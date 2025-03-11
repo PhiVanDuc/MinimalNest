@@ -44,9 +44,15 @@ const productFiltersSlice = createSlice({
                     group: action.payload.payload
                 }
             }
+        },
+        resetProductFilters: (state, action) => {
+            return {
+                group: [],
+                seperate: {}
+            };
         }
     }
 })
 
 export default productFiltersSlice.reducer;
-export const { updateProductFilters, defaultProductFilters } = productFiltersSlice.actions;
+export const { updateProductFilters, defaultProductFilters, resetProductFilters } = productFiltersSlice.actions;

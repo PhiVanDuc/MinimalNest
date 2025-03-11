@@ -51,14 +51,14 @@ export default function ProductFiltersContent() {
                 <Accordion
                     type="single"
                     collapsible
-                    className="space-y-[5px]"
+                    className="space-y-[10px]"
                 >
                     <AccordionItem
                         value="value-1"
                         className="border-0"
                     >
                         <AccordionTrigger
-                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300"
+                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300 data-[state=open]:bg-neutral-100"
                         >
                             <p>Sắp xếp</p>
                         </AccordionTrigger>
@@ -105,7 +105,7 @@ export default function ProductFiltersContent() {
                         className="border-0"
                     >
                         <AccordionTrigger
-                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300"
+                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300 data-[state=open]:bg-neutral-100"
                         >
                             <p>Loại</p>
                         </AccordionTrigger>
@@ -142,7 +142,7 @@ export default function ProductFiltersContent() {
                         className="border-0"
                     >
                         <AccordionTrigger
-                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300"
+                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300 data-[state=open]:bg-neutral-100"
                         >
                             <p>Nội thất</p>
                         </AccordionTrigger>
@@ -179,7 +179,7 @@ export default function ProductFiltersContent() {
                         className="border-0"
                     >
                         <AccordionTrigger
-                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300"
+                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300 data-[state=open]:bg-neutral-100"
                         >
                             <p>Giá</p>
                         </AccordionTrigger>
@@ -211,7 +211,7 @@ export default function ProductFiltersContent() {
                         className="border-0"
                     >
                         <AccordionTrigger
-                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300"
+                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300 data-[state=open]:bg-neutral-100"
                         >
                             <p>Màu sắc</p>
                         </AccordionTrigger>

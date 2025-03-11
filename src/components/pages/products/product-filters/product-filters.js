@@ -6,9 +6,9 @@ import { useSelector } from "react-redux";
 import ProductFiltersHeader from "./product-filters-header";
 import ProductFiltersContent from "./product-filters-content";
 import ProductSearchButton from "./product-search-button";
-import ProductFiltersCheckSearchParams from "./product-filters-check-searchparams";
 import ProductFiltersLoading from "./product-filters-loading";
 import { cn } from "@/lib/utils";
+import ProductFiltersCheckSearchParams from "./product-filters-check-searchparams";
 
 export default function ProductFilters() {
     const expandMobile = useSelector(state => state.productFiltersToggle.expandMobile);

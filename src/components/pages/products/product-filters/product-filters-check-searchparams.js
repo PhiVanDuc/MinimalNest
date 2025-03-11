@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { types, sorts, furniture, colors } from "./product-filters-data";
 
 import { useDispatch } from "react-redux";
-import { defaultProductFilters } from "@/redux/slices/product-filters/product-filters-slice";
+import { defaultProductFilters, resetProductFilters } from "@/redux/slices/product-filters/product-filters-slice";
 
 const validFilters = [
     "discount",
@@ -31,9 +31,12 @@ export default function ProductFiltersCheckSearchParams({ children }) {
         let objSearchParams = Object.fromEntries(searchParams.entries());
         const newSearchParams = new URLSearchParams();
 
-        for (let key in objSearchParams) {
-            if (!objSearchParams[key]) delete objSearchParams[key];
+        if (Object.keys(objSearchParams).length === 0) {
+            dispatch(resetProductFilters());
+            return;
         }
+
+        for (let key in objSearchParams) if (!objSearchParams[key]) delete objSearchParams[key];
 
         let filters = objSearchParams?.filters;
         if (filters) {
@@ -58,8 +61,10 @@ export default function ProductFiltersCheckSearchParams({ children }) {
         delete objSearchParams?.filters;
         dispatch(defaultProductFilters({ seperate: true, payload: objSearchParams }));
         
+        console.log("Run in use effect of ProductFiltersCheckSearchParams");
+        
         router.replace(`${pathname}?${newSearchParams.toString().replace(/%2C/g, ',')}`);
-    }, [searchParams, router, dispatch]);
+    }, [searchParams, pathname, router, dispatch]);
 
     return <>{children}</>;
 }

@@ -8,8 +8,8 @@ export default function ProductsListSearch() {
 
     return (
         <div className={cn(
-            "w-full pl-[320px] flex justify-center",
-            !expand ? "pl-[92px]" : ""
+            "pl-0 xl:pl-[320px] flex justify-center transition-all duration-300",
+            !expand ? "xl:pl-[92px]" : ""
         )}>
             <div className="p-[40px] max-width space-y-[40px]">
                 Tìm Kiếm Sản Phẩm
