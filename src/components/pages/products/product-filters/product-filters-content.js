@@ -30,10 +30,10 @@ export default function ProductFiltersContent() {
 
     return (
         <ScrollArea className={cn(
-            "relative space-y-[15px] flex-1 px-[20px] mb-[20px]",
-            !expand ? "hidden" : ""
+            "relative flex-1 px-[20px] mb-[20px]",
+            !expand ? "xl:hidden" : ""
         )}>
-            <h3 className="text-[13px] font-medium text-darkBland">Danh Sách Bộ Lọc</h3>
+            <h3 className="text-[13px] font-medium text-darkBland mb-[15px]">Danh Sách Bộ Lọc</h3>
 
             <div className="space-y-[5px] pb-[40px]">
                 <label
@@ -58,7 +58,7 @@ export default function ProductFiltersContent() {
                         className="border-0"
                     >
                         <AccordionTrigger
-                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100"
+                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300"
                         >
                             <p>Sắp xếp</p>
                         </AccordionTrigger>
@@ -105,7 +105,7 @@ export default function ProductFiltersContent() {
                         className="border-0"
                     >
                         <AccordionTrigger
-                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100"
+                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300"
                         >
                             <p>Loại</p>
                         </AccordionTrigger>
@@ -142,7 +142,7 @@ export default function ProductFiltersContent() {
                         className="border-0"
                     >
                         <AccordionTrigger
-                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100"
+                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300"
                         >
                             <p>Nội thất</p>
                         </AccordionTrigger>
@@ -179,7 +179,7 @@ export default function ProductFiltersContent() {
                         className="border-0"
                     >
                         <AccordionTrigger
-                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100"
+                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300"
                         >
                             <p>Giá</p>
                         </AccordionTrigger>
@@ -211,7 +211,7 @@ export default function ProductFiltersContent() {
                         className="border-0"
                     >
                         <AccordionTrigger
-                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100"
+                            className="px-[15px] py-[10px] rounded-[10px] text-[16px] font-medium text-darkBold hover:bg-neutral-100 transition-all duration-300"
                         >
                             <p>Màu sắc</p>
                         </AccordionTrigger>

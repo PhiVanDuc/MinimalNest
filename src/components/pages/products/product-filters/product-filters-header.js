@@ -6,16 +6,17 @@ import { updateProductFilters } from "@/redux/slices/product-filters/product-fil
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Menu, Search } from "lucide-react"
+import { Menu, Search, Undo2 } from "lucide-react"
 import { useSearchParams } from "next/navigation"
-import { toggleAction } from "@/redux/slices/product-filters/product-filters-toggle-slice"
+import { toggleAction, toggleMobileAction } from "@/redux/slices/product-filters/product-filters-toggle-slice"
 import { cn } from "@/lib/utils"
 
 export default function ProductFiltersHeader() {
     const searchParams = useSearchParams();
     const dispath = useDispatch();
     const filters = useSelector(state => state.productFilters.seperate);
-    const expand = useSelector(state => state.productFiltersToggle.expand)
+    const expand = useSelector(state => state.productFiltersToggle.expand);
+    const expandMobile = useSelector(state => state.productFiltersToggle.expandMobile);
 
     const [productName, setProductName] = useState(() => {
         return filters['product-name'] ||
@@ -24,14 +25,15 @@ export default function ProductFiltersHeader() {
     });
     const prevValueRef = useRef("");
 
-    // Thực hiện đóng / mở filter
     const handleToggle = () => {
         dispath(toggleAction(!expand));
     }
 
-    // Xử lý Debounce input
+    const handleToggleMobile = () => {
+        dispath(toggleMobileAction(!expandMobile));
+    }
+
     useEffect(() => {
-        // Ngăn chặn ần đầu render mà bị chạy vào debounce input
         if (prevValueRef.current === productName) return;
         prevValueRef.current = productName;
 
@@ -44,47 +46,63 @@ export default function ProductFiltersHeader() {
 
     return (
         <header className={cn(
-            "relative w-[320px] space-y-[20px] px-[20px] mb-[30px] text-center",
-            !expand ? "w-fit" : ""
+            "relative px-[20px] mb-[30px] text-center transition-all duration-300 ease-linear",
+            !expand ? "xl:w-[92px]" : "xl:w-[320px]"
         )}>
-            <div className="relative">
-                <h2 className={cn(
-                    "text-[17px] font-semibold text-darkBold w-full text-center",
-                    !expand ? "hidden" : ""
+            <div className="w-full space-y-[20px]">
+                <div className="relative flex items-center justify-center">
+                    <h2 className={cn(
+                        "text-[17px] font-semibold text-darkBold whitespace-nowrap overflow-hidden text-center transition-all duration-300",
+                        !expand ? "xl:opacity-0 xl:w-0 xl:invisible" : "opacity-100"
+                    )}>
+                        Bộ Lọc
+                    </h2>
+
+                    <div className={cn(
+                        "hidden xl:block absolute right-0 top-[50%] translate-y-[-50%]",
+                        !expand ? "text-center left-0" : ""
+                    )}>
+                        <Button
+                            variant="ghost"
+                            className="text-darkMedium bg-neutral-50"
+                            onClick={handleToggle}
+                        >
+                            <Menu size={20} />
+                        </Button>
+                    </div>
+
+                    <div className={cn(
+                        "xl:hidden absolute right-0 top-[50%] translate-y-[-50%]",
+                    )}>
+                        <Button
+                            variant="ghost"
+                            className="text-darkMedium bg-neutral-50"
+                            onClick={handleToggleMobile}
+                        >
+                            <Undo2 size={20} />
+                        </Button>
+                    </div>
+                </div>
+
+                <div className={cn(
+                    "relative w-full transition-all duration-300 overflow-hidden",
+                    !expand ? "xl:opacity-0 xl:invisible" : ""
                 )}>
-                    Bộ Lọc
-                </h2>
+                    <Input
+                        value={productName}
+                        placeholder="Tên sản phẩm . . ."
+                        className="py-[19px] pr-[40px] placeholder:text-[#94A3B8] text-darkBold focus:border-[1.5px] focus:border-darkBland"
+                        onChange={(e) => { setProductName(e.target.value) }}
+                    />
 
-                <Button
-                    variant="ghost"
-                    className={cn(
-                        "absolute right-0 top-[50%] translate-y-[-50%] text-darkMedium bg-neutral-50",
-                        !expand ? "static translate-y-0" : ""
-                    )}
-                    onClick={handleToggle}
-                >
-                    <Menu size={20} />
-                </Button>
-            </div>
-
-            <div className={cn(
-                "relative w-full",
-                !expand ? "hidden" : ""
-            )}>
-                <Input
-                    value={productName}
-                    placeholder="Tên sản phẩm . . ."
-                    className="py-[19px] pr-[40px] placeholder:text-[#94A3B8] text-darkBold"
-                    onChange={(e) => { setProductName(e.target.value) }}
-                />
-
-                <Search
-                    size={20}
-                    className="absolute top-[50%] translate-y-[-50%] right-[10px] text-darkMedium cursor-pointer"
-                    style={{
-                        marginTop: 0
-                    }}
-                />
+                    <Search
+                        size={20}
+                        className="absolute top-[50%] translate-y-[-50%] right-[10px] text-darkMedium cursor-pointer"
+                        style={{
+                            marginTop: 0
+                        }}
+                    />
+                </div>
             </div>
         </header>
     )

@@ -11,7 +11,6 @@ import Autoplay from "embla-carousel-autoplay";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { v4 } from "uuid";
 
 export default function CoreCarousel({ data, numberCardClassName, options = {}, isPlugins = false }) {
     const [api, setApi] = useState();

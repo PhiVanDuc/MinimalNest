@@ -38,8 +38,8 @@ export default function ProductSearchButton() {
 
     return (
         <div className={cn(
-            "px-[20px] w-full",
-            !expend ? "hidden" : ""
+            "px-[20px] w-full transition-all duration-300",
+            !expend ? "xl:hidden" : ""
         )}>
             <CustomButton
                 className="bg-yellowBold hover:bg-yellowBold w-full"
