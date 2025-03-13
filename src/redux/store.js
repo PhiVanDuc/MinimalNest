@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import counterReducer from "@/redux/slices/counter/counterSlice";
-import productFiltersReducer from "@/redux/slices/product-filters/product-filters-slice";
-import productFiltersToggleReducer from "@/redux/slices/product-filters/product-filters-toggle-slice";
+import productFilterSlice from "@/redux/slices/product-filter/product-filter-slice";
+import productFilterOpenSlice from "@/redux/slices/product-filter/product-filter-open-slice";
 
 export const store = configureStore({
     reducer: {
         counter: counterReducer,
-        productFilters: productFiltersReducer,
-        productFiltersToggle: productFiltersToggleReducer
+        productFilter: productFilterSlice,
+        productFilterOpen: productFilterOpenSlice
     }
 });

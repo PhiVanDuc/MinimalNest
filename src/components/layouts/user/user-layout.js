@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 
-import UserNavbar from "@/components/pages/layouts/user/navigate-bar/user-navbar";
-import UserNavbarMobile from "@/components/pages/layouts/user/navigate-bar/user-navbar-mobile";
+import UserNavbar from "./navigate-bar/user-navbar";
 import NavigateBarLoading from "./navigate-bar/navigate-bar-loading";
+import UserNavbarMobile from "./navigate-bar/user-navbar-mobile";
 
 export default function UserLayout({ children }) {
     return (

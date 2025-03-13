@@ -1,4 +1,4 @@
-import UserLayout from '@/components/pages/layouts/user/user-layout'
+import UserLayout from "@/components/layouts/user/user-layout";
 
 export const metadata = {
 	title: `${process.env.WEBSITE_NAME} - Trang chủ`,

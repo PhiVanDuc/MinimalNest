@@ -19,7 +19,7 @@ const findalData = spaces.map(space => (
         component: (
             <>
                 <div className="w-full aspect-video rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300" />
-                <div className="relative text-[16px] font-semibold text-darkBold p-[20px] bg-white rounded-br-[15px] rounded-bl-[15px]">
+                <div className="relative text-[15px] sm:text-[16px] font-semibold text-darkBold p-[20px] bg-white rounded-br-[15px] rounded-bl-[15px]">
                     <div className="flex items-center justify-between">
                         <h3>{space}</h3>
                         <Badge className="bg-yellowBold text-white text-[13px]">30 sản phẩm</Badge>

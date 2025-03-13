@@ -15,8 +15,8 @@ export default function ProductItem() {
 
             <div className="relative space-y-[15px] p-[20px] bg-white">
                 <div className="flex items-center justify-between">
-                    <h3 className="text-[16px] text-darkBold font-semibold">Product name</h3>
-                    <Badge className="bg-yellowBold text-white text-[14px] font-medium">4,98</Badge>
+                    <h3 className="text-[15px] sm:text-[16px] text-darkBold font-semibold">Product name</h3>
+                    <Badge className="bg-yellowBold text-white text-[13px] font-medium">4,98</Badge>
                 </div>
 
                 <TooltipProvider
@@ -39,7 +39,10 @@ export default function ProductItem() {
                     </div>
                 </TooltipProvider>
 
-                <p className="flex items-center gap-x-[10px] text-[16px] text-darkBold font-semibold"><IoPricetagOutline size={22} /> 400.000 VND</p>
+                <p className="flex items-center gap-x-[10px] text-[13px] sm:text-[15px] text-darkBold font-semibold">
+                    <IoPricetagOutline size={22} />
+                    400.000 VND
+                </p>
                 <span
                     className="absolute inset-0 border border-t-0 rounded-[15px] rounded-tr-none rounded-tl-none"
                     style={{

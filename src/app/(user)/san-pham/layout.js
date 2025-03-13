@@ -1,4 +1,4 @@
-import ProductLayout from "@/components/pages/layouts/user/product-layout";
+import ProductLayout from "@/components/layouts/user/product-layout";
 
 export default function Layout({ children }) {
     return (

@@ -45,13 +45,13 @@ const finalData = feedbacks.map(feedback => ({
             />
             <p className="text-[16px] leading-[28px] text-darkMedium truncate-text">{feedback.feedback}</p>
 
-            <div className="flex items-center justify-between">
-                <div className="flex items-center gap-x-[10px]">
+            <div className="flex items-center justify-between gap-[10px]">
+                <div className="flex items-center gap-x-[10px] overflow-hidden">
                     <div className="shrink-0 w-[44px] aspect-square rounded-full bg-slate-300" />
-                    <p className="text-[18px] font-medium text-darkBold">{feedback.name}</p>
+                    <p className="text-[16px] lg:text-[18px] font-medium text-darkBold whitespace-nowrap truncate">{feedback.name}</p>
                 </div>
 
-                <Badge className="bg-yellowBold text-white text-[14px] font-medium">4,98</Badge>
+                <Badge className="hidden md:block bg-yellowBold text-white text-[13px] sm:text-[14px] font-medium">4,98</Badge>
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
 import AuthButtons from "@/components/pages/auth/auth-buttons";
 import Logo from "@/components/customs/logo/logo";
-import NavigateItems from "@/components/pages/layouts/user/navigate-bar/navigate-items";
+import NavigateItems from "./navigate-items";
 
 export default function UserNavbar() {
     return (
