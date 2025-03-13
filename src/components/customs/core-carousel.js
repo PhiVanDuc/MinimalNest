@@ -47,10 +47,7 @@ export default function CoreCarousel({ data, numberCardClassName, options = {}, 
                         data?.map(item => (
                             <CarouselItem
                                 key={item.id}
-                                className={cn(
-                                    "min-[550px]:basis-1/2 lg:basis-1/3 2xl:basis-1/4",
-                                    numberCardClassName
-                                )}
+                                className={numberCardClassName}
                             >
                                 <div className="sm:p-1">
                                     {item.component}

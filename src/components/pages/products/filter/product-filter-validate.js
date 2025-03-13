@@ -2,106 +2,106 @@
 
 import { useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { types, categories, colors } from "./product-filter-data";
-import { useDispatch, useSelector } from "react-redux";
-import { updateFilters, updateOthers } from "@/redux/slices/product-filter/product-filter-slice";
+import { useDispatch } from "react-redux";
+
+import { types, categories, colors, params } from "./product-filter-data";
+import { updateDefault } from "@/redux/slices/product-filter/product-filter-slice";
+import _ from "lodash";
 
 export default function ProductFilterValidate({ children }) {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const dispatch = useDispatch();
-    const currentFilters = useSelector((state) => state.productFilter.filters);
 
     useEffect(() => {
-        if (!searchParams?.size) {
-            if (pathname !== "/san-pham") router.push("/san-pham");
-            return;
-        }
-        
-        const searchParamsString = new URLSearchParams();
-
-        const validParams = new Set(["filters", "product-name", "price-min", "price-max"]);
-        const params = Object.fromEntries(
-            [...searchParams.entries()].filter(([key, value]) => value && validParams.has(key))
-        );
-
-        if (!Object.keys(params).length) {
-            if (pathname !== "/san-pham") router.push("/san-pham");
+        if (!pathname.startsWith("/san-pham/tim-kiem")) {
+            dispatch(updateDefault());
             return;
         }
 
-        // Tạo danh sách filter hợp lệ từ data
-        const rootFilters = [
+        const urlSearchParams = new URLSearchParams;
+        const currentParams = Object.fromEntries(searchParams.entries());
+
+        // Kiểm tra xem params có thuộc vào danh sách chấp nhận hay không.
+        let acceptParams = Object.entries(currentParams).reduce((prev, [key, value]) => {
+            if (params.includes(key)) {
+                prev[key] = value;
+            }
+
+            return prev;
+        }, {});
+
+        // Kiểm tra xem có value nào là falsy, nếu có thì xóa cặp key - value đó
+        acceptParams = _.pickBy(acceptParams, value => value);
+
+        // Kiểm tra nếu không có params nào thì chuyển hướng về /san-pham
+        if (Object.keys(acceptParams).length === 0) {
+            router.replace("/san-pham");
+            return;
+        }
+
+        // Chuẩn bị dữ liệu để cập nhật product filter state
+        const listFilters = [
             ...types,
             ...categories,
             ...colors,
-            { label: "discount", subLabel: "Giảm giá" }
-        ];
-        const validFilters = Object.fromEntries(rootFilters.map(filter => [filter.label, filter]));
-
-        // Xây dựng finalParams từ URL params
-        const finalParams = {};
-
-        if (params["filters"]) {
-            finalParams["filters"] = Object.fromEntries(
-                params["filters"]
-                    .split(",")
-                    .map(filter => [filter, validFilters[filter]])
-                    .filter(([, val]) => val)
-                );
+            {
+                label: "discount",
+                subLabel: "Giảm giá"
             }
+        ];
 
-            ["product-name", "price-min", "price-max"].forEach(key => {
-                if (params[key]) {
-                    finalParams[key] = {
+        let finalData = {};
+        if (acceptParams["filters"]) {
+            const arrFilters = acceptParams["filters"].split(",");
+            let paramFilters = "";
+
+            finalData["filters"] = arrFilters.reduce((acc, label, index) => {
+                const found = listFilters.find(item => item.label === label);
+                if (found) {
+                    const { subLabel, codeColor } = found;
+
+                    if (index < arrFilters.length - 1) paramFilters += label + ",";
+                    else paramFilters += label;
+
+                    acc[label] = codeColor ? { subLabel, codeColor } : { subLabel };
+                }
+                return acc;
+            }, {});
+
+            urlSearchParams.set("filters", paramFilters);
+            delete acceptParams["filters"];
+        }
+
+        if (Object.keys(acceptParams).length > 0) {
+            finalData["others"] = Object.entries(acceptParams).reduce((prev, [key, value]) => {
+                const found = params.find(param => param === key);
+                if (found) {
+                    urlSearchParams.set(key, value);
+
+                    prev[key] = {
                         label: key,
-                        subLabel:
-                            key === "product-name"
+                        subLabel: key === "living-space"
+                            ? "Không gian sống"
+                            : key === "product-name"
                             ? "Tên sản phẩm"
                             : key === "price-min"
                             ? "Giá tối thiểu"
                             : "Giá tối đa",
-                        value: params[key]
-                    };
-                }
-            }
-        );
-
-        // Cập nhật từng filter nếu chưa có trong state (để tránh toggle không mong muốn)
-        let temp;
-        if (finalParams["filters"]) {
-            Object.entries(finalParams["filters"]).forEach(([key, value]) => {
-                if (!currentFilters?.[key]) {
-                    dispatch(updateFilters({ [key]: value }));
-                }
-            });
-
-            let string = "";
-            Object.entries(finalParams["filters"]).forEach((filter, index) => {
-                if (index === Object.entries(finalParams["filters"]).length - 1) {
-                    string += filter[0];
-                    return;
+                        value
+                    }
                 }
 
-                string += filter[0] + ",";
-            });
-
-            searchParamsString.set("filters", string);
-            temp = {...finalParams};
-            delete temp["filters"];
+                return prev;
+            }, {});
         }
 
-        // Cập nhật các params khác vào state
-        if (Object.keys(temp).length) {
-            Object.keys(temp).forEach(key => {
-                searchParamsString.set(key, temp[key].value);
-            })
-            dispatch(updateOthers(temp));
-        }
-
-        router.replace(`${pathname}?${searchParamsString.toString().replace(/%2C/g, ",")}`);
-    }, [router, pathname, searchParams, currentFilters, dispatch]);
+        // Dùng finalData cập nhật product filter state
+        dispatch(updateDefault(finalData));
+        router.replace(`${pathname}?${urlSearchParams.toString().replace(/%2C/g, ",")}`);
+        
+    }, [router, pathname, searchParams, dispatch]);
 
     return <>{children}</>;
 }

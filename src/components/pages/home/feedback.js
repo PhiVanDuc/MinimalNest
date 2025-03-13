@@ -72,6 +72,7 @@ export default function Feedback() {
                     loop: true
                 }}
                 isPlugins={true}
+                numberCardClassName="sm:basis-1/2 lg:basis-1/3"
             />
         </section>
     )

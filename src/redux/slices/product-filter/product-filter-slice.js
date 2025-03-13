@@ -57,6 +57,11 @@ const productFilterSlice = createSlice({
             });
         },
 
+        updateDefault: (state, action) => {
+            state.filters = action.payload?.filters || {};
+            state.others = action.payload?.others || {};
+        },
+
         deleteFilters: (state, action) => {
             const payload = action.payload;
             delete state.filters?.[payload];
@@ -70,4 +75,4 @@ const productFilterSlice = createSlice({
 });
 
 export default productFilterSlice.reducer;
-export const { updateFilters, updateRadioFilters, updateOthers, deleteFilters, deleteOthers } = productFilterSlice.actions;
+export const { updateFilters, updateRadioFilters, updateOthers, updateDefault, deleteFilters, deleteOthers } = productFilterSlice.actions;

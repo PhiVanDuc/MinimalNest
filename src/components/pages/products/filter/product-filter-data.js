@@ -66,3 +66,11 @@ export const colors = [
         codeColor: "#CCAD8F"
     }
 ]
+
+export const params = [
+    "filters",
+    "living-space",
+    "product-name",
+    "price-min",
+    "price-max"
+];

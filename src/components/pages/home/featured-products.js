@@ -68,6 +68,7 @@ export default function FeaturedProducts() {
 
             <CoreCarousel
                 data={products}
+                numberCardClassName="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
             />
         </section>
     )

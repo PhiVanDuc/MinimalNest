@@ -45,7 +45,10 @@ export default function LivingSpace() {
                 <p className="text-[14px] md:text-[16px] text-darkBland font-medium">Chọn không gian bạn muốn sắp xếp nội thất và tìm ngay những sản phẩm nội thất tối giản, phù hợp với phong cách của bạn.</p>
             </div>
 
-            <CoreCarousel data={findalData}/>
+            <CoreCarousel
+                data={findalData}
+                numberCardClassName="sm:basis-1/2 lg:basis-1/3"
+            />
 
             <BlurCircle className="right-0 bottom-0 translate-x-[50%] translate-y-[50%]" />
         </section>

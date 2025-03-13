@@ -44,7 +44,7 @@ export default function Header() {
             variants={parentVariants}
             initial="hidden"
             animate="show"
-            className="relative responsive-horizontal pt-[80px] pb-[100px] md:pb-[150px] xl:h-screen w-full flex items-center"
+            className="relative responsive-horizontal py-[100px] md:py-[150px] w-full flex items-center"
         >
             <div className="relative w-full flex flex-col lg:flex-row justify-between gap-[40px] lg:gap-[80px]">
                 {/* Tiêu đề bên trái */}
