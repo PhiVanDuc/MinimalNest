@@ -101,7 +101,7 @@ export default function ProductFilterValidate({ children }) {
         }
 
         router.replace(`${pathname}?${searchParamsString.toString().replace(/%2C/g, ",")}`);
-    }, [pathname, searchParams, currentFilters, dispatch]);
+    }, [router, pathname, searchParams, currentFilters, dispatch]);
 
     return <>{children}</>;
 }

@@ -27,8 +27,9 @@ export default function ProductFilterHeader() {
     }
 
     useEffect(() => {
-        setProductName(stateFilter?.others?.["product-name"]?.value ?? "");
-    }, [stateFilter?.others?.["product-name"]])
+        const productNameValue = stateFilter?.others?.["product-name"]?.value ?? "";
+        setProductName(productNameValue);
+    }, [stateFilter?.others]);
 
     // Xử lý debounce
     useEffect(() => {
