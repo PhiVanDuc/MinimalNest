@@ -6,7 +6,7 @@ import UserNavbarMobile from "./navigate-bar/user-navbar-mobile";
 
 export default function UserLayout({ children }) {
     return (
-        <main>
+        <main className="overflow-x-hidden">
             <Suspense fallback={<NavigateBarLoading />}>
                 <UserNavbar />
                 <UserNavbarMobile />

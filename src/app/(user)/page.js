@@ -15,8 +15,8 @@ export const metadata = {
 
 export default function Page() {
     return (
-        <div className="flex justify-center">
-            <div className="max-width">
+        <div className="flex justify-center overflow-x-hidden">
+            <div className="max-width overflow-x-hidden">
                 <Suspense fallback={<HeaderLoading />}>
                     <Header />
                     <Analysis />
