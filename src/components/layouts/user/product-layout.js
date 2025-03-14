@@ -6,7 +6,7 @@ import Footer from "./footer"
 
 export default function ProductLayout({ children }) {
     return (
-        <div className="pt-[66px] xl:pt-[76px]">
+        <>
             <Suspense fallback={<ProductFilterLoading />}>
                 <ProductFilter />
             </Suspense>
@@ -17,6 +17,6 @@ export default function ProductLayout({ children }) {
             <div className="border-t border-slate-200">
                 <Footer />
             </div>
-        </div>
+        </>
     )
 }

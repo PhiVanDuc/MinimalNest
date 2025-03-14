@@ -7,10 +7,14 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 import { IoPricetagOutline } from "react-icons/io5";
+import Link from "next/link";
 
 export default function ProductItem() {
     return (
-        <div className="rounded-[15px] cursor-pointer">
+        <Link
+            href={`/san-pham/ten-san-pham`}
+            className="block rounded-[15px] cursor-pointer"
+        >
             <div className="w-full aspect-video rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300" />
 
             <div className="relative space-y-[15px] p-[20px] bg-white">
@@ -50,6 +54,6 @@ export default function ProductItem() {
                     }}
                 />
             </div>
-        </div>
+        </Link>
     )
 }

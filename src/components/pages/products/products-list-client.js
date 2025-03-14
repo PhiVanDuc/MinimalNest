@@ -14,7 +14,7 @@ export default function ProductsListClient() {
         <div className="flex justify-center mb-[100px] lg:mb-[150px]">
             <div
                 className={cn(
-                    "max-width pt-[20px] lg:pt-[40px] transition-all duration-300 space-y-[60px]",
+                    "max-width transition-all duration-300 space-y-[60px]",
                     isOpen ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" : "responsive-horizontal"
                 )}
             >
