@@ -15,12 +15,15 @@ import { Input } from "@/components/ui/input";
 
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useSelector } from "react-redux";
 
 const hiddenPath = ["/checkout"];
 
 export default function Newsletter() {
     const firstPath = usePathname();
     const [pathname, setPathname] = useState(() => firstPath === "/" ? "/home" : firstPath);
+
+    const isOpen = useSelector(state => state.productFilterOpen);
 
     useEffect(() => {
         setPathname(() => firstPath === "/" ? "/home" : firstPath);
@@ -36,9 +39,10 @@ export default function Newsletter() {
     return (
         <div
             className={cn(
-                "responsive-horizontal pb-[100px] lg:pb-[150px] w-full",
-                pathname.startsWith("/home") ? "max-width" : "",
-                hiddenPath.some(path => pathname.startsWith(path)) ? "hidden" : ""
+                "pb-[100px] lg:pb-[150px] w-full",
+                pathname.startsWith("/home") ? "responsive-horizontal max-width" : "",
+                hiddenPath.some(path => pathname.startsWith(path)) ? "hidden" : "",
+                (pathname.startsWith("/san-pham") && isOpen) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" : "responsive-horizontal"
             )}
         >
             <div className="hidden md:block relative w-full rounded-[15px] aspect-16/7 overflow-hidden">

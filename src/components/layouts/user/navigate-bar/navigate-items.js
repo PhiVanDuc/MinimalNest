@@ -171,7 +171,7 @@ export default function NavigateItems() {
                                                         key={item.label}
                                                         className={cn(
                                                             "flex items-center text-darkMedium hover:text-darkBold px-[15px] py-[10px] gap-x-[20px] rounded-[5px] cursor-pointer",
-                                                            searchParams.get("livingSpace") === item.livingSpace ? "bg-yellowMedium hover:bg-yelloMedium text-darkBold" : ""
+                                                            searchParams.get("living-space") === item.livingSpace ? "bg-yellowMedium hover:bg-yelloMedium text-darkBold" : ""
                                                         )}
                                                         onClick={() => { handleClickSubNav(item) }}
                                                     >

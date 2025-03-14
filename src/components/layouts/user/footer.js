@@ -1,3 +1,7 @@
+"use client"
+
+import { useSelector } from 'react-redux';
+
 import Logo from '@/components/customs/logo/logo';
 import Link from 'next/link';
 
@@ -5,11 +9,19 @@ import { FaFacebookF } from "react-icons/fa6";
 import { AiFillInstagram } from "react-icons/ai";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
+import { cn } from '@/lib/utils';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+    const pathname = usePathname();
+    const isOpen = useSelector(state => state.productFilterOpen);
+
     return (
         <footer className='flex justify-center bg-yellowBland pt-[80px]'>
-            <div className="responsive-horizontal max-width">
+            <div className={cn(
+                "max-width",
+                (pathname.startsWith("/san-pham") && isOpen) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" : "responsive-horizontal"
+            )}>
                 <div className='flex flex-col xl:flex-row items-start gap-[30px] xl:gap-[20px] pb-[20px]'>
                     <div className='space-y-[10px] text-center xl:text-left w-full xl:w-[55%]'>
                         <div className='xl:w-fit p-[25px] rounded-[15px] bg-yellowBold text-white'>

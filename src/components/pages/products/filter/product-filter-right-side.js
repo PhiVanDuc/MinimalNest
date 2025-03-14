@@ -1,5 +1,6 @@
 "use client"
 
+import { usePathname, useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { toggle } from "@/redux/slices/product-filter/product-filter-open-slice";
 import { deleteFilters, deleteOthers } from "@/redux/slices/product-filter/product-filter-slice";
@@ -18,6 +19,9 @@ import { v4 } from "uuid";
 import { cn } from "@/lib/utils";
 
 export default function ProductFilterRightSide() {
+    const pathname = usePathname();
+    const router = useRouter();
+
     const dispatch = useDispatch();
     const { filters, others } = useSelector(state => state.productFilter);
     const isOpen = useSelector(state => state.productFilterOpen);
@@ -34,6 +38,25 @@ export default function ProductFilterRightSide() {
 
         dispatch(deleteFilters(data));
     }
+
+    const handleSearch = () => {
+        const newSearchParams = new URLSearchParams();
+    
+        if (Object.keys(filters).length > 0) newSearchParams.set("filters", Object.keys(filters).join(","));
+        else newSearchParams.delete("filters");
+    
+        if (Object.keys(others).length > 0) {
+            Object.keys(others).forEach((key) => {
+                const label = others[key]?.label;
+                const value = others[key]?.value;
+                if (label && value) {
+                    newSearchParams.set(label, value);
+                }
+            });
+        }
+    
+        router.push(`/san-pham/tim-kiem?${newSearchParams.toString().replace(/%2C/g, ",")}`);
+    };
 
     return (
         <div className="flex flex-wrap items-center gap-[8px]">
@@ -89,12 +112,15 @@ export default function ProductFilterRightSide() {
             }
 
             {
-                (Object.entries(others)?.length > 0 || Object.entries(filters)?.length > 0) &&
+                (Object.entries(others)?.length > 0 || Object.entries(filters)?.length > 0 || pathname.startsWith("/san-pham/tim-kiem")) &&
                 (
                     <TooltipProvider delayDuration={100}>
                         <Tooltip>
                             <TooltipTrigger asChild>
-                                <div className="shrink-0 h-[38px] aspect-square rounded-full flex items-center justify-center text-darkMedium border border-neutral-300 hover:text-darkBold hover:bg-neutral-50 transition-all duration-300 cursor-pointer">
+                                <div
+                                    className="shrink-0 h-[38px] aspect-square rounded-full flex items-center justify-center text-darkMedium border border-neutral-300 hover:text-darkBold hover:bg-neutral-50 transition-all duration-300 cursor-pointer"
+                                    onClick={handleSearch}
+                                >
                                     <RotateCcw size={16} />
                                 </div>
                             </TooltipTrigger>

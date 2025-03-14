@@ -182,7 +182,7 @@ export default function NavigateItemsMobile() {
                                                 key={livingSpace.label}
                                                 className={cn(
                                                     "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-slate-100 text-[15px] text-darkMedium font-medium cursor-pointer",
-                                                    livingSpace.livingSpace === searchParams.get("livingSpace") ? "bg-yellowMedium hover:bg-yellowMedium hover:opacity-80" : ""
+                                                    livingSpace.livingSpace === searchParams.get("living-space") ? "bg-yellowMedium hover:bg-yellowMedium hover:opacity-80" : ""
                                                 )}
                                                 onClick={() => { handleClickSubNav(livingSpace); }}
                                             >

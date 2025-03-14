@@ -13,7 +13,7 @@ const spaces = [
     "Trang trí"
 ]
 
-const findalData = spaces.map(space => (
+const finalData = spaces.map(space => (
     {
         id: v4(),
         component: (
@@ -46,7 +46,7 @@ export default function LivingSpace() {
             </div>
 
             <CoreCarousel
-                data={findalData}
+                data={finalData}
                 numberCardClassName="sm:basis-1/2 lg:basis-1/3"
             />
 
