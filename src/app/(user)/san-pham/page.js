@@ -1,4 +1,6 @@
 import ProductsList from "@/components/pages/products/products-list";
+import ProductsListLoading from "@/components/pages/products/products-list-loading";
+import { Suspense } from "react";
 
 export const metadata = {
 	title: `${process.env.WEBSITE_NAME} - Sản phẩm`,
@@ -7,6 +9,8 @@ export const metadata = {
 
 export default function Page() {
     return (
-        <ProductsList />
+        <Suspense fallback={<ProductsListLoading />}>
+            <ProductsList />
+        </Suspense>
     )
 }

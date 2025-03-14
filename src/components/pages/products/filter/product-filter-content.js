@@ -34,7 +34,7 @@ export default function ProductFilterContent() {
         <ScrollArea
             className="relative flex-1 px-[20px]"
         >
-            <div className="space-y-[10px]">
+            <div className="space-y-[10px] pb-[30px]">
                 <h3 className="text-[14px] text-darkBland font-semibold">Danh sách bộ lọc</h3>
 
                 <div className="space-y-[10px]">

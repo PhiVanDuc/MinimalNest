@@ -64,7 +64,7 @@ export default function ProductsListSearchClient() {
     const isOpen = useSelector(state => state.productFilterOpen);
 
     return (
-        <div className="flex justify-center mb-[100px] md:mb-[150px]">
+        <div className="flex justify-center mb-[100px] lg:mb-[150px]">
             <div
                 className={cn(
                     "max-width pt-[20px] lg:pt-[40px] transition-all duration-300 space-y-[60px]",
@@ -86,7 +86,7 @@ export default function ProductsListSearchClient() {
         
                     <div
                         className="flex justify-center"
-                        style={{ marginTop: "40px" }}
+                        style={{ marginTop: "50px" }}
                     >
                         <Pagination>
                             <PaginationContent>

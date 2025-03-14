@@ -58,7 +58,7 @@ const products = [
 
 export default function ProductsNormal() {
     return (
-        <div className="space-y-[20px] pb-[100px] md:pb-[150px]">
+        <div className="space-y-[20px]">
             <h2 className="text-[20px] md:text-[24px] text-darkBold font-semibold">Các sản phẩm khác</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[20px]">
@@ -71,7 +71,7 @@ export default function ProductsNormal() {
 
             <div
                 className="flex justify-center"
-                style={{ marginTop: "40px" }}
+                style={{ marginTop: "50px" }}
             >
                 <Pagination>
                     <PaginationContent>
