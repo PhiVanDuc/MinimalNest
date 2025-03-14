@@ -93,21 +93,23 @@ export default function ProductFilterRightSide() {
 
             {
                 Object.entries(others)?.map(other => {
-                    return (
-                        <div
-                            key={v4()}
-                            className="group flex items-center gap-x-[15px] w-fit text-[14px] font-medium text-darkMedium px-[20px] py-[8px] rounded-full border border-neutral-300 hover:text-darkBold hover:bg-neutral-50 hover:border-neutral-500 transition-all duration-300 cursor-pointer"
-                            onClick={() => {
-                                handleDeleteFilters(
-                                    "others",
-                                    other[0]
-                                );
-                            }}
-                        >
-                            <p>{other[1].subLabel} - {other[1].value}</p>
-                            <X size={16} className="translate-y-[0.5px] text-darkBland group-hover:text-red-300 transition-colors duration-300" />
-                        </div>
-                    )
+                    if (other[1].label !== "living-space") {
+                        return (
+                            <div
+                                key={v4()}
+                                className="group flex items-center gap-x-[15px] w-fit text-[14px] font-medium text-darkMedium px-[20px] py-[8px] rounded-full border border-neutral-300 hover:text-darkBold hover:bg-neutral-50 hover:border-neutral-500 transition-all duration-300 cursor-pointer"
+                                onClick={() => {
+                                    handleDeleteFilters(
+                                        "others",
+                                        other[0]
+                                    );
+                                }}
+                            >
+                                <p>{other[1].subLabel} - {other[1].value}</p>
+                                <X size={16} className="translate-y-[0.5px] text-darkBland group-hover:text-red-300 transition-colors duration-300" />
+                            </div>
+                        )
+                    }
                 })
             }
 
