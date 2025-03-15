@@ -11,7 +11,15 @@ module.exports = {
   	extend: {
 		aspectRatio: {
 			'3/4': '3 / 4',
+			'16/15': '16 / 15',
+			'16/14': '16 / 14',
+			'16/13': '16 / 13',
+			'16/12': '16 / 12',
+			'16/11': '16 / 11',
+			'16/10': '16 / 10',
+			'16/8': '16 / 8',
 			'16/7': '16 / 7',
+			'16/6': '16 / 6',
 			'16/5': '16 / 5'
 		},
   		colors: {
@@ -21,6 +29,7 @@ module.exports = {
 			yellowBold: '#F3BC4F',
 			yellowMedium: '#F3F0EA',
 			yellowBland: '#FAF8F4',
+			blueChecked: '#26AA99',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

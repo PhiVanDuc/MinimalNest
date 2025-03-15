@@ -6,6 +6,7 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import Logo from "@/components/customs/logo/logo";
 import { Button } from "@/components/ui/button";
+import CartButton from "@/components/pages/cart/cart-button";
 import {
     Sheet,
     SheetContent,
@@ -24,7 +25,7 @@ import {
 } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { Armchair, BookText, House, Send, Sun } from "lucide-react";
+import { Armchair, BookText, House, Send, ShoppingCart, Sun } from "lucide-react";
 import { TbLayoutDashboard } from "react-icons/tb";
 import { PiCookingPotBold } from "react-icons/pi";
 import { LuShowerHead } from "react-icons/lu";
@@ -127,8 +128,11 @@ export default function NavigateItemsMobile() {
             modal={true}
         >
             <SheetTrigger asChild>
-                <Button variant="ghost">
-                    <Menu />
+                <Button
+                    variant="ghost"
+                    className="group"
+                >
+                    <Menu className="text-slate-400 group-hover:text-darkBold transition duration-300" />
                 </Button>
             </SheetTrigger>
 
@@ -154,46 +158,50 @@ export default function NavigateItemsMobile() {
                     <div className="space-y-[10px]">
                         <p className="text-[13px] font-medium text-darkBland">Thương mại</p>
 
-                        <Accordion
-                            type="single"
-                            collapsible
-                            className="w-full"
-                        >
-                            <AccordionItem
-                                value="item-1"
-                                className="border-0"
+                        <div className="space-y-[10px]">
+                            <Accordion
+                                type="single"
+                                collapsible
+                                className="w-full"
                             >
-                                <AccordionTrigger
-                                    className={cn(
-                                        "py-[10px] px-[20px] rounded-[10px] hover:bg-slate-100 text-[15px] text-darkMedium font-medium",
-                                        pathname.startsWith("/products") ? "text-white bg-yellowBold hover:bg-yellowBold hover:opacity-80 transition duration-300" : ""
-                                    )}
-                                    iconColor={ pathname.startsWith("/products") ? "text-white" : "" }
+                                <AccordionItem
+                                    value="item-1"
+                                    className="border-0"
                                 >
-                                    <div className="flex items-center gap-x-[15px]">
-                                        <FiShoppingBag size={20} />
-                                        <p>Sản phẩm</p>
-                                    </div>
-                                </AccordionTrigger>
-                                <AccordionContent className="mt-[10px] p-[10px] space-y-[10px] border-[1.5px] rounded-[10px]">
-                                    {
-                                        livingSpaces.map(livingSpace => (
-                                            <div
-                                                key={livingSpace.label}
-                                                className={cn(
-                                                    "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-slate-100 text-[15px] text-darkMedium font-medium cursor-pointer",
-                                                    livingSpace.livingSpace === searchParams.get("living-space") ? "bg-yellowMedium hover:bg-yellowMedium hover:opacity-80" : ""
-                                                )}
-                                                onClick={() => { handleClickSubNav(livingSpace); }}
-                                            >
-                                                {livingSpace.icon}
-                                                {livingSpace.label}
-                                            </div>
-                                        ))
-                                    }
-                                </AccordionContent>
-                            </AccordionItem>
-                        </Accordion>
+                                    <AccordionTrigger
+                                        className={cn(
+                                            "py-[10px] px-[20px] rounded-[10px] hover:bg-slate-100 text-[15px] text-darkMedium font-medium",
+                                            pathname.startsWith("/products") ? "text-white bg-yellowBold hover:bg-yellowBold hover:opacity-80 transition duration-300" : ""
+                                        )}
+                                        iconColor={ pathname.startsWith("/products") ? "text-white" : "" }
+                                    >
+                                        <div className="flex items-center gap-x-[15px]">
+                                            <FiShoppingBag size={20} />
+                                            <p>Sản phẩm</p>
+                                        </div>
+                                    </AccordionTrigger>
+                                    <AccordionContent className="mt-[10px] p-[10px] space-y-[10px] border-[1.5px] rounded-[10px]">
+                                        {
+                                            livingSpaces.map(livingSpace => (
+                                                <div
+                                                    key={livingSpace.label}
+                                                    className={cn(
+                                                        "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-slate-100 text-[15px] text-darkMedium font-medium cursor-pointer",
+                                                        livingSpace.livingSpace === searchParams.get("living-space") ? "bg-yellowMedium hover:bg-yellowMedium hover:opacity-80" : ""
+                                                    )}
+                                                    onClick={() => { handleClickSubNav(livingSpace); }}
+                                                >
+                                                    {livingSpace.icon}
+                                                    {livingSpace.label}
+                                                </div>
+                                            ))
+                                        }
+                                    </AccordionContent>
+                                </AccordionItem>
+                            </Accordion>
+
+                            <CartButton />
+                        </div>
                     </div>
                     
                     <div className="space-y-[10px] mt-[10px]">

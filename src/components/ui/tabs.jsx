@@ -19,14 +19,20 @@ const TabsList = React.forwardRef(({ className, ...props }, ref) => (
 TabsList.displayName = TabsPrimitive.List.displayName
 
 const TabsTrigger = React.forwardRef(({ className, ...props }, ref) => (
-  <TabsPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow",
-      className
-    )}
-    {...props} />
+  <div className="relative group">
+    <TabsPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        "peer inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow transition-all duration-300",
+        className
+      )}
+      {...props}
+    />
+
+    <span className="inline-block opacity-0 peer-data-[state=active]:opacity-100 group-hover:opacity-100 absolute h-[2.5px] w-full rounded-full left-0 right-0 bottom-0 bg-darkBold transition-all duration-300" />
+  </div>
 ))
+
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
 const TabsContent = React.forwardRef(({ className, ...props }, ref) => (

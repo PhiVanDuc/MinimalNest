@@ -52,34 +52,42 @@ export default function CustomBreadcrumb() {
 
     if (breadcrumbs.length <= 3) {
         return (
-            <div className={cn(
-                "pt-[86px] xl:pt-[116px] pb-[20px] lg:pb-[40px] max-width transition-all duration-300",
-                (isOpen && (pathname === "/san-pham" || pathname === "/san-pham/tim-kiem")) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" : "responsive-horizontal",
-                pathname === "/" ? "hidden" : ""
-            )} >
-                <Breadcrumb>
-                    <BreadcrumbList className="text-[15px]">
-                        {breadcrumbs.map((crumb, index) => {
-                            const isCurrent = index === breadcrumbs.length - 1;
-                            return (
-                                <Fragment key={v4()}>
-                                    <BreadcrumbItem>
-                                        {isCurrent ? (
-                                            <BreadcrumbPage className="text-yellowBold font-medium">
-                                                {crumb.label}
-                                            </BreadcrumbPage>
-                                        ) : (
-                                            <BreadcrumbLink href={crumb.href}>
-                                                {crumb.label}
-                                            </BreadcrumbLink>
-                                        )}
-                                    </BreadcrumbItem>
-                                    {!isCurrent && <BreadcrumbSeparator />}
-                                </Fragment>
-                            );
-                        })}
-                    </BreadcrumbList>
-                </Breadcrumb>
+            <div
+                className={cn(
+                    "flex justify-center pt-[86px] xl:pt-[116px] pb-[20px] lg:pb-[40px]",
+                    pathname === "/" ? "hidden" : ""
+                )}
+            >
+                <div
+                    className={cn(
+                        "max-width transition-all duration-300",
+                        (isOpen && (pathname === "/san-pham" || pathname === "/san-pham/tim-kiem")) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" : "responsive-horizontal"
+                    )}
+                >
+                    <Breadcrumb>
+                        <BreadcrumbList className="text-[15px]">
+                            {breadcrumbs.map((crumb, index) => {
+                                const isCurrent = index === breadcrumbs.length - 1;
+                                return (
+                                    <Fragment key={v4()}>
+                                        <BreadcrumbItem>
+                                            {isCurrent ? (
+                                                <BreadcrumbPage className="text-yellowBold font-medium">
+                                                    {crumb.label}
+                                                </BreadcrumbPage>
+                                            ) : (
+                                                <BreadcrumbLink href={crumb.href}>
+                                                    {crumb.label}
+                                                </BreadcrumbLink>
+                                            )}
+                                        </BreadcrumbItem>
+                                        {!isCurrent && <BreadcrumbSeparator />}
+                                    </Fragment>
+                                );
+                            })}
+                        </BreadcrumbList>
+                    </Breadcrumb>
+                </div>
             </div>
         );
     }

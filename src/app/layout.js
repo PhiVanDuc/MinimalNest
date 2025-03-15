@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import ClickSpark from "@/components/customs/react-bits/ClickSpark";
 import ReduxProvider from "@/redux/redux-provider";
+import { Toaster } from "sonner";
 
 const inter = Inter({
 	subsets: ["latin", "vietnamese"],
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
 			<body
 				className={`${inter.className} text-[16px] overflow-x-hidden antialiased`}
 			>
+				<Toaster />
 				<ClickSpark
 					sparkColor='#F3BC4F'
 					sparkSize={12}

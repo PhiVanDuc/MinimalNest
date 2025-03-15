@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 export default function UserLayout({ children }) {
     return (
-        <main className="overflow-x-hidden">
+        <main className="w-full overflow-x-hidden">
             <Suspense fallback={<NavigateBarLoading />}>
                 <UserNavbar />
                 <UserNavbarMobile />
