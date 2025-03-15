@@ -3,15 +3,6 @@
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
 import CustomButton from "@/components/customs/custom-button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
@@ -22,7 +13,6 @@ import { FiPlus, FiMinus } from "react-icons/fi";
 
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 const colors = [
     { value: "black", bg: "bg-darkBold" },
@@ -32,17 +22,17 @@ const colors = [
 ];
 
 const sizes = [
-    { value: "m", label: "Cao 80cm - Dài 100cm - Rộng 140cm" },
-    { value: "l", label: "Cao 80cm - Dài 100cm - Rộng 140cm" },
-    { value: "x", label: "Cao 80cm - Dài 100cm - Rộng 140cm" },
-    { value: "xl", label: "Cao 80cm - Dài 100cm - Rộng 140cm" }
+    { value: "M", label: "Cao 80cm - Dài 100cm - Rộng 140cm" },
+    { value: "L", label: "Cao 80cm - Dài 100cm - Rộng 140cm" },
+    { value: "X", label: "Cao 80cm - Dài 100cm - Rộng 140cm" },
+    { value: "XL", label: "Cao 80cm - Dài 100cm - Rộng 140cm" }
 ]
 
 export default function ProductDetailBasicInfo() {
     const form = useForm({
         defaultValues: {
             color: "black",
-            size: "l",
+            size: "L",
             quantity: 1
         }
     });
@@ -75,36 +65,36 @@ export default function ProductDetailBasicInfo() {
             {/* Thông tin đặt hằng ở trên */}
             <div className="w-full space-y-8">
                 <div className="relative pb-8 space-y-6">
-                    <div className="space-y-1">
+                    <div className="space-y-[10px] sm:space-y-[5px]">
                         <div className="flex items-center justify-between">
-                            <h1 className="text-xl font-semibold text-darkBold">Tên sản phẩm</h1>
-                            <div className="flex items-center gap-4 text-sm font-semibold text-blueChecked">
+                            <h1 className="text-[20px] md:text-[24px] font-semibold text-darkBold order-2 sm:order-1 truncate">Tên sản phẩm</h1>
+                            <div className="hidden sm:flex items-center gap-3 text-sm font-semibold text-blueChecked order-1 sm:order-2">
                                 <CircleCheckBig size={26} />
                                 <p>Còn sản phẩm</p>
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-2 text-gray-300 text-sm">
+                        <div className="flex items-center gap-1 sm:gap-2 text-gray-300 text-sm">
                             {[...Array(5)].map((_, i) => (
-                                <FaStar key={i} size={20} />
+                                <FaStar key={i} className="w-[15px] sm:w-[20px] aspect-square" />
                             ))}
                             <p className="pl-2 text-darkMedium">(Không có đánh giá)</p>
                         </div>
                     </div>
 
-                    <p className="text-lg font-semibold text-darkBold">400.000 VNĐ</p>
+                    <p className="text-[18px] md:text-[20px] font-semibold text-darkBold">400.000 VNĐ</p>
                     <span className="absolute left-0 right-0 bottom-0 h-0.5 rounded-full bg-gray-200" />
                 </div>
 
                 <Form {...form}>
                     <form className="space-y-6">
-                        <div className="flex items-center gap-4 text-sm font-semibold text-blueChecked">
+                        <div className="flex items-center gap-3 text-sm font-semibold text-blueChecked">
                             <RiCopperCoinLine size={30} className="shrink-0" />
                             <p>Nhận 400 điểm khi mua sản phẩm này</p>
                         </div>
 
                         <div className="space-y-4">
-                            <p className="text-[15px] font-medium text-darkBland">
+                            <p className="text-[14px] sm:text-[15px] font-medium text-darkBland">
                                 Màu sắc: <span className="font-bold text-darkBold">{form.watch("color")}</span>
                             </p>
 
@@ -122,7 +112,7 @@ export default function ProductDetailBasicInfo() {
                                                 {colors.map((color) => (
                                                     <label
                                                         key={color.value}
-                                                        className={`w-11 h-11 rounded-full ${color.bg} outline outline-2 outline-offset-[3px] transition-all duration-300 cursor-pointer hover:outline-darkBland ${
+                                                        className={`w-[35px] sm:w-[45px] h-[35px] sm:h-[45px] rounded-full ${color.bg} outline outline-1 sm:outline-2 outline-offset-[3px] transition-all duration-300 cursor-pointer hover:outline-darkBland ${
                                                             field.value === color.value
                                                                 ? "outline-darkBland"
                                                                 : "outline-slate-200"
@@ -139,7 +129,7 @@ export default function ProductDetailBasicInfo() {
                         </div>
 
                         <div className="space-y-4">
-                            <p className="text-[15px] font-medium text-darkBland">Kích thước:</p>
+                            <p className="text-[14px] sm:text-[15px] font-medium text-darkBland">Kích thước:</p>
 
                             <FormField
                                 control={form.control}
@@ -157,46 +147,14 @@ export default function ProductDetailBasicInfo() {
                                                         <label
                                                             key={size.value}
                                                             className={cn(
-                                                                "py-[12px] px-[20px] rounded-full border hover:border-darkBold hover:text-darkBold transition-colors duration-300 cursor-pointer",
+                                                                "w-[45px] sm:w-[50px] h-[45px] sm:h-[50px] flex items-center justify-center rounded-full border hover:border-darkBold hover:text-darkBold transition-colors duration-300 cursor-pointer",
                                                                 field.value === size.value ? "border-darkBold text-darkBold bg-neutral-50" : " border-darkBland text-darkBland"
                                                             )}
                                                         >
                                                             <RadioGroupItem value={size.value} className="hidden" />
-                                                            <p className="text-[14px] font-medium">{size.label}</p>
+                                                            <p className="text-[14px] sm:text-[15px] font-medium">{size.value}</p>
                                                         </label>
                                                     ))}
-
-                                                    <Dialog>
-                                                        <DialogTrigger>
-                                                            <div className="py-[12px] px-[20px] rounded-full border border-darkBland hover:border-darkBold hover:text-darkBold transition-colors duration-300 cursor-pointer">
-                                                                <p className="text-[14px] font-medium text-darkBland">Thêm</p>
-                                                            </div>
-                                                        </DialogTrigger>
-
-                                                        <DialogContent className="max-w-[90%] md:max-w-[700px] p-0">
-                                                            <ScrollArea className="p-[24px] max-h-screen">
-                                                                <DialogHeader className="mb-[24px]">
-                                                                    <DialogTitle>Kích thước</DialogTitle>
-                                                                    <DialogDescription>Chọn kích thước phù hợp với không gian của bạn.</DialogDescription>
-                                                                </DialogHeader>
-
-                                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
-                                                                    {sizes.map((size) => (
-                                                                        <label
-                                                                            key={size.value}
-                                                                            className={cn(
-                                                                                "py-[12px] px-[20px] rounded-full border hover:border-darkBold hover:text-darkBold transition-colors duration-300 cursor-pointer",
-                                                                                field.value === size.value ? "border-darkBold text-darkBold bg-neutral-50" : " border-darkBland text-darkBland"
-                                                                            )}
-                                                                        >
-                                                                            <RadioGroupItem value={size.value} className="hidden" />
-                                                                            <p className="text-[14px] font-medium">{size.label}</p>
-                                                                        </label>
-                                                                    ))}
-                                                                </div>
-                                                            </ScrollArea>
-                                                        </DialogContent>
-                                                    </Dialog>
                                                 </RadioGroup>
                                             </FormControl>
                                         </FormItem>
@@ -240,20 +198,12 @@ export default function ProductDetailBasicInfo() {
                         </div>
                         
                         <div className="space-y-[15px]">
-                            <div className="flex items-center gap-[8px]">
-                                <CustomButton
-                                    icon={<ShoppingCart />}
-                                    className="w-full rounded-[10px]"
-                                >
-                                    Thêm vào giỏ hàng
-                                </CustomButton>
-
-                                <CustomButton
-                                    icon={<Heart />}
-                                    className="rounded-[10px] bg-yellowMedium hover:bg-yellowMedium hover:opacity-80 transition-all text-darkMedium"
-                                >
-                                </CustomButton>
-                            </div>
+                            <CustomButton
+                                icon={<ShoppingCart />}
+                                className="w-full rounded-[10px] text-[13px] sm:text-[14px] gap-x-[15px] sm:gap-x-[20px]"
+                            >
+                                Thêm vào giỏ hàng
+                            </CustomButton>
 
                             <div
                                 className="flex items-center gap-[15px] text-darkMedium font-medium cursor-pointer hover:text-darkBold transition-colors"

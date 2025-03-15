@@ -99,3 +99,13 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.my-swiper {
+  --swiper-pagination-bullet-width: 10px;
+  --swiper-pagination-bullet-height: 10px;
+  --swiper-pagination-bullet-border-radius: 50%;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: white !important;
+}

@@ -54,7 +54,7 @@ export default function CustomBreadcrumb() {
         return (
             <div
                 className={cn(
-                    "flex justify-center pt-[86px] xl:pt-[116px] pb-[20px] lg:pb-[40px]",
+                    "flex justify-center pt-[86px] xl:pt-[116px] pb-[40px]",
                     pathname === "/" ? "hidden" : ""
                 )}
             >
@@ -98,7 +98,7 @@ export default function CustomBreadcrumb() {
 
     return (
         <div className={cn(
-            "pt-[86px] xl:pt-[116px] pb-[20px] lg:pb-[40px] max-width transition-all duration-300",
+            "pt-[86px] xl:pt-[116px] pb-[40px] max-width transition-all duration-300",
             (isOpen && (pathname === "/san-pham" || pathname === "/san-pham/tim-kiem")) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" : "responsive-horizontal",
             pathname === "/" ? "hidden" : ""
         )} >
