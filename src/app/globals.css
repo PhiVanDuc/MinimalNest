@@ -106,6 +106,10 @@
   --swiper-pagination-bullet-border-radius: 50%;
 }
 
+.my-swiper .delete-margin {
+  margin: 0px !important;
+}
+
 .swiper-pagination-bullet-active {
   background-color: white !important;
 }

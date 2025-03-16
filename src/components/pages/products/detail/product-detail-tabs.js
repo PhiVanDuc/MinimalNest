@@ -25,10 +25,10 @@ export default function ProductDetailTabs() {
                     </TabsTrigger>
 
                     <TabsTrigger
-                        value="exchange"
+                        value="size"
                         className="shrink-0 data-[state=active]:bg-transparent data-[state=active]:text-darkBold data-[state=active]:shadow-none p-0 pb-[10px] text-[16px] font-medium text-darkMedium hover:text-darkBold"
                     >
-                        Chính sách đổi trả
+                        Tiêu chuẩn kích thước
                     </TabsTrigger>
 
                     <TabsTrigger
@@ -44,7 +44,7 @@ export default function ProductDetailTabs() {
                 <p className="text-[15px] leading-[30px] text-darkMedium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce non mauris non metus convallis pretium. Praesent eget suscipit mi, in tincidunt nunc. Quisque a risus a sapien pharetra semper. Nam sit amet lectus in ante sollicitudin lacinia. Cras et felis urna. Suspendisse potenti.</p>
             </TabsContent>
 
-            <TabsContent value="exchange">
+            <TabsContent value="size">
                 <p className="text-[15px] leading-[30px] text-darkMedium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce non mauris non metus convallis pretium. Praesent eget suscipit mi, in tincidunt nunc. Quisque a risus a sapien pharetra semper. Nam sit amet lectus in ante sollicitudin lacinia. Cras et felis urna. Suspendisse potenti.</p>
             </TabsContent>
 

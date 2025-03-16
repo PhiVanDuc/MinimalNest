@@ -10,8 +10,11 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 
 export default function ProductDetailImages() {
+    const pathname = usePathname();
+    const router = useRouter();
     const sliderNav = useRef(null);
 
     const handlePrev = useCallback(() => {
@@ -58,9 +61,9 @@ export default function ProductDetailImages() {
             </SwiperSlide>
 
             <div
-                className="group absolute flex items-center gap-[10px] sm:gap-[15px] rounded-[8px] top-[10px] right-[10px] text-[13px] sm:text-[14px] text-darkBold font-medium cursor-pointer px-[15px] sm:px-[20px] py-[5px] sm:py-[8px] overflow-hidden"
-                style={{
-                    marginTop: "0px !important"
+                className="delete-margin group absolute flex items-center gap-[10px] sm:gap-[15px] rounded-[8px] top-[10px] right-[10px] text-[13px] sm:text-[14px] text-darkBold font-medium cursor-pointer px-[15px] sm:px-[20px] py-[5px] sm:py-[8px] overflow-hidden"
+                onClick={() => {
+                    router.push(`${pathname}/anh`);
                 }}
             >
                 <TbCategoryPlus
@@ -72,20 +75,14 @@ export default function ProductDetailImages() {
             </div>
 
             <div
-                className='prev-button absolute top-[50%] translate-y-[-50%] left-[15px] flex items-center justify-center w-[35px] md:w-[45px] aspect-square rounded-full bg-white/50 hover:bg-white/60 backdrop-blur-[10px] text-darkMedium hover:text-darkBold transition-all cursor-pointer z-20'
-                style={{
-                    marginTop: "0px !important"
-                }}
+                className='delete-margin prev-button absolute top-[50%] translate-y-[-50%] left-[15px] flex items-center justify-center w-[35px] md:w-[45px] aspect-square rounded-full bg-white/50 hover:bg-white/60 backdrop-blur-[10px] text-darkMedium hover:text-darkBold transition-all cursor-pointer z-20'
                 onClick={handlePrev}
             >
                 <ChevronLeft className='w-[20px] md:w-[30px] aspect-square' />
             </div>
 
             <div
-                className='next-button absolute top-[50%] translate-y-[-50%] right-[15px] flex items-center justify-center w-[35px] md:w-[45px] aspect-square rounded-full bg-white/50 hover:bg-white/60 backdrop-blur-[10px] text-darkMedium hover:text-darkBold transition-all cursor-pointer z-20'
-                style={{
-                    marginTop: "0px !important"
-                }}
+                className='delete-margin next-button absolute top-[50%] translate-y-[-50%] right-[15px] flex items-center justify-center w-[35px] md:w-[45px] aspect-square rounded-full bg-white/50 hover:bg-white/60 backdrop-blur-[10px] text-darkMedium hover:text-darkBold transition-all cursor-pointer z-20'
                 onClick={handleNext}
             >
                 <ChevronRight className='w-[20px] md:w-[30px] aspect-square' />
