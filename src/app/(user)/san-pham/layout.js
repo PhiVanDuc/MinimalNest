@@ -4,6 +4,7 @@ export default function Layout({ children, modal }) {
     return (
         <ProductLayout>
             {children}
+            {modal}
         </ProductLayout>
     )
 }
