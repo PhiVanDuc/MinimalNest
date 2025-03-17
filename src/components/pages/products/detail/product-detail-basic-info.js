@@ -74,7 +74,7 @@ export default function ProductDetailBasicInfo() {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-1 sm:gap-2 text-gray-300 text-sm">
+                        <div className="flex items-center gap-[4px] text-gray-300 text-sm">
                             {[...Array(5)].map((_, i) => (
                                 <FaStar key={i} className="w-[15px] sm:w-[20px] aspect-square" />
                             ))}

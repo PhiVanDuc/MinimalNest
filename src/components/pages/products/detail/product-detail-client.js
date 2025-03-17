@@ -2,7 +2,7 @@
 
 import { CircleCheckBig } from "lucide-react";
 import ProductDetailBasicInfo from "./product-detail-basic-info";
-import ProductDetailImages from "./product-detail-images";
+import ProductDetailImages from "./image/product-detail-images";
 import ProductDetailRelatedProduct from "./product-detail-related-product";
 import ProductDetailTabs from "./product-detail-tabs";
 

@@ -4,7 +4,8 @@ import UserNavbar from "./navigate-bar/user-navbar";
 import NavigateBarLoading from "./navigate-bar/navigate-bar-loading";
 import UserNavbarMobile from "./navigate-bar/user-navbar-mobile";
 import CustomBreadcrumb from "@/components/customs/custom-breadcrumb";
-import { cn } from "@/lib/utils";
+import Newsletter from "./newsletter";
+import Footer from "./footer";
 
 export default function UserLayout({ children }) {
     return (
@@ -17,6 +18,9 @@ export default function UserLayout({ children }) {
             <CustomBreadcrumb />
 
             {children}
+
+            <Newsletter />
+            <Footer />
         </main>
     )
 }

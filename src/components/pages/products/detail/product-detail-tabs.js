@@ -6,7 +6,7 @@ import {
     TabsList,
     TabsTrigger
 } from "@/components/ui/tabs"
-import ProductDetailComments from "./product-detail-comments"
+import ProductDetailComments from "./comment/product-detail-comments"
 import { ScrollArea } from "@radix-ui/react-scroll-area"
 
 export default function ProductDetailTabs() {
