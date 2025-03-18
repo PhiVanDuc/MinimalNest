@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import ProductDetail from "@/components/pages/products/detail/product-detail";
+import ProductDetailLoading from "@/components/pages/products/detail/product-detail-loading";
 
 export async function generateMetadata() {
     // fetch dữ liệu
@@ -10,6 +12,8 @@ export async function generateMetadata() {
 
 export default function Page() {
     return (
-        <ProductDetail />
+        <Suspense fallback={<ProductDetailLoading />}>
+            <ProductDetail />
+        </Suspense>
     )
 }

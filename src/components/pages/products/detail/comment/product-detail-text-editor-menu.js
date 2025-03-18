@@ -1,7 +1,6 @@
 "use client"
 
 import { Toggle } from "@/components/ui/toggle";
-import { Editor } from "@tiptap/react";
 import {
     AlignCenter,
     AlignLeft,
@@ -14,7 +13,6 @@ import {
     Italic,
     List,
     ListOrdered,
-    Send,
     Strikethrough,
 } from "lucide-react";
 
@@ -50,26 +48,6 @@ export default function ProductDetailCommentMenuBar({ editor }) {
           preesed: editor.isActive("italic"),
         },
         {
-          icon: <Strikethrough className="size-4" />,
-          onClick: () => editor.chain().focus().toggleStrike().run(),
-          preesed: editor.isActive("strike"),
-        },
-        {
-          icon: <AlignLeft className="size-4" />,
-          onClick: () => editor.chain().focus().setTextAlign("left").run(),
-          preesed: editor.isActive({ textAlign: "left" }),
-        },
-        {
-          icon: <AlignCenter className="size-4" />,
-          onClick: () => editor.chain().focus().setTextAlign("center").run(),
-          preesed: editor.isActive({ textAlign: "center" }),
-        },
-        {
-          icon: <AlignRight className="size-4" />,
-          onClick: () => editor.chain().focus().setTextAlign("right").run(),
-          preesed: editor.isActive({ textAlign: "right" }),
-        },
-        {
           icon: <List className="size-4" />,
           onClick: () => editor.chain().focus().toggleBulletList().run(),
           preesed: editor.isActive("bulletList"),
@@ -78,12 +56,7 @@ export default function ProductDetailCommentMenuBar({ editor }) {
           icon: <ListOrdered className="size-4" />,
           onClick: () => editor.chain().focus().toggleOrderedList().run(),
           preesed: editor.isActive("orderedList"),
-        },
-        {
-          icon: <Highlighter className="size-4" />,
-          onClick: () => editor.chain().focus().toggleHighlight().run(),
-          preesed: editor.isActive("highlight"),
-        },
+        }
     ];
     
     return (

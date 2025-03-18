@@ -1,87 +1,76 @@
 "use client"
 
-import { useState } from 'react'
-import { useEditor, EditorContent } from '@tiptap/react'
-
-import StarterKit from '@tiptap/starter-kit'
-import TextAlign from "@tiptap/extension-text-align"
-import Highlight from "@tiptap/extension-highlight"
-
-import ProductDetailCommentMenuBar from "./product-detail-comment-menu-bar";
-import { FaStar } from 'react-icons/fa6'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { Button } from "@/components/ui/button";
+import { useRef } from "react";
 
 export default function ProductDetailComments() {
-    const [post, setPost] = useState("Test tiptap");
-    const [stars, setStars] = useState(0);
-
-    const handleChooseStars = (quantity) => {
-        if (quantity === stars) {
-            setStars(0);
-            return;
-        }
-
-        setStars(quantity);
-    }
-
-    const editor = useEditor(
-        {
-            extensions: [
-                StarterKit.configure({
-                    bulletList: {
-                        HTMLAttributes: {
-                            class: "list-disc ml-3",
-                        },
-                    },
-                    orderedList: {
-                        HTMLAttributes: {
-                            class: "list-decimal ml-3",
-                        },
-                    },
-                }),
-                TextAlign.configure({
-                    types: ["heading", "paragraph"],
-                }),
-                Highlight,
-            ],
-            content: post,
-            editorProps: {
-                attributes: {
-                    class: "min-h-[100px] border border-b-0 rounded-[15px] rounded-br-none rounded-bl-none outline-none px-[20px] py-[20px]"
-                }
-            },
-            onUpdate: ({ editor }) => {
-                setPost(editor.getHTML());
-            },
-        }
-    )
+    const lastChildComments = useRef([]);
 
     return (
-        <div className='space-y-[15px]'>
-            <div>
-                <EditorContent editor={editor} />
-                <ProductDetailCommentMenuBar editor={editor} />
-            </div>
+        <div className="space-y-[40px]">
+            <h3 className="text-[18px] md:text-[22px] font-semibold text-darkBold">Các đánh giá</h3>
 
-            <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-[20px]'>
-                    <h3 className='text-[16px] font-medium text-darkBland'>Số sao nhận xét</h3>
+            <ul className="space-y-[30px]">
+                <li className="space-y-[30px]">
+                    <div className="flex items-start gap-[15px]">
+                        <div className="shrink-0 w-[45px] aspect-square rounded-full bg-slate-300" />
 
-                    <div className="flex items-center gap-[10px] text-gray-300 text-sm">
-                        {[...Array(5)].map((_, i) => (
-                            <FaStar
-                                key={i + "a"}
-                                className={cn(
-                                    "text-[15px] sm:text-[20px] aspect-square hover:text-darkBland cursor-pointer transition duration-300",
-                                    (i + 1) <= stars ? "text-yellowBold hover:text-yellowBold hover:opacity-80" : ""
-                                )}
-                                onClick={() => { handleChooseStars(i + 1) }}
-                            />
-                        ))}
+                        <div className="space-y-[10px]">
+                            <div className="space-y-[5px]">
+                                <h4 className="truncate text-[15px] sm:text-[16px] font-semibold text-darkBold">Tên người dùng</h4>
+                                <p className="text-[14px] text-darkBland">1 phút trước</p>
+                            </div>
+
+                            <p className="text-darkMedium text-[14px] sm:text-[16px] leading-[24px] sm:leading-[28px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vel neque id sem facilisis viverra. Praesent at magna sit amet odio consequat placerat. Integer ac lectus vitae sapien convallis tincidunt.</p>
+
+                            <div className="flex gap-x-[20px]">
+                                <p className="w-fit text-[14px] font-medium text-darkBland hover:text-darkBold transition-colors cursor-pointer">Xem phản hồi</p>
+                                <p className="w-fit text-[14px] font-medium text-darkBland hover:text-darkBold transition-colors cursor-pointer">Phản hổi</p>
+                            </div>
+                        </div>
                     </div>
-                </div>    
-                <Button>Nhận xét</Button>
+
+                    <ul className="pl-[60px] space-y-[30px]">
+                        <li className="space-y-[15px]">
+
+                            <div className="flex items-start gap-[15px]">
+                                <div className="shrink-0 w-[45px] aspect-square rounded-full bg-slate-300" />
+
+                                <div className="space-y-[10px]">
+                                    <div className="space-y-[5px]">
+                                        <h4 className="truncate text-[15px] sm:text-[16px] font-semibold text-darkBold">Tên người dùng</h4>
+                                        <p className="text-[14px] text-darkBland">1 phút trước</p>
+                                    </div>
+
+                                    <p className="text-darkMedium text-[14px] sm:text-[16px] leading-[24px] sm:leading-[28px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vel neque id sem facilisis viverra. Praesent at magna sit amet odio consequat placerat. Integer ac lectus vitae sapien convallis tincidunt.</p>
+
+                                    <p className="w-fit text-[14px] font-medium text-darkBland hover:text-darkBold transition-colors cursor-pointer">Phản hổi</p>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li className="space-y-[15px]">
+                            <div className="flex items-start gap-[15px]">
+                                <div className="shrink-0 w-[45px] aspect-square rounded-full bg-slate-300" />
+
+                                <div className="space-y-[10px]">
+                                    <div className="space-y-[5px]">
+                                        <h4 className="truncate text-[15px] sm:text-[16px] font-semibold text-darkBold">Tên người dùng</h4>
+                                        <p className="text-[14px] text-darkBland">1 phút trước</p>
+                                    </div>
+
+                                    <p className="text-darkMedium text-[14px] sm:text-[16px] leading-[24px] sm:leading-[28px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vel neque id sem facilisis viverra. Praesent at magna sit amet odio consequat placerat. Integer ac lectus vitae sapien convallis tincidunt.</p>
+
+                                    <p className="w-fit text-[14px] font-medium text-darkBland hover:text-darkBold transition-colors cursor-pointer">Phản hổi</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div className="text-center">
+                <Button variant="outline" className="w-full">Xem thêm đánh giá</Button>
             </div>
         </div>
     )

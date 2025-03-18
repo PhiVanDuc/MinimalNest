@@ -6,8 +6,9 @@ import {
     TabsList,
     TabsTrigger
 } from "@/components/ui/tabs"
-import ProductDetailComments from "./comment/product-detail-comments"
 import { ScrollArea } from "@radix-ui/react-scroll-area"
+import ProductDetailTextEditor from "./comment/product-detail-text-editor"
+import ProductDetailComments from "./comment/product-detail-comments"
 
 export default function ProductDetailTabs() {
     return (
@@ -48,7 +49,11 @@ export default function ProductDetailTabs() {
                 <p className="text-[15px] leading-[30px] text-darkMedium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce non mauris non metus convallis pretium. Praesent eget suscipit mi, in tincidunt nunc. Quisque a risus a sapien pharetra semper. Nam sit amet lectus in ante sollicitudin lacinia. Cras et felis urna. Suspendisse potenti.</p>
             </TabsContent>
 
-            <TabsContent value="comments">
+            <TabsContent
+                value="comments"
+                className="space-y-[40px]"
+            >
+                <ProductDetailTextEditor />
                 <ProductDetailComments />
             </TabsContent>
         </Tabs>

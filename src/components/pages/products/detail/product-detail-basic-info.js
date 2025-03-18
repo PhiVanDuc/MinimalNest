@@ -6,7 +6,7 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import CustomButton from "@/components/customs/custom-button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-import { CircleCheckBig, Heart, Share, ShoppingCart } from "lucide-react";
+import { CircleCheckBig, Share, ShoppingCart } from "lucide-react";
 import { FaStar } from "react-icons/fa";
 import { RiCopperCoinLine } from "react-icons/ri";
 import { FiPlus, FiMinus } from "react-icons/fi";
@@ -206,10 +206,12 @@ export default function ProductDetailBasicInfo() {
                             </CustomButton>
 
                             <div
-                                className="flex items-center gap-[15px] text-darkMedium font-medium cursor-pointer hover:text-darkBold transition-colors"
+                                className="flex items-center w-fit gap-[15px] text-darkMedium font-medium cursor-pointer hover:text-darkBold transition-colors text-[14px] sm:text-[16px]"
                                 onClick={handleShare}
                             >
-                                <Share size={20} />
+                                <Share
+                                    className="w-[18px] sm:w-[20px] aspect-square"
+                                />
                                 <p>Chia sẻ</p>
                             </div>
                         </div>
