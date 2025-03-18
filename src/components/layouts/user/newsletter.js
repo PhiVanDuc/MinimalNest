@@ -1,8 +1,9 @@
 "use client"
 
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 import {
     Form,
@@ -14,35 +15,36 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { useSelector } from "react-redux";
 
-const hiddenPath = ["/checkout"];
+const sidebarPaths = ["/san-pham"];
+const hiddenPaths = ["/gio-hang", "/thanh-toan"];
 
 export default function Newsletter() {
-    const firstPath = usePathname();
-    const [pathname, setPathname] = useState(() => firstPath === "/" ? "/home" : firstPath);
+    const pathname = usePathname();
+    const isHiddenPath = hiddenPaths.find(path => pathname.startsWith(path));
+    const isSidebarPath = sidebarPaths.find(path => pathname.startsWith(path));
 
-    const isOpen = useSelector(state => state.productFilterOpen);
-
-    useEffect(() => {
-        setPathname(() => firstPath === "/" ? "/home" : firstPath);
-    }, [firstPath]);
+    const isProductFilterOpen = useSelector(state => state.productFilterOpen);
 
     const form = useForm({
         defaultValues: {
             email: ""
         }
     });
+
     const handleSubmit = (values) => {}
 
     return (
         <div
             className={cn(
-                "pb-[100px] lg:pb-[150px] w-full",
-                pathname.startsWith("/home") ? "responsive-horizontal max-width" : "",
-                hiddenPath.some(path => pathname.startsWith(path)) ? "hidden" : "",
-                (pathname.startsWith("/san-pham") && isOpen) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" : "responsive-horizontal"
+                "pb-[100px] lg:pb-[150px] max-width",
+                isHiddenPath
+                    ? "hidden"
+                    : isSidebarPath
+                        ? `px-0 pl-[20px] md:pl-[40px] pr-[20px] md:pr-[40px] ${
+                                (pathname.startsWith("/san-pham") && isProductFilterOpen) ? "xl:pl-[360px]" : "xl:px-[80px]"
+                            }`
+                        : "responsive-horizontal"
             )}
         >
             <div className="hidden md:block relative w-full rounded-[15px] aspect-16/7 overflow-hidden">

@@ -1,5 +1,6 @@
 "use client"
 
+import { usePathname } from 'next/navigation';
 import { useSelector } from 'react-redux';
 
 import Logo from '@/components/customs/logo/logo';
@@ -10,18 +11,27 @@ import { AiFillInstagram } from "react-icons/ai";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { cn } from '@/lib/utils';
-import { usePathname } from 'next/navigation';
+
+const sidebarPaths = ["/san-pham"];
 
 export default function Footer() {
     const pathname = usePathname();
-    const isOpen = useSelector(state => state.productFilterOpen);
+    const isSidebarPath = sidebarPaths.find(path => pathname.startsWith(path));
+
+    const isProductFilterOpen = useSelector(state => state.productFilterOpen);
 
     return (
         <footer className='flex justify-center bg-yellowBland pt-[80px]'>
-            <div className={cn(
-                "max-width",
-                (pathname.startsWith("/san-pham") && isOpen) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" : "responsive-horizontal"
-            )}>
+            <div
+                className={cn(
+                    "max-width",
+                    isSidebarPath ?
+                    `px-0 pl-[20px] md:pl-[40px] pr-[20px] md:pr-[40px] ${
+                        (pathname.startsWith("/san-pham") && isProductFilterOpen) ? "xl:pl-[360px]" : "xl:px-[80px]"
+                    }` :
+                    "responsive-horizontal"
+                )}
+            >
                 <div className='flex flex-col xl:flex-row items-start gap-[30px] xl:gap-[20px] pb-[20px]'>
                     <div className='space-y-[10px] text-center xl:text-left w-full xl:w-[55%]'>
                         <div className='xl:w-fit p-[25px] rounded-[15px] bg-yellowBold text-white'>
