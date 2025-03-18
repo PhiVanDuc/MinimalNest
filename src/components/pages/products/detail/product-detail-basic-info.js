@@ -112,7 +112,7 @@ export default function ProductDetailBasicInfo() {
                                                 {colors.map((color) => (
                                                     <label
                                                         key={color.value}
-                                                        className={`w-[35px] sm:w-[45px] h-[35px] sm:h-[45px] rounded-full ${color.bg} outline outline-1 sm:outline-2 outline-offset-[3px] transition-all duration-300 cursor-pointer hover:outline-darkBland ${
+                                                        className={`w-[30px] sm:w-[45px] h-[30px] sm:h-[45px] rounded-full ${color.bg} outline outline-1 sm:outline-2 outline-offset-[3px] transition-all duration-300 cursor-pointer hover:outline-darkBland ${
                                                             field.value === color.value
                                                                 ? "outline-darkBland"
                                                                 : "outline-slate-200"
@@ -147,12 +147,12 @@ export default function ProductDetailBasicInfo() {
                                                         <label
                                                             key={size.value}
                                                             className={cn(
-                                                                "w-[45px] sm:w-[50px] h-[45px] sm:h-[50px] flex items-center justify-center rounded-full border hover:border-darkBold hover:text-darkBold transition-colors duration-300 cursor-pointer",
+                                                                "w-[40px] sm:w-[50px] h-[40px] sm:h-[50px] flex items-center justify-center rounded-full border hover:border-darkBold hover:text-darkBold transition-colors duration-300 cursor-pointer",
                                                                 field.value === size.value ? "border-darkBold text-darkBold bg-neutral-50" : " border-darkBland text-darkBland"
                                                             )}
                                                         >
                                                             <RadioGroupItem value={size.value} className="hidden" />
-                                                            <p className="text-[14px] sm:text-[15px] font-medium">{size.value}</p>
+                                                            <p className="text-[13px] sm:text-[15px] font-medium">{size.value}</p>
                                                         </label>
                                                     ))}
                                                 </RadioGroup>
@@ -175,19 +175,19 @@ export default function ProductDetailBasicInfo() {
                                             <FormControl>
                                                 <div className="flex items-center gap-[20px] p-[5px] rounded-full border border-darkBland w-fit">
                                                     <div
-                                                        className="flex items-center justify-center w-[35px] aspect-square rounded-full bg-[#EDF0F3] cursor-pointer"
+                                                        className="flex items-center justify-center w-[30px] sm:w-[35px] aspect-square rounded-full bg-[#EDF0F3] cursor-pointer"
                                                         onClick={() => { handleUpdateQuantity("down") }}
                                                     >
-                                                        <FiMinus size={15} />
+                                                        <FiMinus className="text-[14px] sm:text-[15px]" />
                                                     </div>
 
                                                     <p className="text-darkBold font-medium">{form.watch("quantity") || form.getValues("quantity")}</p>
 
                                                     <div
-                                                        className="flex items-center justify-center w-[35px] aspect-square rounded-full bg-[#EDF0F3] cursor-pointer"
+                                                        className="flex items-center justify-center w-[30px] sm:w-[35px] aspect-square rounded-full bg-[#EDF0F3] cursor-pointer"
                                                         onClick={() => { handleUpdateQuantity("up") }}
                                                     >
-                                                        <FiPlus size={15} />
+                                                        <FiPlus className="text-[14px] sm:text-[15px]" />
                                                     </div>
                                                 </div>
                                             </FormControl>
