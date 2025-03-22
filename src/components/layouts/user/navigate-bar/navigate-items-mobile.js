@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 import Link from "next/link";
@@ -23,9 +23,10 @@ import {
     AccordionItem,
     AccordionTrigger
 } from "@/components/ui/accordion";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuTrigger, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { Armchair, BookText, House, Send, ShoppingCart, Sun } from "lucide-react";
+import { Armchair, BookText, House, Send, Sun } from "lucide-react";
 import { TbLayoutDashboard } from "react-icons/tb";
 import { PiCookingPotBold } from "react-icons/pi";
 import { LuShowerHead } from "react-icons/lu";
@@ -101,6 +102,8 @@ export default function NavigateItemsMobile() {
 
     const [pathname, setPathname] = useState(() => firstPath === "/" ? "/home" : firstPath);
     const [isOpen, setIsOpen] = useState(false);
+    const triggerRef = useRef(null);
+    const [triggerWidth, setTriggerWidth] = useState(0);
 
     const handleClickSubNav = (item) => {
         if (item.livingSpace === "all") router.push("/san-pham");
@@ -121,6 +124,12 @@ export default function NavigateItemsMobile() {
         setPathname(firstPath === "/" ? "/home" : firstPath);
     }, [firstPath]);
 
+    useEffect(() => {
+        if (triggerRef.current) {
+            setTriggerWidth(triggerRef.current?.offsetWidth);
+        }
+    }, []);
+    
     return (
         <Sheet
             open={isOpen}
@@ -170,7 +179,7 @@ export default function NavigateItemsMobile() {
                                 >
                                     <AccordionTrigger
                                         className={cn(
-                                            "py-[10px] px-[20px] rounded-[10px] hover:bg-slate-100 text-[15px] text-darkMedium font-medium",
+                                            "py-[10px] px-[20px] rounded-[10px] hover:bg-neutral-100 text-[15px] text-darkMedium font-medium",
                                             pathname.startsWith("/products") ? "text-white bg-yellowBold hover:bg-yellowBold hover:opacity-80 transition duration-300" : ""
                                         )}
                                         iconColor={ pathname.startsWith("/products") ? "text-white" : "" }
@@ -186,7 +195,7 @@ export default function NavigateItemsMobile() {
                                                 <div
                                                     key={livingSpace.label}
                                                     className={cn(
-                                                        "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-slate-100 text-[15px] text-darkMedium font-medium cursor-pointer",
+                                                        "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-neutral-100 text-[15px] text-darkMedium font-medium cursor-pointer",
                                                         livingSpace.livingSpace === searchParams.get("living-space") ? "bg-yellowMedium hover:bg-yellowMedium hover:opacity-80" : ""
                                                     )}
                                                     onClick={() => { handleClickSubNav(livingSpace); }}
@@ -214,7 +223,7 @@ export default function NavigateItemsMobile() {
                                         key={item.label}
                                         href={item.href}
                                         className={cn(
-                                            "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-slate-100 text-[15px] text-darkMedium font-medium",
+                                            "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-neutral-100 text-[15px] text-darkMedium font-medium",
                                             pathname.startsWith(item.highlight) ? "text-white bg-yellowBold hover:bg-yellowBold hover:opacity-80 transition duration-300" : ""
                                         )}
                                         onClick={() => { setIsOpen(false); }}
@@ -232,15 +241,38 @@ export default function NavigateItemsMobile() {
                 </ScrollArea>
 
                 <SheetFooter className="px-[20px] py-[20px] overflow-x-hidden">
-                    <div className="flex items-center justify-between px-[15px] py-[10px] rounded-[10px] bg-slate-100 hover:opacity-80 cursor-pointer transition duration-300 overflow-x-hidden">
-                        <div className="flex items-center gap-x-[15px] overflow-x-hidden">
-                            <div className="shrink-0 w-[50px] aspect-square rounded-full bg-slate-300" />
-                            <div className="space-y-[2px] overflow-x-hidden">
-                                <p className="text-[15px] font-semibold text-darkBold truncate">Phi Van Duc</p>
-                                <p className="text-[13px] font-medium text-darkMedium truncate">phivanduc325@gmail.com</p>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <div
+                                ref={triggerRef} 
+                                className="flex items-center justify-between px-[15px] py-[10px] rounded-[10px] bg-slate-100 hover:opacity-80 cursor-pointer transition duration-300 overflow-x-hidden"
+                            >
+                                <div className="flex items-center gap-x-[15px] overflow-x-hidden">
+                                    <div className="shrink-0 w-[50px] aspect-square rounded-full bg-slate-300" />
+                                    <div className="space-y-[2px] overflow-x-hidden">
+                                        <p className="text-[15px] font-semibold text-darkBold truncate">Phi Van Duc</p>
+                                        <p className="text-[13px] font-medium text-darkMedium truncate">phivanduc325@gmail.com</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </DropdownMenuTrigger>
+
+                        <DropdownMenuContent
+                            align="start"
+                            sideOffset={10}
+                            className="p-[10px] rounded-[10px]"
+                        >
+                            <DropdownMenuGroup className="w-full">
+                                <DropdownMenuItem className="cursor-pointer text-[14px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[20px] py-[10px]">
+                                    <Link href="">Hồ sơ người dùng</Link>
+                                </DropdownMenuItem>
+
+                                <DropdownMenuItem className="cursor-pointer text-[14px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[20px] py-[10px]">
+                                    <p>Đăng xuất</p>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </SheetFooter>
             </SheetContent>
         </Sheet>
