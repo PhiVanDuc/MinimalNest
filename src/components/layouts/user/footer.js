@@ -12,11 +12,11 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { cn } from '@/lib/utils';
 
-const sidebarPaths = ["/san-pham"];
+const sidebarPaths = ["/san-pham", "/san-pham/tim-kiem"];
 
 export default function Footer() {
     const pathname = usePathname();
-    const isSidebarPath = sidebarPaths.find(path => pathname.startsWith(path));
+    const isSidebarPath = sidebarPaths.find(path => pathname === path);
 
     const isProductFilterOpen = useSelector(state => state.productFilterOpen);
 
@@ -27,7 +27,7 @@ export default function Footer() {
                     "max-width",
                     isSidebarPath ?
                     `px-0 pl-[20px] md:pl-[40px] pr-[20px] md:pr-[40px] ${
-                        (pathname.startsWith("/san-pham") && isProductFilterOpen) ? "xl:pl-[360px]" : "xl:px-[80px]"
+                        isProductFilterOpen ? "xl:pl-[360px]" : "xl:px-[80px]"
                     }` :
                     "responsive-horizontal"
                 )}

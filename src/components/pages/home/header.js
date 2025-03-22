@@ -1,5 +1,7 @@
 "use client"
 
+import { useRouter } from "next/navigation";
+
 import { motion } from "framer-motion";
 import CustomButton from "@/components/customs/custom-button";
 import RotatingText from "@/components/customs/react-bits/RotatingText";
@@ -39,14 +41,16 @@ const rightVariants = {
 }
 
 export default function Header() {
+    const router = useRouter();
+
     return (
         <motion.header
             variants={parentVariants}
             initial="hidden"
             animate="show"
-            className="relative responsive-horizontal py-[100px] md:py-[150px] w-full flex items-center"
+            className="relative flex items-center"
         >
-            <div className="relative w-full flex flex-col lg:flex-row justify-between gap-[40px] lg:gap-[80px]">
+            <div className="relative w-full flex flex-col lg:flex-row justify-between pt-[100px] xl:pt-[160px] xl:pb-[60px] gap-[40px] lg:gap-[80px]">
                 {/* Tiêu đề bên trái */}
                 <motion.div
                     variants={leftVariants}
@@ -109,6 +113,7 @@ export default function Header() {
                         <CustomButton
                             className="bg-yellowBold hover:bg-yellowBold text-[16px] px-[30px]"
                             icon={<LuShoppingCart size={20} />}
+                            onClick={() => { router.push("/san-pham") }}
                         >
                             Mua sắm ngay
                         </CustomButton>
@@ -149,6 +154,7 @@ export default function Header() {
                     <CustomButton
                         className="bg-yellowBold hover:bg-yellowBold"
                         icon={<LuShoppingCart size={20} />}
+                        onClick={() => { router.push("/san-pham") }}
                     >
                         Mua sắm ngay
                     </CustomButton>

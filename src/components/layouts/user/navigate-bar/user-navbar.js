@@ -6,7 +6,7 @@ import CartButton from "@/components/pages/cart/cart-button";
 export default function UserNavbar() {
     return (
         <nav
-            className="fixed top-0 left-0 right-0 responsive-horizontal py-[15px] xl:py-[20px] hidden xl:flex justify-between items-center bg-white z-20 border-b border-slate-200"
+            className="fixed top-0 left-0 right-0 responsive-horizontal h-[80px] hidden xl:flex justify-between items-center bg-white z-20 border-b border-slate-200"
         >
             <Logo />
             <NavigateItems />

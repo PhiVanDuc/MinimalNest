@@ -16,13 +16,13 @@ import { Input } from "@/components/ui/input";
 
 import { cn } from "@/lib/utils";
 
-const sidebarPaths = ["/san-pham"];
+const sidebarPaths = ["/san-pham", "/san-pham/tim-kiem"];
 const hiddenPaths = ["/gio-hang", "/thanh-toan"];
 
 export default function Newsletter() {
     const pathname = usePathname();
     const isHiddenPath = hiddenPaths.find(path => pathname.startsWith(path));
-    const isSidebarPath = sidebarPaths.find(path => pathname.startsWith(path));
+    const isSidebarPath = sidebarPaths.find(path => pathname === path);
 
     const isProductFilterOpen = useSelector(state => state.productFilterOpen);
 
@@ -43,7 +43,7 @@ export default function Newsletter() {
                         ? "hidden"
                         : isSidebarPath
                             ? `px-0 pl-[20px] md:pl-[40px] pr-[20px] md:pr-[40px] ${
-                                    (pathname.startsWith("/san-pham") && isProductFilterOpen) ? "xl:pl-[360px]" : "xl:px-[80px]"
+                                    isProductFilterOpen ? "xl:pl-[360px]" : "xl:px-[80px]"
                                 }`
                             : "responsive-horizontal"
                 )}

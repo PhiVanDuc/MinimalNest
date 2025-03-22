@@ -31,11 +31,14 @@ const breadcrumbMap = {
     "lien-lac": "Liên lạc"
 };
 
+const sidebarPaths = ["/san-pham"];
+
 export default function CustomBreadcrumb() {
     const pathname = usePathname();
     const pathSegments = pathname.split("/").filter(Boolean);
 
     const isOpen = useSelector(state => state.productFilterOpen);
+    const isSidebarPath = sidebarPaths.find(path => pathname.startsWith(path));
 
     const breadcrumbs = useMemo(() => {
         return [
@@ -54,40 +57,35 @@ export default function CustomBreadcrumb() {
         return (
             <div
                 className={cn(
-                    "flex justify-center pt-[86px] xl:pt-[116px] pb-[40px]",
+                    "pt-[100px] xl:pt-[120px] pb-[40px] transition-colors duration-300",
+                    (isOpen && (pathname === "/san-pham" || pathname === "/san-pham/tim-kiem")) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" :
+                    isSidebarPath ? "responsive-horizontal" : "",
                     pathname === "/" ? "hidden" : ""
                 )}
             >
-                <div
-                    className={cn(
-                        "max-width transition-all duration-300",
-                        (isOpen && (pathname === "/san-pham" || pathname === "/san-pham/tim-kiem")) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" : "responsive-horizontal"
-                    )}
-                >
-                    <Breadcrumb>
-                        <BreadcrumbList className="text-[15px]">
-                            {breadcrumbs.map((crumb, index) => {
-                                const isCurrent = index === breadcrumbs.length - 1;
-                                return (
-                                    <Fragment key={v4()}>
-                                        <BreadcrumbItem>
-                                            {isCurrent ? (
-                                                <BreadcrumbPage className="text-yellowBold font-medium">
-                                                    {crumb.label}
-                                                </BreadcrumbPage>
-                                            ) : (
-                                                <BreadcrumbLink href={crumb.href}>
-                                                    {crumb.label}
-                                                </BreadcrumbLink>
-                                            )}
-                                        </BreadcrumbItem>
-                                        {!isCurrent && <BreadcrumbSeparator />}
-                                    </Fragment>
-                                );
-                            })}
-                        </BreadcrumbList>
-                    </Breadcrumb>
-                </div>
+                <Breadcrumb>
+                    <BreadcrumbList className="text-[15px]">
+                        {breadcrumbs.map((crumb, index) => {
+                            const isCurrent = index === breadcrumbs.length - 1;
+                            return (
+                                <Fragment key={v4()}>
+                                    <BreadcrumbItem>
+                                        {isCurrent ? (
+                                            <BreadcrumbPage className="text-yellowBold font-medium">
+                                                {crumb.label}
+                                            </BreadcrumbPage>
+                                        ) : (
+                                            <BreadcrumbLink href={crumb.href}>
+                                                {crumb.label}
+                                            </BreadcrumbLink>
+                                        )}
+                                    </BreadcrumbItem>
+                                    {!isCurrent && <BreadcrumbSeparator />}
+                                </Fragment>
+                            );
+                        })}
+                    </BreadcrumbList>
+                </Breadcrumb>
             </div>
         );
     }
@@ -97,11 +95,14 @@ export default function CustomBreadcrumb() {
     const lastCrumb = breadcrumbs[breadcrumbs.length - 1];
 
     return (
-        <div className={cn(
-            "pt-[86px] xl:pt-[116px] pb-[40px] max-width transition-all duration-300",
-            (isOpen && (pathname === "/san-pham" || pathname === "/san-pham/tim-kiem")) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" : "responsive-horizontal",
-            pathname === "/" ? "hidden" : ""
-        )} >
+        <div
+            className={cn(
+                "pt-[100px] xl:pt-[120px] pb-[40px] transition-colors duration-300",
+                (isOpen && (pathname === "/san-pham" || pathname === "/san-pham/tim-kiem")) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" :
+                isSidebarPath ? "responsive-horizontal" : "",
+                pathname === "/" ? "hidden" : ""
+            )}
+        >
             <Breadcrumb>
                 <BreadcrumbList className="text-[15px]">
                     {/* 2 phần tử đầu */}

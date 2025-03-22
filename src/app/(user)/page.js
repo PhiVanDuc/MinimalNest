@@ -15,17 +15,15 @@ export const metadata = {
 
 export default function Page() {
     return (
-        <div className="flex justify-center overflow-x-hidden">
-            <div className="max-width">
-                <Suspense fallback={<HeaderLoading />}>
-                    <Header />
-                    <Analysis />
-                    <FeaturedProducts />
-                    <LivingSpace />
-                    <Compliment />
-                    <Feedback />
-                </Suspense>
+        <Suspense fallback={<HeaderLoading />} >
+            <div className="space-y-[100px]">
+                <Header />
+                <Analysis />
+                <FeaturedProducts />
+                <LivingSpace />
+                <Compliment />
+                <Feedback />
             </div>
-        </div>
+        </Suspense>
     )
 }

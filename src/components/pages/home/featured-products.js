@@ -50,7 +50,7 @@ const products = [
 
 export default function FeaturedProducts() {
     return (
-        <section className="responsive-horizontal pb-[100px] space-y-[40px]">
+        <section className="space-y-[40px]">
             <div className="space-y-[10px]">
                 <div className="flex items-center justify-between">
                     <h2 className="text-[20px] lg:text-[24px] text-darkBold font-semibold">Nội thất nổi bật</h2>

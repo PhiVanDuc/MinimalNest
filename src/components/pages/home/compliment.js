@@ -1,5 +1,7 @@
 "use client"
 
+import { useRouter } from "next/navigation";
+
 import { motion } from "framer-motion";
 import BlurCircle from "@/components/customs/blur-circle";
 import CustomButton from "@/components/customs/custom-button";
@@ -36,8 +38,10 @@ const secondChildVariants = {
 }
 
 export default function Compliment() {
+    const router = useRouter();
+
     return (
-        <section className="relative responsive-horizontal pb-[100px] flex flex-col xl:flex-row items-start justify-between gap-[40px] xl:gap-[100px]">
+        <section className="relative flex flex-col xl:flex-row items-start justify-between gap-[40px] xl:gap-[100px]">
             <div
                 className="xl:block flex flex-col items-center space-y-[25px] w-full xl:w-[550px]"
             >
@@ -93,6 +97,7 @@ export default function Compliment() {
                         <CustomButton
                             className="bg-yellowBold hover:bg-yellowBold text-[16px] px-[30px]"
                             icon={<LuShoppingCart size={20} />}
+                            onClick={() => { router.push("/san-pham") }}
                         >
                             Mua sắm ngay
                         </CustomButton>

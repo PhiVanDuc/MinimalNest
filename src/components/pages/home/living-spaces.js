@@ -39,7 +39,7 @@ const finalData = spaces.map(space => (
 
 export default function LivingSpace() {
     return (
-        <section className="relative responsive-horizontal pb-[100px] space-y-[40px]">
+        <section className="relative space-y-[40px]">
             <div className="space-y-[10px]">
                 <h2 className="text-[20px] lg:text-[24px] text-darkBold font-semibold">Nội thất không gian sống</h2>
                 <p className="text-[14px] md:text-[16px] text-darkBland font-medium">Chọn không gian bạn muốn sắp xếp nội thất và tìm ngay những sản phẩm nội thất tối giản, phù hợp với phong cách của bạn.</p>

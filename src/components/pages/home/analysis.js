@@ -36,7 +36,7 @@ const countVariants = {
 export default function Analysis() {
     return (
         <section
-            className="relative responsive-horizontal flex flex-col lg:flex-row items-center gap-[40px] lg:gap-[80px] pb-[100px]"
+            className="relative flex flex-col lg:flex-row items-center gap-[40px] lg:gap-[80px]"
         >
             <div className='order-2 lg:order-1 w-full aspect-square rounded-[20px] md:rounded-[60px] bg-slate-300' />
 
