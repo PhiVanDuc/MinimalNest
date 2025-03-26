@@ -1,7 +1,18 @@
 import ProductsListClient from "./products-list-client";
+import ProductsNormal from "./products-normal";
+import ProductsPromote from "./products-promote";
 
-export default function ProductsList() {
+export default async function ProductsList() {
+    new Promise((resolve) =>
+        setTimeout(() => {
+            resolve();
+        }, 3000)
+    );
+
     return (
-        <ProductsListClient />
+        <ProductsListClient>
+            <ProductsPromote />
+            <ProductsNormal />
+        </ProductsListClient>
     )
 }

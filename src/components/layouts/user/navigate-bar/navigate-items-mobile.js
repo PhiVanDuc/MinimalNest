@@ -1,12 +1,11 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 import Link from "next/link";
 import Logo from "@/components/customs/logo/logo";
 import { Button } from "@/components/ui/button";
-import CartButton from "@/components/pages/cart/cart-button";
 import {
     Sheet,
     SheetContent,
@@ -26,14 +25,14 @@ import {
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuTrigger, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { Armchair, BookText, House, Send, Sun } from "lucide-react";
-import { TbLayoutDashboard } from "react-icons/tb";
+import { Armchair, BookText, House, Send, ShoppingCart, Sun } from "lucide-react";
+import { TbLayoutDashboard, TbLogout } from "react-icons/tb";
 import { PiCookingPotBold } from "react-icons/pi";
 import { LuShowerHead } from "react-icons/lu";
 import { MdOutlineBed } from "react-icons/md";
 import { HiOutlineArchive } from "react-icons/hi";
 import { Menu, Undo2 } from "lucide-react";
-import { FiShoppingBag } from "react-icons/fi";
+import { FiShoppingBag, FiUser } from "react-icons/fi";
 import { cn } from "@/lib/utils";
 
 const livingSpaces = [
@@ -102,8 +101,6 @@ export default function NavigateItemsMobile() {
 
     const [pathname, setPathname] = useState(() => firstPath === "/" ? "/home" : firstPath);
     const [isOpen, setIsOpen] = useState(false);
-    const triggerRef = useRef(null);
-    const [triggerWidth, setTriggerWidth] = useState(0);
 
     const handleClickSubNav = (item) => {
         if (item.livingSpace === "all") router.push("/san-pham");
@@ -123,12 +120,6 @@ export default function NavigateItemsMobile() {
     useEffect(() => {
         setPathname(firstPath === "/" ? "/home" : firstPath);
     }, [firstPath]);
-
-    useEffect(() => {
-        if (triggerRef.current) {
-            setTriggerWidth(triggerRef.current?.offsetWidth);
-        }
-    }, []);
     
     return (
         <Sheet
@@ -209,7 +200,14 @@ export default function NavigateItemsMobile() {
                                 </AccordionItem>
                             </Accordion>
 
-                            <CartButton />
+                            <div
+                                className={cn(
+                                    "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-neutral-100 text-[15px] text-darkMedium font-medium cursor-pointer"
+                                )}
+                            >
+                                <ShoppingCart size={20} />
+                                <p>Giỏ hàng</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -244,7 +242,6 @@ export default function NavigateItemsMobile() {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <div
-                                ref={triggerRef} 
                                 className="flex items-center justify-between px-[15px] py-[10px] rounded-[10px] bg-slate-100 hover:opacity-80 cursor-pointer transition duration-300 overflow-x-hidden"
                             >
                                 <div className="flex items-center gap-x-[15px] overflow-x-hidden">
@@ -263,11 +260,13 @@ export default function NavigateItemsMobile() {
                             className="p-[10px] rounded-[10px]"
                         >
                             <DropdownMenuGroup className="w-full">
-                                <DropdownMenuItem className="cursor-pointer text-[14px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[20px] py-[10px]">
-                                    <Link href="">Hồ sơ người dùng</Link>
+                                <DropdownMenuItem className="flex items-center gap-[10px] cursor-pointer text-[14px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[20px] py-[10px]">
+                                    <div className="shrink-0 w-[24px] flex justify-center"><FiUser className="text-[20px]" /></div>
+                                    <Link href="/ho-so">Hồ sơ người dùng</Link>
                                 </DropdownMenuItem>
 
-                                <DropdownMenuItem className="cursor-pointer text-[14px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[20px] py-[10px]">
+                                <DropdownMenuItem className="flex items-center gap-[10px] cursor-pointer text-[14px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[20px] py-[10px]">
+                                    <div className="shrink-0 w-[24px] flex justify-center"><TbLogout className="text-[20px]" /></div>
                                     <p>Đăng xuất</p>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>

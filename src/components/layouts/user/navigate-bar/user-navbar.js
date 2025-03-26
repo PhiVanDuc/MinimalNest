@@ -1,7 +1,7 @@
 import AuthButtons from "@/components/pages/auth/auth-buttons";
 import Logo from "@/components/customs/logo/logo";
 import NavigateItems from "./navigate-items";
-import CartButton from "@/components/pages/cart/cart-button";
+import { Button } from "@/components/ui/button";
 
 export default function UserNavbar() {
     return (
@@ -11,7 +11,12 @@ export default function UserNavbar() {
             <Logo />
             <NavigateItems />
             <div className="flex items-center gap-x-[5px]">
-                <CartButton />
+                <Button
+                    variant="ghost"
+                    className="hidden xl:flex hover:bg-transparent text-[15px] text-darkMedium hover:bg-neutral-100 hover:text-darkBold transition-colors duration-300"
+                >
+                    Giỏ hàng
+                </Button>
                 <AuthButtons />
             </div>
         </nav>

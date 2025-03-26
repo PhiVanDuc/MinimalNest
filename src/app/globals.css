@@ -100,6 +100,20 @@
   overflow: hidden;
 }
 
+.truncate-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Giới hạn 3 dòng */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Giới hạn 3 dòng */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .my-swiper {
   --swiper-pagination-bullet-width: 10px;
   --swiper-pagination-bullet-height: 10px;

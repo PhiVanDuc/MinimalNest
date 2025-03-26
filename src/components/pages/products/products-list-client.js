@@ -1,13 +1,9 @@
 "use client"
 
 import { useSelector } from "react-redux";
-
-import ProductsPromote from "./products-promote";
-import ProductsNormal from "./products-normal";
-
 import { cn } from "@/lib/utils";
 
-export default function ProductsListClient() {
+export default function ProductsListClient({ children }) {
     const isOpen = useSelector(state => state.productFilterOpen);
 
     return (
@@ -17,8 +13,7 @@ export default function ProductsListClient() {
                 isOpen ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" : "responsive-horizontal"
             )}
         >
-            <ProductsPromote />
-            <ProductsNormal />
+            {children}
         </div>
     )
 }

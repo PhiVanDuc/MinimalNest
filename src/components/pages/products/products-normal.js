@@ -1,5 +1,3 @@
-"use client"
-
 import ProductItem from "./product-item";
 import {
     Pagination,

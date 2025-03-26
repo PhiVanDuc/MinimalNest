@@ -1,5 +1,3 @@
-"use client"
-
 import CoreCarousel from "@/components/customs/core-carousel";
 import ProductFilterRightSide from "./filter/product-filter-right-side";
 import ProductItem from "./product-item";
