@@ -9,13 +9,13 @@ import Footer from "./footer";
 
 export default function UserLayout({ children }) {
     return (
-        <main className="w-full">
+        <main className="w-full overflow-hidden">
             <Suspense fallback={<NavigateBarLoading />}>
                 <UserNavbar />
                 <UserNavbarMobile />
             </Suspense>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center overflow-hidden">
                 <div className="responsive-horizontal max-width">
                     <CustomBreadcrumb />
                     {children}
