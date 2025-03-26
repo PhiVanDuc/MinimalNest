@@ -70,7 +70,7 @@ export default function ProfileGeneralDeleteAccount() {
                                     return (
                                         <FormItem className="space-y-[10px]">
                                             <FormLabel className="inline-block w-full text-center text-[15px] text-darkBold font-darkBold">
-                                                Để xác nhận, nhập <span className="font-semibold text-yellowBold">"Mã của tài khoản"</span> vào ô nhập bên dưới.
+                                                Để xác nhận, nhập <span className="font-semibold text-yellowBold">Mã của tài khoản</span> vào ô nhập bên dưới.
                                             </FormLabel>
 
                                             <FormControl>
