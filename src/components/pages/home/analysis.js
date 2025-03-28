@@ -48,20 +48,19 @@ export default function Analysis() {
                     viewport={{ amount: 0.2, once: true }}
                     className='space-y-[15px]'
                 >
-                    <motion.div
-                        variants={headingVariants}
+                    <div
                         className='flex justify-center lg:justify-start'
                     >
                         <h3 className='w-fit text-[14px] lg:text-[16px] text-darkBold font-medium px-[20px] lg:px-[25px] py-[10px] lg:py-[15px] rounded-[99px] bg-yellowMedium'>Số liệu thống kê</h3>
-                    </motion.div>
+                    </div>
 
                     <motion.div className='text-center lg:text-left space-y-[20px]'>
-                        <motion.h2
+                        <h2
                             variants={headingVariants}
                             className='text-[30px] md:text-[36px] xl:text-[48px] font-bold text-darkBold'
                         >
                             Hành trình thành công cùng khách hàng.
-                        </motion.h2>
+                        </h2>
                         <motion.p
                             variants={headingVariants}
                             className='text-[14px] sm:text-[16px] lg:text-[18px] text-darkBland'

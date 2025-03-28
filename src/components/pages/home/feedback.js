@@ -59,7 +59,7 @@ const finalData = feedbacks.map(feedback => ({
 
 export default function Feedback() {
     return (
-        <section className="space-y-[60px] pb-[100px] xl:pb-[150px]">
+        <section className="space-y-[60px]">
             <div className="flex flex-col items-center gap-y-[15px]">
                 <h3 className='w-fit text-[14px] lg:text-[16px] text-darkBold font-medium px-[20px] lg:px-[25px] py-[10px] lg:py-[15px] rounded-[99px] bg-yellowMedium'>Số liệu thống kê</h3>
                 <h2 className="text-[30px] md:text-[36px] xl:text-[48px] font-bold text-darkBold text-center">Khách Hàng Nói Gì Về Chúng Tôi.</h2>

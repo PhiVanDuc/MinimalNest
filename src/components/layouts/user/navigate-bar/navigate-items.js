@@ -72,9 +72,9 @@ const items = [
         ]
     },
     {
-        label: "Giới thiệu",
-        href: "/gioi-thieu",
-        highlight: "/gioi-thieu",
+        label: "Phiếu giảm giá",
+        href: "/phieu-giam-gia",
+        highlight: "/phieu-giam-gia",
     },
     {
         label: "Liên lạc",

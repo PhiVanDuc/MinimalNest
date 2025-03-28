@@ -65,7 +65,7 @@ export default function ProductsListSearchClient() {
     const isOpen = useSelector(state => state.productFilterOpen);
 
     return (
-        <div className="flex justify-center mb-[100px] lg:mb-[150px]">
+        <div className="flex justify-center">
             <div
                 className={cn(
                     "max-width transition-all duration-300 space-y-[60px]",

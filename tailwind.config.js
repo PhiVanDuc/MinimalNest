@@ -26,7 +26,7 @@ module.exports = {
 			darkBold: '#404040',
 			darkMedium: '#737373',
 			darkBland: '#A1A1A1',
-			yellowBold: '#F3BC4F',
+			yellowBold: '#F29E50',
 			yellowMedium: '#F3F0EA',
 			yellowBland: '#FAF8F4',
 			blueChecked: '#26AA99',

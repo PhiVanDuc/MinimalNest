@@ -81,10 +81,10 @@ const items = [
         highlight: "/home",
     },
     {
-        label: "Giới thiệu",
+        label: "Phiếu giảm giá",
         icon: <BookText size={20} />,
-        href: "/gioi-thieu",
-        highlight: "/gioi-thieu",
+        href: "/phieu-giam-gia",
+        highlight: "/phieu-giam-gia",
     },
     {
         label: "Liên lạc",

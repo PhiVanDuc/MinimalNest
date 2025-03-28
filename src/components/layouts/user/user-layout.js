@@ -15,7 +15,7 @@ export default function UserLayout({ children }) {
                 <UserNavbarMobile />
             </Suspense>
 
-            <div className="flex justify-center overflow-hidden">
+            <div className="flex justify-center overflow-hidden mb-[100px] lg:mb-[150px]">
                 <div className="responsive-horizontal max-width">
                     <CustomBreadcrumb />
                     {children}

@@ -52,8 +52,7 @@ export default function Header() {
         >
             <div className="relative w-full flex flex-col lg:flex-row justify-between pt-[100px] xl:pt-[160px] xl:pb-[60px] gap-[40px] lg:gap-[80px]">
                 {/* Tiêu đề bên trái */}
-                <motion.div
-                    variants={leftVariants}
+                <div
                     className="xl:shrink-0 w-full lg:w-[550px] space-y-[15px] lg:space-y-[30px] pt-[60px] h-fit"
                 >
                     <h1
@@ -78,7 +77,7 @@ export default function Header() {
                     </h1>
 
                     <p className="font-medium text-darkBland text-center lg:text-left lg:leading-[28px]">Mang đến những thiết kế tối giản, tinh tế giúp bạn tạo dựng không gian sống hoàn hảo.</p>
-                </motion.div>
+                </div>
 
                 {/* Hình ảnh bên phải */}
                 <motion.div

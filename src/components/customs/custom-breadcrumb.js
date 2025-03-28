@@ -29,7 +29,9 @@ const breadcrumbMap = {
     "tim-kiem": "Tìm kiếm",
     "gioi-thieu": "Giới thiệu",
     "lien-lac": "Liên lạc",
-    "ho-so": "Hồ sơ - Thông tin chung"
+    "ho-so": "Hồ sơ - Thông tin chung",
+    "phieu-giam-gia": "Phiếu giảm giá",
+    "don-hang": "Đơn hàng"
 };
 
 const sidebarPaths = ["/san-pham"];

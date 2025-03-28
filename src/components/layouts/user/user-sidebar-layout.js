@@ -18,7 +18,7 @@ export default function UserSidebarLayout({ children, sidebar, sidebarLoading })
                 {sidebar}
             </Suspense>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center mb-[100px] lg:mb-[150px]">
                 <div className="max-width">
                     <CustomBreadcrumb />
                     {children}

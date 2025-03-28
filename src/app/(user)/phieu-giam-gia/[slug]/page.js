@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import ProfileGeneral from "@/components/pages/profile/general/profile-general";
+import ProfileCouponDetail from "@/components/pages/coupon/profile-coupon-detail";
 
 export default function Page() {
     return (
         <Suspense fallback="Loading . . .">
-            <ProfileGeneral />
+            <ProfileCouponDetail />
         </Suspense>
     )
 }

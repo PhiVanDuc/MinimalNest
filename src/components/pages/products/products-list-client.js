@@ -9,7 +9,7 @@ export default function ProductsListClient({ children }) {
     return (
         <div
             className={cn(
-                "mb-[100px] lg:mb-[150px] space-y-[60px] transition-all duration-300",
+                "space-y-[60px] transition-all duration-300",
                 isOpen ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" : "responsive-horizontal"
             )}
         >

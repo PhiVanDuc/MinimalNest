@@ -8,7 +8,7 @@ import ProductDetailTabs from "./product-detail-tabs";
 
 export default function ProductDetailClient() {
     return (
-        <div className="flex justify-center mb-[100px] lg:mb-[150px]">
+        <div className="flex justify-center">
             <div className="responsive-horizontal max-width transition-all duration-300 space-y-[60px]">
                 <div className="space-y-[15px] sm:space-y-0">
                     <div className="flex sm:hidden items-center gap-3 text-sm font-semibold text-blueChecked order-1 sm:order-2">
