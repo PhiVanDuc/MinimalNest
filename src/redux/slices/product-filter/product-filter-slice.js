@@ -25,6 +25,7 @@ const productFilterSlice = createSlice({
 
         updateRadioFilters: (state, action) => {
             const { list, payload } = action.payload;
+
             const key = Object.keys(payload)[0];
           
             if (state.filters[key]) {
@@ -32,7 +33,7 @@ const productFilterSlice = createSlice({
             } else {
                 list.forEach(item => {
                     if (state.filters.hasOwnProperty(item.label)) {
-                    delete state.filters[item.label];
+                        delete state.filters[item.label];
                     }
                 });
 

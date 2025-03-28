@@ -17,6 +17,7 @@ import { X } from "lucide-react";
 
 import { v4 } from "uuid";
 import { cn } from "@/lib/utils";
+import CryptoJS from "crypto-js";
 
 export default function ProductFilterRightSide() {
     const pathname = usePathname();
@@ -40,6 +41,11 @@ export default function ProductFilterRightSide() {
     }
 
     const handleSearch = () => {
+        if (Object.keys(filters).length === 0 && Object.keys(others).length === 0) {
+            router.push("/san-pham");
+            return;
+        }
+        
         const newSearchParams = new URLSearchParams();
     
         if (Object.keys(filters).length > 0) newSearchParams.set("filters", Object.keys(filters).join(","));
@@ -47,15 +53,17 @@ export default function ProductFilterRightSide() {
     
         if (Object.keys(others).length > 0) {
             Object.keys(others).forEach((key) => {
-                const label = others[key]?.label;
+                const label = others[key]?.param;
                 const value = others[key]?.value;
                 if (label && value) {
                     newSearchParams.set(label, value);
                 }
             });
         }
-    
-        router.push(`/san-pham/tim-kiem?${newSearchParams.toString().replace(/%2C/g, ",")}`);
+
+        const finalSearchParams = newSearchParams.toString().replace(/%2C/g, ",");
+        const signature = CryptoJS.HmacSHA256(finalSearchParams, "This is key for signature").toString(CryptoJS.enc.Hex);
+        router.push(`/san-pham/tim-kiem?${finalSearchParams}&signature=${signature}`);
     };
 
     return (
@@ -84,7 +92,7 @@ export default function ProductFilterRightSide() {
                                 );
                             }}
                         >
-                            <p>{filter[1]?.subLabel}</p>
+                            <p>{filter[1]?.label}</p>
                             <X size={16} className="translate-y-[0.5px] text-darkBland group-hover:text-red-300 transition-colors duration-300" />
                         </div>
                     )
@@ -105,7 +113,7 @@ export default function ProductFilterRightSide() {
                                     );
                                 }}
                             >
-                                <p>{other[1].subLabel} - {other[1].value}</p>
+                                <p>{other[1].label} - {other[1].value}</p>
                                 <X size={16} className="translate-y-[0.5px] text-darkBland group-hover:text-red-300 transition-colors duration-300" />
                             </div>
                         )

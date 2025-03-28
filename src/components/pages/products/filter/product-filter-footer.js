@@ -7,6 +7,8 @@ import CustomButton from "@/components/customs/custom-button";
 import { Search } from "lucide-react";
 
 import { toggle } from "@/redux/slices/product-filter/product-filter-open-slice";
+import CryptoJS from "crypto-js";
+import { toast } from "sonner";
 
 export default function ProductFilterFooter() {
     const searchParams = useSearchParams();
@@ -18,6 +20,12 @@ export default function ProductFilterFooter() {
 
     const handleSearch = () => {
         const { filters, others } = productFilterState;
+
+        // Kiểm tra ngay từ đầu: nếu không có bộ lọc nào thì chuyển hướng về "/san-pham"
+        if (Object.keys(filters).length === 0 && Object.keys(others).length === 0) {
+            toast.warning("Vui lòng lựa chọn trước khi tìm kiếm.");
+            return;
+        }
         const newSearchParams = new URLSearchParams(searchParams.toString());
     
         if (Object.keys(filters).length > 0) newSearchParams.set("filters", Object.keys(filters).join(","));
@@ -25,7 +33,7 @@ export default function ProductFilterFooter() {
     
         if (Object.keys(others).length > 0) {
             Object.keys(others).forEach((key) => {
-                const label = others[key]?.label;
+                const label = others[key]?.param;
                 const value = others[key]?.value;
                 if (label && value) {
                     newSearchParams.set(label, value);
@@ -33,7 +41,9 @@ export default function ProductFilterFooter() {
             });
         }
     
-        router.push(`/san-pham/tim-kiem?${newSearchParams.toString().replace(/%2C/g, ",")}`);
+        const finalSearchParams = newSearchParams.toString().replace(/%2C/g, ",");
+        const signature = CryptoJS.HmacSHA256(finalSearchParams, "This is key for signature").toString(CryptoJS.enc.Hex);
+        router.push(`/san-pham/tim-kiem?${finalSearchParams}&signature=${signature}`);
         dispatch(toggle(!isOpen));
     };
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
-import ProductFilterValidate from "./product-filter-validate";
+import ProductFilterWrapper from "./product-filter-wrapper";
 import ProductFilterHeader from "./product-filter-header";
 import ProductFilterContent from "./product-filter-content";
 import ProductFilterFooter from "./product-filter-footer";
@@ -37,11 +37,11 @@ export default function ProductFilterClient() {
                 !isShow ? "hidden" : ""
             )}>
                 <aside className="flex flex-col h-full">
-                    <ProductFilterValidate>
+                    <ProductFilterWrapper>
                         <ProductFilterHeader />
                         <ProductFilterContent />
                         <ProductFilterFooter />
-                    </ProductFilterValidate>
+                    </ProductFilterWrapper>
                 </aside>
             </div>
 

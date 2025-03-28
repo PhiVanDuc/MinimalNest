@@ -45,8 +45,9 @@ export default function ProductFilterContent() {
                                 handleChooseFilter(
                                     "filters",
                                     {
-                                        discount: {
-                                            subLabel: "Giảm giá"
+                                        "discount": {
+                                            label: "Giảm giá",
+                                            param: "discount"
                                         }
                                     }
                                 )
@@ -89,7 +90,8 @@ export default function ProductFilterContent() {
                                                             list: types,
                                                             payload: {
                                                                 [item.label]: {
-                                                                    subLabel: item.subLabel
+                                                                    label: item.subLabel,
+                                                                    param: item.label
                                                                 }
                                                             }
                                                         },
@@ -132,7 +134,8 @@ export default function ProductFilterContent() {
                                                         "filters", 
                                                         {
                                                             [item.label]: {
-                                                                subLabel: item.subLabel
+                                                                label: item.subLabel,
+                                                                param: item.label
                                                             }
                                                         }
                                                     )
@@ -167,8 +170,8 @@ export default function ProductFilterContent() {
                                             "others",
                                             {
                                                 "price-min": {
-                                                    label: "price-min",
-                                                    subLabel: "Giá tối thiểu",
+                                                    label: "Giá tối thiểu",
+                                                    param: "price-min",
                                                     value: prices[0]
                                                 }
                                             }
@@ -178,8 +181,8 @@ export default function ProductFilterContent() {
                                             "others",
                                             {
                                                 "price-max": {
-                                                    label: "price-max",
-                                                    subLabel: "Giá tối đa",
+                                                    label: "Giá tối đa",
+                                                    param: "price-max",
                                                     value: prices[1]
                                                 }
                                             }
@@ -232,7 +235,8 @@ export default function ProductFilterContent() {
                                                         "filters",
                                                         {
                                                             [item.label]: {
-                                                                subLabel: item.subLabel,
+                                                                label: item.subLabel,
+                                                                param: item.label,
                                                                 codeColor: item.codeColor
                                                             }
                                                         }
