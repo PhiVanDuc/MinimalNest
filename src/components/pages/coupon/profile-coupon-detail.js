@@ -56,7 +56,7 @@ export default function ProfileCouponDetail() {
 
                         <li className="flex items-center gap-x-[10px] text-[15px] md:text-[16px] text-darkMedium font-medium pl-[32px]">
                             <span className="shrink-0 inline-block w-[5px] h-[5px] rounded-full bg-yellowBold" />
-                            Áp dụng cho các sản phẩm thuộc danh mục <span className="text-blueChecked">"Ghế, giường, thảm, . . ."</span>
+                            Áp dụng cho các sản phẩm thuộc danh mục <span className="text-blueChecked">&quot;Ghế, giường, thảm, . . .&ldquo</span>
                         </li>
                     </ul>
                 </div>
