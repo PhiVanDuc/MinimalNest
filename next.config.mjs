@@ -1,8 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['fastly.picsum.photos'],
-    },
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'fakestoreapi.com',
+                port: '',
+                pathname: '/img/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'fastly.picsum.photos',
+                port: '',
+                pathname: '/id/**',
+            },
+        ]
+    }
 };
 
 export default nextConfig;

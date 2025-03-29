@@ -1,3 +1,6 @@
+import Link from "next/link";
+import Image from "next/image";
+
 import {
     Tooltip,
     TooltipContent,
@@ -7,16 +10,33 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 import { IoPricetagOutline } from "react-icons/io5";
-import Link from "next/link";
 
-export default function ProductItem() {
+export default function ProductItem({ item }) {
     return (
         <Link
             href={`/san-pham/ten-san-pham`}
             className="block rounded-[15px] cursor-pointer"
         >
-            <div className="w-full aspect-video rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300">
-            </div>
+            {
+                item ?
+                (
+                    <div className="w-full aspect-16/12 rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
+                        <Image
+                            src={item.image}
+                            alt="Product Image"
+                            width={item.blurImage.img.width}
+                            height={item.blurImage.img.height}
+                            className="w-full aspect-16/12 object-cover object-center"
+                            placeholder="blur"
+                            blurDataURL={item.blurImage.base64}
+                        />
+                    </div>       
+                ) : 
+                (
+                    <div className="w-full aspect-16/12 rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
+                    </div>
+                )
+            }
 
             <div className="relative space-y-[15px] p-[20px] bg-white">
                 <div className="flex items-center justify-between">

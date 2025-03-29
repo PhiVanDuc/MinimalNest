@@ -17,7 +17,7 @@ import { X } from "lucide-react";
 
 import { v4 } from "uuid";
 import { cn } from "@/lib/utils";
-import CryptoJS from "crypto-js";
+import generateSignatureClient from "@/lib/generate-signature-client";
 
 export default function ProductFilterRightSide() {
     const pathname = usePathname();
@@ -62,7 +62,7 @@ export default function ProductFilterRightSide() {
         }
 
         const finalSearchParams = newSearchParams.toString().replace(/%2C/g, ",");
-        const signature = CryptoJS.HmacSHA256(finalSearchParams, "This is key for signature").toString(CryptoJS.enc.Hex);
+        const signature = generateSignatureClient(finalSearchParams);
         router.push(`/san-pham/tim-kiem?${finalSearchParams}&signature=${signature}`);
     };
 

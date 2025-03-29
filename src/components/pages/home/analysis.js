@@ -1,12 +1,23 @@
-import CountUp from '@/components/customs/react-bits/CountUp'
-import BlurCircle from '../../customs/blur-circle'
+import Image from 'next/image';
+import analysisImage from "../../../../public/analysis_image.webp";
 
-export default function Analysis() {
+import CountUp from '@/components/customs/react-bits/CountUp';
+import BlurCircle from '../../customs/blur-circle';
+
+export default async function Analysis() {
     return (
         <section
             className="relative flex flex-col lg:flex-row items-center gap-[40px] lg:gap-[80px]"
         >
-            <div className='w-full order-2 lg:order-1 aspect-square rounded-[20px] md:rounded-[60px] bg-slate-300'>
+            <div className='w-full order-2 lg:order-1 aspect-square rounded-[20px] md:rounded-[60px] bg-slate-300 overflow-hidden'>
+                <Image
+                    src={analysisImage}
+                    alt="Analysis Image"
+                    width={1125}
+                    height={750}
+                    className="w-full h-full object-cover object-center"
+                    placeholder="blur"
+                />
             </div>
 
             <div className='order-1 lg:order-2 w-full space-y-[30px]'>

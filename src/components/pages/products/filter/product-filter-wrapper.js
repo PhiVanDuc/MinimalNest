@@ -59,9 +59,9 @@ export default function ProductFilterWrapper({ children }) {
                             ? "Tên sản phẩm"
                             : key === "price-min"
                             ? "Giá tối thiểu"
-                            : key === "price-min" 
+                            : key === "price-max" 
                             ? "Giá tối đa"
-                            : "ID phiếu giảm giá",
+                            : key === "v-id" && "ID phiếu giảm giá",
                         param: key,
                         value
                     }

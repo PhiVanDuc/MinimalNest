@@ -1,6 +1,8 @@
+import Image from "next/image";
+import avatarFeedback from "../../../../public/avatar_feedback.webp";
+
 import CoreCarousel from "@/components/customs/core-carousel";
 import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
 import { v4 } from "uuid";
 
 const feedbacks = [
@@ -47,7 +49,17 @@ const finalData = feedbacks.map(feedback => ({
 
             <div className="flex items-center justify-between gap-[10px]">
                 <div className="flex items-center gap-x-[10px] overflow-hidden">
-                    <div className="shrink-0 w-[44px] aspect-square rounded-full bg-slate-300" />
+                    <div className="shrink-0 w-[44px] aspect-square rounded-full bg-slate-300 overflow-hidden">
+                        <Image
+                            src={avatarFeedback}
+                            alt="Avatar"
+                            width={60}
+                            height={60}
+                            className="w-full aspect-square object-cover object-center"
+                            placeholder="blur"
+                        />
+                    </div>
+
                     <p className="text-[16px] lg:text-[18px] font-medium text-darkBold whitespace-nowrap truncate">{feedback.name}</p>
                 </div>
 

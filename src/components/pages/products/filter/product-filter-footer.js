@@ -15,18 +15,16 @@ export default function ProductFilterFooter() {
     const router = useRouter();
 
     const dispatch = useDispatch();
-    const productFilterState = useSelector(state => state.productFilter);
+    const { filters, others } = useSelector(state => state.productFilter);
     const isOpen = useSelector(state => state.productFilterOpen)
 
     const handleSearch = () => {
-        const { filters, others } = productFilterState;
-
-        // Kiểm tra ngay từ đầu: nếu không có bộ lọc nào thì chuyển hướng về "/san-pham"
         if (Object.keys(filters).length === 0 && Object.keys(others).length === 0) {
-            toast.warning("Vui lòng lựa chọn trước khi tìm kiếm.");
+            router.push("/san-pham");
             return;
         }
-        const newSearchParams = new URLSearchParams(searchParams.toString());
+        
+        const newSearchParams = new URLSearchParams();
     
         if (Object.keys(filters).length > 0) newSearchParams.set("filters", Object.keys(filters).join(","));
         else newSearchParams.delete("filters");
@@ -40,7 +38,7 @@ export default function ProductFilterFooter() {
                 }
             });
         }
-    
+
         const finalSearchParams = newSearchParams.toString().replace(/%2C/g, ",");
         const signature = generateSignatureClient(finalSearchParams);
         router.push(`/san-pham/tim-kiem?${finalSearchParams}&signature=${signature}`);

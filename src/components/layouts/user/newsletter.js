@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import newsletterImage from "../../../../public/newsletter_image_background.jpg";
+import newsletterImage from "../../../../public/newsletter_image_background.webp";
 import { usePathname } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";

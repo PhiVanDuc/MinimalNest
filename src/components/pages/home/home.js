@@ -7,7 +7,7 @@ import LivingSpace from "@/components/pages/home/living-spaces";
 import Compliment from "@/components/pages/home/compliment";
 import Feedback from "@/components/pages/home/feedback";
 
-export default async function Home() {
+export default function Home() {
     return (
         <Suspense fallback={<HeaderLoading />}>
             <div className="space-y-[100px]">
