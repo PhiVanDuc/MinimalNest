@@ -55,6 +55,7 @@
     "lucide-react": "^0.477.0",
     "next": "14.2.24",
     "next-themes": "^0.4.4",
+    "plaiceholder": "^3.0.0",
     "react": "^18",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18",

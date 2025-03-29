@@ -72,5 +72,6 @@ export const params = [
     "living-space",
     "product-name",
     "price-min",
-    "price-max"
+    "price-max",
+    "v-id"
 ];

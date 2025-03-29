@@ -1,3 +1,4 @@
+import DynamicImage from "@/components/customs/dynamic-image";
 import {
     Tooltip,
     TooltipContent,
@@ -15,7 +16,13 @@ export default function ProductItem() {
             href={`/san-pham/ten-san-pham`}
             className="block rounded-[15px] cursor-pointer"
         >
-            <div className="w-full aspect-video rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300" />
+            <div className="w-full aspect-video rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
+                <DynamicImage
+                    src="https://fastly.picsum.photos/id/507/2000/2000.jpg?hmac=9oAdMdpuu5V-i2IhaoACEOEyeOfLIdwRzvBDH6Wi4Xc"
+                    alt="Product Image"
+                    className="w-full aspect-video object-cover object-center"
+                />
+            </div>
 
             <div className="relative space-y-[15px] p-[20px] bg-white">
                 <div className="flex items-center justify-between">

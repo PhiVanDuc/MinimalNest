@@ -7,8 +7,8 @@ import CustomButton from "@/components/customs/custom-button";
 import { Search } from "lucide-react";
 
 import { toggle } from "@/redux/slices/product-filter/product-filter-open-slice";
-import CryptoJS from "crypto-js";
 import { toast } from "sonner";
+import generateSignatureClient from "@/lib/generate-signature-client";
 
 export default function ProductFilterFooter() {
     const searchParams = useSearchParams();
@@ -42,7 +42,7 @@ export default function ProductFilterFooter() {
         }
     
         const finalSearchParams = newSearchParams.toString().replace(/%2C/g, ",");
-        const signature = CryptoJS.HmacSHA256(finalSearchParams, "This is key for signature").toString(CryptoJS.enc.Hex);
+        const signature = generateSignatureClient(finalSearchParams);
         router.push(`/san-pham/tim-kiem?${finalSearchParams}&signature=${signature}`);
         dispatch(toggle(!isOpen));
     };

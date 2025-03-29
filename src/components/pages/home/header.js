@@ -1,8 +1,4 @@
-"use client"
-
-import { useRouter } from "next/navigation";
-
-import { motion } from "framer-motion";
+import DynamicImage from "@/components/customs/dynamic-image";
 import CustomButton from "@/components/customs/custom-button";
 import RotatingText from "@/components/customs/react-bits/RotatingText";
 import CustomBadge from "@/components/customs/custom-badge";
@@ -12,45 +8,12 @@ import { LuShoppingCart } from "react-icons/lu";
 import { AiOutlineLike } from "react-icons/ai";
 import { Truck } from "lucide-react";
 import BlurCircle from "../../customs/blur-circle";
+import { cn } from "@/lib/utils";
 
-const parentVariants = {
-    hidden: {},
-    show: {
-        transition: {
-            staggerChildren: 0.25,
-        }
-    }
-}
-
-const leftVariants = {
-    hidden: { x: "-50%", opacity: 0 },
-    show: { 
-        x: 0, 
-        opacity: 1,
-        transition: { type: "tween", duration: 0.5 }
-    }
-}
-
-const rightVariants = {
-    hidden: { x: "50%", opacity: 0 },
-    show: { 
-        x: 0, 
-        opacity: 1,
-        transition: { type: "tween", duration: 0.5 }
-    }
-}
-
-export default function Header() {
-    const router = useRouter();
-
+export default async function Header() {
     return (
-        <motion.header
-            variants={parentVariants}
-            initial="hidden"
-            animate="show"
-            className="relative flex items-center"
-        >
-            <div className="relative w-full flex flex-col lg:flex-row justify-between pt-[100px] xl:pt-[160px] xl:pb-[60px] gap-[40px] lg:gap-[80px]">
+        <header className="relative flex items-center">
+            <div className="relative w-full flex flex-col lg:flex-row justify-between pt-[100px] xl:pt-[160px] xl:mb-[60px] gap-[40px] lg:gap-[80px]">
                 {/* Tiêu đề bên trái */}
                 <div
                     className="xl:shrink-0 w-full lg:w-[550px] space-y-[15px] lg:space-y-[30px] pt-[60px] h-fit"
@@ -80,50 +43,46 @@ export default function Header() {
                 </div>
 
                 {/* Hình ảnh bên phải */}
-                <motion.div
-                    variants={rightVariants}
-                    className="w-full space-y-[20px]"
-                >
+                <div className="w-full space-y-[20px]">
                     <div className="w-full grid grid-cols-2 gap-[10px] lg:gap-[20px]">
-                        <div className="relative h-[140px] md:h-[200px] lg:h-[260px] rounded-[15px] bg-slate-300">
-                            <CustomBadge
-                                text="Mới"
-                                badgeClassName="absolute top-[15px] right-[15px] px-[10px] py-[5px] bg-yellowBold hover:bg-yellowBold hover:opacity-80 cursor-pointer"
-                                textClassName="text-[14px]"
-                            />
-                        </div>
-                        <div className="relative h-[140px] md:h-[200px] lg:h-[260px] rounded-[15px] bg-slate-300">
-                            <CustomBadge
-                                text="Mới"
-                                badgeClassName="absolute top-[15px] right-[15px] px-[10px] py-[5px] bg-yellowBold hover:bg-yellowBold hover:opacity-80 cursor-pointer"
-                                textClassName="text-[14px] text-white"
-                            />
-                        </div>
-                        <div className="relative col-span-2 h-[140px] md:h-[200px] lg:h-[260px] rounded-[15px] bg-slate-300">
-                            <CustomBadge
-                                text="Mới"
-                                badgeClassName="absolute top-[15px] right-[15px] px-[10px] py-[5px] bg-yellowBold hover:bg-yellowBold hover:opacity-80 cursor-pointer"
-                                textClassName="text-[14px] text-white"
-                            />
-                        </div>
+                        {
+                            Array.from({ length: 3 }).map((_, index) => {
+                                return (
+                                    <div
+                                        className={cn(
+                                            "relative h-[140px] md:h-[200px] lg:h-[260px] rounded-[15px] bg-slate-300 overflow-hidden",
+                                            index === 2 ? "col-span-2" : "col-span-1"
+                                        )}
+                                    >
+                                        <DynamicImage
+                                            src="https://fastly.picsum.photos/id/507/2000/2000.jpg?hmac=9oAdMdpuu5V-i2IhaoACEOEyeOfLIdwRzvBDH6Wi4Xc"
+                                            alt="Lasest Product Image"
+                                            className="w-full h-[140px] md:h-[200px] lg:h-[260px] object-cover object-center"
+                                        />
+                                        
+                                        <CustomBadge
+                                            text="Mới"
+                                            badgeClassName="absolute top-[15px] right-[15px] px-[10px] py-[5px] bg-yellowBold hover:bg-yellowBold hover:opacity-80 cursor-pointer"
+                                            textClassName="text-[14px]"
+                                        />
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
 
                     <div className="lg:hidden w-full flex justify-center">
                         <CustomButton
                             className="bg-yellowBold hover:bg-yellowBold text-[16px] px-[30px]"
                             icon={<LuShoppingCart size={20} />}
-                            onClick={() => { router.push("/san-pham") }}
                         >
                             Mua sắm ngay
                         </CustomButton>
                     </div>
-                </motion.div>
+                </div>
 
                 {/* Thanh ưu đãi */}
-                <motion.div
-                    variants={leftVariants}
-                    className="hidden absolute bottom-0 left-0 lg:flex items-center px-[25px] py-[20px] gap-x-[25px] border border-slate-200 shadow-sm rounded-[15px] bg-white"
-                >
+                <div className="hidden absolute bottom-0 left-0 lg:flex items-center px-[25px] py-[20px] gap-x-[25px] border border-slate-200 shadow-sm rounded-[15px] bg-white">
                     <div className="space-y-[8px]">
                         <p className="text-[14px] font-semibold text-darkMedium">Lắp đặt</p>
                         <div className="flex items-center gap-x-[8px]">
@@ -153,14 +112,13 @@ export default function Header() {
                     <CustomButton
                         className="bg-yellowBold hover:bg-yellowBold"
                         icon={<LuShoppingCart size={20} />}
-                        onClick={() => { router.push("/san-pham") }}
                     >
                         Mua sắm ngay
                     </CustomButton>
-                </motion.div>
+                </div>
             </div>
 
             <BlurCircle className="right-0 bottom-0 translate-x-[50%] translate-y-[50%]" />
-        </motion.header>
+        </header>
     )
 }

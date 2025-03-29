@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
 
+import ProfileCouponRedirectButton from "./profile-coupon-redirect-button";
+
 const coupons = [
     {
         id: v4(),
@@ -73,7 +75,7 @@ const coupons = [
         expDate: "25.02.2025",
         quantity: 2
     }
-]
+];
 
 export default function ProfileCouponsList() {
     return (
@@ -115,9 +117,11 @@ export default function ProfileCouponsList() {
                                     </div>
 
                                     <div className="flex items-center gap-[5px] text-[14px]">
-                                        <Button>
-                                            <Link href="">Sản phẩm</Link>
-                                        </Button>
+                                        <ProfileCouponRedirectButton
+                                            id={coupon.id}
+                                        >
+                                            Sản phẩm
+                                        </ProfileCouponRedirectButton>
 
                                         <Button variant="ghost">
                                             <Link href="/phieu-giam-gia/tieu-de-phieu-giam-gia">Chi tiết</Link>

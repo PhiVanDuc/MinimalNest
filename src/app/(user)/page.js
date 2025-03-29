@@ -1,12 +1,4 @@
-import { Suspense } from "react";
-
-import HeaderLoading from "@/components/pages/home/header-loading";
-import Header from "@/components/pages/home/header";
-import Analysis from "@/components/pages/home/analysis";
-import FeaturedProducts from "@/components/pages/home/featured-products";
-import LivingSpace from "@/components/pages/home/living-spaces";
-import Compliment from "@/components/pages/home/compliment";
-import Feedback from "@/components/pages/home/feedback";
+import Home from "@/components/pages/home/home";
 
 export const metadata = {
 	title: `${process.env.WEBSITE_NAME} - Trang chủ`,
@@ -15,15 +7,6 @@ export const metadata = {
 
 export default function Page() {
     return (
-        <Suspense fallback={<HeaderLoading />} >
-            <div className="space-y-[100px]">
-                <Header />
-                <Analysis />
-                <FeaturedProducts />
-                <LivingSpace />
-                <Compliment />
-                <Feedback />
-            </div>
-        </Suspense>
+        <Home />
     )
 }

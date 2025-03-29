@@ -31,7 +31,6 @@ export default function ProductFilterWrapper({ children }) {
         ];
 
         const currentParams = Object.fromEntries(searchParams.entries());
-        delete currentParams?.["v-id"];
 
         let finalData = {};
         if (currentParams["filters"]) {
@@ -60,7 +59,9 @@ export default function ProductFilterWrapper({ children }) {
                             ? "Tên sản phẩm"
                             : key === "price-min"
                             ? "Giá tối thiểu"
-                            : "Giá tối đa",
+                            : key === "price-min" 
+                            ? "Giá tối đa"
+                            : "ID phiếu giảm giá",
                         param: key,
                         value
                     }

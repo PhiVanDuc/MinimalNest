@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image";
+import newsletterImage from "../../../../public/newsletter_image_background.jpg";
 import { usePathname } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -50,11 +51,12 @@ export default function Newsletter() {
             >
                 <div className="hidden md:block relative w-full rounded-[15px] aspect-16/7 overflow-hidden">
                     <Image
-                        src="/newsletter_image_background.jpg"
+                        src={newsletterImage}
                         alt="Newsletter"
                         width={1920}
                         height={1080}
                         className="absolute inset-0 w-full h-full object-cover object-center"
+                        placeholder="blur"
                     />
 
                     <span className="absolute inset-0 bg-[#404040]/40" />

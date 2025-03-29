@@ -10,33 +10,6 @@ import Image from "next/image";
 import { LuShoppingCart } from "react-icons/lu";
 import { Check } from "lucide-react";
 
-const parentVariants = {
-    hidden: {},
-    show: {
-        transition: {
-            staggerChildren: 0.25,
-        }
-    }
-}
-
-const childVariants = {
-    hidden: { x: "-30%", opacity: 0 },
-    show: { 
-        x: 0, 
-        opacity: 1,
-        transition: { type: "tween", duration: 0.5 }
-    }
-}
-
-const secondChildVariants = {
-    hidden: { x: "30%", opacity: 0 },
-    show: { 
-        x: 0, 
-        opacity: 1,
-        transition: { type: "tween", duration: 0.5 }
-    }
-}
-
 export default function Compliment() {
     const router = useRouter();
 
