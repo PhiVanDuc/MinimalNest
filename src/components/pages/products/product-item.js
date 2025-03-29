@@ -15,37 +15,37 @@ export default function ProductItem({ item }) {
     return (
         <Link
             href={`/san-pham/ten-san-pham`}
-            className="block rounded-[15px] cursor-pointer"
+            className="block rounded-[15px] cursor-pointer border overflow-hidden"
         >
             {
                 item ?
-                (
-                    <div className="w-full aspect-16/12 rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
-                        <Image
-                            src={item.image}
-                            alt="Product Image"
-                            width={item.blurImage.img.width}
-                            height={item.blurImage.img.height}
-                            className="w-full aspect-16/12 object-cover object-center"
-                            placeholder="blur"
-                            blurDataURL={item.blurImage.base64}
-                        />
-                    </div>       
-                ) : 
-                (
-                    <div className="w-full aspect-16/12 rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
-                    </div>
-                )
+                    (
+                        <div className="w-full aspect-16/12 rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
+                            <Image
+                                src={item.image}
+                                alt="Product Image"
+                                width={item.blurImage.img.width}
+                                height={item.blurImage.img.height}
+                                className="w-full aspect-16/12 object-cover object-center"
+                                placeholder="blur"
+                                blurDataURL={item.blurImage.base64}
+                            />
+                        </div>
+                    ) :
+                    (
+                        <div className="w-full aspect-16/12 rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
+                        </div>
+                    )
             }
 
             <div className="relative space-y-[15px] p-[20px] bg-white">
                 <div className="flex items-center justify-between">
-                    <h3 className="text-[15px] sm:text-[16px] text-darkBold font-semibold">Product name</h3>
+                    <h3 className="text-[15px] sm:text-[16px] text-darkBold font-semibold">Tên sản phẩm</h3>
                     <Badge className="bg-yellowBold text-white text-[13px] font-medium">4,98</Badge>
                 </div>
 
                 <TooltipProvider
-                    delayDuration={400}
+                    delayDuration={200}
                 >
                     <div className="flex items-center gap-x-[8px]">
                         {
@@ -68,12 +68,6 @@ export default function ProductItem({ item }) {
                     <IoPricetagOutline size={22} />
                     400.000 VND
                 </p>
-                <span
-                    className="absolute inset-0 border border-t-0 rounded-[15px] rounded-tr-none rounded-tl-none"
-                    style={{
-                        marginTop: "0px"
-                    }}
-                />
             </div>
         </Link>
     )
