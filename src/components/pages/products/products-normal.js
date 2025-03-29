@@ -13,7 +13,7 @@ import { v4 } from "uuid";
 import getProducts from "@/services/products/getProducts";
 
 export default async function ProductsNormal() {
-    const products = await getProducts();
+    const products = await getProducts(2);
     if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
 
     const componentProduct = products.map(item => {

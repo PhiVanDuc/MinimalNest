@@ -24,13 +24,13 @@ export default function ProductItem({ item }) {
                     (
                         <div className="w-full aspect-square rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
                             <Image
-                                src={item.blurImage.img.src}
+                                src={item?.blurImage.img.src}
                                 alt="Product Image"
-                                width={item.blurImage.img.width}
-                                height={item.blurImage.img.height}
+                                width={item?.blurImage.img.width}
+                                height={item?.blurImage.img.height}
                                 className="w-full aspect-square object-cover object-center"
                                 placeholder="blur"
-                                blurDataURL={item.blurImage.base64}
+                                blurDataURL={item?.blurImage.base64}
                                 loading="lazy"
                             />
                         </div>
