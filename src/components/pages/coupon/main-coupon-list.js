@@ -72,10 +72,130 @@ let coupons = [
         prodDate: "20.02.2025",
         expDate: "25.02.2025",
         quantity: 2
+    },
+    {
+        id: v4(),
+        image: "",
+        code: "VIPSALE2025",
+        title: "Voucher Độc Quyền – Nhận Ngay Ưu Đãi Chưa Từng Có",
+        decrease: "Giảm 20% giảm tối đa 200k",
+        prodDate: "20.02.2025",
+        expDate: "25.02.2025",
+        quantity: 2
+    },
+    {
+        id: v4(),
+        image: "",
+        code: "VIPSALE2025",
+        title: "Voucher Độc Quyền – Nhận Ngay Ưu Đãi Chưa Từng Có",
+        decrease: "Giảm 20% giảm tối đa 200k",
+        prodDate: "20.02.2025",
+        expDate: "25.02.2025",
+        quantity: 2
+    },
+    {
+        id: v4(),
+        image: "",
+        code: "VIPSALE2025",
+        title: "Voucher Độc Quyền – Nhận Ngay Ưu Đãi Chưa Từng Có",
+        decrease: "Giảm 20% giảm tối đa 200k",
+        prodDate: "20.02.2025",
+        expDate: "25.02.2025",
+        quantity: 2
+    },
+    {
+        id: v4(),
+        image: "",
+        code: "VIPSALE2025",
+        title: "Voucher Độc Quyền – Nhận Ngay Ưu Đãi Chưa Từng Có",
+        decrease: "Giảm 20% giảm tối đa 200k",
+        prodDate: "20.02.2025",
+        expDate: "25.02.2025",
+        quantity: 2
+    },
+    {
+        id: v4(),
+        image: "",
+        code: "VIPSALE2025",
+        title: "Voucher Độc Quyền – Nhận Ngay Ưu Đãi Chưa Từng Có",
+        decrease: "Giảm 20% giảm tối đa 200k",
+        prodDate: "20.02.2025",
+        expDate: "25.02.2025",
+        quantity: 2
+    },
+    {
+        id: v4(),
+        image: "",
+        code: "VIPSALE2025",
+        title: "Voucher Độc Quyền – Nhận Ngay Ưu Đãi Chưa Từng Có",
+        decrease: "Giảm 20% giảm tối đa 200k",
+        prodDate: "20.02.2025",
+        expDate: "25.02.2025",
+        quantity: 2
+    },
+    {
+        id: v4(),
+        image: "",
+        code: "VIPSALE2025",
+        title: "Voucher Độc Quyền – Nhận Ngay Ưu Đãi Chưa Từng Có",
+        decrease: "Giảm 20% giảm tối đa 200k",
+        prodDate: "20.02.2025",
+        expDate: "25.02.2025",
+        quantity: 2
+    },
+    {
+        id: v4(),
+        image: "",
+        code: "VIPSALE2025",
+        title: "Voucher Độc Quyền – Nhận Ngay Ưu Đãi Chưa Từng Có",
+        decrease: "Giảm 20% giảm tối đa 200k",
+        prodDate: "20.02.2025",
+        expDate: "25.02.2025",
+        quantity: 2
+    },
+    {
+        id: v4(),
+        image: "",
+        code: "VIPSALE2025",
+        title: "Voucher Độc Quyền – Nhận Ngay Ưu Đãi Chưa Từng Có",
+        decrease: "Giảm 20% giảm tối đa 200k",
+        prodDate: "20.02.2025",
+        expDate: "25.02.2025",
+        quantity: 2
+    },
+    {
+        id: v4(),
+        image: "",
+        code: "VIPSALE2025",
+        title: "Voucher Độc Quyền – Nhận Ngay Ưu Đãi Chưa Từng Có",
+        decrease: "Giảm 20% giảm tối đa 200k",
+        prodDate: "20.02.2025",
+        expDate: "25.02.2025",
+        quantity: 2
+    },
+    {
+        id: v4(),
+        image: "",
+        code: "VIPSALE2025",
+        title: "Voucher Độc Quyền – Nhận Ngay Ưu Đãi Chưa Từng Có",
+        decrease: "Giảm 20% giảm tối đa 200k",
+        prodDate: "20.02.2025",
+        expDate: "25.02.2025",
+        quantity: 2
+    },
+    {
+        id: v4(),
+        image: "",
+        code: "VIPSALE2025",
+        title: "Voucher Độc Quyền – Nhận Ngay Ưu Đãi Chưa Từng Có",
+        decrease: "Giảm 20% giảm tối đa 200k",
+        prodDate: "20.02.2025",
+        expDate: "25.02.2025",
+        quantity: 2
     }
 ];
 
-export default async function ProfileCouponsList() {
+export default async function MainCouponList() {
     const products = await getProducts();
     if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
 
@@ -86,7 +206,7 @@ export default async function ProfileCouponsList() {
 
     return (
         <div>
-            <div className="grid grid-cols-1 2xl:grid-cols-2 gap-[20px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[20px]">
                 {
                     coupons.map(coupon => {
                         return (
