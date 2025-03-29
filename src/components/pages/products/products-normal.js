@@ -10,58 +10,26 @@ import {
 } from "@/components/ui/pagination";
 
 import { v4 } from "uuid";
+import getProducts from "@/services/products/getProducts";
 
-const products = [
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    }
-]
+export default async function ProductsNormal() {
+    const products = await getProducts();
+    if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
 
-export default function ProductsNormal() {
+    const componentProduct = products.map(item => {
+        return {
+            id: v4(),
+            component: <ProductItem item={item} />
+        }
+    });
+
     return (
         <div className="space-y-[20px]">
             <h2 className="text-[20px] md:text-[24px] text-darkBold font-semibold">Các sản phẩm khác</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[20px]">
                 {
-                    products.map(product => {
+                    componentProduct.map(product => {
                         return <div key={product.id}>{product.component}</div>
                     })
                 }

@@ -1,17 +1,15 @@
 "use client"
 
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import CustomButton from "@/components/customs/custom-button";
 import { Search } from "lucide-react";
 
 import { toggle } from "@/redux/slices/product-filter/product-filter-open-slice";
-import { toast } from "sonner";
 import generateSignatureClient from "@/lib/generate-signature-client";
 
 export default function ProductFilterFooter() {
-    const searchParams = useSearchParams();
     const router = useRouter();
 
     const dispatch = useDispatch();

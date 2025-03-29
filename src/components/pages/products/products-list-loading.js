@@ -28,20 +28,22 @@ export default function ProductsListLoading() {
                 <div className="space-y-[20px]">
                     <Skeleton className="max-w-[200px] h-[36px] rounded-[15px]" />
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[20px]">
-                        <Skeleton className="w-full aspect-video rounded-[15px]" />
-                        <Skeleton className="w-full aspect-video rounded-[15px]" />
-                        <Skeleton className="w-full aspect-video rounded-[15px]" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[20px]">
+                        <Skeleton className="w-full aspect-16/12 rounded-[15px]" />
+                        <Skeleton className="w-full aspect-16/12 rounded-[15px]" />
+                        <Skeleton className="w-full aspect-16/12 rounded-[15px]" />
+                        <Skeleton className="w-full aspect-16/12 rounded-[15px]" />
                     </div>
                 </div>
 
                 <div className="space-y-[20px]">
                     <Skeleton className="max-w-[200px] h-[36px] rounded-[15px]" />
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[20px]">
-                        <Skeleton className="w-full aspect-video rounded-[15px]" />
-                        <Skeleton className="w-full aspect-video rounded-[15px]" />
-                        <Skeleton className="w-full aspect-video rounded-[15px]" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[20px]">
+                        <Skeleton className="w-full aspect-16/12 rounded-[15px]" />
+                        <Skeleton className="w-full aspect-16/12 rounded-[15px]" />
+                        <Skeleton className="w-full aspect-16/12 rounded-[15px]" />
+                        <Skeleton className="w-full aspect-16/12 rounded-[15px]" />
                     </div>
                 </div>
             </div>

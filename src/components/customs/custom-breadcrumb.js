@@ -60,7 +60,7 @@ export default function CustomBreadcrumb() {
         return (
             <div
                 className={cn(
-                    "pt-[100px] xl:pt-[120px] pb-[40px] transition-colors duration-300",
+                    "pt-[100px] xl:pt-[120px] pb-[40px] transition-all duration-300",
                     (isOpen && (pathname === "/san-pham" || pathname === "/san-pham/tim-kiem")) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" :
                     isSidebarPath ? "responsive-horizontal" : "",
                     pathname === "/" ? "hidden" : ""

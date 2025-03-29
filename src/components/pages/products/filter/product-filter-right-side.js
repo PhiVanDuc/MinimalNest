@@ -101,7 +101,7 @@ export default function ProductFilterRightSide() {
 
             {
                 Object.entries(others)?.map(other => {
-                    if (other[1].label !== "living-space") {
+                    if (other[1].param !== "living-space" && other[1].param !== "v-id") {
                         return (
                             <div
                                 key={v4()}

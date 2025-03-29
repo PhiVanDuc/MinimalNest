@@ -3,51 +3,19 @@ import ProductFilterRightSide from "./filter/product-filter-right-side";
 import ProductItem from "./product-item";
 
 import { v4 } from "uuid";
+import getProducts from "@/services/products/getProducts";
 
-const products = [
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    },
-    {
-        id: v4(),
-        component: <ProductItem />
-    }
-]
+export default async function ProductsPromote() {
+    const products = await getProducts();
+    if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
 
-export default function ProductsPromote() {
+    const componentProduct = products.map(item => {
+        return {
+            id: v4(),
+            component: <ProductItem item={item} />
+        }
+    });
+
     return (
         <div className="space-y-[60px]">
             <div className="space-y-[20px]">
@@ -59,8 +27,8 @@ export default function ProductsPromote() {
                 <h2 className="text-[20px] md:text-[24px] text-darkBold font-semibold">Sản phẩm nổi bật</h2>
 
                 <CoreCarousel
-                    data={products}
-                    numberCardClassName="sm:basis-1/2 lg:basis-1/3"
+                    data={componentProduct}
+                    numberCardClassName="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                 />
             </div>
 
@@ -68,8 +36,8 @@ export default function ProductsPromote() {
                 <h2 className="text-[20px] md:text-[24px] text-darkBold font-semibold">Sản phẩm mới</h2>
 
                 <CoreCarousel
-                    data={products}
-                    numberCardClassName="sm:basis-1/2 lg:basis-1/3"
+                    data={componentProduct}
+                    numberCardClassName="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                 />
             </div>
         </div>

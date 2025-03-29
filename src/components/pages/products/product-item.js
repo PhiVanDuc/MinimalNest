@@ -15,7 +15,7 @@ export default function ProductItem({ item }) {
     return (
         <Link
             href={`/san-pham/ten-san-pham`}
-            className="block rounded-[15px] cursor-pointer border overflow-hidden"
+            className="block rounded-[15px] cursor-pointer border shadow-sm overflow-hidden"
         >
             {
                 item ?
