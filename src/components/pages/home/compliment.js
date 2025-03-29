@@ -63,6 +63,7 @@ export default function Compliment() {
                         height={2000}
                         className="w-full h-full object-cover object-center"
                         placeholder="blur"
+                        loading="lazy"
                     />
                 </div>
 
@@ -73,6 +74,7 @@ export default function Compliment() {
                         width={45}
                         height={45}
                         className="w-[45px] aspect-square object-cover object-center"
+                        loading="lazy"
                     />
                 </div>
 

@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 
 import Link from "next/link";
+import voucherImage from "../../../../public/voucher.webp";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
@@ -19,17 +20,17 @@ export default function CouponItem({ coupon }) {
 
     return (
         <div
-            className="relative flex items-center rounded-[15px] border bg-white"
+            className="relative flex flex-col sm:flex-row gap-[10px] sm:gap-0 items-center rounded-[15px] border bg-white"
         >
-            <div className="relative flex flex-col w-[40%] self-stretch rounded-tl-[15px] rounded-bl-[15px] overflow-hidden">
+            <div className="relative w-full sm:w-[45%] aspect-video sm:aspect-auto sm:self-stretch rounded-tl-[15px] rounded-bl-[15px] rounded-tr-[15px] rounded-br-[15px] sm:rounded-tr-0 sm:rounded-br-0 overflow-hidden">
                 <Image
-                    src={coupon.blurImage.img.src}
+                    src={voucherImage}
                     alt="Product Image"
-                    width={coupon.blurImage.img.width}
-                    height={coupon.blurImage.img.height}
-                    className="absolute inset-0 h-full w-full object-cover object-center bg-slate-300"
+                    width={1000}
+                    height={1000}
+                    className="absolute inset-0 h-full w-full object-cover object-left bg-slate-300"
                     placeholder="blur"
-                    blurDataURL={coupon.blurImage.base64}
+                    loading="lazy"
                 />
 
                 <div className="flex flex-col absolute space-y-[10px] top-[50%] translate-y-[-50%] left-[10px]">
@@ -41,7 +42,7 @@ export default function CouponItem({ coupon }) {
                 </div>
             </div>
             
-            <div className="py-[10px] px-[15px] sm:py-[15px] sm:px-[20px] w-[60%]">
+            <div className="py-[10px] px-[15px] sm:py-[15px] sm:px-[20px] w-full sm:w-[55%]">
                 <div className="space-y-[5px] mb-[20px]">
                     <div className="flex items-center gap-x-[10px]">
                         <span className="inline-block w-[8px] aspect-square rounded-full bg-yellowBold" />
@@ -56,16 +57,17 @@ export default function CouponItem({ coupon }) {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-[5px] text-[14px]">
+                <div className="flex flex-col sm:flex-row items-center gap-[5px] text-[14px]">
                     {
                         pathname.startsWith("/phieu-giam-gia") ?
                         (
-                            <Button >
+                            <Button className="w-full sm:w-fit" >
                                 Lưu phiếu
                             </Button>
                         ) :
                         (
                             <Button
+                                className="w-full sm:w-fit"
                                 onClick={() => { handleRedirect(coupon.id); }}
                             >
                                 Sản phẩm

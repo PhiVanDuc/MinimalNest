@@ -57,6 +57,7 @@ export default function Newsletter() {
                         height={1080}
                         className="absolute inset-0 w-full h-full object-cover object-center"
                         placeholder="blur"
+                        loading="lazy"
                     />
 
                     <span className="absolute inset-0 bg-[#404040]/40" />

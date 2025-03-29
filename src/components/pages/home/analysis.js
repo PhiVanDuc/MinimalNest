@@ -17,6 +17,7 @@ export default async function Analysis() {
                     height={750}
                     className="w-full h-full object-cover object-center"
                     placeholder="blur"
+                    loading="lazy"
                 />
             </div>
 

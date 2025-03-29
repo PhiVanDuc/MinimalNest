@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import Image from "next/image";
 
@@ -29,6 +31,7 @@ export default function ProductItem({ item }) {
                                 className="w-full aspect-square object-cover object-center"
                                 placeholder="blur"
                                 blurDataURL={item.blurImage.base64}
+                                loading="lazy"
                             />
                         </div>
                     ) :

@@ -10,7 +10,6 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import CouponItem from "./coupon-item";
-import getProducts from "@/services/products/getProducts";
 
 let coupons = [
     {
@@ -196,17 +195,11 @@ let coupons = [
 ];
 
 export default async function MainCouponList() {
-    const products = await getProducts(19);
-    if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
-
-    coupons = coupons.map((coupon, index) => {
-        coupon["blurImage"] = products[index]?.blurImage;
-        return coupon;
-    })
+    // Fetch dữ liệu ở đây
 
     return (
         <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[25px]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-[25px]">
                 {
                     coupons.map(coupon => {
                         return (

@@ -71,6 +71,7 @@ export default async function Header() {
                                             className="w-full h-[140px] md:h-[200px] lg:h-[260px] object-cover object-center"
                                             placeholder="blur"
                                             blurDataURL={image.base64}
+                                            loading="lazy"
                                         />
 
                                         <CustomBadge
