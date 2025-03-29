@@ -1,4 +1,3 @@
-import DynamicImage from "@/components/customs/dynamic-image";
 import CustomButton from "@/components/customs/custom-button";
 import RotatingText from "@/components/customs/react-bits/RotatingText";
 import CustomBadge from "@/components/customs/custom-badge";
@@ -9,6 +8,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import { Truck } from "lucide-react";
 import BlurCircle from "../../customs/blur-circle";
 import { cn } from "@/lib/utils";
+import { v4 } from "uuid";
 
 export default async function Header() {
     return (
@@ -49,17 +49,12 @@ export default async function Header() {
                             Array.from({ length: 3 }).map((_, index) => {
                                 return (
                                     <div
+                                        key={v4()}
                                         className={cn(
                                             "relative h-[140px] md:h-[200px] lg:h-[260px] rounded-[15px] bg-slate-300 overflow-hidden",
                                             index === 2 ? "col-span-2" : "col-span-1"
                                         )}
-                                    >
-                                        <DynamicImage
-                                            src="https://fastly.picsum.photos/id/507/2000/2000.jpg?hmac=9oAdMdpuu5V-i2IhaoACEOEyeOfLIdwRzvBDH6Wi4Xc"
-                                            alt="Lasest Product Image"
-                                            className="w-full h-[140px] md:h-[200px] lg:h-[260px] object-cover object-center"
-                                        />
-                                        
+                                    >   
                                         <CustomBadge
                                             text="Mới"
                                             badgeClassName="absolute top-[15px] right-[15px] px-[10px] py-[5px] bg-yellowBold hover:bg-yellowBold hover:opacity-80 cursor-pointer"

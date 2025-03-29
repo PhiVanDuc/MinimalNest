@@ -1,18 +1,12 @@
 import CountUp from '@/components/customs/react-bits/CountUp'
 import BlurCircle from '../../customs/blur-circle'
-import DynamicImage from '@/components/customs/dynamic-image'
 
 export default function Analysis() {
     return (
         <section
             className="relative flex flex-col lg:flex-row items-center gap-[40px] lg:gap-[80px]"
         >
-            <div className='w-full order-2 lg:order-1 aspect-square rounded-[20px] md:rounded-[60px] bg-slate-300 overflow-hidden'>
-                <DynamicImage
-                    src='https://fastly.picsum.photos/id/507/2000/2000.jpg?hmac=9oAdMdpuu5V-i2IhaoACEOEyeOfLIdwRzvBDH6Wi4Xc'
-                    alt="Analysis Image"
-                    className="w-full object-cover object-center"
-                />
+            <div className='w-full order-2 lg:order-1 aspect-square rounded-[20px] md:rounded-[60px] bg-slate-300'>
             </div>
 
             <div className='order-1 lg:order-2 w-full space-y-[30px]'>
