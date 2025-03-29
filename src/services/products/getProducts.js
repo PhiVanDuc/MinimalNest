@@ -36,8 +36,6 @@ const getProducts = async (maxItem = 20) => {
                 blurImage: item["blurImage"]
             };
         }));
-
-        console.log(newData[0].blurImage.img);
         
         return newData;
     }

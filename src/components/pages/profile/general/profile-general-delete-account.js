@@ -30,9 +30,7 @@ export default function ProfileGeneralDeleteAccount() {
         }
     });
 
-    const handleSubmit = (values) => {
-        console.log(values);
-    }
+    const handleSubmit = (values) => {}
 
     return (
         <div className="sm:flex items-center justify-between gap-[20px] space-y-[20px] sm:space-y-0">

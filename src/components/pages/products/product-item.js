@@ -26,8 +26,8 @@ export default function ProductItem({ item }) {
                             <Image
                                 src={item.blurImage.img.src}
                                 alt="Product Image"
-                                width={600}
-                                height={300}
+                                width={item.blurImage.img.width}
+                                height={item.blurImage.img.height}
                                 className="w-full aspect-square object-cover object-center"
                                 placeholder="blur"
                                 blurDataURL={item.blurImage.base64}

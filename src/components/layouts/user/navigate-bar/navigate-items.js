@@ -122,7 +122,6 @@ export default function NavigateItems() {
     
         if (Object.keys(others).length > 0) {
             if (!others?.["living-space"]) {
-                console.log("Run here");
                 newSearchParams.set("living-space", item.livingSpace);
             }
 

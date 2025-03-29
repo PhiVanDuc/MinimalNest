@@ -8,7 +8,7 @@ import getProducts from "@/services/products/getProducts";
 import { v4 } from "uuid";
 
 export default async function FeaturedProducts() {
-    let products = await getProducts(10);
+    let products = await getProducts(8);
     if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
 
     const componentProduct = products.map(item => {
