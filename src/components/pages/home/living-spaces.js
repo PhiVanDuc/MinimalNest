@@ -18,7 +18,7 @@ const finalData = spaces.map(space => (
         id: v4(),
         component: (
             <>
-                <div className="w-full aspect-video rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300" />
+                <div className="w-full aspect-16/11 rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300" />
                 <div className="relative text-[15px] sm:text-[16px] font-semibold text-darkBold p-[20px] bg-white rounded-br-[15px] rounded-bl-[15px]">
                     <div className="flex items-center justify-between">
                         <h3>{space}</h3>
@@ -47,7 +47,7 @@ export default function LivingSpace() {
 
             <CoreCarousel
                 data={finalData}
-                numberCardClassName="sm:basis-1/2 lg:basis-1/3"
+                numberCardClassName="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
             />
 
             <BlurCircle className="right-0 bottom-0 translate-x-[50%] translate-y-[50%]" />

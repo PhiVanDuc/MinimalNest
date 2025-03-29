@@ -5,7 +5,7 @@ import { v4 } from "uuid";
 
 const FAKE_API = process.env.FAKE_API;
 
-const getProducts = async () => {
+const getProducts = async (maxItem = 20) => {
     try {
         const request = await fetch(
             `${FAKE_API}/products`,
@@ -20,16 +20,25 @@ const getProducts = async () => {
         }
         
         const response = await request.json();
+        const limitedProducts = response?.products.slice(0, maxItem - 1);
 
         // Thêm placeholder cho ảnh với key là blurImage
-        const newData = Promise.all(response.map(async (item) => {
-            const blurImage = await dynamicBlurImage(item.image);
-            item["id"] = v4();
-            item["blurImage"] = blurImage;
+        const newData = await Promise.all(limitedProducts.map(async (item) => {
+            const blurImage = await dynamicBlurImage(item.images[0]);
 
-            return item;
+            item["blurImage"] = {
+                base64: blurImage.base64,
+                img: blurImage.img
+            };
+
+            return {
+                id: v4(),
+                blurImage: item["blurImage"]
+            };
         }));
 
+        console.log(newData[0].blurImage.img);
+        
         return newData;
     }
     catch(error) {

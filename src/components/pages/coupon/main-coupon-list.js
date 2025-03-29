@@ -196,7 +196,7 @@ let coupons = [
 ];
 
 export default async function MainCouponList() {
-    const products = await getProducts();
+    const products = await getProducts(19);
     if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
 
     coupons = coupons.map((coupon, index) => {
@@ -206,7 +206,7 @@ export default async function MainCouponList() {
 
     return (
         <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[20px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[25px]">
                 {
                     coupons.map(coupon => {
                         return (

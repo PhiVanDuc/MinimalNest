@@ -8,7 +8,7 @@ import getProducts from "@/services/products/getProducts";
 import { v4 } from "uuid";
 
 export default async function FeaturedProducts() {
-    let products = await getProducts();
+    let products = await getProducts(10);
     if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
 
     const componentProduct = products.map(item => {
@@ -37,7 +37,7 @@ export default async function FeaturedProducts() {
 
             <CoreCarousel
                 data={componentProduct}
-                numberCardClassName="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+                numberCardClassName="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5"
             />
         </section>
     )

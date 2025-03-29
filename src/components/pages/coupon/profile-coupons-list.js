@@ -76,7 +76,7 @@ let coupons = [
 ];
 
 export default async function ProfileCouponsList() {
-    const products = await getProducts();
+    const products = await getProducts(9);
     if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
 
     coupons = coupons.map((coupon, index) => {
@@ -86,7 +86,7 @@ export default async function ProfileCouponsList() {
 
     return (
         <div>
-            <div className="grid grid-cols-1 2xl:grid-cols-2 gap-[20px]">
+            <div className="grid grid-cols-1 2xl:grid-cols-2 gap-[25px]">
                 {
                     coupons.map(coupon => {
                         return (

@@ -20,52 +20,54 @@ export default function ProductItem({ item }) {
             {
                 item ?
                     (
-                        <div className="w-full aspect-16/12 rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
+                        <div className="w-full aspect-square rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
                             <Image
-                                src={item.image}
+                                src={item.blurImage.img.src}
                                 alt="Product Image"
-                                width={item.blurImage.img.width}
-                                height={item.blurImage.img.height}
-                                className="w-full aspect-16/12 object-cover object-center"
+                                width={600}
+                                height={300}
+                                className="w-full aspect-square object-cover object-center"
                                 placeholder="blur"
                                 blurDataURL={item.blurImage.base64}
                             />
                         </div>
                     ) :
                     (
-                        <div className="w-full aspect-16/12 rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
+                        <div className="w-full aspect-square rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
                         </div>
                     )
             }
 
-            <div className="relative space-y-[15px] p-[20px] bg-white">
-                <div className="flex items-center justify-between">
-                    <h3 className="text-[15px] sm:text-[16px] text-darkBold font-semibold">Tên sản phẩm</h3>
-                    <Badge className="bg-yellowBold text-white text-[13px] font-medium">4,98</Badge>
+            <div className="relative p-[20px] bg-white space-y-[15px]">
+                <div className="space-y-[5px]">
+                    <div className="flex items-center justify-between">
+                        <h3 className="text-[14px] sm:text-[15px] text-darkBold font-semibold">Tên sản phẩm</h3>
+                        <Badge className="bg-yellowBold text-white text-[12px] font-medium px-[6px]">4,98</Badge>
+                    </div>
+
+                    <TooltipProvider
+                        delayDuration={200}
+                    >
+                        <div className="flex items-center gap-x-[8px]">
+                            {
+                                Array.from({ length: 4 }).map((_, index) => (
+                                    <Tooltip key={index}>
+                                        <TooltipTrigger asChild>
+                                            <span className="inline-block w-[14px] h-[14px] rounded-full bg-slate-300 cursor-pointer" />
+                                        </TooltipTrigger>
+
+                                        <TooltipContent>
+                                            <p>Mô tả màu sắc</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                ))
+                            }
+                        </div>
+                    </TooltipProvider>
                 </div>
 
-                <TooltipProvider
-                    delayDuration={200}
-                >
-                    <div className="flex items-center gap-x-[8px]">
-                        {
-                            Array.from({ length: 4 }).map((_, index) => (
-                                <Tooltip key={index}>
-                                    <TooltipTrigger asChild>
-                                        <span className="inline-block w-[16px] h-[16px] rounded-full bg-slate-300 cursor-pointer" />
-                                    </TooltipTrigger>
-
-                                    <TooltipContent>
-                                        <p>Mô tả màu sắc</p>
-                                    </TooltipContent>
-                                </Tooltip>
-                            ))
-                        }
-                    </div>
-                </TooltipProvider>
-
-                <p className="flex items-center gap-x-[10px] text-[13px] sm:text-[15px] text-darkBold font-semibold">
-                    <IoPricetagOutline size={22} />
+                <p className="flex items-center gap-x-[10px] text-[13px] sm:text-[14px] text-darkBold font-semibold">
+                    <IoPricetagOutline size={20} className="text-darkMedium" />
                     400.000 VND
                 </p>
             </div>

@@ -1,31 +1,43 @@
+"use client"
+
+import { usePathname, useRouter } from "next/navigation";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
-import ProfileCouponRedirectButton from "./profile-coupon-redirect-button";
+import generateSignatureClient from "@/lib/generate-signature-client";
 
 export default function CouponItem({ coupon }) {
+    const pathname = usePathname();
+    const router = useRouter();
+
+    const handleRedirect = () => {
+        const signature = generateSignatureClient(`v-id=${id}`);
+        router.push(`/san-pham/tim-kiem?v-id=${id}&signature=${signature}`);
+    }
+
     return (
         <div
             className="relative flex items-center rounded-[15px] border bg-white"
         >
-            <div className="relative flex flex-col w-[40%] self-stretch">
+            <div className="relative flex flex-col w-[40%] self-stretch rounded-tl-[15px] rounded-bl-[15px] overflow-hidden">
                 <Image
                     src={coupon.blurImage.img.src}
                     alt="Product Image"
                     width={coupon.blurImage.img.width}
                     height={coupon.blurImage.img.height}
-                    className="absolute inset-0 h-full w-full object-cover object-center bg-slate-300 rounded-tl-[15px] rounded-bl-[15px]"
+                    className="absolute inset-0 h-full w-full object-cover object-center bg-slate-300"
                     placeholder="blur"
                     blurDataURL={coupon.blurImage.base64}
                 />
 
                 <div className="flex flex-col absolute space-y-[10px] top-[50%] translate-y-[-50%] left-[10px]">
-                    <span className="inline-block w-[6px] aspect-square rounded-full bg-white" />
-                    <span className="inline-block w-[6px] aspect-square rounded-full bg-white" />
-                    <span className="inline-block w-[6px] aspect-square rounded-full bg-white" />
-                    <span className="inline-block w-[6px] aspect-square rounded-full bg-white" />
-                    <span className="inline-block w-[6px] aspect-square rounded-full bg-white" />
+                    <span className="inline-block w-[7px] aspect-square rounded-full bg-white" />
+                    <span className="inline-block w-[7px] aspect-square rounded-full bg-white" />
+                    <span className="inline-block w-[7px] aspect-square rounded-full bg-white" />
+                    <span className="inline-block w-[7px] aspect-square rounded-full bg-white" />
+                    <span className="inline-block w-[7px] aspect-square rounded-full bg-white" />
                 </div>
             </div>
             
@@ -45,11 +57,21 @@ export default function CouponItem({ coupon }) {
                 </div>
 
                 <div className="flex items-center gap-[5px] text-[14px]">
-                    <ProfileCouponRedirectButton
-                        id={coupon.id}
-                    >
-                        Sản phẩm
-                    </ProfileCouponRedirectButton>
+                    {
+                        pathname.startsWith("/phieu-giam-gia") ?
+                        (
+                            <Button >
+                                Lưu phiếu
+                            </Button>
+                        ) :
+                        (
+                            <Button
+                                onClick={() => { handleRedirect(coupon.id); }}
+                            >
+                                Sản phẩm
+                            </Button>
+                        )
+                    }
 
                     <Button variant="ghost">
                         <Link href="/phieu-giam-gia/tieu-de-phieu-giam-gia">Chi tiết</Link>
@@ -57,10 +79,10 @@ export default function CouponItem({ coupon }) {
                 </div>
             </div>
 
-            <div className="absolute flex justify-center top-[10px] right-[-7px] rounded-tl-full rounded-bl-full w-[40px] py-[2px] bg-yellowMedium text-[14px] text-darkBold font-medium">
+            <div className="absolute flex justify-center top-[10px] right-[-7px] rounded-tl-full rounded-bl-full w-[38px] py-[2px] bg-yellowMedium text-[13px] text-darkBold font-medium">
                 <p>3</p>
                 <div
-                    className="absolute top-[25px] right-0 w-[50px] h-[50px] bg-yellowBold -z-10"
+                    className="absolute top-[23.5px] right-0 w-[50px] h-[50px] bg-yellowBold -z-10"
                     style={{
                         clipPath: "polygon(0 0, 100% 0, 0 100%)"
                     }}
