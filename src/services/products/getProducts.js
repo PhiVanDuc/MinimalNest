@@ -20,7 +20,7 @@ const getProducts = async (maxItem = 20) => {
         }
         
         const response = await request.json();
-        const limitedProducts = response?.products.slice(0, maxItem - 1);
+        const limitedProducts = response?.products.slice(0, maxItem);
 
         // Thêm placeholder cho ảnh với key là blurImage
         const newData = await Promise.all(limitedProducts.map(async (item) => {

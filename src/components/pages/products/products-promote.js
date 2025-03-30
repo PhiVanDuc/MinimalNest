@@ -6,7 +6,7 @@ import { v4 } from "uuid";
 import getProducts from "@/services/products/getProducts";
 
 export default async function ProductsPromote() {
-    const products = await getProducts(2);
+    const products = await getProducts(10);
     if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
 
     const componentProduct = products.map(item => {
