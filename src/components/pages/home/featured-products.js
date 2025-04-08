@@ -3,20 +3,31 @@ import CoreCarousel from "@/components/customs/core-carousel";
 import ProductItem from "@/components/pages/products/product-item";
 
 import { ChevronRight } from "lucide-react";
-
-import getProducts from "@/services/products/getProducts";
 import { v4 } from "uuid";
 
 export default async function FeaturedProducts() {
-    let products = await getProducts(8);
-    if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
-
-    const componentProduct = products.map(item => {
-        return {
+    const componentProduct = [
+        {
             id: v4(),
-            component: <ProductItem item={item} />
+            component: <ProductItem />
+        },
+        {
+            id: v4(),
+            component: <ProductItem />
+        },
+        {
+            id: v4(),
+            component: <ProductItem />
+        },
+        {
+            id: v4(),
+            component: <ProductItem />
+        },
+        {
+            id: v4(),
+            component: <ProductItem />
         }
-    });
+    ]
 
     return (
         <section className="space-y-[40px]">
@@ -37,7 +48,7 @@ export default async function FeaturedProducts() {
 
             <CoreCarousel
                 data={componentProduct}
-                numberCardClassName="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5"
+                numberCardClassName="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
             />
         </section>
     )

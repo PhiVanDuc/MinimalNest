@@ -107,6 +107,10 @@ export default function NavigateItems() {
             return;
         }
 
+        const newSearchParams = new URLSearchParams();
+
+        // Thêm luôn living-space kẻo website lag và không cập nhật kịp state trong redux
+        newSearchParams.set("living-space", item.livingSpace);
         dispatch(updateOthers({
             "living-space": {
                 label: "Không gian sống",
@@ -114,18 +118,14 @@ export default function NavigateItems() {
                 value: item.livingSpace
             }
         }));
-        
-        const newSearchParams = new URLSearchParams();
     
         if (Object.keys(filters).length > 0) newSearchParams.set("filters", Object.keys(filters).join(","));
         else newSearchParams.delete("filters");
     
         if (Object.keys(others).length > 0) {
-            if (!others?.["living-space"]) {
-                newSearchParams.set("living-space", item.livingSpace);
-            }
-
             Object.keys(others).forEach((key) => {
+                if (key === "living-space") return;
+
                 const label = others[key]?.param;
                 const value = others[key]?.value;
                 if (label && value) {
@@ -133,9 +133,11 @@ export default function NavigateItems() {
                 }
             });
         }
-
-        const signature = generateSignatureClient(newSearchParams.toString().replace(/%2C/g, ","));
-        router.push(`/san-pham/tim-kiem?${newSearchParams.toString().replace(/%2C/g, ",")}&signature=${signature}`);
+        
+        const queryString = newSearchParams
+            .toString()
+            .replace(/%2C/g, ",");
+        router.push(`/san-pham/tim-kiem?${queryString}&signature=${generateSignatureClient(queryString)}`);
     }
 
     return (

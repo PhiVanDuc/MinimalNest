@@ -10,18 +10,14 @@ import {
 } from "@/components/ui/pagination";
 
 import { v4 } from "uuid";
-import getProducts from "@/services/products/getProducts";
 
 export default async function ProductsNormal() {
-    const products = await getProducts(20);
-    if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
-
-    const componentProduct = products.map(item => {
+    const componentProduct = Array.from({ length: 20 }).map((_, index) => {
         return {
             id: v4(),
-            component: <ProductItem item={item} />
+            component: <ProductItem />
         }
-    });
+    })
 
     return (
         <div className="space-y-[20px]">

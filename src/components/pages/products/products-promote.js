@@ -3,18 +3,14 @@ import ProductFilterRightSide from "./filter/product-filter-right-side";
 import ProductItem from "./product-item";
 
 import { v4 } from "uuid";
-import getProducts from "@/services/products/getProducts";
 
 export default async function ProductsPromote() {
-    const products = await getProducts(10);
-    if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
-
-    const componentProduct = products.map(item => {
+    const componentProduct = Array.from({ length: 10 }).map((_, index) => {
         return {
             id: v4(),
-            component: <ProductItem item={item} />
+            component: <ProductItem />
         }
-    });
+    })
 
     return (
         <div className="space-y-[60px]">

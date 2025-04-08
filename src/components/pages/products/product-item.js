@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link";
-import Image from "next/image";
 
 import {
     Tooltip,
@@ -13,33 +12,13 @@ import { Badge } from "@/components/ui/badge";
 
 import { IoPricetagOutline } from "react-icons/io5";
 
-export default function ProductItem({ item }) {
+export default function ProductItem() {
     return (
         <Link
             href={`/san-pham/ten-san-pham`}
             className="block rounded-[15px] cursor-pointer border shadow-sm overflow-hidden"
         >
-            {
-                item ?
-                    (
-                        <div className="w-full aspect-square rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
-                            <Image
-                                src={item?.blurImage.img.src}
-                                alt="Product Image"
-                                width={item?.blurImage.img.width}
-                                height={item?.blurImage.img.height}
-                                className="w-full aspect-square object-cover object-center"
-                                placeholder="blur"
-                                blurDataURL={item?.blurImage.base64}
-                                loading="lazy"
-                            />
-                        </div>
-                    ) :
-                    (
-                        <div className="w-full aspect-square rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden">
-                        </div>
-                    )
-            }
+            <div className="w-full aspect-16/15 rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden" />
 
             <div className="relative p-[20px] bg-white space-y-[15px]">
                 <div className="space-y-[5px]">

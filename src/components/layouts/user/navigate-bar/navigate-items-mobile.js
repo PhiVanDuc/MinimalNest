@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 
 import Link from "next/link";
 import Logo from "@/components/customs/logo/logo";
@@ -33,7 +34,10 @@ import { MdOutlineBed } from "react-icons/md";
 import { HiOutlineArchive } from "react-icons/hi";
 import { Menu, Undo2 } from "lucide-react";
 import { FiShoppingBag, FiUser } from "react-icons/fi";
+
 import { cn } from "@/lib/utils";
+import generateSignatureClient from "@/lib/generate-signature-client";
+import { updateOthers } from "@/redux/slices/product-filter/product-filter-slice";
 
 const livingSpaces = [
     {
@@ -99,27 +103,56 @@ export default function NavigateItemsMobile() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
+    const dispatch = useDispatch();
+    const { filters, others } = useSelector(state => state.productFilter);
     const [pathname, setPathname] = useState(() => firstPath === "/" ? "/home" : firstPath);
     const [isOpen, setIsOpen] = useState(false);
-
-    const handleClickSubNav = (item) => {
-        if (item.livingSpace === "all") router.push("/san-pham");
-        else {
-            const obj = {};
-            searchParams.forEach((value, key) => {
-                obj[key] = value;
-            });
-
-            obj['living-space'] = item.livingSpace;
-            router.push(`/san-pham/tim-kiem?${new URLSearchParams(obj).toString().replace(/%2C/g, ',')}`);
-        }
-
-        setIsOpen(false);
-    }
 
     useEffect(() => {
         setPathname(firstPath === "/" ? "/home" : firstPath);
     }, [firstPath]);
+
+    const handleClickSubNav = (item) => {
+        if (item.livingSpace === "all") {
+            router.push("/san-pham");
+            setIsOpen(false);
+            return;
+        }
+
+        const newSearchParams = new URLSearchParams();
+
+        // Thêm luôn living-space kẻo website lag và không cập nhật kịp state trong redux
+        newSearchParams.set("living-space", item.livingSpace);
+        dispatch(updateOthers({
+            "living-space": {
+                label: "Không gian sống",
+                param: "living-space",
+                value: item.livingSpace
+            }
+        }));
+    
+        if (Object.keys(filters).length > 0) newSearchParams.set("filters", Object.keys(filters).join(","));
+        else newSearchParams.delete("filters");
+    
+        if (Object.keys(others).length > 0) {
+            Object.keys(others).forEach((key) => {
+                if (key === "living-space") return;
+
+                const label = others[key]?.param;
+                const value = others[key]?.value;
+                if (label && value) {
+                    newSearchParams.set(label, value);
+                }
+            });
+        }
+        
+        const queryString = newSearchParams
+            .toString()
+            .replace(/%2C/g, ",");
+        router.push(`/san-pham/tim-kiem?${queryString}&signature=${generateSignatureClient(queryString)}`);
+
+        setIsOpen(false);
+    }
     
     return (
         <Sheet

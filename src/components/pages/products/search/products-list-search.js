@@ -10,18 +10,13 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
-
 import { v4 } from "uuid";
-import getProducts from "@/services/products/getProducts";
 
 export default async function ProductsListSearch() {
-    const products = await getProducts();
-    if (!products) return <div>Lỗi khi lấy dữ liệu.</div>
-
-    const componentProduct = products.map(item => {
+    const componentProduct = Array.from({ length: 20 }).map((_, index) => {
         return {
             id: v4(),
-            component: <ProductItem item={item} />
+            component: <ProductItem />
         }
     });
 
