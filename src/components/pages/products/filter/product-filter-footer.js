@@ -30,6 +30,7 @@ export default function ProductFilterFooter() {
 
     const hasActiveFilters = useMemo(() => {
         return (
+            !_.isEmpty(livingSpaceState) ||
             Boolean(productNameState.value) ||
             Boolean(discountState.value) ||
             !_.isEmpty(typeState) ||
@@ -40,6 +41,7 @@ export default function ProductFilterFooter() {
         );
     },
         [
+            livingSpaceState,
             productNameState.value,
             discountState.value,
             typeState,
@@ -57,6 +59,7 @@ export default function ProductFilterFooter() {
         }
         const currentSearchParams = new URLSearchParams();
 
+        if (!_.isEmpty(livingSpaceState)) currentSearchParams.set("living-space", livingSpaceState?.param);
         if (productNameState?.value) currentSearchParams.set(productNameState?.param, productNameState?.value);
         if (discountState?.value) currentSearchParams.set(discountState?.param, discountState?.value);
         if (!_.isEmpty(typeState)) currentSearchParams.set("type", typeState?.param);

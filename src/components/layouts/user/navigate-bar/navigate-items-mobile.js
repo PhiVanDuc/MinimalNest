@@ -36,6 +36,8 @@ import { Menu, Undo2 } from "lucide-react";
 import { FiShoppingBag, FiUser } from "react-icons/fi";
 
 import { cn } from "@/lib/utils";
+import generateSignatureClient from "@/lib/generate-signature-client";
+import { addLivingSpace } from "@/redux/slices/product-filter/product-filter-slice";
 
 const livingSpaces = [
     {
@@ -110,6 +112,20 @@ export default function NavigateItemsMobile() {
     }, [firstPath]);
 
     const handleClickSubNav = (item) => {
+        const params = new URLSearchParams(searchParams.toString());
+
+        params.set("living-space", item.livingSpace);
+        params.delete("signature");
+        dispatch(addLivingSpace({
+            label: item.label,
+            param: item.livingSpace
+        }));
+
+        const stringSearchParams = params.toString().replace(/%2C/g, ",");
+        const signature = generateSignatureClient(params.toString().replace(/%2C/g, ","));
+        
+        router.push(`/san-pham/tim-kiem?${stringSearchParams}&signature=${signature}`);
+        setIsOpen(false);
     }
     
     return (

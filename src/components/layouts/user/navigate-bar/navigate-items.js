@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDispatch } from "react-redux";
 
 import Link from "next/link";
 import {
@@ -23,6 +23,8 @@ import { FaChevronDown } from "react-icons/fa6";
 import Mark from "./mark";
 
 import { cn } from "@/lib/utils";
+import generateSignatureClient from "@/lib/generate-signature-client";
+import { addLivingSpace } from "@/redux/slices/product-filter/product-filter-slice";
 
 const items = [
     {
@@ -99,6 +101,19 @@ export default function NavigateItems() {
     }, [firstPath]);
 
     const handleClickSubNav = (item) => {
+        const params = new URLSearchParams(searchParams.toString());
+
+        params.set("living-space", item.livingSpace);
+        params.delete("signature");
+        dispatch(addLivingSpace({
+            label: item.label,
+            param: item.livingSpace
+        }));
+
+        const stringSearchParams = params.toString().replace(/%2C/g, ",");
+        const signature = generateSignatureClient(params.toString().replace(/%2C/g, ","));
+        
+        router.push(`/san-pham/tim-kiem?${stringSearchParams}&signature=${signature}`);
     }
 
     return (

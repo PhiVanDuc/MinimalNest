@@ -32,7 +32,9 @@ const productFilterSlice = createSlice({
     initialState,
     reducers: {
         // Add
-        addLivingSpace: (state, action) => {},
+        addLivingSpace: (state, action) => {
+            state.livingSpaceState = action.payload;
+        },
         
         addProductName: (state, action) => {
             state.productNameState.value = action.payload;
@@ -96,7 +98,9 @@ const productFilterSlice = createSlice({
         },
 
         // Delete
-        deleteLivingSpace: (state, action) => {},
+        deleteLivingSpace: (state, action) => {
+            state.livingSpaceState = "";
+        },
 
         deleteProductName: (state, action) => {
             state.productNameState.value = "";

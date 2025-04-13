@@ -7,12 +7,13 @@ import { useDispatch } from "react-redux";
 import _ from "lodash";
 import {
     addDiscount,
+    addLivingSpace,
     addPriceMax,
     addPriceMin,
     addProductName,
     updateInitialState
 } from "@/redux/slices/product-filter/product-filter-slice";
-import { types, categories, colors } from "./product-filter-data";
+import { livingSpaces, types, categories, colors } from "./product-filter-data";
 
 export default function ProductFilterWrapper({ children }) {
     const router = useRouter();
@@ -26,6 +27,12 @@ export default function ProductFilterWrapper({ children }) {
 
         for (const key in params) {
             switch(key) {
+                case "living-space": {
+                    const index = livingSpaces.findIndex(livingSpace => livingSpace.param === params[key]);
+                    if (index !== -1) dispatch(addLivingSpace(livingSpaces[index])) 
+                    break;
+                }
+
                 case "product-name": {
                     dispatch(addProductName(params[key]));
                     break;

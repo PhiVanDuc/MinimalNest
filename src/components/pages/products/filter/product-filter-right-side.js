@@ -22,6 +22,7 @@ import {
     deleteCategories,
     deleteColors,
     deleteDiscount,
+    deleteLivingSpace,
     deletePrices,
     deleteProductName,
     deleteType
@@ -31,6 +32,7 @@ import generateSignatureClient from "@/lib/generate-signature-client";
 export default function ProductFilterRightSide() {
     const router = useRouter();
     const pathname = usePathname();
+    const searchParams = useSearchParams();
 
     const dispatch = useDispatch();
     const isOpen = useSelector(state => state.productFilterOpen);
@@ -51,6 +53,10 @@ export default function ProductFilterRightSide() {
 
     const handleDelete = (filter, payload = {}) => {
         switch(filter) {
+            case "living-space": {
+                dispatch(deleteLivingSpace());
+                break;
+            }
             case "product-name": {
                 dispatch(deleteProductName());
                 break;
@@ -87,6 +93,7 @@ export default function ProductFilterRightSide() {
 
     const hasActiveFilters = useMemo(() => {
         return (
+            !_.isEmpty(livingSpaceState) ||
             Boolean(productNameState.value) ||
             Boolean(discountState.value) ||
             !_.isEmpty(typeState) ||
@@ -97,6 +104,7 @@ export default function ProductFilterRightSide() {
         );
     },
         [
+            livingSpaceState,
             productNameState.value,
             discountState.value,
             typeState,
@@ -109,11 +117,14 @@ export default function ProductFilterRightSide() {
 
     const handleSearch = () => {
         if (!hasActiveFilters && pathname.startsWith("/san-pham/tim-kiem")) {
+            console.log(livingSpaceState);
+            
             router.replace("/san-pham");
             return;
         }
         const currentSearchParams = new URLSearchParams();
 
+        if (!_.isEmpty(livingSpaceState)) currentSearchParams.set("living-space", livingSpaceState?.param);
         if (productNameState?.value) currentSearchParams.set(productNameState?.param, productNameState?.value);
         if (discountState?.value) currentSearchParams.set(discountState?.param, discountState?.value);
         if (!_.isEmpty(typeState)) currentSearchParams.set("type", typeState?.param);
@@ -150,6 +161,14 @@ export default function ProductFilterRightSide() {
                 <p>Bộ Lọc</p>
                 <SlidersHorizontal size={16} />
             </div>
+
+            {
+                !_.isEmpty(livingSpaceState) &&
+                <ProductFilterRightSideItem
+                    payload={livingSpaceState}
+                    handleDelete={() => { handleDelete("living-space") }}
+                />
+            }
             
             {
                 productNameState?.value &&
