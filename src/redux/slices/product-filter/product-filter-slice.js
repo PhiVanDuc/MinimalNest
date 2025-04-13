@@ -1,79 +1,163 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    filters: {},
-    others: {}
+    livingSpaceState: {},
+    productNameState: {
+        label: "Tên sản phẩm",
+        param: "product-name",
+        value: ""
+    },
+    discountState: {
+        label: "Giảm giá",
+        param: "discount",
+        value: false
+    },
+    typeState: {},
+    categoriesState: [],
+    priceMinState: {
+        label: "Giá tối thiểu",
+        param: "price-min",
+        value: 0
+    },
+    priceMaxState: {
+        label: "Giá tối đa",
+        param: "price-max",
+        value: 0
+    },
+    colorsState: [],
 }
 
 const productFilterSlice = createSlice({
     name: "productFilter",
     initialState,
     reducers: {
-        updateFilters: (state, action) => {
-            const payload = action.payload;
-            const arr = Object.entries(payload).flat();
+        // Add
+        addLivingSpace: (state, action) => {},
+        
+        addProductName: (state, action) => {
+            state.productNameState.value = action.payload;
+        },
 
-            if (!state.filters?.[arr[0]]) {
-                state.filters = {
-                    ...state.filters,
-                    ...payload
+        addDiscount: (state, action) => {
+            state.discountState.value = action.payload;
+        },
+
+        addType: (state, action) => {
+            if (state.typeState?.param === action.payload?.param) state.typeState = {}
+            else state.typeState = action.payload;
+        },
+
+        addCategories: (state, action) => {
+            if (state.categoriesState.length > 0) {
+                const deleteIndex = state.categoriesState.findIndex(category => action.payload.param === category?.param);
+
+                if (deleteIndex === -1) state.categoriesState.push(action.payload);
+                else state.categoriesState.splice(deleteIndex, 1);
+            }
+            else state.categoriesState.push(action.payload);
+        },
+
+        addPriceMin: (state, action) => {
+            state.priceMinState.value = action.payload;
+        },
+
+        addPriceMax: (state, action) => {
+            state.priceMaxState.value = action.payload;
+        },
+
+        addColors: (state, action) => {
+            if (state.colorsState.length > 0) {
+                const deleteIndex = state.colorsState.findIndex(category => action.payload.param === category?.param);
+
+                if (deleteIndex === -1) state.colorsState.push(action.payload);
+                else state.colorsState.splice(deleteIndex, 1);
+            }
+            else state.colorsState.push(action.payload);
+        },
+
+        // Update
+        updateInitialState: (state, action) => {
+            switch(action.payload?.filter) {
+                case "type": {
+                    state.typeState = action.payload.data;
+                    break;
                 }
-            } else {
-                delete state.filters?.[arr[0]];
+
+                case "categories": {
+                    state.categoriesState = action.payload.data;
+                    break;
+                }
+
+                case "colors": {
+                    state.colorsState = action.payload.data;
+                    break;
+                }
             }
         },
 
-        updateRadioFilters: (state, action) => {
-            const { list, payload } = action.payload;
+        // Delete
+        deleteLivingSpace: (state, action) => {},
 
-            const key = Object.keys(payload)[0];
-          
-            if (state.filters[key]) {
-              delete state.filters[key];
-            } else {
-                list.forEach(item => {
-                    if (state.filters.hasOwnProperty(item.label)) {
-                        delete state.filters[item.label];
-                    }
-                });
-
-                state.filters = {
-                    ...state.filters,
-                    ...payload
-                };
-            }
+        deleteProductName: (state, action) => {
+            state.productNameState.value = "";
         },
-          
-        updateOthers: (state, action) => {
-            const payload = action.payload;
-            
-            Object.keys(payload).forEach((key) => {
-                if (!payload[key].value) {
-                    if (state.others.hasOwnProperty(key)) {
-                        delete state.others[key];
-                    }
-                } else {
-                    state.others[key] = payload[key];
-                }
+
+        deleteDiscount: (state, action) => {
+            state.discountState.value = false;
+        },
+
+        deleteType: (state, action) => {
+            state.typeState = {}
+        },
+
+        deleteCategories: (state, action) => {
+            const deleteIndex = state.categoriesState.findIndex(category => {
+                return category.param === action.payload?.param;
             });
+
+            state.categoriesState.splice(deleteIndex, 1);
         },
 
-        updateDefault: (state, action) => {
-            state.filters = action.payload?.filters || {};
-            state.others = action.payload?.others || {};
+        deletePrices: (state, action) => {
+            state.priceMinState = {
+                label: "Giá tối thiểu",
+                param: "price-min",
+                value: 0
+            };
+
+            state.priceMaxState = {
+                label: "Giá tối đa",
+                param: "price-max",
+                value: 0
+            };
         },
 
-        deleteFilters: (state, action) => {
-            const payload = action.payload;
-            delete state.filters?.[payload];
-        },
+        deleteColors: (state, action) => {
+            const deleteIndex = state.colorsState.findIndex(color => {
+                return color.param === action.payload?.param;
+            });
 
-        deleteOthers: (state, action) => {
-            const payload = action.payload;
-            delete state.others?.[payload];
+            state.colorsState.splice(deleteIndex, 1);
         }
     }
 });
 
 export default productFilterSlice.reducer;
-export const { updateFilters, updateRadioFilters, updateOthers, updateDefault, deleteFilters, deleteOthers } = productFilterSlice.actions;
+export const {
+    addLivingSpace,
+    addProductName,
+    addDiscount,
+    addType,
+    addCategories,
+    addPriceMin,
+    addPriceMax,
+    addColors,
+    updateInitialState,
+    deleteLivingSpace,
+    deleteProductName,
+    deleteDiscount,
+    deleteType,
+    deleteCategories,
+    deletePrices,
+    deleteColors
+} = productFilterSlice.actions;

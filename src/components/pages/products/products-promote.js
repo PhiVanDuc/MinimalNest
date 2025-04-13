@@ -15,7 +15,7 @@ export default async function ProductsPromote() {
     return (
         <div className="space-y-[60px]">
             <div className="space-y-[20px]">
-                <div className="w-full aspect-square sm:aspect-16/7 lg:aspect-16/5 rounded-[15px] bg-slate-300" />
+                <div className="w-full aspect-square sm:aspect-16/7 lg:aspect-16/6 rounded-[15px] bg-slate-300" />
                 <ProductFilterRightSide />
             </div>
             

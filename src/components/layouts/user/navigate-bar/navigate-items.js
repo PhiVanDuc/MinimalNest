@@ -23,8 +23,6 @@ import { FaChevronDown } from "react-icons/fa6";
 import Mark from "./mark";
 
 import { cn } from "@/lib/utils";
-import generateSignatureClient from "@/lib/generate-signature-client";
-import { updateOthers } from "@/redux/slices/product-filter/product-filter-slice";
 
 const items = [
     {
@@ -93,7 +91,6 @@ export default function NavigateItems() {
     const router = useRouter();
 
     const dispatch = useDispatch();
-    const { filters, others } = useSelector(state => state.productFilter);
     const [pathname, setPathname] = useState(() => firstPath === "/" ? "/home" : firstPath);
     const [isOpenSubNav, setIsOpenSubNav] = useState(false);
 
@@ -102,42 +99,6 @@ export default function NavigateItems() {
     }, [firstPath]);
 
     const handleClickSubNav = (item) => {
-        if (item.livingSpace === "all") {
-            router.push("/san-pham");
-            return;
-        }
-
-        const newSearchParams = new URLSearchParams();
-
-        // Thêm luôn living-space kẻo website lag và không cập nhật kịp state trong redux
-        newSearchParams.set("living-space", item.livingSpace);
-        dispatch(updateOthers({
-            "living-space": {
-                label: "Không gian sống",
-                param: "living-space",
-                value: item.livingSpace
-            }
-        }));
-    
-        if (Object.keys(filters).length > 0) newSearchParams.set("filters", Object.keys(filters).join(","));
-        else newSearchParams.delete("filters");
-    
-        if (Object.keys(others).length > 0) {
-            Object.keys(others).forEach((key) => {
-                if (key === "living-space") return;
-
-                const label = others[key]?.param;
-                const value = others[key]?.value;
-                if (label && value) {
-                    newSearchParams.set(label, value);
-                }
-            });
-        }
-        
-        const queryString = newSearchParams
-            .toString()
-            .replace(/%2C/g, ",");
-        router.push(`/san-pham/tim-kiem?${queryString}&signature=${generateSignatureClient(queryString)}`);
     }
 
     return (

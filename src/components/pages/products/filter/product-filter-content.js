@@ -7,27 +7,54 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 
-import { types, categories, colors } from "./product-filter-data";
-import { updateFilters, updateOthers, updateRadioFilters } from "@/redux/slices/product-filter/product-filter-slice";
 import { cn } from "@/lib/utils";
+import { types, categories, colors } from "./product-filter-data";
+import {
+    addCategories,
+    addColors,
+    addDiscount,
+    addPriceMax,
+    addPriceMin,
+    addType,
+    deleteType
+} from "@/redux/slices/product-filter/product-filter-slice";
+import _ from "lodash";
 
 export default function ProductFilterContent() {
     const dispatch = useDispatch();
-    const filters = useSelector(state => state.productFilter.filters);
-    const others = useSelector(state => state.productFilter.others);
+    const { discountState, typeState, categoriesState, priceMinState, priceMaxState, colorsState } = useSelector(state => state.productFilter);
 
-    const handleChooseFilter = (type = "filters", data, radio) => {
-        if (type === "others") {
-            dispatch(updateOthers(data));
-            return;
+    const handleChooseFilter = (filter, payload) => {
+        switch(filter) {
+            case "discount": {
+                dispatch(addDiscount(payload));
+                break;
+            }
+            case "type": {
+                if (_.isEmpty(typeState)) dispatch(addType(payload));
+                else dispatch(deleteType());
+                break;
+            }
+            case "categories": {
+                dispatch(addCategories(payload));
+                break;
+            }
+            case "price-min": {
+                dispatch(addPriceMin(payload));
+                break;
+            }
+            case "price-max": {
+                dispatch(addPriceMax(payload));
+                break;
+            }
+            case "colors": {
+                dispatch(addColors(payload));
+                break;
+            }
+            default: {
+                console.log("Không có bộ lọc đó!");
+            }
         }
-
-        if (radio) {
-            dispatch(updateRadioFilters(data));
-            return;
-        }
-
-        dispatch(updateFilters(data));
     }
     
     return (
@@ -38,29 +65,27 @@ export default function ProductFilterContent() {
                 <h3 className="text-[14px] text-darkBland font-semibold">Danh sách bộ lọc</h3>
 
                 <div className="space-y-[10px]">
+                    {/* Bắt đầu Discount */}
                     <label className="flex items-center gap-x-[15px] px-[20px] py-[12px] rounded-[10px] hover:bg-neutral-100 transition-colors text-[16px] font-medium text-darkMedium hover:text-darkBold cursor-pointer">
                         <Switch
-                            checked={filters?.["discount"] ? true : false}
+                            checked={discountState.value}
                             onCheckedChange={() => {
                                 handleChooseFilter(
-                                    "filters",
-                                    {
-                                        "discount": {
-                                            label: "Giảm giá",
-                                            param: "discount"
-                                        }
-                                    }
+                                    "discount",
+                                    !discountState.value
                                 )
                             }}
                         />
                         <p>Giảm giá</p>
                     </label>
-
+                    {/* Kết thúc Discount */}
+                    
                     <Accordion
                         type="single"
                         collapsible
                         className="space-y-[5px]"
                     >
+                        {/* Bắt đầu Type */}
                         <AccordionItem
                             value="item-0"
                             className="border-none space-y-[10px]"
@@ -74,7 +99,7 @@ export default function ProductFilterContent() {
                             <AccordionContent className="pl-[20px] pb-0 space-y-[5px]">
                                 {
                                     types.map(item => {
-                                        const isCheck = filters?.[item.label];
+                                        const isCheck = item.param === typeState?.param;
 
                                         return (
                                             <p
@@ -85,28 +110,24 @@ export default function ProductFilterContent() {
                                                 )}
                                                 onClick={() => {
                                                     handleChooseFilter(
-                                                        "filters",
+                                                        "type",
                                                         {
-                                                            list: types,
-                                                            payload: {
-                                                                [item.label]: {
-                                                                    label: item.subLabel,
-                                                                    param: item.label
-                                                                }
-                                                            }
-                                                        },
-                                                        true
+                                                            label: item.label,
+                                                            param: item.param
+                                                        }
                                                     )
                                                 }}
                                             >
-                                                {item.subLabel}
+                                                {item.label}
                                             </p>
                                         )
                                     })
                                 }
                             </AccordionContent>
                         </AccordionItem>
-
+                        {/* Kết thúc Type */}
+                        
+                        {/* Bắt đầu Categories */}
                         <AccordionItem
                             value="item-1"
                             className="border-none space-y-[10px]"
@@ -120,7 +141,7 @@ export default function ProductFilterContent() {
                             <AccordionContent className="pl-[20px] pb-0 space-y-[5px]">
                                 {
                                     categories.map(item => {
-                                        const isCheck = filters?.[item.label];
+                                        const isCheck = categoriesState.some(category => category?.param === item.param);
 
                                         return (
                                             <p
@@ -131,24 +152,24 @@ export default function ProductFilterContent() {
                                                 )}
                                                 onClick={() => {
                                                     handleChooseFilter(
-                                                        "filters", 
+                                                        "categories",
                                                         {
-                                                            [item.label]: {
-                                                                label: item.subLabel,
-                                                                param: item.label
-                                                            }
+                                                            label: item.label,
+                                                            param: item.param
                                                         }
                                                     )
                                                 }}
                                             >
-                                                {item.subLabel}
+                                                {item.label}
                                             </p>
                                         )
                                     })
                                 }
                             </AccordionContent>
                         </AccordionItem>
-
+                        {/* Kết thúc Categories */}
+                        
+                        {/* Bắt đầu Price */}
                         <AccordionItem
                             value="item-2"
                             className="border-none space-y-[20px]"
@@ -161,31 +182,19 @@ export default function ProductFilterContent() {
                             
                             <AccordionContent className="pl-[20px] pb-0 space-y-[20px] pt-[8px]">
                                 <Slider
-                                    defaultValue={[others["price-min"]?.value || 20, others["price-max"]?.value || 80]}
+                                    defaultValue={[priceMinState?.value || 10, priceMaxState?.value || 80]}
                                     min={1}
                                     max={100}
                                     step={1}
                                     onValueChange={(prices) => {
                                         handleChooseFilter(
-                                            "others",
-                                            {
-                                                "price-min": {
-                                                    label: "Giá tối thiểu",
-                                                    param: "price-min",
-                                                    value: prices[0]
-                                                }
-                                            }
+                                            "price-min",
+                                            prices[0]
                                         );
 
                                         handleChooseFilter(
-                                            "others",
-                                            {
-                                                "price-max": {
-                                                    label: "Giá tối đa",
-                                                    param: "price-max",
-                                                    value: prices[1]
-                                                }
-                                            }
+                                            "price-max",
+                                            prices[1]
                                         );
                                     }}
                                 />
@@ -194,20 +203,22 @@ export default function ProductFilterContent() {
                                     <div className="space-y-[2px] text-center">
                                         <p className="text-[14px] font-medium text-darkBland">Thấp nhất</p>
                                         <p className="text-[13px] font-semibold text-darkBold">
-                                            {others["price-min"]?.value || 20}
+                                            { priceMinState?.value || 10 }
                                         </p>
                                     </div>
 
                                     <div className="space-y-[2px] text-center">
                                         <p className="text-[14px] font-medium text-darkBland">Cao nhất</p>
                                         <p className="text-[13px] font-semibold text-darkBold">
-                                            {others["price-max"]?.value || 80}
+                                            { priceMaxState?.value || 80 }
                                         </p>
                                     </div>
                                 </div>
                             </AccordionContent>
                         </AccordionItem>
-
+                        {/* Kết thúc Price */}
+                        
+                        {/* Bắt đầu Colors */}
                         <AccordionItem
                             value="item-3"
                             className="border-none space-y-[10px]"
@@ -221,7 +232,7 @@ export default function ProductFilterContent() {
                             <AccordionContent className="pl-[20px] pb-0 space-y-[5px]">
                                 {
                                     colors.map(item => {
-                                        const isCheck = filters?.[item.label];
+                                        const isCheck = colorsState.some(color => color?.param === item.param);
 
                                         return (
                                             <div    
@@ -232,13 +243,11 @@ export default function ProductFilterContent() {
                                                 )}
                                                 onClick={() => {
                                                     handleChooseFilter(
-                                                        "filters",
+                                                        "colors",
                                                         {
-                                                            [item.label]: {
-                                                                label: item.subLabel,
-                                                                param: item.label,
-                                                                codeColor: item.codeColor
-                                                            }
+                                                            label: item.label,
+                                                            param: item.param,
+                                                            codeColor: item.codeColor
                                                         }
                                                     )
                                                 }}
@@ -249,13 +258,14 @@ export default function ProductFilterContent() {
                                                         background: item.codeColor
                                                     }}
                                                 />
-                                                <p>{item.subLabel}</p>
+                                                <p>{item.label}</p>
                                             </div>
                                         )
                                     })
                                 }
                             </AccordionContent>
                         </AccordionItem>
+                        {/* Kết thúc Colors */}
                     </Accordion>
                 </div>
             </div>

@@ -1,9 +1,10 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation";
+import { useMemo } from "react";
+
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { toggle } from "@/redux/slices/product-filter/product-filter-open-slice";
-import { deleteFilters, deleteOthers } from "@/redux/slices/product-filter/product-filter-slice";
 
 import {
     Tooltip,
@@ -11,59 +12,130 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-
 import { RotateCcw, SlidersHorizontal } from "lucide-react";
-import { X } from "lucide-react";
+import ProductFilterRightSideItem from "./product-filter-right-side-item";
 
 import { v4 } from "uuid";
+import _ from "lodash";
 import { cn } from "@/lib/utils";
+import {
+    deleteCategories,
+    deleteColors,
+    deleteDiscount,
+    deletePrices,
+    deleteProductName,
+    deleteType
+} from "@/redux/slices/product-filter/product-filter-slice";
 import generateSignatureClient from "@/lib/generate-signature-client";
 
 export default function ProductFilterRightSide() {
-    const pathname = usePathname();
     const router = useRouter();
+    const pathname = usePathname();
 
     const dispatch = useDispatch();
-    const { filters, others } = useSelector(state => state.productFilter);
     const isOpen = useSelector(state => state.productFilterOpen);
+    const {
+        livingSpaceState,
+        productNameState,
+        discountState,
+        typeState,
+        categoriesState,
+        priceMinState,
+        priceMaxState,
+        colorsState
+    } = useSelector(state => state.productFilter);
 
     const handleOpenFilter = () => {
         dispatch(toggle(!isOpen));
     }
-    
-    const handleDeleteFilters = (type, data) => {
-        if (type === "others") {
-            dispatch(deleteOthers(data));
-            return;
-        }
 
-        dispatch(deleteFilters(data));
+    const handleDelete = (filter, payload = {}) => {
+        switch(filter) {
+            case "product-name": {
+                dispatch(deleteProductName());
+                break;
+            }
+            case "discount": {
+                dispatch(deleteDiscount());
+                break;
+            }
+            case "type": {
+                dispatch(deleteType());
+                break;
+            }
+            case "categories": {
+                dispatch(deleteCategories(payload));
+                break;
+            }
+            case "price-min": {
+                dispatch(deletePrices());
+                break;
+            }
+            case "price-max": {
+                dispatch(deletePrices());
+                break;
+            }
+            case "colors": {
+                dispatch(deleteColors(payload));
+                break;
+            }
+            default: {
+                console.log("Không có bộ lọc đó!");
+            }
+        }
     }
 
+    const hasActiveFilters = useMemo(() => {
+        return (
+            Boolean(productNameState.value) ||
+            Boolean(discountState.value) ||
+            !_.isEmpty(typeState) ||
+            categoriesState.length > 0 ||
+            priceMinState.value > 0 ||
+            priceMaxState.value > 0 ||
+            colorsState.length > 0
+        );
+    },
+        [
+            productNameState.value,
+            discountState.value,
+            typeState,
+            categoriesState,
+            priceMinState.value,
+            priceMaxState.value,
+            colorsState,
+        ]
+    );
+
     const handleSearch = () => {
-        if (Object.keys(filters).length === 0 && Object.keys(others).length === 0) {
-            router.push("/san-pham");
+        if (!hasActiveFilters && pathname.startsWith("/san-pham/tim-kiem")) {
+            router.replace("/san-pham");
             return;
         }
-        
-        const newSearchParams = new URLSearchParams();
-    
-        if (Object.keys(filters).length > 0) newSearchParams.set("filters", Object.keys(filters).join(","));
-        else newSearchParams.delete("filters");
-    
-        if (Object.keys(others).length > 0) {
-            Object.keys(others).forEach((key) => {
-                const label = others[key]?.param;
-                const value = others[key]?.value;
-                if (label && value) {
-                    newSearchParams.set(label, value);
-                }
-            });
+        const currentSearchParams = new URLSearchParams();
+
+        if (productNameState?.value) currentSearchParams.set(productNameState?.param, productNameState?.value);
+        if (discountState?.value) currentSearchParams.set(discountState?.param, discountState?.value);
+        if (!_.isEmpty(typeState)) currentSearchParams.set("type", typeState?.param);
+        if (priceMinState?.value > 0 && priceMaxState?.value > 0) {
+            currentSearchParams.set(priceMinState?.param, priceMinState?.value);
+            currentSearchParams.set(priceMaxState?.param, priceMaxState?.value);
         }
 
-        const finalSearchParams = newSearchParams.toString().replace(/%2C/g, ",");
-        const signature = generateSignatureClient(finalSearchParams);
-        router.push(`/san-pham/tim-kiem?${finalSearchParams}&signature=${signature}`);
+        if (categoriesState.length > 0) {
+            const value = categoriesState.map(category => category.param).join(",");
+            currentSearchParams.set("categories", value);
+        }
+
+        if (colorsState.length > 0) {
+            const value = colorsState.map(color => color.param).join(",");
+            currentSearchParams.set("colors", value);
+        }
+
+        const stringSearchParams = currentSearchParams.toString().replace(/%2C/g, ",");
+        const signature = generateSignatureClient(stringSearchParams);
+
+        router.push(`/san-pham/tim-kiem?${stringSearchParams}&signature=${signature}`);
     };
 
     return (
@@ -78,51 +150,78 @@ export default function ProductFilterRightSide() {
                 <p>Bộ Lọc</p>
                 <SlidersHorizontal size={16} />
             </div>
+            
+            {
+                productNameState?.value &&
+                <ProductFilterRightSideItem
+                    payload={productNameState}
+                    handleDelete={() => { handleDelete("product-name") }}
+                    displayValue={true}
+                />
+            }
 
             {
-                Object.entries(filters)?.map(filter => {
+                discountState?.value &&
+                <ProductFilterRightSideItem
+                    payload={discountState}
+                    handleDelete={() => { handleDelete("discount") }}
+                />
+            }
+
+            {
+                !_.isEmpty(typeState) &&
+                <ProductFilterRightSideItem
+                    payload={typeState}
+                    handleDelete={() => { handleDelete("type") }}
+                />
+            }
+
+            {
+                categoriesState.length > 0 &&
+                categoriesState.map(category => {
                     return (
-                        <div
+                        <ProductFilterRightSideItem
                             key={v4()}
-                            className="group flex items-center gap-x-[15px] w-fit text-[14px] font-medium text-darkMedium px-[20px] py-[8px] rounded-full border border-neutral-300 hover:text-darkBold hover:bg-neutral-50 hover:border-neutral-500 transition-all duration-300 cursor-pointer"
-                            onClick={() => {
-                                handleDeleteFilters(
-                                    "filters",
-                                    filter[0]
-                                );
-                            }}
-                        >
-                            <p>{filter[1]?.label}</p>
-                            <X size={16} className="translate-y-[0.5px] text-darkBland group-hover:text-red-300 transition-colors duration-300" />
-                        </div>
+                            payload={category}
+                            handleDelete={() => { handleDelete("categories", category) }}
+                        />
                     )
                 })
             }
 
             {
-                Object.entries(others)?.map(other => {
-                    if (other[1].param !== "living-space" && other[1].param !== "v-id") {
-                        return (
-                            <div
-                                key={v4()}
-                                className="group flex items-center gap-x-[15px] w-fit text-[14px] font-medium text-darkMedium px-[20px] py-[8px] rounded-full border border-neutral-300 hover:text-darkBold hover:bg-neutral-50 hover:border-neutral-500 transition-all duration-300 cursor-pointer"
-                                onClick={() => {
-                                    handleDeleteFilters(
-                                        "others",
-                                        other[0]
-                                    );
-                                }}
-                            >
-                                <p>{other[1].label} - {other[1].value}</p>
-                                <X size={16} className="translate-y-[0.5px] text-darkBland group-hover:text-red-300 transition-colors duration-300" />
-                            </div>
-                        )
-                    }
+                priceMinState?.value > 0 &&
+                <ProductFilterRightSideItem
+                    payload={priceMinState}
+                    handleDelete={() => { handleDelete("price-min") }}
+                    displayValue={true}
+                />
+            }
+
+            {
+                priceMaxState?.value > 0 &&
+                <ProductFilterRightSideItem
+                    payload={priceMaxState}
+                    handleDelete={() => { handleDelete("price-max") }}
+                    displayValue={true}
+                />
+            }
+
+            {
+                colorsState.length > 0 &&
+                colorsState.map(color => {
+                    return (
+                        <ProductFilterRightSideItem
+                            key={v4()}
+                            payload={color}
+                            handleDelete={() => { handleDelete("colors", color) }}
+                        />
+                    )
                 })
             }
 
             {
-                (Object.entries(others)?.length > 0 || Object.entries(filters)?.length > 0 || pathname.startsWith("/san-pham/tim-kiem")) &&
+                pathname.startsWith("/san-pham/tim-kiem") &&
                 (
                     <TooltipProvider delayDuration={100}>
                         <Tooltip>

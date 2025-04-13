@@ -3,75 +3,73 @@ import { v4 } from "uuid";
 export const types = [
     {
         id: v4(),
-        subLabel: "Nổi bật",
-        label: "featured"
+        label: "Mới nhất",
+        param: "latest"
     },
     {
         id: v4(),
-        subLabel: "Mới nhất",
-        label: "latest"
+        label: "Bán chạy nhất",
+        param: "best-seller"
     },
     {
         id: v4(),
-        subLabel: "Bán chạy nhất",
-        label: "best-seller"
+        label: "Giá - Từ cao đến thấp",
+        param: "price-desc"
     },
     {
         id: v4(),
-        subLabel: "Giá - Từ cao đến thấp",
-        label: "price-desc"
-    },
-    {
-        id: v4(),
-        subLabel: "Giá - Từ thấp đến cao",
-        label: "price-asc"
+        label: "Giá - Từ thấp đến cao",
+        param: "price-asc"
     },
 ];
 
 export const categories = [
     {
         id: v4(),
-        subLabel: "Bàn",
-        label: "desk"
+        label: "Bàn",
+        param: "desk"
     },
     {
         id: v4(),
-        subLabel: "Ghế",
-        label: "chair"
+        label: "Ghế",
+        param: "chair"
     },
     {
         id: v4(),
-        subLabel: "Sofa",
-        label: "sofa"
+        label: "Sofa",
+        param: "sofa"
     }
 ];
 
 export const colors = [
     {
         id: v4(),
-        subLabel: "Màu đen",
-        label: "black",
+        label: "Màu đen",
+        param: "black",
         codeColor: "#000000"
     },
     {
         id: v4(),
-        subLabel: "Màu trắng",
-        label: "white",
+        label: "Màu trắng",
+        param: "white",
         codeColor: "#ffffff"
     },
     {
         id: v4(),
-        subLabel: "Màu nâu",
-        label: "brown",
+        label: "Màu nâu",
+        param: "brown",
         codeColor: "#CCAD8F"
     }
 ]
 
 export const params = [
-    "filters",
     "living-space",
     "product-name",
-    "price-min",
+    "discount",
+    "types",
+    "categories",
     "price-max",
+    "price-min",
+    "colors",
     "v-id"
 ];
