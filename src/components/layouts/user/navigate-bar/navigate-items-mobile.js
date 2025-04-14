@@ -1,12 +1,10 @@
 "use client"
 
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
 
 import Link from "next/link";
-import Logo from "@/components/customs/logo/logo";
-import { Button } from "@/components/ui/button";
 import {
     Sheet,
     SheetContent,
@@ -16,6 +14,8 @@ import {
     SheetTitle,
     SheetTrigger
 } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import Logo from "@/components/customs/logo/logo";
 
 import {
     Accordion,
@@ -23,59 +23,18 @@ import {
     AccordionItem,
     AccordionTrigger
 } from "@/components/ui/accordion";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuTrigger, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuTrigger, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
-import { Armchair, BookText, House, Send, ShoppingCart, Sun } from "lucide-react";
-import { TbLayoutDashboard, TbLogout } from "react-icons/tb";
-import { PiCookingPotBold } from "react-icons/pi";
-import { LuShowerHead } from "react-icons/lu";
-import { MdOutlineBed } from "react-icons/md";
-import { HiOutlineArchive } from "react-icons/hi";
+import { TbLogout } from "react-icons/tb";
 import { Menu, Undo2 } from "lucide-react";
 import { FiShoppingBag, FiUser } from "react-icons/fi";
+import { BookText, House, Send, ShoppingCart } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { livingSpaces } from "@/static/navbar";
 import generateSignatureClient from "@/lib/generate-signature-client";
 import { addLivingSpace } from "@/redux/slices/product-filter/product-filter-slice";
-
-const livingSpaces = [
-    {
-        label: "Tất cả",
-        icon: <TbLayoutDashboard size={20} />,
-        livingSpace: "all",
-    },
-    {
-        label: "Phòng tắm",
-        icon: <LuShowerHead size={20} />,
-        livingSpace: "bathroom",
-    },
-    {
-        label: "Phòng khách",
-        icon: <Armchair size={20} />,
-        livingSpace: "living-room",
-    },
-    {
-        label: "Ngoài trời",
-        icon: <Sun size={20} />,
-        livingSpace: "outside",
-    },
-    {
-        label: "Phòng ăn - Nhà bếp",
-        icon: <PiCookingPotBold size={20} />,
-        livingSpace: "kitchen",
-    },
-    {
-        label: "Lưu trữ",
-        icon: <HiOutlineArchive size={20} />,
-        livingSpace: "archive",
-    },
-    {
-        label: "Phòng ngủ",
-        icon: <MdOutlineBed size={20} />,
-        livingSpace: "bedroom",
-    }
-];
 
 const items = [
     {
@@ -112,7 +71,7 @@ export default function NavigateItemsMobile() {
     }, [firstPath]);
 
     const handleClickSubNav = (item) => {
-        const params = new URLSearchParams(searchParams.toString());
+        const params = pathname.startsWith("/san-pham/tim-kiem") ? new URLSearchParams(searchParams.toString()) : new URLSearchParams();
 
         params.set("living-space", item.livingSpace);
         params.delete("signature");
@@ -198,7 +157,7 @@ export default function NavigateItemsMobile() {
                                                     )}
                                                     onClick={() => { handleClickSubNav(livingSpace); }}
                                                 >
-                                                    {livingSpace.icon}
+                                                    <livingSpace.icon size={20} />
                                                     {livingSpace.label}
                                                 </div>
                                             ))

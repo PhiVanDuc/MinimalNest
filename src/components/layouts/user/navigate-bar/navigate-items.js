@@ -1,8 +1,8 @@
 "use client"
 
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useDispatch } from "react-redux";
 
 import Link from "next/link";
 import {
@@ -13,79 +13,13 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
-import { Armchair, Sun } from "lucide-react";
-import { TbLayoutDashboard } from "react-icons/tb";
-import { PiCookingPotBold } from "react-icons/pi";
-import { LuShowerHead } from "react-icons/lu";
-import { MdOutlineBed } from "react-icons/md";
-import { HiOutlineArchive } from "react-icons/hi";
-import { FaChevronDown } from "react-icons/fa6";
 import Mark from "./mark";
+import { FaChevronDown } from "react-icons/fa6";
 
 import { cn } from "@/lib/utils";
+import { navbarItems } from "@/static/navbar";
 import generateSignatureClient from "@/lib/generate-signature-client";
 import { addLivingSpace } from "@/redux/slices/product-filter/product-filter-slice";
-
-const items = [
-    {
-        label: "Trang chủ",
-        href: "/",
-        highlight: "/home",
-    },
-    {
-        label: "Sản phẩm",
-        href: "/san-pham",
-        highlight: "/san-pham",
-        subNav: true,
-        subNavItems: [
-            {
-                label: "Tất cả",
-                icon: <TbLayoutDashboard size={20} />,
-                livingSpace: "all",
-            },
-            {
-                label: "Phòng tắm",
-                icon: <LuShowerHead size={20} />,
-                livingSpace: "bathroom",
-            },
-            {
-                label: "Phòng khách",
-                icon: <Armchair size={20} />,
-                livingSpace: "living-room",
-            },
-            {
-                label: "Ngoài trời",
-                icon: <Sun size={20} />,
-                livingSpace: "outside",
-            },
-            {
-                label: "Phòng ăn - Nhà bếp",
-                icon: <PiCookingPotBold size={20} />,
-                livingSpace: "kitchen",
-            },
-            {
-                label: "Lưu trữ",
-                icon: <HiOutlineArchive size={20} />,
-                livingSpace: "archive",
-            },
-            {
-                label: "Phòng ngủ",
-                icon: <MdOutlineBed size={20} />,
-                livingSpace: "bedroom",
-            }
-        ]
-    },
-    {
-        label: "Phiếu giảm giá",
-        href: "/phieu-giam-gia",
-        highlight: "/phieu-giam-gia",
-    },
-    {
-        label: "Liên lạc",
-        href: "/lien-lac",
-        highlight: "/lien-lac",
-    },
-];
 
 export default function NavigateItems() {
     const firstPath = usePathname();
@@ -101,7 +35,12 @@ export default function NavigateItems() {
     }, [firstPath]);
 
     const handleClickSubNav = (item) => {
-        const params = new URLSearchParams(searchParams.toString());
+        if (item.livingSpace === "all") {
+            router.push("/san-pham");
+            return;
+        }
+
+        const params = pathname.startsWith("/san-pham/tim-kiem") ? new URLSearchParams(searchParams.toString()) : new URLSearchParams();
 
         params.set("living-space", item.livingSpace);
         params.delete("signature");
@@ -119,7 +58,7 @@ export default function NavigateItems() {
     return (
         <ul className="w-fit hidden xl:flex items-center gap-x-[55px]">
             {
-                items.map(item => (
+                navbarItems.map(item => (
                     <li
                         key={item.label}
                     >
@@ -183,7 +122,7 @@ export default function NavigateItems() {
                                                         )}
                                                         onClick={() => { handleClickSubNav(item) }}
                                                     >
-                                                        {item.icon}
+                                                        <item.icon size={20} />
                                                         <p className="text-[15px]">{item.label}</p>
                                                     </DropdownMenuItem> 
                                                 ))

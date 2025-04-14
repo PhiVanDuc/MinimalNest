@@ -1,10 +1,6 @@
 "use client"
 
-import { useMemo } from "react";
-
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
-import { toggle } from "@/redux/slices/product-filter/product-filter-open-slice";
+import { usePathname } from "next/navigation";
 
 import {
     Tooltip,
@@ -15,139 +11,29 @@ import {
 import { RotateCcw, SlidersHorizontal } from "lucide-react";
 import ProductFilterRightSideItem from "./product-filter-right-side-item";
 
-import { v4 } from "uuid";
 import _ from "lodash";
+import { v4 } from "uuid";
 import { cn } from "@/lib/utils";
-import {
-    deleteCategories,
-    deleteColors,
-    deleteDiscount,
-    deleteLivingSpace,
-    deletePrices,
-    deleteProductName,
-    deleteType
-} from "@/redux/slices/product-filter/product-filter-slice";
-import generateSignatureClient from "@/lib/generate-signature-client";
+import useProductFilter from "@/hooks/use-product-filter";
 
 export default function ProductFilterRightSide() {
-    const router = useRouter();
     const pathname = usePathname();
-    const searchParams = useSearchParams();
-
-    const dispatch = useDispatch();
-    const isOpen = useSelector(state => state.productFilterOpen);
     const {
-        livingSpaceState,
-        productNameState,
-        discountState,
-        typeState,
-        categoriesState,
-        priceMinState,
-        priceMaxState,
-        colorsState
-    } = useSelector(state => state.productFilter);
-
-    const handleOpenFilter = () => {
-        dispatch(toggle(!isOpen));
-    }
-
-    const handleDelete = (filter, payload = {}) => {
-        switch(filter) {
-            case "living-space": {
-                dispatch(deleteLivingSpace());
-                break;
-            }
-            case "product-name": {
-                dispatch(deleteProductName());
-                break;
-            }
-            case "discount": {
-                dispatch(deleteDiscount());
-                break;
-            }
-            case "type": {
-                dispatch(deleteType());
-                break;
-            }
-            case "categories": {
-                dispatch(deleteCategories(payload));
-                break;
-            }
-            case "price-min": {
-                dispatch(deletePrices());
-                break;
-            }
-            case "price-max": {
-                dispatch(deletePrices());
-                break;
-            }
-            case "colors": {
-                dispatch(deleteColors(payload));
-                break;
-            }
-            default: {
-                console.log("Không có bộ lọc đó!");
-            }
-        }
-    }
-
-    const hasActiveFilters = useMemo(() => {
-        return (
-            !_.isEmpty(livingSpaceState) ||
-            Boolean(productNameState.value) ||
-            Boolean(discountState.value) ||
-            !_.isEmpty(typeState) ||
-            categoriesState.length > 0 ||
-            priceMinState.value > 0 ||
-            priceMaxState.value > 0 ||
-            colorsState.length > 0
-        );
-    },
-        [
+        isOpen,
+        toggleFilter,
+        handleDelete,
+        handleSearch,
+        filterState: {
             livingSpaceState,
-            productNameState.value,
-            discountState.value,
+            productNameState,
+            discountState,
             typeState,
             categoriesState,
-            priceMinState.value,
-            priceMaxState.value,
+            priceMinState,
+            priceMaxState,
             colorsState,
-        ]
-    );
-
-    const handleSearch = () => {
-        if (!hasActiveFilters && pathname.startsWith("/san-pham/tim-kiem")) {
-            console.log(livingSpaceState);
-            
-            router.replace("/san-pham");
-            return;
-        }
-        const currentSearchParams = new URLSearchParams();
-
-        if (!_.isEmpty(livingSpaceState)) currentSearchParams.set("living-space", livingSpaceState?.param);
-        if (productNameState?.value) currentSearchParams.set(productNameState?.param, productNameState?.value);
-        if (discountState?.value) currentSearchParams.set(discountState?.param, discountState?.value);
-        if (!_.isEmpty(typeState)) currentSearchParams.set("type", typeState?.param);
-        if (priceMinState?.value > 0 && priceMaxState?.value > 0) {
-            currentSearchParams.set(priceMinState?.param, priceMinState?.value);
-            currentSearchParams.set(priceMaxState?.param, priceMaxState?.value);
-        }
-
-        if (categoriesState.length > 0) {
-            const value = categoriesState.map(category => category.param).join(",");
-            currentSearchParams.set("categories", value);
-        }
-
-        if (colorsState.length > 0) {
-            const value = colorsState.map(color => color.param).join(",");
-            currentSearchParams.set("colors", value);
-        }
-
-        const stringSearchParams = currentSearchParams.toString().replace(/%2C/g, ",");
-        const signature = generateSignatureClient(stringSearchParams);
-
-        router.push(`/san-pham/tim-kiem?${stringSearchParams}&signature=${signature}`);
-    };
+        },
+    } = useProductFilter();
 
     return (
         <div className="flex flex-wrap items-center gap-[8px]">
@@ -156,7 +42,7 @@ export default function ProductFilterRightSide() {
                     "shrink-0 flex items-center gap-x-[15px] w-fit text-[14px] font-medium text-darkMedium px-[20px] py-[8px] rounded-full border border-neutral-300 cursor-pointer hover:text-darkBold hover:bg-neutral-50 hover:border-neutral-500 transition-all duration-300",
                     isOpen ? "text-darkBold bg-neutral-50 border-neutral-500" : ""
                 )}
-                onClick={handleOpenFilter}
+                onClick={toggleFilter}
             >
                 <p>Bộ Lọc</p>
                 <SlidersHorizontal size={16} />
