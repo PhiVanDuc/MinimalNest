@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-import HeaderLoading from "./header-loading";
 import Header from "@/components/pages/home/header";
 import Analysis from "@/components/pages/home/analysis";
 import FeaturedProducts from "@/components/pages/home/featured-products";
@@ -9,15 +7,13 @@ import Feedback from "@/components/pages/home/feedback";
 
 export default function Home() {
     return (
-        <Suspense fallback={<HeaderLoading />}>
-            <div className="space-y-[100px]">
-                <Header />
-                <Analysis />
-                <FeaturedProducts />
-                <LivingSpace />
-                <Compliment />
-                <Feedback />
-            </div>
-        </Suspense>
+        <div className="space-y-[100px]">
+            <Header />
+            <Analysis />
+            <FeaturedProducts />
+            <LivingSpace />
+            <Compliment />
+            <Feedback />
+        </div>
     )
 }

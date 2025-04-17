@@ -1,10 +1,17 @@
+"use client"
+
+import useProductFilter from "@/hooks/use-product-filter";
+
 import CoreCarousel from "@/components/customs/core-carousel";
 import ProductFilterRightSide from "./filter/product-filter-right-side";
 import ProductItem from "./product-item";
 
 import { v4 } from "uuid";
+import { cn } from "@/lib/utils";
 
-export default async function ProductsPromote() {
+export default function ProductsPromote() {
+    const { isOpen } = useProductFilter();
+
     const componentProduct = Array.from({ length: 10 }).map((_, index) => {
         return {
             id: v4(),
@@ -24,7 +31,10 @@ export default async function ProductsPromote() {
 
                 <CoreCarousel
                     data={componentProduct}
-                    numberCardClassName="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+                    numberCardClassName={cn(
+                        "sm:basis-1/2 lg:basis-1/3",
+                        isOpen ? "xl:basis-1/3" : "xl:basis-1/4"
+                    )}
                 />
             </div>
 
@@ -33,7 +43,10 @@ export default async function ProductsPromote() {
 
                 <CoreCarousel
                     data={componentProduct}
-                    numberCardClassName="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+                    numberCardClassName={cn(
+                        "sm:basis-1/2 lg:basis-1/3",
+                        isOpen ? "xl:basis-1/3" : "xl:basis-1/4"
+                    )}
                 />
             </div>
         </div>

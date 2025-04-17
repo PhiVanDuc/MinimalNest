@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { Fragment, useMemo } from "react";
+import { Fragment } from "react";
 import { usePathname } from "next/navigation";
-import { useSelector } from "react-redux";
+import useBreadcrumbPadding from "@/hooks/use-breadcrumb-padding";
 
 import {
     Breadcrumb,
@@ -21,7 +21,6 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { v4 } from "uuid";
 import { cn } from "@/lib/utils";
 
 const breadcrumbMap = {
@@ -31,121 +30,107 @@ const breadcrumbMap = {
     "lien-lac": "Liên lạc",
     "ho-so": "Hồ sơ - Thông tin chung",
     "phieu-giam-gia": "Phiếu giảm giá",
-    "don-hang": "Đơn hàng"
+    "don-hang": "Đơn hàng",
 };
-
-const sidebarPaths = ["/san-pham"];
 
 export default function CustomBreadcrumb() {
     const pathname = usePathname();
-    const pathSegments = pathname.split("/").filter(Boolean);
+    if (pathname === "/") return null;
 
-    const isOpen = useSelector(state => state.productFilterOpen);
-    const isSidebarPath = sidebarPaths.find(path => pathname.startsWith(path));
+    const segments = pathname.split("/").filter(Boolean);
+    const crumbs = [
+        { href: "/", label: "Trang chủ" },
+        ...segments.map((seg, i) => ({
+            href: "/" + segments.slice(0, i + 1).join("/"),
+            label: breadcrumbMap[seg] ?? seg,
+        })),
+    ];
 
-    const breadcrumbs = useMemo(() => {
-        return [
-            { href: "/", label: "Trang chủ" },
-            ...pathSegments.map((segment, index) => {
-                const href = "/" + pathSegments.slice(0, index + 1).join("/");
-                return {
-                    href,
-                    label: breadcrumbMap[segment] || segment,
-                };
-            }),
-        ];
-    }, [pathSegments]);
+    const paddingClass = useBreadcrumbPadding(pathname);
+    const baseClasses = cn(
+        "pt-[100px] xl:pt-[120px] pb-[40px] transition-all duration-300",
+        paddingClass
+    );
 
-    if (breadcrumbs.length <= 3) {
-        return (
-            <div
-                className={cn(
-                    "pt-[100px] xl:pt-[120px] pb-[40px] transition-all duration-300",
-                    (isOpen && (pathname === "/san-pham" || pathname === "/san-pham/tim-kiem")) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" :
-                    isSidebarPath ? "responsive-horizontal" : "",
-                    pathname === "/" ? "hidden" : ""
-                )}
-            >
-                <Breadcrumb>
-                    <BreadcrumbList className="text-[15px]">
-                        {breadcrumbs.map((crumb, index) => {
-                            const isCurrent = index === breadcrumbs.length - 1;
-                            return (
-                                <Fragment key={v4()}>
-                                    <BreadcrumbItem>
-                                        {isCurrent ? (
-                                            <BreadcrumbPage className="text-yellowBold font-medium">
-                                                {crumb.label}
-                                            </BreadcrumbPage>
-                                        ) : (
-                                            <BreadcrumbLink href={crumb.href}>
-                                                {crumb.label}
-                                            </BreadcrumbLink>
-                                        )}
-                                    </BreadcrumbItem>
-                                    {!isCurrent && <BreadcrumbSeparator />}
-                                </Fragment>
-                            );
-                        })}
-                    </BreadcrumbList>
-                </Breadcrumb>
-            </div>
-        );
-    }
-
-    const firstCrumbs = breadcrumbs.slice(0, 2);
-    const dropdownCrumbs = breadcrumbs.slice(2, breadcrumbs.length - 1);
-    const lastCrumb = breadcrumbs[breadcrumbs.length - 1];
+    const showEllipsis = crumbs.length > 3;
+    const firstTwo = crumbs.slice(0, 2);
+    const middle = crumbs.slice(2, -1);
+    const last = crumbs[crumbs.length - 1];
 
     return (
-        <div
-            className={cn(
-                "pt-[100px] xl:pt-[120px] pb-[40px] transition-colors duration-300",
-                (isOpen && (pathname === "/san-pham" || pathname === "/san-pham/tim-kiem")) ? "pl-[20px] md:pl-[40px] xl:pl-[360px] pr-[20px] md:pr-[40px]" :
-                isSidebarPath ? "responsive-horizontal" : "",
-                pathname === "/" ? "hidden" : ""
-            )}
-        >
+        <div className={baseClasses}>
             <Breadcrumb>
                 <BreadcrumbList className="text-[15px]">
-                    {/* 2 phần tử đầu */}
-                    {firstCrumbs.map((crumb) => (
-                        <Fragment key={v4()}>
+                    {crumbs.length === 2 ? (
+                        // Nếu chỉ có 2 crumbs, render trực tiếp
+                        crumbs.map((crumb, index) => (
+                            <Fragment key={crumb.href}>
+                                <BreadcrumbItem>
+                                    {index === crumbs.length - 1 ? (
+                                        <BreadcrumbPage className="text-yellowBold font-medium">
+                                            {crumb.label}
+                                        </BreadcrumbPage>
+                                    ) : (
+                                        <BreadcrumbLink href={crumb.href}>{crumb.label}</BreadcrumbLink>
+                                    )}
+                                </BreadcrumbItem>
+                                {index < crumbs.length - 1 && <BreadcrumbSeparator />}
+                            </Fragment>
+                        ))
+                    ) : (
+                        <>
+                            {/* Render 2 đầu */}
+                            {firstTwo.map(crumb => (
+                                <Fragment key={crumb.href}>
+                                    <BreadcrumbItem>
+                                        <BreadcrumbLink href={crumb.href}>{crumb.label}</BreadcrumbLink>
+                                    </BreadcrumbItem>
+                                    <BreadcrumbSeparator />
+                                </Fragment>
+                            ))}
+    
+                            {/* Nếu nhiều hơn 3 crumbs thì hiển thị dropdown */}
+                            {showEllipsis ? (
+                                <>
+                                    <BreadcrumbItem>
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger className="flex items-center gap-1">
+                                                <BreadcrumbEllipsis className="h-4 w-4" />
+                                                <span className="sr-only">Toggle menu</span>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent align="start">
+                                                {middle.map(crumb => (
+                                                    <DropdownMenuItem key={crumb.href}>
+                                                        <a href={crumb.href}>{crumb.label}</a>
+                                                    </DropdownMenuItem>
+                                                ))}
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
+                                    </BreadcrumbItem>
+                                    <BreadcrumbSeparator />
+                                </>
+                            ) : (
+                                // Nếu không, render liền mạch
+                                middle.map(crumb => (
+                                    <Fragment key={crumb.href}>
+                                        <BreadcrumbItem>
+                                            <BreadcrumbLink href={crumb.href}>{crumb.label}</BreadcrumbLink>
+                                        </BreadcrumbItem>
+                                        <BreadcrumbSeparator />
+                                    </Fragment>
+                                ))
+                            )}
+    
+                            {/* Luôn render phần tử cuối */}
                             <BreadcrumbItem>
-                                <BreadcrumbLink href={crumb.href}>
-                                    {crumb.label}
-                                </BreadcrumbLink>
+                                <BreadcrumbPage className="text-yellowBold font-medium">
+                                    {last.label}
+                                </BreadcrumbPage>
                             </BreadcrumbItem>
-                            <BreadcrumbSeparator />
-                        </Fragment>
-                    ))}
-
-                    {/* Dropdown menu cho phần tử từ thứ 3 đến liền trước phần tử cuối */}
-                    <BreadcrumbItem>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger className="flex items-center gap-1">
-                                <BreadcrumbEllipsis className="h-4 w-4" />
-                                <span className="sr-only">Toggle menu</span>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="start">
-                                {dropdownCrumbs.map((crumb) => (
-                                    <DropdownMenuItem key={v4()}>
-                                        <a href={crumb.href}>{crumb.label}</a>
-                                    </DropdownMenuItem>
-                                ))}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-
-                    {/* Phần tử cuối */}
-                    <BreadcrumbItem>
-                        <BreadcrumbPage className="text-yellowBold font-medium">
-                            {lastCrumb.label}
-                        </BreadcrumbPage>
-                    </BreadcrumbItem>
+                        </>
+                    )}
                 </BreadcrumbList>
             </Breadcrumb>
         </div>
-    );
+    );    
 }

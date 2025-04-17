@@ -1,13 +1,14 @@
 "use client"
 
+import useCouponFilter from "@/hooks/use-coupon-filter";
+
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { cn } from "@/lib/utils";
-import useProductFilter from "@/hooks/use-product-filter";
 
-export default function ProductFilterLoading() {
-    const { isOpen, toggleFilter } = useProductFilter();
+export default function CouponFilterLoading() {
+    const { isOpen, toggleFilter } = useCouponFilter();
 
     return (
         <>

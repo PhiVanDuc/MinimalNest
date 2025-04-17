@@ -3,7 +3,7 @@ import { BadgePercent, Timer, Text, Scale } from "lucide-react";
 
 export default function ProfileCouponDetail() {
     return (
-        <div className="w-full">
+        <div className="max-width responsive-horizontal">
             <div className="w-full space-y-[15px] mb-[40px]">
                 <div className="w-full aspect-video sm:aspect-16/7 lg:aspect-16/6 rounded-[10px] bg-slate-300" />
                 
@@ -69,8 +69,9 @@ export default function ProfileCouponDetail() {
                     <p className="text-[14px] md:text-[15px] text-darkMedium font-medium pl-[32px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                 </div>
 
-                <div className="text-right">
-                    <Button className="px-[25px] py-[22px]">Sản phẩm</Button>
+                <div className="flex justify-end gap-x-[8px]">
+                    {/* <Button className="px-[25px] py-[22px] bg-transparent shadow-none text-darkBold font-semibold hover:bg-transparent hover:text-darkBold">Sản phẩm</Button> */}
+                    <Button className="px-[25px] py-[22px]">Lưu</Button>
                 </div>
             </div>
         </div>

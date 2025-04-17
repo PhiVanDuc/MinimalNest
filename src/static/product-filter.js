@@ -1,36 +1,5 @@
 import { v4 } from "uuid";
 
-export const livingSpaces = [
-    {
-        label: "Tất cả",
-        param: "all",
-    },
-    {
-        label: "Phòng tắm",
-        param: "bathroom",
-    },
-    {
-        label: "Phòng khách",
-        param: "living-room",
-    },
-    {
-        label: "Ngoài trời",
-        param: "outside",
-    },
-    {
-        label: "Phòng ăn - Nhà bếp",
-        param: "kitchen",
-    },
-    {
-        label: "Lưu trữ",
-        param: "archive",
-    },
-    {
-        label: "Phòng ngủ",
-        param: "bedroom",
-    }
-]
-
 export const types = [
     {
         id: v4(),
@@ -92,15 +61,3 @@ export const colors = [
         codeColor: "#CCAD8F"
     }
 ]
-
-export const params = [
-    "living-space",
-    "product-name",
-    "discount",
-    "types",
-    "categories",
-    "price-max",
-    "price-min",
-    "colors",
-    "v-id"
-];

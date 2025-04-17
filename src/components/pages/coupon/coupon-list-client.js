@@ -1,10 +1,10 @@
 "use client"
 
-import useProductFilter from "@/hooks/use-product-filter";
+import { useSelector } from "react-redux";
 import { cn } from "@/lib/utils";
 
-export default function ProductsListClient({ children }) {
-    const { isOpen } = useProductFilter();
+export default function CouponListClient({ children }) {
+    const isOpen = useSelector(state => state.couponFilterOpen);
 
     return (
         <div

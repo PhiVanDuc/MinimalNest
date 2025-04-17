@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import Home from "@/components/pages/home/home";
+import HeaderLoading from "@/components/pages/home/header-loading";
 
 export const metadata = {
     title: `${process.env.WEBSITE_NAME} - Trang chủ`,
@@ -6,9 +8,9 @@ export const metadata = {
 };
 
 export default function Page() {
-    const createVar = 0;
-
     return (
-        <Home />
+        <Suspense fallback={<HeaderLoading />}>
+            <Home />
+        </Suspense>
     )
 }

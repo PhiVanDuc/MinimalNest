@@ -14,9 +14,14 @@ export default function UserSidebarLayout({ children, sidebar, sidebarLoading })
                 <UserNavbarMobile />
             </Suspense>
 
-            <Suspense fallback={sidebarLoading}>
-                {sidebar}
-            </Suspense>
+            {
+                sidebar && 
+                (
+                    <Suspense fallback={sidebarLoading}>
+                        {sidebar}
+                    </Suspense>
+                )
+            }
 
             <div className="flex justify-center mb-[100px] lg:mb-[150px]">
                 <div className="max-width">

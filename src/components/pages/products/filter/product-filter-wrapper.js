@@ -5,6 +5,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 
 import _ from "lodash";
+import { livingSpaces } from "@/static/navbar";
 import {
     addDiscount,
     addLivingSpace,
@@ -13,11 +14,9 @@ import {
     addProductName,
     updateInitialState
 } from "@/redux/slices/product-filter/product-filter-slice";
-import { livingSpaces, types, categories, colors } from "./product-filter-data";
+import { types, categories, colors } from "@/static/product-filter";
 
 export default function ProductFilterWrapper({ children }) {
-    const router = useRouter();
-    const pathname = usePathname();
     const searchParams = useSearchParams();
     
     const dispatch = useDispatch();
@@ -88,7 +87,7 @@ export default function ProductFilterWrapper({ children }) {
                 }
             }
         }
-    }, [router, pathname, searchParams, dispatch]);
+    }, [searchParams, dispatch]);
     
     return (
         <>{children}</>

@@ -1,5 +1,5 @@
 import { RiCopperCoinLine } from "react-icons/ri";
-import ProfileCouponsList from "./profile-coupons-list";
+import ProfileCouponList from "./profile-coupon-list";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -78,7 +78,7 @@ export default function ProfileCoupon() {
                 </Dialog>
             </header>
 
-            <ProfileCouponsList />
+            <ProfileCouponList />
         </div>
     )
 }

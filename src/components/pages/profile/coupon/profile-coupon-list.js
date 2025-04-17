@@ -9,7 +9,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
-import CouponItem from "./coupon-item";
+import CouponItem from "../../coupon/coupon-item";
 
 let coupons = [
     {
@@ -74,7 +74,7 @@ let coupons = [
     }
 ];
 
-export default async function ProfileCouponsList() {
+export default async function ProfileCouponList() {
     // Fetch dữ liệu ở đây
 
     return (

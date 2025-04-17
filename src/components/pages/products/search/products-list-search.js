@@ -1,6 +1,3 @@
-import ProductsListSearchClient from "./products-list-search-client";
-import ProductItem from "../product-item";
-import ProductFilterRightSide from "../filter/product-filter-right-side";
 import {
     Pagination,
     PaginationContent,
@@ -10,6 +7,10 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import ProductItem from "../product-item";
+import ProductsListSearchClient from "./products-list-search-client";
+import ProductFilterRightSide from "../filter/product-filter-right-side";
+
 import { v4 } from "uuid";
 
 export default async function ProductsListSearch() {
@@ -34,7 +35,7 @@ export default async function ProductsListSearch() {
                     })
                 }
             </div>
-    
+
             <div
                 className="flex justify-center"
                 style={{ marginTop: "50px" }}

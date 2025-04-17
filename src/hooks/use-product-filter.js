@@ -62,6 +62,7 @@ export default function useProductFilter() {
     const handleSearch = () => {
         if (!hasActiveFilters && pathname.startsWith("/san-pham/tim-kiem")) {
             router.replace("/san-pham");
+            dispatch(toggle(false));
             return;
         }
         const params = new URLSearchParams();
@@ -122,8 +123,6 @@ export default function useProductFilter() {
             case "colors":
                 dispatch(deleteColors(payload));
                 break;
-            default:
-                console.warn(`Unknown filter: ${filter}`);
         }
     };
 
@@ -133,8 +132,6 @@ export default function useProductFilter() {
         handleSearch,
         toggleFilter,
         handleDelete,
-        pathname,
-        searchParams,
         filterState: {
             livingSpaceState,
             productNameState,
