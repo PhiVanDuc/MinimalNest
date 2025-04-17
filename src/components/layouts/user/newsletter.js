@@ -24,14 +24,13 @@ const hiddenPaths = ["/gio-hang", "/thanh-toan"];
 export default function Newsletter() {
     const pathname = usePathname();
     const isHiddenPath = hiddenPaths.find(path => pathname.startsWith(path));
+    const isProductFilterOpen = useSelector(state => state.productFilterOpen);
+    const isCouponFilterOpen = useSelector(state => state.couponFilterOpen);
 
     let paddingClass = "";
     if (!isHiddenPath) {
         const isProductSidebar = sidebarProductPaths.includes(pathname);
         const isDiscountSidebar = sidebarDiscountPaths.includes(pathname);
-
-        const isProductFilterOpen = useSelector(state => state.productFilterOpen);
-        const isCouponFilterOpen = useSelector(state => state.couponFilterOpen);
 
         const basePadding = "px-0 pl-[20px] md:pl-[40px] pr-[20px] md:pr-[40px]";
         const productPadding = isProductFilterOpen ? "xl:pl-[360px]" : "xl:px-[80px]";
