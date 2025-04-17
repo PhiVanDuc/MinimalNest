@@ -35,6 +35,8 @@ const breadcrumbMap = {
 
 export default function CustomBreadcrumb() {
     const pathname = usePathname();
+    const paddingClass = useBreadcrumbPadding(pathname);
+
     if (pathname === "/") return null;
 
     const segments = pathname.split("/").filter(Boolean);
@@ -42,11 +44,10 @@ export default function CustomBreadcrumb() {
         { href: "/", label: "Trang chủ" },
         ...segments.map((seg, i) => ({
             href: "/" + segments.slice(0, i + 1).join("/"),
-            label: breadcrumbMap[seg] ?? seg,
+            label: breadcrumbMap[seg] || seg,
         })),
     ];
 
-    const paddingClass = useBreadcrumbPadding(pathname);
     const baseClasses = cn(
         "pt-[100px] xl:pt-[120px] pb-[40px] transition-all duration-300",
         paddingClass
@@ -62,7 +63,6 @@ export default function CustomBreadcrumb() {
             <Breadcrumb>
                 <BreadcrumbList className="text-[15px]">
                     {crumbs.length === 2 ? (
-                        // Nếu chỉ có 2 crumbs, render trực tiếp
                         crumbs.map((crumb, index) => (
                             <Fragment key={crumb.href}>
                                 <BreadcrumbItem>
@@ -71,7 +71,9 @@ export default function CustomBreadcrumb() {
                                             {crumb.label}
                                         </BreadcrumbPage>
                                     ) : (
-                                        <BreadcrumbLink href={crumb.href}>{crumb.label}</BreadcrumbLink>
+                                        <BreadcrumbLink href={crumb.href}>
+                                            {crumb.label}
+                                        </BreadcrumbLink>
                                     )}
                                 </BreadcrumbItem>
                                 {index < crumbs.length - 1 && <BreadcrumbSeparator />}
@@ -79,17 +81,19 @@ export default function CustomBreadcrumb() {
                         ))
                     ) : (
                         <>
-                            {/* Render 2 đầu */}
-                            {firstTwo.map(crumb => (
+                            {/* 2 items đầu */}
+                            {firstTwo.map((crumb) => (
                                 <Fragment key={crumb.href}>
                                     <BreadcrumbItem>
-                                        <BreadcrumbLink href={crumb.href}>{crumb.label}</BreadcrumbLink>
+                                        <BreadcrumbLink href={crumb.href}>
+                                            {crumb.label}
+                                        </BreadcrumbLink>
                                     </BreadcrumbItem>
                                     <BreadcrumbSeparator />
                                 </Fragment>
                             ))}
-    
-                            {/* Nếu nhiều hơn 3 crumbs thì hiển thị dropdown */}
+
+                            {/* Dropdown hoặc items giữa */}
                             {showEllipsis ? (
                                 <>
                                     <BreadcrumbItem>
@@ -99,7 +103,7 @@ export default function CustomBreadcrumb() {
                                                 <span className="sr-only">Toggle menu</span>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="start">
-                                                {middle.map(crumb => (
+                                                {middle.map((crumb) => (
                                                     <DropdownMenuItem key={crumb.href}>
                                                         <a href={crumb.href}>{crumb.label}</a>
                                                     </DropdownMenuItem>
@@ -110,18 +114,19 @@ export default function CustomBreadcrumb() {
                                     <BreadcrumbSeparator />
                                 </>
                             ) : (
-                                // Nếu không, render liền mạch
-                                middle.map(crumb => (
+                                middle.map((crumb) => (
                                     <Fragment key={crumb.href}>
                                         <BreadcrumbItem>
-                                            <BreadcrumbLink href={crumb.href}>{crumb.label}</BreadcrumbLink>
+                                            <BreadcrumbLink href={crumb.href}>
+                                                {crumb.label}
+                                            </BreadcrumbLink>
                                         </BreadcrumbItem>
                                         <BreadcrumbSeparator />
                                     </Fragment>
                                 ))
                             )}
-    
-                            {/* Luôn render phần tử cuối */}
+
+                            {/* Phần tử cuối */}
                             <BreadcrumbItem>
                                 <BreadcrumbPage className="text-yellowBold font-medium">
                                     {last.label}
@@ -132,5 +137,5 @@ export default function CustomBreadcrumb() {
                 </BreadcrumbList>
             </Breadcrumb>
         </div>
-    );    
+    );
 }

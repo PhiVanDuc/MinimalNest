@@ -26,11 +26,12 @@ export default function useCouponFilter() {
     } = useSelector(state => state.couponFilter);
 
     const hasActiveFilters = useMemo(
-        () =>
-            !_.isEmpty(typeState) ||
+        () => {
+            return !_.isEmpty(typeState) ||
             eventsState.length > 0 ||
             !_.isEmpty(discountTypeState) ||
-            userTypesState.value > 0
+            userTypesState.value > 0;
+        },
         [
             typeState,
             eventsState,

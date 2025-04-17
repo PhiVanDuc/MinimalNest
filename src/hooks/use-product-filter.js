@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import {
     deleteLivingSpace,
@@ -22,7 +22,6 @@ export default function useProductFilter() {
     const router = useRouter();
     const dispatch = useDispatch();
     const pathname = usePathname();
-    const searchParams = useSearchParams();
 
     const isOpen = useSelector((state) => state.productFilterOpen);
     const {
@@ -38,15 +37,16 @@ export default function useProductFilter() {
 
     // Xác định xem có lựa chọn filter nào có giá trị không.
     const hasActiveFilters = useMemo(
-        () =>
-            !_.isEmpty(livingSpaceState) ||
+        () => {
+            return !_.isEmpty(livingSpaceState) ||
             Boolean(productNameState.value) ||
             Boolean(discountState.value) ||
             !_.isEmpty(typeState) ||
             categoriesState.length > 0 ||
             priceMinState.value > 0 ||
             priceMaxState.value > 0 ||
-            colorsState.length > 0
+            colorsState.length > 0;
+        },
         [
             livingSpaceState,
             productNameState.value,

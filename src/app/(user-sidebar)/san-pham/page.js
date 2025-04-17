@@ -12,6 +12,5 @@ export default function Page() {
         <Suspense fallback={<ProductsListLoading />}>
             <ProductsList />
         </Suspense>
-        
     )
 }
