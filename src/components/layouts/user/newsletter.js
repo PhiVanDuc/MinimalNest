@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 
 import { cn } from "@/lib/utils";
 
-const sidebarPaths = ["/san-pham", "/san-pham/tim-kiem"];
+const sidebarPaths = ["/san-pham", "/san-pham/tim-kiem", "/phieu-giam-gia"];
 const hiddenPaths = ["/gio-hang", "/thanh-toan"];
 
 export default function Newsletter() {

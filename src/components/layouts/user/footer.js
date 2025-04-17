@@ -12,7 +12,7 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { cn } from '@/lib/utils';
 
-const sidebarPaths = ["/san-pham", "/san-pham/tim-kiem"];
+const sidebarPaths = ["/san-pham", "/san-pham/tim-kiem", "/phieu-giam-gia"];
 
 export default function Footer() {
     const pathname = usePathname();
