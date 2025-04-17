@@ -17,15 +17,32 @@ import { Input } from "@/components/ui/input";
 
 import { cn } from "@/lib/utils";
 
-const sidebarPaths = ["/san-pham", "/san-pham/tim-kiem", "/phieu-giam-gia"];
+const sidebarProductPaths = ["/san-pham", "/san-pham/tim-kiem"];
+const sidebarDiscountPaths = ["/phieu-giam-gia"];
 const hiddenPaths = ["/gio-hang", "/thanh-toan"];
 
 export default function Newsletter() {
     const pathname = usePathname();
     const isHiddenPath = hiddenPaths.find(path => pathname.startsWith(path));
-    const isSidebarPath = sidebarPaths.find(path => pathname === path);
 
-    const isProductFilterOpen = useSelector(state => state.productFilterOpen);
+    let paddingClass = "";
+    if (!isHiddenPath) {
+        const isProductSidebar = sidebarProductPaths.includes(pathname);
+        const isDiscountSidebar = sidebarDiscountPaths.includes(pathname);
+
+        const isProductFilterOpen = useSelector(state => state.productFilterOpen);
+        const isCouponFilterOpen = useSelector(state => state.couponFilterOpen);
+
+        const basePadding = "px-0 pl-[20px] md:pl-[40px] pr-[20px] md:pr-[40px]";
+        const productPadding = isProductFilterOpen ? "xl:pl-[360px]" : "xl:px-[80px]";
+        const discountPadding = isCouponFilterOpen ? "xl:pl-[360px]" : "xl:px-[80px]";
+
+        paddingClass = (() => {
+            if (isProductSidebar) return `${basePadding} ${productPadding}`;
+            if (isDiscountSidebar) return `${basePadding} ${discountPadding}`;
+            return "responsive-horizontal";
+        })();
+    }
 
     const form = useForm({
         defaultValues: {
@@ -39,14 +56,9 @@ export default function Newsletter() {
         <div className="flex justify-center">
             <div
                 className={cn(
-                    "pb-[100px] lg:pb-[150px] max-width",
-                    isHiddenPath
-                        ? "hidden"
-                        : isSidebarPath
-                            ? `px-0 pl-[20px] md:pl-[40px] pr-[20px] md:pr-[40px] ${
-                                    isProductFilterOpen ? "xl:pl-[360px]" : "xl:px-[80px]"
-                                }`
-                            : "responsive-horizontal"
+                    "pb-[100px] lg:pb-[150px] max-width transition-all duration-300",
+                    paddingClass,
+                    isHiddenPath ? "hidden" : ""
                 )}
             >
                 <div className="hidden md:block relative w-full rounded-[15px] aspect-16/7 overflow-hidden">

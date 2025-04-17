@@ -12,26 +12,33 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { cn } from '@/lib/utils';
 
-const sidebarPaths = ["/san-pham", "/san-pham/tim-kiem", "/phieu-giam-gia"];
+const sidebarProductPaths = ["/san-pham", "/san-pham/tim-kiem"];
+const sidebarDiscountPaths = ["/phieu-giam-gia"];
 
 export default function Footer() {
     const pathname = usePathname();
-    const isSidebarPath = sidebarPaths.find(path => pathname === path);
+    const isProductSidebar = sidebarProductPaths.includes(pathname);
+    const isDiscountSidebar = sidebarDiscountPaths.includes(pathname);
 
     const isProductFilterOpen = useSelector(state => state.productFilterOpen);
+    const isCouponFilterOpen = useSelector(state => state.couponFilterOpen);
+
+    const basePadding = "px-0 pl-[20px] md:pl-[40px] pr-[20px] md:pr-[40px]";
+    const productPadding = isProductFilterOpen ? "xl:pl-[360px]" : "xl:px-[80px]";
+    const discountPadding = isCouponFilterOpen ? "xl:pl-[360px]" : "xl:px-[80px]";
+
+    const paddingClass = (() => {
+        if (isProductSidebar) return `${basePadding} ${productPadding}`;
+        if (isDiscountSidebar) return `${basePadding} ${discountPadding}`;
+        return "responsive-horizontal";
+    })();
 
     return (
         <footer className='flex justify-center bg-yellowBland pt-[80px]'>
-            <div
-                className={cn(
-                    "max-width",
-                    isSidebarPath ?
-                    `px-0 pl-[20px] md:pl-[40px] pr-[20px] md:pr-[40px] ${
-                        isProductFilterOpen ? "xl:pl-[360px]" : "xl:px-[80px]"
-                    }` :
-                    "responsive-horizontal"
-                )}
-            >
+            <div className={cn(
+                "max-width transition-all duration-300",
+                paddingClass
+            )}>
                 <div className='flex flex-col xl:flex-row items-start gap-[30px] xl:gap-[20px] pb-[20px]'>
                     <div className='space-y-[10px] text-center xl:text-left w-full xl:w-[55%]'>
                         <div className='xl:w-fit p-[25px] rounded-[15px] bg-yellowBold text-white'>
