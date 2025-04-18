@@ -6,16 +6,23 @@ import UserNavbarMobile from "./navigate-bar/user-navbar-mobile";
 import CustomBreadcrumb from "@/components/customs/custom-breadcrumb";
 import Newsletter from "./newsletter";
 import Footer from "./footer";
+import { cn } from "@/lib/utils";
 
-export default function UserLayout({ children }) {
+export default function UserLayout({ children, isOverflow = false }) {
     return (
-        <main className="w-full overflow-hidden">
+        <main className={cn(
+            "w-full",
+            isOverflow ? "overflow-hidden" : ""
+        )}>
             <Suspense fallback={<NavigateBarLoading />}>
                 <UserNavbar />
                 <UserNavbarMobile />
             </Suspense>
 
-            <div className="flex justify-center overflow-hidden mb-[100px] lg:mb-[150px]">
+            <div className={cn(
+                "flex justify-center mb-[100px] lg:mb-[150px]",
+                isOverflow ? "overflow-hidden" : ""
+            )}>
                 <div className="responsive-horizontal max-width">
                     <CustomBreadcrumb />
                     {children}

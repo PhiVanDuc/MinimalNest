@@ -30,6 +30,7 @@ const breadcrumbMap = {
     "lien-lac": "Liên lạc",
     "ho-so": "Hồ sơ - Thông tin chung",
     "phieu-giam-gia": "Phiếu giảm giá",
+    "gio-hang": "Giỏ hàng",
     "don-hang": "Đơn hàng",
 };
 

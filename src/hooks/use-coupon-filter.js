@@ -27,10 +27,9 @@ export default function useCouponFilter() {
 
     const hasActiveFilters = useMemo(
         () => {
-            return !_.isEmpty(typeState) ||
-            eventsState.length > 0 ||
-            !_.isEmpty(discountTypeState) ||
-            userTypesState.value > 0;
+            return (
+                !_.isEmpty(typeState) || eventsState.length > 0 || !_.isEmpty(discountTypeState) || userTypesState.length > 0
+            );
         },
         [
             typeState,

@@ -188,6 +188,7 @@ export default function ProductFilterContent() {
                             <AccordionContent className="pl-[20px] pb-0 space-y-[20px] pt-[8px]">
                                 <Slider
                                     defaultValue={[priceMinState?.value || 10, priceMaxState?.value || 80]}
+                                    value={[priceMinState?.value || 10, priceMaxState?.value || 80]}
                                     min={1}
                                     max={100}
                                     step={1}

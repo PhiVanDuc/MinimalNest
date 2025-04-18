@@ -168,8 +168,10 @@ export default function NavigateItemsMobile() {
 
                             <div
                                 className={cn(
-                                    "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-neutral-100 text-[15px] text-darkMedium font-medium cursor-pointer"
+                                    "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-neutral-100 text-[15px] text-darkMedium font-medium cursor-pointer",
+                                    pathname.startsWith("/gio-hang") ? "bg-neutral-100" : 'bg-transparent'
                                 )}
+                                onClick={() => { router.push("/gio-hang"); }}
                             >
                                 <ShoppingCart size={20} />
                                 <p>Giỏ hàng</p>
