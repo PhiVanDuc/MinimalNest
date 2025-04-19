@@ -8,11 +8,11 @@ const cartSelectedProductsSlice = createSlice({
     name: "cartSelectedProducts",
     initialState,
     reducers: {
-        setSelectedProducts: (state, action) => {
+        addCartProduct: (state, action) => {
             state.selectedProducts = action.payload;
         }
     }
 });
 
 export default cartSelectedProductsSlice.reducer;
-export const { setSelectedProducts } = cartSelectedProductsSlice.actions;
+export const { addCartProduct } = cartSelectedProductsSlice.actions;

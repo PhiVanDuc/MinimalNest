@@ -13,14 +13,14 @@ export default function CartSummary() {
     const selectedProducts = useSelector(state => state.cartSelectedProducts.selectedProducts);
 
     return (
-        <div className="sticky top-[100px] shrink-0 w-[370px] rounded-[10px] p-[20px] border space-y-[20px]">
+        <div className="xl:sticky xl:top-[100px] shrink-0 w-full xl:w-[370px] rounded-[10px] p-[20px] border space-y-[20px] bg-white">
             <div className="space-y-[15px] mb-[20px]">
                 <header className="flex items-center justify-between mb-[15px]">
                     <h2 className="text-[18px] font-semibold text-darkBold">Tổng giỏ hàng</h2>
                     <ShoppingCart size={22} className="text-blueChecked" />
                 </header>
 
-                <div className="flex items-center justify-between text-[14px] text-darkMedium font-medium">
+                <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[14px] text-darkMedium font-medium">
                     <p>Tổng tiền hàng</p>
                     <Money
                         price={1200000000}
@@ -29,7 +29,7 @@ export default function CartSummary() {
                     />
                 </div>
 
-                <div className="flex items-center justify-between text-[14px] text-darkMedium font-medium">
+                <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[14px] text-darkMedium font-medium">
                     <p>Phí vận chuyển</p>
                     <p className="text-darkBold">Miễn phí</p>
                 </div>
@@ -38,7 +38,7 @@ export default function CartSummary() {
             <Separator />
 
             <div className="space-y-[5px]">
-                <div className="flex items-center justify-between">
+                <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0">
                     <p className="text-[16px] font-semibold text-darkBold">Tổng tạm</p>
                     <Money
                         price={1200000000}
