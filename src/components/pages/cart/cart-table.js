@@ -39,7 +39,7 @@ export default function CartTable({ data }) {
 
     useEffect(() => {
         dispatch(addCartProduct(selectedProducts))
-    }, [selectedProducts])
+    }, [selectedProducts, dispatch])
 
     return (
         <div className="relative w-full">

@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body
-				className={`${inter.className} text-[16px] overflow-x-hidden antialiased`}
+				className={`${inter.className} text-[16px] text-darkBold overflow-x-hidden antialiased`}
 			>
 				<Toaster />
 				<ClickSpark

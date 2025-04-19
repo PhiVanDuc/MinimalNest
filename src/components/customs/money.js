@@ -12,7 +12,7 @@ export default function Money({ price, moneyClassName = "", currencyClassName = 
             <span>{formatCurrency(price)}</span>
             
             <span className={cn(
-                "font-semibold text-[12px] text-darkBold tracking-wide",
+                "font-semibold text-[12px] tracking-wide",
                 currencyClassName
             )}>
                 VNĐ

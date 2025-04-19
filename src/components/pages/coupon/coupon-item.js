@@ -75,8 +75,11 @@ export default function CouponItem({ coupon }) {
                         )
                     }
 
-                    <Button variant="ghost">
-                        <Link href="/phieu-giam-gia/tieu-de-phieu-giam-gia">Chi tiết</Link>
+                    <Button
+                        variant="ghost"
+                        onClick={() => { router.push("/phieu-giam-gia/ten-phieu-giam-gia") }}
+                    >
+                        Chi tiết
                     </Button>
                 </div>
             </div>
