@@ -71,6 +71,12 @@ export default function NavigateItemsMobile() {
     }, [firstPath]);
 
     const handleClickSubNav = (item) => {
+        if (item.livingSpace === "all") {
+            router.push("/san-pham");
+            setIsOpen(false);
+            return;
+        }
+
         const params = pathname.startsWith("/san-pham/tim-kiem") ? new URLSearchParams(searchParams.toString()) : new URLSearchParams();
 
         params.set("living-space", item.livingSpace);

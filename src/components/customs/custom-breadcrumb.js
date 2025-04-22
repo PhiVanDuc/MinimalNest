@@ -32,6 +32,7 @@ const breadcrumbMap = {
     "phieu-giam-gia": "Phiếu giảm giá",
     "gio-hang": "Giỏ hàng",
     "don-hang": "Đơn hàng",
+    "thanh-toan": "Thanh toán"
 };
 
 export default function CustomBreadcrumb() {

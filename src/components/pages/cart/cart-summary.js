@@ -1,6 +1,7 @@
 "use client"
 
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 import Money from "@/components/customs/money";
 import { ShoppingCart, Trash2 } from "lucide-react";
@@ -10,13 +11,14 @@ import CustomButton from "@/components/customs/custom-button";
 import { toast } from "sonner";
 
 export default function CartSummary() {
+    const router = useRouter();
     const selectedProducts = useSelector(state => state.cartSelectedProducts.selectedProducts);
 
     return (
         <div className="xl:sticky xl:top-[100px] shrink-0 w-full xl:w-[370px] rounded-[10px] p-[20px] border space-y-[20px] bg-white">
             <div className="space-y-[15px] mb-[20px]">
                 <header className="flex items-center justify-between mb-[15px]">
-                    <h2 className="text-[18px] font-semibold text-darkBold">Tổng giỏ hàng</h2>
+                    <h2 className="text-[18px] font-semibold text-darkBold">Thông tin giỏ hàng</h2>
                     <ShoppingCart size={22} className="text-blueChecked" />
                 </header>
 
@@ -65,6 +67,7 @@ export default function CartSummary() {
                         <CustomButton
                             icon={<ShoppingCart size={20} />}
                             className="w-full py-[20px] bg-yellowBold hover:bg-yellowBold"
+                            onClick={() => { router.push("/thanh-toan") }}
                         >
                             Mua
                         </CustomButton>

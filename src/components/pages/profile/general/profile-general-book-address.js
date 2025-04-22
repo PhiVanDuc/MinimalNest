@@ -53,11 +53,11 @@ export default function ProfileGeneralBookAddress() {
                     >
                         <DialogTrigger className="w-fit shrink-0">
                             <div
-                                className="flex items-center gap-x-[15px] text-[15px] font-medium text-darkMedium cursor-pointer sm:px-[15px] sm:py-[8px] rounded-[8px] sm:hover:bg-neutral-200 transition-colors sm:duration-300"
+                                className="flex items-center gap-x-[15px] text-[14px] font-medium text-darkMedium cursor-pointer sm:px-[15px] sm:py-[8px] rounded-[8px] sm:hover:bg-neutral-200 transition-colors sm:duration-300"
                                 onClick={() => { dispatch(displayListForm(true)); }}
                             >
                                 <p className="whitespace-nowrap">Thay đổi</p>
-                                <RotateCcw size={18} />
+                                <RotateCcw size={16} />
                             </div>
                         </DialogTrigger>
 
@@ -94,11 +94,11 @@ export default function ProfileGeneralBookAddress() {
                     >
                         <DialogTrigger className="shrink-0">
                             <div
-                                className="flex items-center gap-x-[15px] text-[15px] font-medium text-darkMedium cursor-pointer sm:px-[15px] sm:py-[8px] rounded-[8px] sm:hover:bg-neutral-200 transition-colors sm:duration-300"
+                                className="flex items-center gap-x-[15px] text-[14px] font-medium text-darkMedium cursor-pointer sm:px-[15px] sm:py-[8px] rounded-[8px] sm:hover:bg-neutral-200 transition-colors sm:duration-300"
                                 onClick={() => { dispatch(displayAddForm(true)); }}
                             >
                                 <p className="whitespace-nowrap">Thêm địa chỉ</p>
-                                <PlusIcon size={18} />
+                                <PlusIcon size={16} />
                             </div>
                         </DialogTrigger>
 
