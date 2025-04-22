@@ -1,11 +1,11 @@
+import PaymentCoupon from "@/components/pages/payment/payment-coupon";
+import PaymentMethod from "@/components/pages/payment/payment-method";
+import PaymentMessage from "@/components/pages/payment/payment-message";
+import PaymentSummary from "@/components/pages/payment/payment-summary";
 import PaymentProductsTable from "@/components/pages/payment/payment-products-table";
 import ProfileGeneralBookAddress from "@/components/pages/profile/general/profile-general-book-address";
 
 import { v4 } from "uuid";
-import PaymentCoupon from "@/components/pages/payment/payment-coupon";
-import PaymentMessage from "@/components/pages/payment/payment-message";
-import PaymentSummary from "@/components/pages/payment/payment-summary";
-import PaymentMethod from "@/components/pages/payment/payment-method";
 
 const data = Array.from({ length: 3 }).map((_, index) => {
     return {
@@ -33,8 +33,8 @@ export default function Payment() {
     return (
         <div>
             <header className="flex items-center gap-[15px] mb-[20px]">
-                <p className="text-[16px] md:text-[18px] font-semibold">MinimalNest</p>
-                <span className="self-stretch my-[4px] w-[3px] rounded-full bg-yellowBold" />
+                <p className="hidden sm:block text-[16px] md:text-[18px] font-semibold">MinimalNest</p>
+                <span className="hidden sm:block self-stretch my-[4px] w-[3px] rounded-full bg-yellowBold" />
                 <h1 className="text-[20px] md:text-[24px] font-semibold">Thanh toán</h1>
             </header>
 

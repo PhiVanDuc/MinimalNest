@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
 import { BiLogoStripe } from "react-icons/bi";
 import { FaShippingFast } from "react-icons/fa";
 
-export default function PaymentMethod() {
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
+export default function OrderDetailPayment() {
     return (
         <div className="space-y-[20px]">
             <h2 className="text-[16px] md:text-[18px] font-semibold">Phương thức thanh toán</h2>
@@ -16,8 +16,11 @@ export default function PaymentMethod() {
                 defaultValue="item 1"
                 className="rounded-[10px] border"
             >
-                <label className="border-b flex items-center gap-[20px] p-[20px] cursor-pointer">
-                    <RadioGroupItem value="item 1" />
+                <label className="border-b flex items-center gap-[20px] p-[20px] cursor-not-allowed">
+                    <RadioGroupItem
+                        value="item 1"
+                        disabled={true}
+                    />
 
                     <div className="flex items-center gap-[10px]">
                         <div className="w-[26px]"><FaShippingFast size={26} className="text-darkMedium" /></div>
@@ -25,8 +28,11 @@ export default function PaymentMethod() {
                     </div>
                 </label>
 
-                <label className="border-b flex items-center gap-[20px] p-[20px] cursor-pointer">
-                    <RadioGroupItem value="item 3" />
+                <label className="border-b flex items-center gap-[20px] p-[20px] cursor-not-allowed">
+                    <RadioGroupItem
+                        value="item 3"
+                        disabled={true}
+                    />
 
                     <div className="flex items-center gap-[10px]">
                         <div className="flex justify-center w-[26px]"><BiLogoStripe size={26} className="text-darkMedium" /></div>
@@ -34,8 +40,11 @@ export default function PaymentMethod() {
                     </div>
                 </label>
 
-                <label className="flex items-center gap-[20px] p-[20px] cursor-pointer">
-                    <RadioGroupItem value="item 2" />
+                <label className="flex items-center gap-[20px] p-[20px] cursor-not-allowed">
+                    <RadioGroupItem
+                        value="item 2"
+                        disabled={true}
+                    />
 
                     <div className="flex items-center gap-[10px]">
                         <div className="w-[26px]">

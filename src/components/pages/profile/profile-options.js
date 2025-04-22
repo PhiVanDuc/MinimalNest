@@ -5,11 +5,16 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
+const display = ["/ho-so", "/ho-so/phieu-giam-gia", "/ho-so/don-hang"];
+
 export default function ProfileOptions() {
     const pathname = usePathname();
 
     return (
-        <div className="shrink-0 xl:sticky xl:top-[100px] w-full xl:w-[340px] h-fit rounded-[10px] border p-[20px] shadow-sm">
+        <div className={cn(
+            "shrink-0 xl:sticky xl:top-[100px] w-full xl:w-[340px] h-fit rounded-[10px] border p-[20px] shadow-sm",
+            !display.some(path => path === pathname) ? "hidden" : ""
+        )}>
             <h2 className="text-[16px] font-semibold text-darkBold text-center mb-[20px]">Hồ sơ</h2>
 
             <div className="flex flex-col space-y-[5px]">

@@ -1,12 +1,17 @@
 "use client"
 
-import { v4 } from "uuid";
-import OrderItemProduct from "./order-item-product";
-import { Separator } from "@/components/ui/separator";
+import { useRouter } from "next/navigation";
+
 import Money from "@/components/customs/money";
 import { Button } from "@/components/ui/button";
+import OrderItemProduct from "./order-item-product";
+import { Separator } from "@/components/ui/separator";
+
+import { v4 } from "uuid";
 
 export default function OrderItem() {
+    const router = useRouter();
+
     return (
         <div className="p-[15px] sm:p-[30px] space-y-[20px] rounded-[15px] border cursor-pointer transition-all duration-300">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-[5px]">
@@ -58,7 +63,12 @@ export default function OrderItem() {
             </div>
 
             <div className="flex items-center gap-[5px]">
-                <Button>Xem chi tiết</Button>
+                <Button
+                    onClick={() => { router.push("/ho-so/don-hang/aaa") }}
+                >
+                    Xem chi tiết
+                </Button>
+                
                 <Button>Hủy đơn</Button>
             </div>
         </div>
