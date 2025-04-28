@@ -12,6 +12,7 @@ import {
 
 import { FiUser } from "react-icons/fi";
 import { TbLogout } from "react-icons/tb";
+import { LayoutDashboard } from "lucide-react";
 
 export default function AuthOptions() {
     const router = useRouter();
@@ -32,13 +33,22 @@ export default function AuthOptions() {
                 <DropdownMenuGroup>
                     <DropdownMenuItem
                         className="flex items-center gap-[10px] cursor-pointer text-[14px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[20px] py-[10px]"
+                        onClick={() => { router.push("/ho-so"); }}
                     >
                         <div className="shrink-0 w-[24px] flex justify-center">
                             <FiUser className="text-[20px]" />
                         </div>
-                        <p onClick={() => { router.push("/ho-so") }} >
-                            Hồ sơ người dùng
-                        </p>
+                        <p>Hồ sơ người dùng</p>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem
+                        className="flex items-center gap-[10px] cursor-pointer text-[14px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[20px] py-[10px]"
+                        onClick={() => { router.push("/quan-tri") }}
+                    >
+                        <div className="shrink-0 w-[24px] flex justify-center">
+                            <LayoutDashboard size={20} />
+                        </div>
+                        <p>Trang quản trị</p>
                     </DropdownMenuItem>
 
                     <DropdownMenuItem className="flex items-center gap-[10px] cursor-pointer text-[14px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[20px] py-[10px]">

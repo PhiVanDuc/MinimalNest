@@ -5,15 +5,6 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 import Link from "next/link";
-import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger
-} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/customs/logo/logo";
 
@@ -23,11 +14,28 @@ import {
     AccordionItem,
     AccordionTrigger
 } from "@/components/ui/accordion";
+
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger
+} from "@/components/ui/sheet";
+
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuTrigger,
+    DropdownMenuItem
+} from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuTrigger, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
 import { TbLogout } from "react-icons/tb";
-import { Menu, Undo2 } from "lucide-react";
+import { LayoutDashboard, Menu, Undo2 } from "lucide-react";
 import { FiShoppingBag, FiUser } from "react-icons/fi";
 import { BookText, House, Send, ShoppingCart } from "lucide-react";
 
@@ -48,13 +56,7 @@ const items = [
         icon: <BookText size={20} />,
         href: "/phieu-giam-gia",
         highlight: "/phieu-giam-gia",
-    },
-    {
-        label: "Liên lạc",
-        icon: <Send size={20} />,
-        href: "/lien-lac",
-        highlight: "/lien-lac",
-    },
+    }
 ];
 
 export default function NavigateItemsMobile() {
@@ -219,10 +221,10 @@ export default function NavigateItemsMobile() {
                                 className="flex items-center justify-between px-[15px] py-[10px] rounded-[10px] bg-slate-100 hover:opacity-80 cursor-pointer transition duration-300 overflow-x-hidden"
                             >
                                 <div className="flex items-center gap-x-[15px] overflow-x-hidden">
-                                    <div className="shrink-0 w-[50px] aspect-square rounded-full bg-slate-300" />
+                                    <div className="shrink-0 w-[40px] aspect-square rounded-full bg-slate-300" />
                                     <div className="space-y-[2px] overflow-x-hidden">
-                                        <p className="text-[15px] font-semibold text-darkBold truncate">Phi Van Duc</p>
-                                        <p className="text-[13px] font-medium text-darkMedium truncate">phivanduc325@gmail.com</p>
+                                        <p className="text-[14px] font-semibold text-darkBold truncate">Phi Van Duc</p>
+                                        <p className="text-[12px] font-medium text-darkMedium truncate">phivanduc325@gmail.com</p>
                                     </div>
                                 </div>
                             </div>
@@ -234,13 +236,32 @@ export default function NavigateItemsMobile() {
                             className="p-[10px] rounded-[10px]"
                         >
                             <DropdownMenuGroup className="w-full">
-                                <DropdownMenuItem className="flex items-center gap-[10px] cursor-pointer text-[14px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[20px] py-[10px]">
-                                    <div className="shrink-0 w-[24px] flex justify-center"><FiUser className="text-[20px]" /></div>
-                                    <Link href="/ho-so">Hồ sơ người dùng</Link>
+                                <DropdownMenuItem
+                                    className="flex items-center gap-[10px] cursor-pointer text-[13px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[10px] py-[10px]"
+                                    onClick={() => { router.push("/ho-so"); }}
+                                >
+                                    <div className="shrink-0 w-[24px] flex justify-center">
+                                        <FiUser size={18} />
+                                    </div>
+                                    <p>Hồ sơ người dùng</p>
                                 </DropdownMenuItem>
 
-                                <DropdownMenuItem className="flex items-center gap-[10px] cursor-pointer text-[14px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[20px] py-[10px]">
-                                    <div className="shrink-0 w-[24px] flex justify-center"><TbLogout className="text-[20px]" /></div>
+                                <DropdownMenuItem
+                                    className="flex items-center gap-[10px] cursor-pointer text-[13px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[10px] py-[10px]"
+                                    onClick={() => { router.push("/quan-tri"); }}
+                                >
+                                    <div className="shrink-0 w-[24px] flex justify-center">
+                                        <LayoutDashboard size={18} />
+                                    </div>
+                                    <p>Trang quản trị</p>
+                                </DropdownMenuItem>
+
+                                <DropdownMenuItem
+                                    className="flex items-center gap-[10px] cursor-pointer text-[13px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[10px] py-[10px]"
+                                >
+                                    <div className="shrink-0 w-[24px] flex justify-center">
+                                        <TbLogout size={18} />
+                                    </div>
                                     <p>Đăng xuất</p>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>

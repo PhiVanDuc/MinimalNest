@@ -60,12 +60,7 @@ const navbarItems = [
         label: "Phiếu giảm giá",
         href: "/phieu-giam-gia",
         highlight: "/phieu-giam-gia",
-    },
-    {
-        label: "Liên lạc",
-        href: "/lien-lac",
-        highlight: "/lien-lac",
-    },
+    }
 ];
 
 export { livingSpaces, navbarItems };
