@@ -15,13 +15,11 @@ import {
     TableRow
 } from "@/components/ui/table";
 
-import RolePagination from "./role-pagination";
-
 import { cn } from "@/lib/utils";
 
-export default function RoleTable({ columns }) {
+export default function RoleTable({ data, columns }) {
     const table = useReactTable({
-        data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        data: data || [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
@@ -83,8 +81,6 @@ export default function RoleTable({ columns }) {
                     )}
                 </TableBody>
             </Table>
-
-            <RolePagination />
         </div>
     )
 }

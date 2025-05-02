@@ -1,8 +1,7 @@
 "use client"
 
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { cn } from "@/lib/utils";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import RoleTableAction from "./role-table-action";
 
 const headerClassName = "text-[14px] whitespace-nowrap font-semibold";
 
@@ -81,44 +80,7 @@ const columns = [
                 </h2>
             )
         },
-        cell: ({ row }) => {
-            return (
-                <div className="flex justify-center">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger>
-                            <div className="flex items-center justify-center w-[35px] aspect-square rounded-[5px]">
-                                <BsThreeDotsVertical size={20} />
-                            </div>
-                        </DropdownMenuTrigger>
-
-                        <DropdownMenuContent
-                            alignOffset={10}
-                        >
-                            <DropdownMenuItem
-                                className="cursor-pointer"
-                                onClick={() => {}}
-                            >
-                                Chi tiết
-                            </DropdownMenuItem>
-
-                            <DropdownMenuItem
-                                className="cursor-pointer"
-                                onClick={() => {}}
-                            >
-                                Chỉnh sửa
-                            </DropdownMenuItem>
-
-                            <DropdownMenuItem
-                                className="cursor-pointer"
-                                onClick={() => {}}
-                            >
-                                Xóa
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
-            )
-        }
+        cell: ({ row }) => <RoleTableAction row={row} />
     }
 ];
 

@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import Dashboard from "@/components/pages/dashboard/dashboard";
+import RoleDetail from "@/components/pages/role/role-detail/role-detail";
 
 export default function Page() {
     return (
         <Suspense fallback={"Loading . . ."}>
-            <Dashboard />
+            <RoleDetail />
         </Suspense>
     )
 }

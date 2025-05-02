@@ -73,7 +73,12 @@ export default function AdminSidebarGroup({ group }) {
                                         })
                                     }
 
-                                    <span className="absolute top-0 bottom-0 left-[13px] w-[3px] rounded-full bg-yellowBold" />
+                                    <span
+                                        className="absolute top-0 bottom-0 left-[13px] w-[3px] rounded-full bg-yellowBold"
+                                        style={{
+                                            marginTop: "0px"
+                                        }}
+                                    />
                                 </AccordionContent>
                             </AccordionItem>
                         )

@@ -35,7 +35,10 @@ const breadcrumbMap = {
     "thanh-toan": "Thanh toán",
     "quan-tri": "Quản trị",
     "bang-thong-ke": "Bảng thống kê",
-    "vai-tro": "Vai trò"
+    "vai-tro": "Vai trò",
+    "them-vai-tro": "Thêm vai trò",
+    "chi-tiet-vai-tro": "Chi tiết vai trò",
+    "chinh-sua-vai-tro": "Chỉnh sửa vai trò",
 };
 
 export default function CustomBreadcrumb({ style, isAdmin = false }) {

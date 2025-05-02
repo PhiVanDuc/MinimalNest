@@ -8,7 +8,7 @@ export default function RoleFilterSelected() {
             <div
                 className="shrink-0 flex items-center gap-x-[12px] w-fit text-[13px] font-medium px-[15px] py-[8px] rounded-full border text-darkMedium bg-white hover:text-darkBold hover:bg-slate-50 cursor-pointer transition-all duration-300"
             >
-                <p>Tên sản phẩm</p>
+                <p>Tên vai trò - Tên vai trò đã nhập</p>
                 <X size={15} />
             </div>
         </div>
