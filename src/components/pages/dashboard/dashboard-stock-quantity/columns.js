@@ -1,9 +1,7 @@
 "use client"
 
-import { useState } from "react";
-
 import Money from "@/components/customs/money";
-import { Progress } from "@/components/ui/progress";
+import CellStock from "./cell-stock";
 
 const columns = [
     {
@@ -53,20 +51,7 @@ const columns = [
         id: "stock",
         accesserKey: "stock",
         header: () => <h3 className="text-[14px] text-darkMedium font-medium text-center">Kho</h3>,
-        cell: ({ row }) => {
-            const [stock, setStock] = useState(80);
-
-            return (
-                <div className="space-y-[5px]">
-                    <Progress
-                        value={stock}
-                        max={200}
-                        classNameIndicator="bg-green-500"
-                    />
-                    <p className="text-[13px] text-darkMedium">{stock} còn nhiều.</p>
-                </div>
-            )
-        }
+        cell: ({ row }) => <CellStock row={row} />
     },
 ];
 
