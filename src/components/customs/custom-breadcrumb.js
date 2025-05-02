@@ -32,10 +32,13 @@ const breadcrumbMap = {
     "phieu-giam-gia": "Phiếu giảm giá",
     "gio-hang": "Giỏ hàng",
     "don-hang": "Đơn hàng",
-    "thanh-toan": "Thanh toán"
+    "thanh-toan": "Thanh toán",
+    "quan-tri": "Quản trị",
+    "bang-thong-ke": "Bảng thống kê",
+    "vai-tro": "Vai trò"
 };
 
-export default function CustomBreadcrumb() {
+export default function CustomBreadcrumb({ style, isAdmin = false }) {
     const pathname = usePathname();
     const paddingClass = useBreadcrumbPadding(pathname);
 
@@ -43,7 +46,9 @@ export default function CustomBreadcrumb() {
 
     const segments = pathname.split("/").filter(Boolean);
     const crumbs = [
-        { href: "/", label: "Trang chủ" },
+        ...(isAdmin
+            ? []
+            : [{ href: "/", label: "Trang chủ" }]),
         ...segments.map((seg, i) => ({
             href: "/" + segments.slice(0, i + 1).join("/"),
             label: breadcrumbMap[seg] || seg,
@@ -52,7 +57,7 @@ export default function CustomBreadcrumb() {
 
     const baseClasses = cn(
         "pt-[100px] xl:pt-[120px] pb-[40px] transition-all duration-300",
-        paddingClass
+        paddingClass,
     );
 
     const showEllipsis = crumbs.length > 3;
@@ -61,7 +66,10 @@ export default function CustomBreadcrumb() {
     const last = crumbs[crumbs.length - 1];
 
     return (
-        <div className={baseClasses}>
+        <div
+        className={baseClasses}
+        style={style}
+        >
             <Breadcrumb>
                 <BreadcrumbList className="text-[15px]">
                     {crumbs.length === 2 ? (

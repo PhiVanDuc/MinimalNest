@@ -30,6 +30,7 @@ module.exports = {
 			yellowMedium: '#F3F0EA',
 			yellowBland: '#FAF8F4',
 			blueChecked: '#26AA99',
+			blueChart: '#487FFF',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

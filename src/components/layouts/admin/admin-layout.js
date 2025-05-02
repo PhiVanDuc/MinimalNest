@@ -7,7 +7,7 @@ export default function AdminLayout({ children }) {
         <>
             <AdminSidebar />
 
-            <main className="space-y-[30px]">
+            <main className="flex flex-col min-h-screen">
                 <NavigateBar />
                 <AdminBodyLayout>
                     {children}

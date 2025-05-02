@@ -53,7 +53,7 @@ export default function AdminSidebarGroup({ group }) {
                                     <span className="text-[13px] font-medium">{item.label}</span>
                                 </AccordionTrigger>
 
-                                <AccordionContent className="relative pl-[20px] pb-0 mt-[5px]">
+                                <AccordionContent className="relative pl-[20px] pb-0 mt-[5px] space-y-[5px]">
                                     {
                                         item?.subItems?.map(subItem => {
                                             const currentLev2 = pathname.startsWith(subItem.href);
@@ -73,7 +73,7 @@ export default function AdminSidebarGroup({ group }) {
                                         })
                                     }
 
-                                    <span className="absolute top-0 bottom-0 left-[15px] w-[2px] rounded-full bg-yellowBold" />
+                                    <span className="absolute top-0 bottom-0 left-[13px] w-[3px] rounded-full bg-yellowBold" />
                                 </AccordionContent>
                             </AccordionItem>
                         )
