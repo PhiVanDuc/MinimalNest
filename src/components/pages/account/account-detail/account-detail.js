@@ -14,7 +14,7 @@ export default function AccountDetail() {
             <div className="py-[20px] rounded-[10px] bg-white">
                 <AccountDetailStatus />
                 
-                <div className="px-[20px] space-y-[30px] ">
+                <div className="px-[20px] space-y-[40px] ">
                     <AccountDetailBookAddress />
                     <AccountDetailFormProfile />
                     <AccountDetailRole />
