@@ -5,7 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-export default function RoleTableAction({ row }) {
+export default function EventTableAction({ row }) {
     const router = useRouter();
 
     return (
@@ -22,7 +22,7 @@ export default function RoleTableAction({ row }) {
                 >
                     <DropdownMenuItem
                         className="cursor-pointer"
-                        onClick={() => { router.push("/quan-tri/vai-tro/chinh-sua-vai-tro/123") }}
+                        onClick={() => { router.push("/quan-tri/vai-tro/chinh-sua-su-kien/123") }}
                     >
                         Chỉnh sửa
                     </DropdownMenuItem>
