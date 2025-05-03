@@ -17,7 +17,7 @@ import {
 
 import { cn } from "@/lib/utils";
 
-export default function DashboardTable({ columns, data }) {
+export default function CustomTable({ data, columns }) {
     const table = useReactTable({
         data: data || [1, 1, 1, 1, 1],
         columns,

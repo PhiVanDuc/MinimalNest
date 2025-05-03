@@ -17,8 +17,8 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import RoleTable from "../role-table/role-table";
 import { Textarea } from "@/components/ui/textarea";
+import CustomTable from "@/components/customs/admin/custom-table";
 
 import columns from "./columns";
 
@@ -131,7 +131,7 @@ export default function RoleEditClient() {
 
                             return (
                                 <FormItem>
-                                    <RoleTable
+                                    <CustomTable
                                         data={data}
                                         columns={columns}
                                     />

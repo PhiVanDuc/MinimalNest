@@ -1,12 +1,12 @@
 "use client"
 
-import RoleFilterName from "./role-filter-name";
+import AccountFilterEmail from "./account-filter-email";
 import CustomFilterButton from "@/components/customs/admin/custom-filter-button";
 
-export default function RoleFilter() {
+export default function AccountFilter() {
     return (
         <CustomFilterButton>
-            <RoleFilterName />
+            <AccountFilterEmail />
         </CustomFilterButton>
     )
 }

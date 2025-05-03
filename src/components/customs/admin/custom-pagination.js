@@ -1,8 +1,16 @@
 "use client"
 
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious
+} from "@/components/ui/pagination"
 
-export default function RolePagination() {
+export default function CustomPagination() {
     return (
         <div
             className="flex justify-center"

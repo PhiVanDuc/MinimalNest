@@ -1,10 +1,10 @@
 import columns from "./columns";
-import RoleTable from "./role-table/role-table";
+import CustomTable from "@/components/customs/admin/custom-table";
 
 import RoleButtonAdd from "./role-button-add";
 import RoleFilter from "./role-filter/role-filter";
-import RolePagination from "./role-table/role-pagination";
 import RoleFilterSelected from "./role-filter/role-filter-selected";
+import CustomPagination from "@/components/customs/admin/custom-pagination";
 
 export default function Role() {
     // Fetch
@@ -22,8 +22,8 @@ export default function Role() {
 
             <div className="p-[20px] bg-white rounded-[10px] space-y-[5px]">
                 <RoleFilterSelected />
-                <RoleTable columns={columns} />
-                <RolePagination />
+                <CustomTable columns={columns} />
+                <CustomPagination />
             </div>
         </section>
     )

@@ -1,11 +1,11 @@
 import Link from "next/link";
-import DashboardTable from "../dashboard-table";
+import CustomTable from "@/components/customs/admin/custom-table";
 
 import columns from "./columns";
 
 export default function DashboardStockQuantity() {
     return (
-        <div className="p-[25px] rounded-[10px] bg-white space-y-[20px] w-[50%]">
+        <div className="p-[25px] rounded-[10px] bg-white space-y-[20px] w-[65%]">
             <header className="flex justify-between">
                 <h2 className="text-[18px] font-semibold">Báo cáo kho</h2>
                 <Link
@@ -16,7 +16,7 @@ export default function DashboardStockQuantity() {
                 </Link>
             </header>
 
-            <DashboardTable
+            <CustomTable
                 columns={columns}
             />
         </div>

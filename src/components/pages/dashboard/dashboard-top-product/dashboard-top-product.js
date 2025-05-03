@@ -1,5 +1,5 @@
 import Link from "next/link";
-import DashboardTable from "../dashboard-table";
+import CustomTable from "@/components/customs/admin/custom-table";
 
 import columns from "./columns";
 
@@ -16,7 +16,7 @@ export default function DashboardTopProduct() {
                 </Link>
             </header>
 
-            <DashboardTable
+            <CustomTable
                 columns={columns}
             />
         </div>
