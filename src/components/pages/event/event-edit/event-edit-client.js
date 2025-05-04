@@ -34,7 +34,7 @@ import { format } from "date-fns"
 import { vi } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 
-export default function EventAdd() {
+export default function EventEditClient() {
     const form = useForm({
         defaultValues: {
             image: "",
@@ -49,12 +49,12 @@ export default function EventAdd() {
     return (
         <section className="space-y-[30px]">
             <header>
-                <h2 className="text-[24px] font-semibold">Thêm sự kiện</h2>
+                <h2 className="text-[24px] font-semibold">Chỉnh sửa sự kiện</h2>
             </header>
 
             <Form {...form}>
                 <form
-                    className="p-[20px] rounded-[10px] bg-white space-y-[15px]"
+                    className="p-[20px] rounded-[10px] bg-white space-y-[20px]"
                 >
                     {/* Thêm ảnh */}
                     <div className="flex items-center justify-center w-full aspect-16/5 rounded-[10px] border border-dashed border-neutral-400 bg-neutral-100">
@@ -298,7 +298,7 @@ export default function EventAdd() {
                     />
 
                     <div className="text-right">
-                        <Button>Thêm sự kiện</Button>
+                        <Button>Lưu thay đổi</Button>
                     </div>
                 </form>
             </Form>

@@ -180,7 +180,7 @@ export default function RoleEditClient() {
                     />
 
                     <div className="flex justify-end pt-[15px]">
-                        <Button>Thêm vai trò</Button>
+                        <Button>Lưu thay đổi</Button>
                     </div>
                 </form>
             </Form>
