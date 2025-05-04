@@ -56,7 +56,7 @@ export default function AdminCouponEditClient() {
     const form = useForm({
         defaultValues: {
             event: "",
-            title: "",
+            code: "",
             desc: "",
             discountType: "fixed",
             discount: "0",
@@ -64,6 +64,7 @@ export default function AdminCouponEditClient() {
             minTotal: "",
             minProduct: "",
             customerType: "initial-customer",
+            quantity: "0",
             status: "active"
         }
     });
@@ -132,16 +133,16 @@ export default function AdminCouponEditClient() {
 
                         <FormField
                             control={form.control}
-                            name="title"
+                            name="code"
                             render={({ field }) => {
                                 return (
                                     <FormItem className="w-full">
                                         <div className="space-y-[5px]">
-                                            <FormLabel>Tiêu đề</FormLabel>
+                                            <FormLabel>Mã phiếu</FormLabel>
 
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Nhập tiêu đề phiếu giảm giá . . ."
+                                                    placeholder="Nhập mã phiếu giảm giá . . ."
                                                     {...field}
                                                     className="px-[15px] py-[20px]"
                                                 />
@@ -409,12 +410,34 @@ export default function AdminCouponEditClient() {
 
                     <FormField
                         control={form.control}
+                        name="quantity"
+                        render={({ field }) => {
+                            return (
+                                <FormItem className="w-full">
+                                    <div className="space-y-[5px]">
+                                        <FormLabel>Số lượng</FormLabel>
+
+                                        <FormControl>
+                                            <Input
+                                                placeholder="Nhập số lượng phiếu giảm giá . . ."
+                                                className="px-[15px] py-[20px] pr-[38px]"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                    </div>
+                                </FormItem>
+                            )
+                        }}
+                    />
+
+                    <FormField
+                        control={form.control}
                         name="status"
                         render={({ field }) => {
                             return (
                                 <FormItem>
                                     <div className="space-y-[5px]">
-                                        <FormLabel className="text-[15px] font-medium">Đổi trạng thái</FormLabel>
+                                        <FormLabel className="text-[15px] font-medium">Trạng thái</FormLabel>
 
                                         <FormControl>
                                             <RadioGroup

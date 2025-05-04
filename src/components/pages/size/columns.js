@@ -1,40 +1,43 @@
 "use client"
 
-import AccountTableAction from "./account-table-acction";
 import { cn } from "@/lib/utils";
+import SizeTableAction from "./size-table-action";
 
 const headerClassName = "text-[14px] whitespace-nowrap font-semibold";
 
 const columns = [
     {
-        id: "account",
-        accesserKey: "account",
-        header: () => <h3 className="text-[14px] text-darkMedium font-medium">Tài khoản</h3>,
+        accessorKey: "size",
+        header: () => <h2 className={headerClassName}>Kích cỡ</h2>,
         cell: ({ row }) => {
             return (
-                <div className="space-y-[5px]">
-                    <h4 className="text-[16px] font-medium">Tên khách hàng.</h4>
-                    <p className="text-[14px] text-darkMedium">email@gmail.com</p>
-                </div>
+                <p className="text-[15px] font-medium">XL</p>
             )
         }
     },
     {
-        id: "roles",
-        accesserKey: "roles",
-        header: () => <h2 className={headerClassName}>Vai trò</h2>,
+        accessorKey: "categories",
+        header: () => <h2 className={headerClassName}>Danh mục</h2>,
         cell: ({ row }) => {
             return (
                 <div className="flex flex-wrap gap-[5px] max-w-[400px]">
-                    <p className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] font-medium rounded-full border">Quản trị sản phẩm</p>
-                    <p className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] font-medium rounded-full border">Quản trị đơn hàng</p>
+                    <p className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] font-medium rounded-full border">Giường</p>
+                    <p className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] font-medium rounded-full border">Thảm</p>
                 </div>
             )
         }
     },
     {
-        id: "customer-type",
-        accessorKey: "customer-type",
+        accessorKey: "desc",
+        header: () => <h2 className={headerClassName}>Mô tả</h2>,
+        cell: ({ row }) => {
+            return (
+                <p className="text-[15px]">Mô tả cho kích cỡ, xem chiều dài, chiều rộng, chiều cao là bao nhiêu cm hoặc m.</p>
+            )
+        }
+    },
+    {
+        accessorKey: "amount",
         header: () => {
             return (
                 <h2
@@ -43,13 +46,13 @@ const columns = [
                         "text-center"
                     )}
                 >
-                    Khách hàng
+                    Đang dùng
                 </h2>
             )
         },
         cell: ({ row }) => {
             return (
-                <p className="text-[15px] text-center">Khách quen</p>
+                <p className="text-[15px] text-center">300</p>
             )
         }
     },
@@ -89,7 +92,7 @@ const columns = [
                 </h2>
             )
         },
-        cell: ({ row }) => <AccountTableAction row={row} />
+        cell: ({ row }) => <SizeTableAction row={row} />
     }
 ];
 

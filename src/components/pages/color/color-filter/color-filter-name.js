@@ -3,11 +3,11 @@
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
-export default function AdminCouponFilterName() {
+export default function ColorFilterName() {
     return (
         <div className="relative h-full">
             <Input
-                placeholder="Tìm mã phiếu giảm giá"
+                placeholder="Tìm tên màu sắc"
                 className="w-[250px] h-full px-[12px] pr-[45px] rounded-full text-[13px] bg-white"
             />
 

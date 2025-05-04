@@ -166,7 +166,7 @@ export default function RoleAdd() {
                                                     <RadioGroupItem value="inactive" />
                                                 </FormControl>
 
-                                                <FormLabel>Dừng kích hoạt</FormLabel>
+                                                <FormLabel>Không kích hoạt</FormLabel>
                                             </FormItem>
                                         </RadioGroup>
                                     </FormControl>

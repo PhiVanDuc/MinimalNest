@@ -65,14 +65,9 @@ const sidebar = [
                     },
                     {
                         id: v4(),
-                        label: "Danh mục",
-                        href: "/quan-tri/danh-muc"
-                    },
-                    {
-                        id: v4(),
                         label: "Sản phẩm",
                         href: "/quan-tri/san-pham"
-                    },
+                    }
                 ]
             },
             {

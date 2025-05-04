@@ -1,27 +1,25 @@
 import columns from "./columns";
-
 import CustomTable from "@/components/customs/admin/custom-table";
-import EventButtonAdd from "./event-button-add";
-import EventFilter from "./event-filter/event-filter";
-import EventFilterSelected from "./event-filter/event-filter-selected";
 import CustomPagination from "@/components/customs/admin/custom-pagination";
 
-export default function Event() {
-    // Fetch
+import ColorButtonAdd from "./color-button-add";
+import ColorFilter from "./color-filter/color-filter";
+import ColorFilterSelected from "./color-filter/color-filter-selected";
 
+export default function Color() {
     return (
         <section className="space-y-[30px]">
             <header className="space-y-[10px]">
                 <div className="flex items-center justify-between">
-                    <h1 className="text-[24px] font-semibold">Quản lý sự kiện</h1>
-                    <EventButtonAdd />
+                    <h1 className="text-[24px] font-semibold">Quản lý màu sắc</h1>
+                    <ColorButtonAdd />
                 </div>
 
-                <EventFilter />
+                <ColorFilter />
             </header>
 
             <div className="p-[20px] bg-white rounded-[10px] space-y-[5px]">
-                <EventFilterSelected />
+                <ColorFilterSelected />
                 <CustomTable columns={columns} />
                 <CustomPagination />
             </div>

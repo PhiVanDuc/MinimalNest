@@ -16,16 +16,16 @@ const columns = [
                 <div className="space-y-[5px]">
                     <h2 className="text-[16px] font-medium">Tiêu đề sự kiện.</h2>
                     
-                    <div className="flex items-center gap-[10px]">
-                        <p className="text-[13px] text-darkMedium font-medium min-w-[55px]">Bắt đầu</p>
+                    <div className="flex items-center gap-[10px] font-medium">
+                        <p className="text-[13px] text-darkMedium min-w-[55px]">Bắt đầu</p>
                         <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                        <p className="text-[13px] text-darkBold font-semibold">Ngày / tháng / năm</p>
+                        <p className="text-[13px] text-darkBold">Ngày / tháng / năm</p>
                     </div>
 
-                    <div className="flex items-center gap-[10px]">
-                        <p className="text-[13px] text-darkMedium font-medium min-w-[55px]">Kết thúc</p>
+                    <div className="flex items-center gap-[10px] font-medium">
+                        <p className="text-[13px] text-darkMedium min-w-[55px]">Kết thúc</p>
                         <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                        <p className="text-[13px] text-darkBold font-semibold">Ngày / tháng / năm</p>
+                        <p className="text-[13px] text-darkBold">Ngày / tháng / năm</p>
                     </div>
                 </div>
             )
@@ -45,16 +45,16 @@ const columns = [
                 <div className="space-y-[5px]">
                     <h2 className="text-[16px] font-medium">Tiêu đề phiếu giảm giá.</h2>
                     
-                    <div className="flex items-center gap-[10px]">
-                        <p className="text-[13px] text-darkMedium font-medium min-w-[80px]">Khách hàng</p>
+                    <div className="flex items-center gap-[10px] font-medium">
+                        <p className="text-[13px] text-darkMedium min-w-[80px]">Khách hàng</p>
                         <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                        <p className="text-[13px] text-darkBold font-semibold">Khách hàng mới</p>
+                        <p className="text-[13px] text-darkBold">Khách hàng mới</p>
                     </div>
 
-                    <div className="flex items-center gap-[10px]">
-                        <p className="text-[13px] text-darkMedium font-medium min-w-[80px]">Giảm theo</p>
+                    <div className="flex items-center gap-[10px] font-medium">
+                        <p className="text-[13px] text-darkMedium min-w-[80px]">Giảm theo</p>
                         <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                        <p className="text-[13px] text-darkBold font-semibold">Số tiền cố định</p>
+                        <p className="text-[13px] text-darkBold">Số tiền cố định</p>
                     </div>
                 </div>
             )

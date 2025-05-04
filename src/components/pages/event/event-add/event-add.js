@@ -276,17 +276,7 @@ export default function EventAdd() {
                                                             <RadioGroupItem value="inactive" />
                                                         </FormControl>
 
-                                                        <span>Chưa kích hoạt</span>
-                                                    </FormLabel>
-                                                </FormItem>
-
-                                                <FormItem>
-                                                    <FormLabel className="flex items-center gap-[5px]">
-                                                        <FormControl>
-                                                            <RadioGroupItem value="block" />
-                                                        </FormControl>
-
-                                                        <span>Chặn</span>
+                                                        <span>Không kích hoạt</span>
                                                     </FormLabel>
                                                 </FormItem>
                                             </RadioGroup>

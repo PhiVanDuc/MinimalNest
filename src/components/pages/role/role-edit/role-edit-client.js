@@ -170,7 +170,7 @@ export default function RoleEditClient() {
                                                     />
                                                 </FormControl>
 
-                                                <FormLabel>Dừng kích hoạt</FormLabel>
+                                                <FormLabel>Không kích hoạt</FormLabel>
                                             </FormItem>
                                         </RadioGroup>
                                     </FormControl>
