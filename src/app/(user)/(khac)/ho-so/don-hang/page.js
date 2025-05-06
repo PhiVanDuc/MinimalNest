@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function Page({ searchParams }) {
     return (
-        <Suspense fallback={"Loading . . ."}>
+        <Suspense fallback={"Đang tải . . ."}>
             <Order />
         </Suspense>
     )

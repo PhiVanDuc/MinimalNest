@@ -3,7 +3,7 @@ import AccountDetail from "@/components/pages/account/account-detail/account-det
 
 export default function Page() {
     return (
-        <Suspense fallback={"Loading . . ."}>
+        <Suspense fallback={"Đang tải . . ."}>
             <AccountDetail />
         </Suspense>
     )

@@ -3,7 +3,7 @@ import Dashboard from "@/components/pages/dashboard/dashboard";
 
 export default function Page() {
     return (
-        <Suspense fallback={"Loading . . ."}>
+        <Suspense fallback={"Đang tải . . ."}>
             <Dashboard />
         </Suspense>
     )

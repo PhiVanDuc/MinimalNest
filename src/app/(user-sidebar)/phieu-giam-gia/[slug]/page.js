@@ -11,7 +11,7 @@ export async function generateMetadata() {
 
 export default function Page() {
     return (
-        <Suspense fallback="Loading . . .">
+        <Suspense fallback="Đang tải . . .">
             <ProfileCouponDetail />
         </Suspense>
     )

@@ -22,7 +22,7 @@ export default async function Page({ searchParams }) {
     }
 
     return (
-        <Suspense fallback={<div className="responsive-horizontal">Loading . . .</div>}>
+        <Suspense fallback={<div className="responsive-horizontal">Đang tải . . .</div>}>
             <CouponList />
         </Suspense>
     )
