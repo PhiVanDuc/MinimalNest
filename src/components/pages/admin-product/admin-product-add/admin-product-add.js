@@ -31,6 +31,7 @@ import AdminProductAddSize from "./admin-product-add-size";
 import AdminProductAddColor from "./admin-product-add-color";
 import AdminProductAddImage from "./admin-product-add-image";
 import AdminProductAddVariant from "./admin-product-add-variant";
+import AdminProductAddStatus from "./admin-product-add-status";
 
 export default function AdminProductAdd() {
     const form = useForm({
@@ -49,7 +50,8 @@ export default function AdminProductAdd() {
             colors: [],
             colorImages: {},
             images: [],
-            variants: []
+            variants: [],
+            status: "active"
         }
     });
 
@@ -143,6 +145,22 @@ export default function AdminProductAdd() {
                                 Checkbox={Checkbox}
                             />
                         </div>
+
+                        <div className="p-[20px] space-y-[20px] rounded-[10px] bg-white">
+                            <AdminProductAddStatus
+                                form={form}
+                                FormField={FormField}
+                                FormItem={FormItem}
+                                FormLabel={FormLabel}
+                                FormControl={FormControl}
+                                RadioGroup={RadioGroup}
+                                RadioGroupItem={RadioGroupItem}
+                            />
+
+                            <div className="flex justify-end pt-[20px]">
+                                <Button>Thêm sản phẩm</Button>
+                            </div>
+                        </div>
                     </div>
                     
                     <AdminProductAddImage form={form} />
@@ -151,10 +169,5 @@ export default function AdminProductAdd() {
         </section>
     )
 }
-
-
-{/* <div className="flex justify-end pt-[20px]">
-    <Button>Thêm sản phẩm</Button>
-</div> */}
 
 {/* <AdminProductAddVariant form={form} /> */}
