@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import AdminOrderCancelButton from "./admin-order-cancel/admin-order-cancel-button";
 
 export default function AdminOrderButton() {
     return (
@@ -13,13 +14,10 @@ export default function AdminOrderButton() {
                 Xuất Excel
             </Button>
 
-            <Button
-                variant="outline"
-                className="shadow-none"
-                onClick={() => { toast.warning("Hãy chọn đơn hàng bạn muốn hủy.") }}
-            >
-                Hủy đơn
-            </Button>
+            <AdminOrderCancelButton
+                Button={Button}
+                toast={toast}
+            />
 
             <Button
                 variant="outline"

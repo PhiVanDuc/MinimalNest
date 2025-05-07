@@ -2,7 +2,7 @@
 
 import { Checkbox } from "@/components/ui/checkbox";
 import Money from "@/components/customs/money";
-import { HiOutlineNewspaper } from "react-icons/hi";
+import AdminOrderWatchCol from "./admin-order-detail/admin-order-watch-col";
 
 import { cn } from "@/lib/utils";
 
@@ -10,8 +10,7 @@ const headerClassName = "text-[14px] whitespace-nowrap text-darkMedium font-semi
 
 const columns = [
     {
-        id: "check",
-        accesserKey: "check",
+        accessorKey: "check",
         header: () => "",
         cell: ({ row }) => {
             return (
@@ -20,8 +19,7 @@ const columns = [
         }
     },
     {
-        id: "idOrder",
-        accesserKey: "idOrder",
+        accessorKey: "idOrder",
         header: () => <h2 className={cn(headerClassName)}>Đơn hàng</h2>,
         cell: ({ row }) => {
             return (
@@ -30,8 +28,7 @@ const columns = [
         }
     },
     {
-        id: "date",
-        accesserKey: "date",
+        accessorKey: "date",
         header: () => <h2 className={cn(headerClassName)}>Ngày</h2>,
         cell: ({ row }) => {
             return (
@@ -40,8 +37,7 @@ const columns = [
         }
     },
     {
-        id: "customer",
-        accesserKey: "customer",
+        accessorKey: "customer",
         header: () => <h2 className={cn(headerClassName, "text-center")}>Khách hàng</h2>,
         cell: ({ row }) => {
             return (
@@ -50,8 +46,7 @@ const columns = [
         }
     },
     {
-        id: "payment",
-        accesserKey: "payment",
+        accessorKey: "payment",
         header: () => <h2 className={cn(headerClassName, "text-center")}>Thanh toán</h2>,
         cell: ({ row }) => {
             return (
@@ -62,8 +57,7 @@ const columns = [
         }
     },
     {
-        id: "total",
-        accesserKey: "total",
+        accessorKey: "total",
         header: () => <h2 className={cn(headerClassName, "text-center")}>Tổng tiền</h2>,
         cell: ({ row }) => {
             return (
@@ -77,8 +71,7 @@ const columns = [
         }
     },
     {
-        id: "customer",
-        accesserKey: "customer",
+        accessorKey: "amount",
         header: () => <h2 className={cn(headerClassName, "text-center")}>Số lượng</h2>,
         cell: ({ row }) => {
             return (
@@ -102,11 +95,7 @@ const columns = [
         header: () => <h2 className={cn(headerClassName, "text-center")}>Xem đơn</h2>,
         cell: ({ row }) => {
             return (
-                <div className="flex justify-center">
-                    <div className="shrink-0 flex justify-center items-center text-darkMedium w-[35px] aspect-square cursor-pointer">
-                        <HiOutlineNewspaper size={22} className="shrink-0" />
-                    </div>
-                </div>
+                <AdminOrderWatchCol />
             )
         }
     }
