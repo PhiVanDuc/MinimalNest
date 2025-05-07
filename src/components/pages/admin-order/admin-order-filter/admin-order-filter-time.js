@@ -21,9 +21,9 @@ export default function AdminOrderFilterTime({
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button className="relative flex px-[15px] pr-[50px] h-[47px] text-[14px] text-darkBold font-medium hover:bg-white bg-white shadow-none rounded-[10px]">
+                <Button className="relative flex px-[15px] pr-[50px] h-[47px] text-[14px] text-darkBold font-medium hover:bg-neutral-100 bg-neutral-100 shadow-none rounded-[10px]">
                     <CalendarIcon
-                        size={20}
+                        size={18}
                         className="absolute top-[50%] right-[10px] translate-y-[-50%] text-darkMedium z-10"
                     />
 

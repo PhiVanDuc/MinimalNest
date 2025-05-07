@@ -10,10 +10,10 @@ export default function Role() {
     // Fetch
 
     return (
-        <section className="space-y-[30px]">
-            <header className="space-y-[10px]">
+        <section className="space-y-[20px]">
+            <header className="space-y-[10px] p-[20px] bg-white rounded-[10px]">
                 <div className="flex items-center justify-between">
-                    <h1 className="text-[24px] font-semibold">Quản lý vai trò</h1>
+                    <h1 className="text-[22px] font-semibold">Quản lý vai trò</h1>
                     <RoleButtonAdd />
                 </div>
 

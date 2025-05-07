@@ -73,7 +73,7 @@ const columns = [
         cell: ({ row }) => {
             return (
                 <div className="flex justify-center">
-                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] font-medium text-green-600 bg-green-600/10 border border-green-600/60">Kích hoạt</p>
+                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] text-green-600 bg-green-600/10 border border-green-600/60">Kích hoạt</p>
                 </div>
             )
         }

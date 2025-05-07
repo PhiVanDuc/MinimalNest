@@ -10,17 +10,14 @@ import {
     DropdownMenuItem
 } from "@/components/ui/dropdown-menu";
 
-export default function AdminProductButtonAdd() {
+export default function AdminProductButton() {
     const router = useRouter();
 
     return (
         <div className="flex items-center gap-[10px]">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button
-                        variant="outline"
-                        className="hover:bg-white"
-                    >
+                    <Button variant="outline">
                         Excel
                     </Button>
                 </DropdownMenuTrigger>
@@ -33,7 +30,7 @@ export default function AdminProductButtonAdd() {
             </DropdownMenu>
 
             <Button
-                className="bg-darkBold"
+                className="text-[14px] text-white bg-yellowBold hover:bg-yellowBold shadown-none"
                 onClick={() => { router.push("/quan-tri/san-pham/them-san-pham") }}
             >
                 Thêm sản phẩm

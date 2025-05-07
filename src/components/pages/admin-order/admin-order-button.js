@@ -5,13 +5,25 @@ import { toast } from "sonner";
 
 export default function AdminOrderButton() {
     return (
-        <div className="flex items-center gap-[5px] p-[15px] rounded-[10px] bg-white">
-            <Button variant="outline">
+        <div className="flex items-center gap-[5px]">
+            <Button
+                variant="outline"
+                className="shadow-none"
+            >
                 Xuất Excel
             </Button>
 
             <Button
                 variant="outline"
+                className="shadow-none"
+                onClick={() => { toast.warning("Hãy chọn đơn hàng bạn muốn hủy.") }}
+            >
+                Hủy đơn
+            </Button>
+
+            <Button
+                variant="outline"
+                className="shadow-none"
                 onClick={() => { toast.warning("Hãy chọn đơn hàng bạn muốn đóng gói.") }}
             >
                 Đóng gói

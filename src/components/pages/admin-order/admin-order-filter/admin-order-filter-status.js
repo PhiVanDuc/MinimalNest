@@ -7,11 +7,11 @@ export default function AdminOrderFilterStatus({
     setStatus
 }) {
     return (
-        <div className="flex p-[5px] bg-white rounded-[10px] w-fit">
+        <div className="flex p-[5px] bg-neutral-100 rounded-[10px] w-fit">
             <p
                 className={cn(
                     "text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
-                    status === "all" ? "text-darkBold bg-neutral-100" : "text-darkMedium"
+                    status === "all" ? "text-darkBold bg-white" : "text-darkMedium"
                 )}
                 onClick={() => { setStatus("all") }}
             >
@@ -21,7 +21,7 @@ export default function AdminOrderFilterStatus({
             <p
                 className={cn(
                     "text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
-                    status === "pending" ? "text-darkBold bg-neutral-100" : "text-darkMedium"
+                    status === "pending" ? "text-darkBold bg-white" : "text-darkMedium"
                 )}
                 onClick={() => { setStatus("pending") }}
             >
@@ -31,7 +31,7 @@ export default function AdminOrderFilterStatus({
             <p
                 className={cn(
                     "text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
-                    status === "packing" ? "text-darkBold bg-neutral-100" : "text-darkMedium"
+                    status === "packing" ? "text-darkBold bg-white" : "text-darkMedium"
                 )}
                 onClick={() => { setStatus("packing") }}
             >
@@ -41,7 +41,7 @@ export default function AdminOrderFilterStatus({
             <p
                 className={cn(
                     "text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
-                    status === "shipping" ? "text-darkBold bg-neutral-100" : "text-darkMedium"
+                    status === "shipping" ? "text-darkBold bg-white" : "text-darkMedium"
                 )}
                 onClick={() => { setStatus("shipping") }}
             >
@@ -51,7 +51,7 @@ export default function AdminOrderFilterStatus({
             <p
                 className={cn(
                     "text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
-                    status === "canceled" ? "text-darkBold bg-neutral-100" : "text-darkMedium"
+                    status === "canceled" ? "text-darkBold bg-white" : "text-darkMedium"
                 )}
                 onClick={() => { setStatus("canceled") }}
             >
@@ -61,7 +61,7 @@ export default function AdminOrderFilterStatus({
             <p
                 className={cn(
                     "text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
-                    status === "fulfilled" ? "text-darkBold bg-neutral-100" : "text-darkMedium"
+                    status === "fulfilled" ? "text-darkBold bg-white" : "text-darkMedium"
                 )}
                 onClick={() => { setStatus("fulfilled") }}
             >

@@ -8,7 +8,7 @@ export default function ColorButtonAdd() {
 
     return (
         <Button
-            className="bg-darkBold"
+            className="text-[14px] text-white bg-yellowBold hover:bg-yellowBold shadown-none"
             onClick={() => { router.push("/quan-tri/mau-sac/them-mau-sac") }}
         >
             Thêm màu sắc

@@ -8,7 +8,7 @@ export default function EventButtonAdd() {
 
     return (
         <Button
-            className="bg-darkBold"
+            className="text-[14px] text-white bg-yellowBold hover:bg-yellowBold shadown-none"
             onClick={() => { router.push("/quan-tri/su-kien/them-su-kien") }}
         >
             Thêm sự kiện

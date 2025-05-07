@@ -8,7 +8,7 @@ export default function RoleButtonAdd() {
 
     return (
         <Button
-            className="bg-darkBold"
+            className="text-[14px] text-white bg-yellowBold hover:bg-yellowBold shadown-none"
             onClick={() => { router.push("/quan-tri/vai-tro/them-vai-tro") }}
         >
             Thêm vai trò
