@@ -28,7 +28,7 @@ import { Calendar } from "@/components/ui/calendar";
 
 import { IoImage } from "react-icons/io5";
 import { FaMinus } from "react-icons/fa6";
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon } from "lucide-react";
 
 import { format } from "date-fns"
 import { vi } from "date-fns/locale";

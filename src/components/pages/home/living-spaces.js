@@ -18,7 +18,7 @@ const finalData = spaces.map(space => (
         id: v4(),
         component: (
             <>
-                <div className="w-full aspect-16/11 rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300" />
+                <div className="w-full aspect-16/12 rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300" />
                 <div className="relative text-[15px] sm:text-[16px] font-semibold text-darkBold p-[20px] bg-white rounded-br-[15px] rounded-bl-[15px]">
                     <div className="flex items-center justify-between">
                         <h3>{space}</h3>

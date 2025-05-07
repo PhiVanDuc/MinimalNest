@@ -14,7 +14,7 @@ const columns = [
         cell: ({ row }) => {
             return (
                 <div className="space-y-[5px]">
-                    <h2 className="text-[16px] font-medium">Tiêu đề sự kiện.</h2>
+                    <h2 className="text-[15px] font-semibold">Tiêu đề sự kiện.</h2>
                     
                     <div className="flex items-center gap-[10px] font-medium">
                         <p className="text-[13px] text-darkMedium min-w-[55px]">Bắt đầu</p>
@@ -43,7 +43,7 @@ const columns = [
         cell: ({ row }) => {
             return (
                 <div className="space-y-[5px]">
-                    <h2 className="text-[16px] font-medium">Tiêu đề phiếu giảm giá.</h2>
+                    <h2 className="text-[15px] font-semibold">Tiêu đề phiếu giảm giá.</h2>
                     
                     <div className="flex items-center gap-[10px] font-medium">
                         <p className="text-[13px] text-darkMedium min-w-[80px]">Khách hàng</p>
@@ -61,7 +61,7 @@ const columns = [
         }
     },
     {
-        accessorKey: "created-at",
+        accessorKey: "discount",
         header: () => {
             return (
                 <h2
@@ -79,7 +79,7 @@ const columns = [
                 <div className="flex justify-center">
                     <Money
                         price={300000}
-                        moneyClassName="text-[15px]"
+                        moneyClassName="text-[14px] font-medium"
                     />
                 </div>
             )
@@ -102,7 +102,7 @@ const columns = [
         cell: ({ row }) => {
             return (
                 <div className="flex justify-center">
-                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] font-medium text-green-600 bg-green-600/20">Kích hoạt</p>
+                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] font-medium text-green-600 bg-green-600/10 border border-green-600/60">Kích hoạt</p>
                 </div>
             )
         }

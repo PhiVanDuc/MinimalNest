@@ -110,10 +110,9 @@ export default function AdminCouponAdd() {
                                                 defaultValue={field.value}
                                             >
                                                 <FormControl>
-                                                    <SelectTrigger>
+                                                    <SelectTrigger className="px-[15px] py-[20px] shadow-none">
                                                         <SelectValue
                                                             placeholder="Chọn sự kiện cho phiếu giảm giá."
-                                                            className="px-[15px] py-[20px] shadow-none"
                                                         />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -355,10 +354,9 @@ export default function AdminCouponAdd() {
                                                 defaultValue={field.value}
                                             >
                                                 <FormControl>
-                                                    <SelectTrigger>
+                                                    <SelectTrigger className="px-[15px] py-[20px] shadow-none">
                                                         <SelectValue
                                                             placeholder="Chọn sự kiện cho phiếu giảm giá."
-                                                            className="px-[15px] py-[20px] shadow-none"
                                                         />
                                                     </SelectTrigger>
                                                 </FormControl>

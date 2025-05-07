@@ -12,7 +12,7 @@ const columns = [
         cell: ({ row }) => {
             return (
                 <div className="space-y-[5px]">
-                    <h2 className="text-[16px] font-medium">Tiêu đề sự kiện.</h2>
+                    <h2 className="text-[15px] font-semibold">Tiêu đề sự kiện.</h2>
                     
                     <div className="flex items-center gap-[10px] font-medium">
                         <p className="text-[13px] text-darkMedium min-w-[55px]">Bắt đầu</p>
@@ -45,7 +45,7 @@ const columns = [
         },
         cell: ({ row }) => {
             return (
-                <p className="text-[15px] text-center">300</p>
+                <p className="text-[14px] font-medium text-center">300</p>
             )
         }
     },
@@ -66,7 +66,7 @@ const columns = [
         cell: ({ row }) => {
             return (
                 <div className="flex justify-center">
-                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] font-medium text-green-600 bg-green-600/20">Kích hoạt</p>
+                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] font-medium text-green-600 bg-green-600/10 border border-green-600/60">Kích hoạt</p>
                 </div>
             )
         }
@@ -87,7 +87,7 @@ const columns = [
         },
         cell: ({ row }) => {
             return (
-                <p className="text-[15px] text-center">Ngày / tháng / năm</p>
+                <p className="text-[14px] font-medium text-center">Ngày / tháng / năm</p>
             )
         }
     },

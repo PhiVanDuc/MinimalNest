@@ -44,6 +44,17 @@ const livingSpaces = [
     },
 ];
 
+const productTypes = [
+    {
+        value: "latest",
+        label: "Mới nhất",
+    },
+    {
+        value: "best-seller",
+        label: "Bán chạy nhất",
+    }
+]
+
 const sizes = [
     {
         value: "s",
@@ -83,4 +94,4 @@ const colors = [
     { value: "#FF7F50", label: "San hô (Coral)" }
 ];
 
-export { categories, livingSpaces, sizes, colors };
+export { categories, livingSpaces, productTypes, sizes, colors };

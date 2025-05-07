@@ -11,7 +11,7 @@ const columns = [
         header: () => <h2 className={headerClassName}>Vai trò</h2>,
         cell: ({ row }) => {
             return (
-                <p className="text-[15px]">Tên vai trò</p>
+                <p className="text-[14px] font-semibold">Tên vai trò</p>
             )
         }
     },
@@ -20,7 +20,7 @@ const columns = [
         header: () => <h2 className={headerClassName}>Mô tả</h2>,
         cell: ({ row }) => {
             return (
-                <p className="text-[15px]">Mô tả vai trò này phù hợp cho ai trong hệ thống.</p>
+                <p className="text-[14px]">Mô tả vai trò này phù hợp cho ai trong hệ thống.</p>
             )
         }
     },
@@ -40,7 +40,7 @@ const columns = [
         },
         cell: ({ row }) => {
             return (
-                <p className="text-[15px] text-center">300</p>
+                <p className="text-[14px] text-center font-medium">300 tài khoản</p>
             )
         }
     },
@@ -61,7 +61,7 @@ const columns = [
         cell: ({ row }) => {
             return (
                 <div className="flex justify-center">
-                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] font-medium text-green-600 bg-green-600/20">Kích hoạt</p>
+                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] font-medium text-green-600 bg-green-600/10 border border-green-600/60">Kích hoạt</p>
                 </div>
             )
         }

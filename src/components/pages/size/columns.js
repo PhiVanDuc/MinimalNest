@@ -11,7 +11,7 @@ const columns = [
         header: () => <h2 className={headerClassName}>Kích cỡ</h2>,
         cell: ({ row }) => {
             return (
-                <p className="text-[15px] font-medium">XL</p>
+                <p className="text-[14px] font-semibold">XL</p>
             )
         }
     },
@@ -21,8 +21,8 @@ const columns = [
         cell: ({ row }) => {
             return (
                 <div className="flex flex-wrap gap-[5px] max-w-[400px]">
-                    <p className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] font-medium rounded-full border">Giường</p>
-                    <p className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] font-medium rounded-full border">Thảm</p>
+                    <p className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] rounded-full border">Giường</p>
+                    <p className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] rounded-full border">Thảm</p>
                 </div>
             )
         }
@@ -32,7 +32,7 @@ const columns = [
         header: () => <h2 className={headerClassName}>Mô tả</h2>,
         cell: ({ row }) => {
             return (
-                <p className="text-[15px]">Mô tả cho kích cỡ, xem chiều dài, chiều rộng, chiều cao là bao nhiêu cm hoặc m.</p>
+                <p className="text-[14px]">Mô tả cho kích cỡ, xem chiều dài, chiều rộng, chiều cao là bao nhiêu cm hoặc m.</p>
             )
         }
     },
@@ -52,7 +52,7 @@ const columns = [
         },
         cell: ({ row }) => {
             return (
-                <p className="text-[15px] text-center">300</p>
+                <p className="text-[14px] text-center font-medium">300 sản phẩm</p>
             )
         }
     },
@@ -73,7 +73,7 @@ const columns = [
         cell: ({ row }) => {
             return (
                 <div className="flex justify-center">
-                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] font-medium text-green-600 bg-green-600/20">Kích hoạt</p>
+                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] font-medium text-green-600 bg-green-600/10 border border-green-600/60">Kích hoạt</p>
                 </div>
             )
         }

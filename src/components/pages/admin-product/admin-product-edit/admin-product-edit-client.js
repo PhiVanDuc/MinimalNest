@@ -145,9 +145,7 @@ export default function AdminProductEditClient() {
                                 FormDescription={FormDescription}
                                 Checkbox={Checkbox}
                             />
-                        </div>
 
-                        <div className="p-[20px] space-y-[20px] rounded-[10px] bg-white">
                             <AdminProductEditStatus
                                 form={form}
                                 FormField={FormField}
@@ -158,9 +156,7 @@ export default function AdminProductEditClient() {
                                 RadioGroupItem={RadioGroupItem}
                             />
 
-                            <div className="flex justify-end pt-[20px]">
-                                <Button>Lưu thay đổi</Button>
-                            </div>
+                            <Button className="w-full">Lưu thay đổi</Button>
                         </div>
                     </div>
                     

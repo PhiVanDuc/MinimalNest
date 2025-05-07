@@ -55,7 +55,7 @@ export default function SizeEditClient() {
     return (
         <section className="space-y-[30px]">
             <header>
-                <h1 className="text-[24px] font-semibold">Thêm kích cỡ</h1>
+                <h1 className="text-[24px] font-semibold">Chỉnh sửa kích cỡ</h1>
             </header>
 
             <Form {...form}>

@@ -30,7 +30,6 @@ import AdminProductAddLivingSpace from "./admin-product-add-living-space";
 import AdminProductAddSize from "./admin-product-add-size";
 import AdminProductAddColor from "./admin-product-add-color";
 import AdminProductAddImage from "./admin-product-add-image";
-import AdminProductAddVariant from "./admin-product-add-variant";
 import AdminProductAddStatus from "./admin-product-add-status";
 
 export default function AdminProductAdd() {
@@ -46,6 +45,7 @@ export default function AdminProductAdd() {
             finalPrice: "",
             category: {},
             livingSpaces: [],
+            productTypes: [],
             sizes: [],
             colors: [],
             colorImages: {},
@@ -144,9 +144,7 @@ export default function AdminProductAdd() {
                                 FormDescription={FormDescription}
                                 Checkbox={Checkbox}
                             />
-                        </div>
 
-                        <div className="p-[20px] space-y-[20px] rounded-[10px] bg-white">
                             <AdminProductAddStatus
                                 form={form}
                                 FormField={FormField}
@@ -157,9 +155,7 @@ export default function AdminProductAdd() {
                                 RadioGroupItem={RadioGroupItem}
                             />
 
-                            <div className="flex justify-end pt-[20px]">
-                                <Button>Thêm sản phẩm</Button>
-                            </div>
+                            <Button className="w-full">Thêm sản phẩm</Button>
                         </div>
                     </div>
                     
