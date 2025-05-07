@@ -57,7 +57,10 @@ export default function AdminOrderDetail({ open, setOpen }) {
                                 {
                                     Array.from({ length: 3 }).map((_, index) => {
                                         return (
-                                            <div className="flex items-center justify-between gap-[15px] p-[15px] rounded-[10px] bg-neutral-50 hover:bg-neutral-100 cursor-pointer">
+                                            <div
+                                                key={index}
+                                                className="flex items-center justify-between gap-[15px] p-[15px] rounded-[10px] bg-neutral-50 hover:bg-neutral-100 cursor-pointer"
+                                            >
                                                 <div className="flex items-center gap-[15px] ">
                                                     <span className="inline-block w-[100px] aspect-square rounded-[10px] bg-slate-300" />
 
