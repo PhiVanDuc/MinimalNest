@@ -13,7 +13,7 @@ export default function CellStock({ row }) {
                 max={200}
                 classNameIndicator="bg-green-500"
             />
-            <p className="text-[13px] text-darkMedium">{stock} còn nhiều.</p>
+            <p className="text-[13px] text-darkMedium font-semibold">{stock} còn nhiều.</p>
         </div>
     )
 }

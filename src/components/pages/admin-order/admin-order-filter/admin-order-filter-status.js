@@ -8,65 +8,89 @@ export default function AdminOrderFilterStatus({
 }) {
     return (
         <div className="flex p-[5px] bg-neutral-100 rounded-[10px] w-fit">
-            <p
+            <div
                 className={cn(
-                    "text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
+                    "flex items-center gap-[10px] text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
                     status === "all" ? "text-darkBold bg-white" : "text-darkMedium"
                 )}
                 onClick={() => { setStatus("all") }}
             >
-                Tất cả
-            </p>
+                <p>Tất cả</p>
 
-            <p
+                <div className="w-[25px] aspect-square rounded-full flex items-center justify-center bg-darkBold text-[12px] text-white font-medium">
+                    <span className="translate-y-[1px]">20</span>
+                </div>
+            </div>
+
+            <div
                 className={cn(
-                    "text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
+                    "flex items-center gap-[10px] text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
                     status === "pending" ? "text-darkBold bg-white" : "text-darkMedium"
                 )}
                 onClick={() => { setStatus("pending") }}
             >
-                Chờ duyệt
-            </p>
+                <p>Chờ duyệt</p>
 
-            <p
+                <div className="w-[25px] aspect-square rounded-full flex items-center justify-center bg-darkBold text-[12px] text-white font-medium">
+                    <span className="translate-y-[1px]">20</span>
+                </div>
+            </div>
+
+            <div
                 className={cn(
-                    "text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
+                    "flex items-center gap-[10px] text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
                     status === "packing" ? "text-darkBold bg-white" : "text-darkMedium"
                 )}
                 onClick={() => { setStatus("packing") }}
             >
-                Đang đóng gói
-            </p>
+                <p>Đang đóng gói</p>
 
-            <p
+                <div className="w-[25px] aspect-square rounded-full flex items-center justify-center bg-darkBold text-[12px] text-white font-medium">
+                    <span className="translate-y-[1px]">20</span>
+                </div>
+            </div>
+
+            <div
                 className={cn(
-                    "text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
+                    "flex items-center gap-[10px] text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
                     status === "shipping" ? "text-darkBold bg-white" : "text-darkMedium"
                 )}
                 onClick={() => { setStatus("shipping") }}
             >
-                Đang vận chuyển
-            </p>
+                <p>Đang vận chuyển</p>
 
-            <p
+                <div className="w-[25px] aspect-square rounded-full flex items-center justify-center bg-darkBold text-[12px] text-white font-medium">
+                    <span className="translate-y-[1px]">20</span>
+                </div>
+            </div>
+
+            <div
                 className={cn(
-                    "text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
+                    "flex items-center gap-[10px] text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
                     status === "canceled" ? "text-darkBold bg-white" : "text-darkMedium"
                 )}
                 onClick={() => { setStatus("canceled") }}
             >
-                Đã hủy
-            </p>
+                <p>Đã hủy</p>
 
-            <p
+                <div className="w-[25px] aspect-square rounded-full flex items-center justify-center bg-darkBold text-[12px] text-white font-medium">
+                    <span className="translate-y-[1px]">20</span>
+                </div>
+            </div>
+
+            <div
                 className={cn(
-                    "text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
+                    "flex items-center gap-[10px] text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
                     status === "fulfilled" ? "text-darkBold bg-white" : "text-darkMedium"
                 )}
                 onClick={() => { setStatus("fulfilled") }}
             >
-                Hoàn thành
-            </p>
+                <p>Hoàn thành</p>
+
+                <div className="w-[25px] aspect-square rounded-full flex items-center justify-center bg-darkBold text-[12px] text-white font-medium">
+                    <span className="translate-y-[1px]">20</span>
+                </div>
+            </div>
         </div>
     )
 }

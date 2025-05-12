@@ -1,29 +1,25 @@
 import columns from "./columns";
-import AdminProductButton from "./admin-product-button";
-
 import CustomTable from "@/components/customs/admin/custom-table";
 import CustomPagination from "@/components/customs/admin/custom-pagination";
-import AdminProductFilter from "./admin-product-filter/admin-product-filter";
-import AdminProductFilterSelected from "./admin-product-filter/admin-product-filter-selected";
-import AdminProductGeneralDiscount from "./admin-product-general-discount";
 
+import InventoryButton from "./inventory-button";
+import InventoryFilter from "./inventory-filter/inventory-filter";
+import InventoryFilterSelected from "./inventory-filter/inventory-filter-selected";
 
-export default function AdminProduct() {
+export default function Inventory() {
     return (
         <section className="space-y-[20px]">
-            <AdminProductGeneralDiscount />
-
             <header className="space-y-[10px] p-[20px] bg-white rounded-[10px]">
                 <div className="flex items-center justify-between">
-                    <h1 className="text-[22px] font-semibold">Quản lý sản phẩm</h1>
-                    <AdminProductButton />
+                    <h1 className="text-[22px] font-semibold">Quản lý kho hàng</h1>
+                    <InventoryButton />
                 </div>
 
-                <AdminProductFilter />
+                <InventoryFilter />
             </header>
 
             <div className="p-[20px] bg-white rounded-[10px] space-y-[5px]">
-                <AdminProductFilterSelected />
+                <InventoryFilterSelected />
                 <CustomTable columns={columns} />
                 <CustomPagination />
             </div>

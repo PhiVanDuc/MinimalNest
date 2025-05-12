@@ -1,7 +1,8 @@
 "use client"
 
 import Money from "@/components/customs/money";
-import AdminProductTableAction from "./admin-product-table-action";
+import InventoryTableAction from "./inventory-table-action";
+import CellStock from "../dashboard/dashboard-stock-quantity/cell-stock";
 
 import { cn } from "@/lib/utils";
 
@@ -49,17 +50,20 @@ const columns = [
     {
         id: "discount",
         accesserKey: "discount",
-        header: () => <h2 className={cn(headerClassName, "text-center")}>Giảm giá</h2>,
+        header: () => <h2 className={cn(headerClassName, "text-center")}>Danh mục</h2>,
         cell: ({ row }) => {
             return (
-                <p className="text-[14px] text-center font-medium">Không giảm giá</p>
+                <div className="flex flex-wrap gap-[5px] max-w-[300px] justify-center">
+                    <p className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] rounded-full border">Giường</p>
+                    <p className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] rounded-full border">Thảm</p>
+                </div>
             )
         }
     },
     {
         id: "price",
         accesserKey: "price",
-        header: () => <h2 className={cn(headerClassName, "text-center")}>Giá cuối</h2>,
+        header: () => <h2 className={cn(headerClassName, "text-center")}>Giá gốc</h2>,
         cell: ({ row }) => {
             return (
                 <div className="flex justify-center">
@@ -73,19 +77,13 @@ const columns = [
     },
     {
         accessorKey: "status",
-        header: () => <h2 className={cn(headerClassName, "text-center")}>Trạng thái</h2>,
-        cell: ({ row }) => {
-            return (
-                <div className="flex justify-center">
-                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] text-green-600 bg-green-600/10 border border-green-600/60">Hoàn thành</p>
-                </div>
-            )
-        }
+        header: () => <h2 className={cn(headerClassName, "text-center")}>Số lượng</h2>,
+        cell: ({ row }) => <CellStock row={row} />
     },
     {
         accessorKey: "actions",
         header: () => <h2 className={cn(headerClassName, "text-center")}>Hành động</h2>,
-        cell: ({ row }) => <AdminProductTableAction row={row} />
+        cell: ({ row }) => <InventoryTableAction />
     }
 ];
 
