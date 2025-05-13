@@ -30,6 +30,13 @@ export default function AdminProductButton() {
             </DropdownMenu>
 
             <Button
+                variant="outline"
+                onClick={() => { router.push("/quan-tri/san-pham/giam-gia-chung") }}
+            >
+                Giảm giá chung
+            </Button>
+
+            <Button
                 className="text-[14px] text-white bg-yellowBold hover:bg-yellowBold shadown-none"
                 onClick={() => { router.push("/quan-tri/san-pham/them-san-pham") }}
             >

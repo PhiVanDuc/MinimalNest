@@ -50,8 +50,12 @@ const productTypes = [
         label: "Mới nhất",
     },
     {
-        value: "best-seller",
+        value: "best-selling",
         label: "Bán chạy nhất",
+    },
+    {
+        value: "normal",
+        label: "Bình thường",
     }
 ]
 
