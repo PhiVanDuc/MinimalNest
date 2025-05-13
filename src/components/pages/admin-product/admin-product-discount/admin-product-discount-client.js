@@ -41,7 +41,7 @@ export default function AdminProductDiscountClient() {
         <div className="space-y-[30px]">
             <header className="space-y-[5px]">
                 <h1 className="text-[24px] font-semibold">Giảm giá chung</h1>
-                <p className="text-[14px] text-darkMedium font-medium">Nếu một chương trình giảm giá được chọn "Áp dụng cho tất cả sản phẩm", thì các chương trình giảm giá khác sẽ không được áp dụng.</p>
+                <p className="text-[14px] text-darkMedium font-medium">Nếu một chương trình giảm giá được chọn &quot;Áp dụng cho tất cả sản phẩm&ldquo;, thì các chương trình giảm giá khác sẽ không được áp dụng.</p>
             </header>
 
             <Form {...form}>
