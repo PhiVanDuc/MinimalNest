@@ -24,6 +24,9 @@ import {
 import { cn } from "@/lib/utils";
 
 const breadcrumbMap = {
+    "dang-nhap": "Đăng nhập",
+    "dang-ky": "Đăng ký",
+    "doi-mat-khau": "Đổi mật khẩu",
     "san-pham": "Sản phẩm",
     "tim-kiem": "Tìm kiếm",
     "gioi-thieu": "Giới thiệu",

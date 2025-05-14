@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 
 const sidebarProductPaths = ["/san-pham", "/san-pham/tim-kiem"];
 const sidebarDiscountPaths = ["/phieu-giam-gia"];
-const hiddenPaths = ["/gio-hang", "/thanh-toan"];
+const hiddenPaths = ["/gio-hang", "/thanh-toan", "/dang-nhap", "/dang-ky", "/doi-mat-khau"];
 
 export default function Newsletter() {
     const pathname = usePathname();
