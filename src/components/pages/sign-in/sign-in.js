@@ -51,7 +51,7 @@ export default function SignIn() {
             const result = await response.json();
             const message = result?.message;
 
-            if (result.success) window.location.href = process.env.NEXT_PUBLIC_FRONTEND_URL;
+            if (result.success) window.location.href = process.env.NODE_ENV === "development" ? process.env.NEXT_PUBLIC_FRONTEND_URL : process.env.NEXT_PUBLIC_FRONTEND_URL_PROD;
             else toast.error(message);
         }
         catch(error) {

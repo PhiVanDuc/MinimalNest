@@ -13,7 +13,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
-import Mark from "./mark";
+import Mark from "../mark";
 import { FaChevronDown } from "react-icons/fa6";
 
 import { cn } from "@/lib/utils";

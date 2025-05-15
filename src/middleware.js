@@ -71,6 +71,8 @@ export function middleware(request) {
         return response;
     }
 
+    // Kiểm tra hạn access token (Cấp lại access token nếu hết hạn) . . .
+
     // Chặn vào Auth Page khi (accessToken && refreshToken) === true
     if (validAccess && validRefresh && authPage) {
         return NextResponse.redirect(
@@ -95,12 +97,3 @@ export function middleware(request) {
 export const config = {
     matcher: '/((?!api|_next/static|_next/image|favicon.ico).*)',
 }
-
-// Vai trò của Middleware trong việc xác thực jwt
-// 1. Kiểm tra xem 2 jwt có tồn tại không
-// 2. Kiểm tra xem 2 jwt có lấy được ra payload không
-
-// Thứ tự kiểm tra trong Middleware
-// 1. Hai jwt
-// 2. Chặn vào Auth Page khi đã có access token và refresh token
-// 3. Quyền
