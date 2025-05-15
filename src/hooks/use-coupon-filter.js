@@ -10,7 +10,7 @@ import {
     deleteType,
     deleteUserTypes
 } from "@/redux/slices/coupon-filter/coupon-filter-slice";
-import generateSignatureClient from "@/lib/generate-signature-client";
+import generateSignatureClient from "@/lib/utils/generate-signature-client";
 import { toggle } from "@/redux/slices/coupon-filter/coupon-filter-open-slice";
 
 export default function useCouponFilter() {

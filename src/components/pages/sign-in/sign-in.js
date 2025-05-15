@@ -1,29 +1,70 @@
 "use client"
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
     Form,
     FormField,
     FormItem,
     FormLabel,
-    FormControl
+    FormControl,
+    FormMessage
 } from "@/components/ui/form";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+import { toast } from "sonner";
+import signInSchema from "@/lib/schemas/sign-in-schema";
+
 export default function SignIn() {
+    const router = useRouter();
+    const [submitting, setSubmitting] = useState(false);
+
     const form = useForm({
+        resolver: zodResolver(signInSchema),
         defaultValues: {
-            email: "",
-            password: "",
+            email: "phivanduc325@gmail.com",
+            password: "123456",
         }
     });
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
+        try {
+            if (submitting) return;
 
+            setSubmitting(true);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/account/sign_in`, {
+                method: "POST",
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data),
+                cache: "no-cache"
+            });
+
+            const result = await response.json();
+            const message = result?.message;
+
+            if (result.success) {
+                toast.success(message);
+                router.replace("/");
+                return;
+            }
+            else toast.error(message);
+        }
+        catch(error) {
+            console.log(error);
+            toast.error("Lỗi form đăng nhập.");
+        }
+        finally {
+            setSubmitting(false);
+        }
     }
 
     return (
@@ -54,6 +95,7 @@ export default function SignIn() {
                                                     {...field}
                                                 />
                                             </FormControl>
+                                            <FormMessage />
                                         </div>
                                     </FormItem>
                                 )
@@ -76,6 +118,7 @@ export default function SignIn() {
                                                     {...field}
                                                 />
                                             </FormControl>
+                                            <FormMessage />
                                         </div>
                                     </FormItem>
                                 )
@@ -99,7 +142,12 @@ export default function SignIn() {
                         </div>
                     </div>
 
-                    <Button className="w-full">Đăng nhập</Button>
+                    <Button
+                        className="w-full"
+                        disabled={submitting}
+                    >
+                        { submitting ? "Đang đăng nhập" : "Đăng nhập" }
+                    </Button>
                 </div>
             </form>
         </Form>

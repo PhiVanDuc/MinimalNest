@@ -2,14 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
     Form,
     FormField,
     FormItem,
     FormLabel,
-    FormControl
+    FormControl,
+    FormMessage
 } from "@/components/ui/form";
 
 import {
@@ -19,12 +21,21 @@ import {
     InputOTPSlot,
 } from "@/components/ui/input-otp"
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import registerSchema, { emailSchema } from "@/lib/schemas/register-schema";
 
 export default function Register() {
+    const router = useRouter();
+    const [submitting, setSubmitting] = useState(false);
+    const [isEmailValid, setIsEmailValid] = useState(false);
+
     const form = useForm({
+        resolver: zodResolver(registerSchema),
         defaultValues: {
             firstName: "",
             lastName: "",
@@ -34,6 +45,12 @@ export default function Register() {
             confirmPassword: ""
         }
     });
+
+    useEffect(() => {
+        const emailValue = form.getValues("email");
+        const result = emailSchema.safeParse(emailValue);
+        setIsEmailValid(result.success);
+    }, [form.watch("email")]);
 
     const [otpCountdown, setOtpCountdown] = useState(0);
 
@@ -45,20 +62,74 @@ export default function Register() {
         return () => clearTimeout(timer);
     }, [otpCountdown]);
 
-    const handleSendOtp = () => {
+    const handleSendOtp = async () => {
         if (otpCountdown > 0) return;
         setOtpCountdown(60);
+
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/account/create_otp`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email: form.getValues("email") }),
+                cache: "no-cache"
+            });
+
+            const result = await response.json();
+            const message = result?.message;
+
+            if (result.success) {
+                toast.success(message);
+                return;
+            }
+            else toast.error(message);
+        }
+        catch(error) {
+            console.log(error);
+            toast.error("Lỗi form gửi mã otp.");
+        }
     };
 
-    const onSubmit = (data) => {
-        
-    }
+    const onSubmit = async (data) => {
+        try {
+            if (submitting) return;
 
+            setSubmitting(true);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/account/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data),
+                cache: "no-cache"
+            });
+
+            const result = await response.json();
+            const message = result?.message;
+
+            if (result.success) {
+                toast.success(message);
+                router.replace("/dang-nhap");
+                return;
+            }
+            else toast.error(message);
+        }
+        catch(error) {
+            console.log(error);
+            toast.error("Lỗi form đăng ký tài khoản.");
+        }
+        finally {
+            setSubmitting(false);
+        }
+    }
+    
     return (
         <Form {...form}>
             <form
                 className="flex w-full justify-center"
                 onSubmit={form.handleSubmit(onSubmit)}
+                autoComplete="off"
             >
                 <div className="w-full max-w-[500px]">
                     <header className="text-center space-y-[5px] mb-[60px]">
@@ -83,6 +154,7 @@ export default function Register() {
                                                         {...field}
                                                     />
                                                 </FormControl>
+                                                <FormMessage />
                                             </div>
                                         </FormItem>
                                     )
@@ -104,6 +176,7 @@ export default function Register() {
                                                         {...field}
                                                     />
                                                 </FormControl>
+                                                <FormMessage />
                                             </div>
                                         </FormItem>
                                     )
@@ -126,6 +199,7 @@ export default function Register() {
                                                     {...field}
                                                 />
                                             </FormControl>
+                                            <FormMessage />
                                         </div>
                                     </FormItem>
                                 )
@@ -159,21 +233,27 @@ export default function Register() {
                                                         </InputOTPGroup>
                                                     </InputOTP>
                                                 </FormControl>
+                                                <FormMessage />
                                             </div>
                                         </FormItem>
                                     )
                                 }}
                             />
 
-                            <p
-                                className={cn(
-                                    "text-[14px] text-right underline underline-offset-2 text-yellowBold font-medium cursor-pointer",
-                                    otpCountdown === 0 ? "opacity-100 hover:opacity-90 cursor-pointer" : "opacity-60 cursor-not-allowed"
-                                )}
-                                onClick={handleSendOtp}
-                            >
-                                {otpCountdown > 0 ? `Gửi lại OTP sau ${otpCountdown}s` : "Nhận mã OTP"}
-                            </p>
+                            {
+                                isEmailValid &&
+                                (
+                                    <p
+                                        className={cn(
+                                            "text-[14px] text-right underline underline-offset-2 text-yellowBold font-medium cursor-pointer",
+                                            otpCountdown === 0 ? "opacity-100 hover:opacity-90 cursor-pointer" : "opacity-60 cursor-not-allowed"
+                                        )}
+                                        onClick={handleSendOtp}
+                                    >
+                                        {otpCountdown > 0 ? `Gửi lại OTP sau ${otpCountdown}s` : "Nhận mã OTP"}
+                                    </p>
+                                )
+                            }
                         </div>
 
                         <FormField
@@ -192,6 +272,7 @@ export default function Register() {
                                                     {...field}
                                                 />
                                             </FormControl>
+                                            <FormMessage />
                                         </div>
                                     </FormItem>
                                 )
@@ -214,6 +295,7 @@ export default function Register() {
                                                     {...field}
                                                 />
                                             </FormControl>
+                                            <FormMessage />
                                         </div>
                                     </FormItem>
                                 )
@@ -237,7 +319,12 @@ export default function Register() {
                         </div>
                     </div>
 
-                    <Button className="w-full">Đăng ký tài khoản</Button>
+                    <Button
+                        className="w-full"
+                        disabled={submitting}
+                    >
+                        { submitting ? "Đang đăng ký" : "Đăng ký tài khoản" }
+                    </Button>
                 </div>
             </form>
         </Form>

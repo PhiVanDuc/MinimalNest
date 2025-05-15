@@ -7,7 +7,7 @@ import voucherImage from "../../../../public/voucher.webp";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
-import generateSignatureClient from "@/lib/generate-signature-client";
+import generateSignatureClient from "@/lib/utils/generate-signature-client";
 
 export default function CouponItem({ coupon }) {
     const pathname = usePathname();

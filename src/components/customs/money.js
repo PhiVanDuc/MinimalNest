@@ -1,6 +1,6 @@
 "use client"
 
-import formatCurrency from "@/lib/format-currency"
+import formatCurrency from "@/lib/utils/format-currency"
 import { cn } from "@/lib/utils"
 
 export default function Money({ price, moneyClassName = "", currencyClassName = "", sign = "" }) {

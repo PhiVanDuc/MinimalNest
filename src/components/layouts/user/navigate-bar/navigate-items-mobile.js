@@ -41,7 +41,7 @@ import { BookText, House, Send, ShoppingCart } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { livingSpaces } from "@/static/navbar";
-import generateSignatureClient from "@/lib/generate-signature-client";
+import generateSignatureClient from "@/lib/utils/generate-signature-client";
 import { addLivingSpace } from "@/redux/slices/product-filter/product-filter-slice";
 
 const items = [

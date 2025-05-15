@@ -18,7 +18,7 @@ import { FaChevronDown } from "react-icons/fa6";
 
 import { cn } from "@/lib/utils";
 import { navbarItems } from "@/static/navbar";
-import generateSignatureClient from "@/lib/generate-signature-client";
+import generateSignatureClient from "@/lib/utils/generate-signature-client";
 import { addLivingSpace } from "@/redux/slices/product-filter/product-filter-slice";
 
 export default function NavigateItems() {

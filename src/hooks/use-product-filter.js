@@ -15,7 +15,7 @@ import {
 } from "@/redux/slices/product-filter/product-filter-slice";
 
 import _ from "lodash";
-import generateSignatureClient from "@/lib/generate-signature-client";
+import generateSignatureClient from "@/lib/utils/generate-signature-client";
 import { toggle } from "@/redux/slices/product-filter/product-filter-open-slice";
 
 export default function useProductFilter() {

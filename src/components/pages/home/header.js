@@ -12,7 +12,7 @@ import BlurCircle from "../../customs/blur-circle";
 
 import { cn } from "@/lib/utils";
 import { v4 } from "uuid";
-import { dynamicBlurImage } from "@/lib/dynamic-blur-image";
+import { dynamicBlurImage } from "@/lib/utils/dynamic-blur-image";
 
 export default async function Header() {
     const blurImages = await Promise.all(Array.from({ length: 3 }).map(async (_, index) => {

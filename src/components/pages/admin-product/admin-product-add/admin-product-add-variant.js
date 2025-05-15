@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 import { v4 } from "uuid";
-import generateSkuProduct from "@/lib/generate-sku-product";
+import generateSkuProduct from "@/lib/utils/generate-sku-product";
 
 export default function AdminProductAddVariant({ form }) {
     const watchName = form.watch("name");
