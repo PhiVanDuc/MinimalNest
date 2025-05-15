@@ -15,6 +15,12 @@ const PUBLIC_PATHS = [
     "/gio-hang",
     "/thanh-toan"
 ];
+
+const PROTECTED_PATHS = [
+    "/ho-so",
+    "/ho-so/phieu-giam-gia",
+    "/ho-so/don-hang"
+];
  
 export function middleware(request) {
     const { cookies, nextUrl } = request;
@@ -22,18 +28,20 @@ export function middleware(request) {
 
     const accessToken = cookies.get("access_token")?.value;
     const refreshToken = cookies.get("refresh_token")?.value;
+    let infoUser;
 
     let validAccess = accessToken ? true : false;
     let validRefresh = refreshToken ? true : false;
 
     const authPage = AUTH_PATHS.includes(pathname);
     const publicPage = PUBLIC_PATHS.includes(pathname);
+    const protectedPage = PROTECTED_PATHS.includes(pathname);
 
     // Kiểm tra tính hợp lệ cả access token và refresh token
     if (validAccess && validRefresh) {
         if (validAccess) {
             try {
-                jwtDecode(accessToken);
+                infoUser = jwtDecode(accessToken);
             } catch (err) {
                 validAccess = false;
             }
@@ -63,6 +71,24 @@ export function middleware(request) {
         return response;
     }
 
+    // Chặn vào Auth Page khi (accessToken && refreshToken) === true
+    if (validAccess && validRefresh && authPage) {
+        return NextResponse.redirect(
+            new URL('/', request.url)
+        );
+    }
+
+    // Chặn vào Admin Page khi người dùng không có bất kỳ quyền nào
+    if (!authPage && !publicPage && !protectedPage) {
+        if (infoUser?.permissions && infoUser?.permissions?.length === 0) {
+            return NextResponse.redirect(
+                new URL('/', request.url)
+            );
+        }
+    }
+
+    // Phân quyền . . .
+
     return NextResponse.next();
 }
 
@@ -76,4 +102,5 @@ export const config = {
 
 // Thứ tự kiểm tra trong Middleware
 // 1. Hai jwt
-// 2. Quyền
+// 2. Chặn vào Auth Page khi đã có access token và refresh token
+// 3. Quyền

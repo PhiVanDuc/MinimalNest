@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
-export default function AuthButtons() {
+export default function NavigateBarUnauth() {
     const router = useRouter();
 
     return (

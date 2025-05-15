@@ -51,11 +51,7 @@ export default function SignIn() {
             const result = await response.json();
             const message = result?.message;
 
-            if (result.success) {
-                toast.success(message);
-                router.replace("/");
-                return;
-            }
+            if (result.success) window.location.href = process.env.NEXT_PUBLIC_FRONTEND_URL;
             else toast.error(message);
         }
         catch(error) {
