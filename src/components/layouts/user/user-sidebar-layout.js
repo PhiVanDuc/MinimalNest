@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import NavigateBarLoading from "./navigate-bar/navigate-bar-loading";
-import UserNavbar from "./navigate-bar/desktop/user-navbar";
-import UserNavbarMobile from "./navigate-bar/mobile/user-navbar-mobile";
+import UserNavbar from "./navigate-bar/desktop/navigate-bar";
+import UserNavbarMobile from "./navigate-bar/mobile/navigate-bar-mobile";
 import CustomBreadcrumb from "@/components/customs/custom-breadcrumb";
 import Newsletter from "./newsletter";
 import Footer from "./footer";

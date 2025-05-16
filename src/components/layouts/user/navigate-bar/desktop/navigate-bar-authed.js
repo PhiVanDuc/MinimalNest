@@ -64,7 +64,9 @@ export default function NavigateBarAuthed({ userInfo }) {
 
                     <DropdownMenuItem
                         className="flex items-center gap-[10px] cursor-pointer text-[14px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[20px] py-[10px]"
-                        onClick={() => { signOut() }}
+                        onClick={() => {
+                            signOut();
+                        }}
                     >
                         <div className="shrink-0 w-[24px] flex justify-center">
                             <TbLogout className="text-[20px]" />

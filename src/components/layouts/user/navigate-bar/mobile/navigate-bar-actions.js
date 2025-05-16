@@ -1,10 +1,14 @@
 import NavigateBarUnauth from "./navigate-bar-unauth";
 import NavigateBarAuthed from "./navigate-bar-authed";
 
-export default function NavigateBarActions({ accessToken, userInfo }) {
+import getAccessToken from "@/lib/utils/getAccessToken";
+
+export default function NavigateBarActions() {
+    const { accessToken, decode } = getAccessToken();
+
     return (
         <>
-            { accessToken ? <NavigateBarAuthed userInfo={userInfo} /> : <NavigateBarUnauth /> }
+            { accessToken ? <NavigateBarAuthed userInfo={decode} /> : <NavigateBarUnauth /> }
         </>
     )
 }

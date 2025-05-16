@@ -1,16 +1,16 @@
 import Logo from "@/components/customs/logo/logo";
-import NavigateItemsMobile from "./navigate-items-mobile";
-import getAccessToken from "@/lib/utils/getAccessToken";
+import NavigateBarItems from "./navigate-bar-items";
+import NavigateBarActions from "./navigate-bar-actions";
 
-export default function UserNavbarMobile() {
-    const { accessToken, decode } = getAccessToken();
-
+export default function NavigateBarMobile() {
     return (
         <nav
             className="fixed top-0 left-0 right-0 responsive-horizontal h-[80px] flex xl:hidden justify-between items-center bg-white z-20 border-b border-slate-200"
         >
             <Logo className="text-[20px] md:text-[22px]" />
-            <NavigateItemsMobile accessToken={accessToken} userInfo={decode} />
+            <NavigateBarItems>
+                <NavigateBarActions />
+            </NavigateBarItems>
         </nav>
     )
 }

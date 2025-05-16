@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 
-import UserNavbar from "./navigate-bar/desktop/user-navbar";
+import NavigateBar from "./navigate-bar/desktop/navigate-bar";
 import NavigateBarLoading from "./navigate-bar/navigate-bar-loading";
-import UserNavbarMobile from "./navigate-bar/mobile/user-navbar-mobile";
+import NavigateBarMobile from "./navigate-bar/mobile/navigate-bar-mobile";
 import CustomBreadcrumb from "@/components/customs/custom-breadcrumb";
 import Newsletter from "./newsletter";
 import Footer from "./footer";
@@ -15,8 +15,8 @@ export default function UserLayout({ children, isOverflow = false }) {
             isOverflow ? "overflow-hidden" : ""
         )}>
             <Suspense fallback={<NavigateBarLoading />}>
-                <UserNavbar />
-                <UserNavbarMobile />
+                <NavigateBar />
+                <NavigateBarMobile />
             </Suspense>
 
             <div className={cn(

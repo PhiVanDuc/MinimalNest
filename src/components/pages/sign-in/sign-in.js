@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { toast } from "sonner";
+import { signIn } from "@/lib/api/server-action/auth";
 import signInSchema from "@/lib/schemas/sign-in-schema";
 
 export default function SignIn() {
@@ -34,24 +35,16 @@ export default function SignIn() {
     });
 
     const onSubmit = async (data) => {
+        let result;
+
         try {
             if (submitting) return;
-
             setSubmitting(true);
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/account/sign_in`, {
-                method: "POST",
-                credentials: 'include',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data),
-                cache: "no-cache"
-            });
 
-            const result = await response.json();
+            result = await signIn(data);
             const message = result?.message;
 
-            if (result.success) window.location.href = process.env.NODE_ENV === "development" ? process.env.NEXT_PUBLIC_FRONTEND_URL : process.env.NEXT_PUBLIC_FRONTEND_URL_PROD;
+            if (result?.success) window.location.reload(true);
             else toast.error(message);
         }
         catch(error) {

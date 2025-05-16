@@ -21,7 +21,7 @@ import { navbarItems } from "@/static/navbar";
 import generateSignatureClient from "@/lib/utils/generate-signature-client";
 import { addLivingSpace } from "@/redux/slices/product-filter/product-filter-slice";
 
-export default function NavigateItems() {
+export default function NavigateBarItems() {
     const firstPath = usePathname();
     const searchParams = useSearchParams();
     const router = useRouter();

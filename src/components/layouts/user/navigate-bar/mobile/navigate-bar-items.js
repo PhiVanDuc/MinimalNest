@@ -7,7 +7,6 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/customs/logo/logo";
-import NavigateBarActions from "./navigate-bar-actions";
 
 import {
     Accordion,
@@ -52,7 +51,7 @@ const items = [
     }
 ];
 
-export default function NavigateItemsMobile({ accessToken, userInfo }) {
+export default function NavigateBarItems({ children }) {
     const firstPath = usePathname();
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -208,7 +207,7 @@ export default function NavigateItemsMobile({ accessToken, userInfo }) {
                 </ScrollArea>
 
                 <SheetFooter className="px-[20px] py-[20px] overflow-x-hidden">
-                    <NavigateBarActions accessToken={accessToken} userInfo={userInfo} />
+                    {children}
                 </SheetFooter>
             </SheetContent>
         </Sheet>
