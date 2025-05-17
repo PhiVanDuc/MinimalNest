@@ -1,62 +1,69 @@
 import { NextResponse } from 'next/server';
+import { AUTH_PATHS, PUBLIC_PATHS, PROTECTED_PATHS, ADMIN_PATHS, PERMISSION_PATHS } from "./routes";
+
+import { verifyToken, refresh_access_token } from './lib/api/server-action/token';
 import { jwtDecode } from 'jwt-decode';
-
-const AUTH_PATHS = [
-    "/dang-nhap",
-    "/dang-ky",
-    "/doi-mat-khau"
-];
-
-const PUBLIC_PATHS = [
-    "/",
-    "/san-pham",
-    "/san-pham/tim-kiem",
-    "/phieu-giam-gia",
-    "/gio-hang",
-    "/thanh-toan"
-];
-
-const PROTECTED_PATHS = [
-    "/ho-so",
-    "/ho-so/phieu-giam-gia",
-    "/ho-so/don-hang"
-];
  
-export function middleware(request) {
+export async function middleware(request) {
+    const finalResponse = NextResponse.next();
+
     const { cookies, nextUrl } = request;
-    const { pathname } = nextUrl;
+    const { pathname: currPath } = nextUrl;
+    const pathname = currPath === "/" ? "/trang-chu" : currPath;
 
     const accessToken = cookies.get("access_token")?.value;
     const refreshToken = cookies.get("refresh_token")?.value;
-    let infoUser;
 
     let validAccess = accessToken ? true : false;
-    let validRefresh = refreshToken ? true : false;
+    let infoUser;
 
-    const authPage = AUTH_PATHS.includes(pathname);
-    const publicPage = PUBLIC_PATHS.includes(pathname);
-    const protectedPage = PROTECTED_PATHS.includes(pathname);
+    const authPage = AUTH_PATHS.some(path => pathname.startsWith(path));
+    const publicPage = PUBLIC_PATHS.some(path => pathname.startsWith(path));
+    const protectedPage = PROTECTED_PATHS.some(path => pathname.startsWith(path));
+    const adminPage = ADMIN_PATHS.some(path => pathname.startsWith(path));
 
     // Kiểm tra tính hợp lệ cả access token và refresh token
-    if (validAccess && validRefresh) {
-        if (validAccess) {
-            try {
-                infoUser = jwtDecode(accessToken);
-            } catch (err) {
-                validAccess = false;
+    if (validAccess && (protectedPage || adminPage)) {
+        const result = await verifyToken(accessToken);
+
+        // Access token không hợp lệ
+        if (!result?.success || (!result?.data?.valid && !result?.data?.expired)) validAccess = false;
+        // Access token hết hạn
+        else if (result?.data?.expired) {
+            const result = await refresh_access_token(refreshToken);
+
+            // Cấp lại access token thất bại
+            if (!result?.success) validAccess = false;
+            // Cấp lại access token thành công
+            else {
+                infoUser = result?.data?.decoded;
+
+                finalResponse.cookies.set("access_token", result?.data?.accessToken, {
+                    httpOnly: true,
+                    path: "/",
+                    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+                });
+
+                finalResponse.cookies.set("refresh_token", result?.data?.refreshToken, {
+                    httpOnly: true,
+                    path: "/",
+                    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+                });
             }
         }
-
-        if (validRefresh) {
+        // Access token có thể dùng tiếp
+        else {
             try {
-                jwtDecode(refreshToken);
-            } catch (err) {
-                validRefresh = false;
+                infoUser = jwtDecode(accessToken);
+            } catch (error) {
+                console.log("Lỗi khi decode access token");
+                console.log(error);
+                validAccess = false;
             }
         }
     }
     
-    if (!validAccess || !validRefresh) {
+    if (!validAccess) {
         const response = NextResponse.next();
         response.cookies.delete("access_token");
         response.cookies.delete("refresh_token");
@@ -71,29 +78,43 @@ export function middleware(request) {
         return response;
     }
 
-    // Kiểm tra hạn access token (Cấp lại access token nếu hết hạn) . . .
-
-    // Chặn vào Auth Page khi (accessToken && refreshToken) === true
-    if (validAccess && validRefresh && authPage) {
+    // Chặn vào Auth Page khi accessToken === true
+    if (validAccess && authPage) {
         return NextResponse.redirect(
             new URL('/', request.url)
         );
     }
 
-    // Chặn vào Admin Page khi người dùng không có bất kỳ quyền nào
-    if (!authPage && !publicPage && !protectedPage) {
-        if (infoUser?.permissions && infoUser?.permissions?.length === 0) {
-            return NextResponse.redirect(
-                new URL('/', request.url)
-            );
+    // Phân quyền quản trị
+    if (adminPage) {
+        const permissions = infoUser?.permissions || [];
+        if (permissions.length === 0) {
+            return NextResponse.redirect(new URL('/', request.url));
+        }
+
+        const matchedPermissions = PERMISSION_PATHS.filter(entry =>
+            permissions.includes(entry.permission)
+        );
+
+        const allowedPaths = new Set(
+            matchedPermissions.flatMap(entry => entry.paths)
+        );
+
+        const hasPermissionForPath = Array.from(allowedPaths).some(path =>
+            pathname.startsWith(path)
+        );        
+
+        // Nếu không có quyền truy cập vào đường dẫn hiện tại
+        if (!hasPermissionForPath) {
+            return NextResponse.redirect(new URL('/', request.url));
         }
     }
 
-    // Phân quyền . . .
-
-    return NextResponse.next();
+    return finalResponse;
 }
 
 export const config = {
-    matcher: '/((?!api|_next/static|_next/image|favicon.ico).*)',
-}
+    matcher: [
+        '/((?!api|_next/static|_next/image|favicon.ico).*)'
+    ]
+};

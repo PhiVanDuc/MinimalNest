@@ -44,11 +44,12 @@ export default function ResetPassword() {
         }
     });
     
+    const watchEmail = form.watch("email");
     useEffect(() => {
         const emailValue = form.getValues("email");
         const result = emailSchema.safeParse(emailValue);
         setIsEmailValid(result.success);
-    }, [form.watch("email")]);
+    }, [watchEmail, form]);
 
     const [otpCountdown, setOtpCountdown] = useState(0);
 
@@ -65,7 +66,7 @@ export default function ResetPassword() {
         setOtpCountdown(60);
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/account/create_otp`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/create_otp`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

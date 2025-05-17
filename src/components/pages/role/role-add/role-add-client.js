@@ -1,6 +1,5 @@
 "use client"
 
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -20,36 +19,31 @@ import { Textarea } from "@/components/ui/textarea";
 
 import columns from "./columns";
 import roleSchema from "@/lib/schemas/role-schema";
-import { editRole } from "@/lib/api/server-action/role";
+import { addRole } from "@/lib/api/server-action/role";
 import { toast } from "sonner";
 
-export default function RoleEditClient({ permissions, role, slug }) {
-    const router = useRouter();
-
+export default function RoleAddClient({ permissions }) {
     const form = useForm({
         resolver: zodResolver(roleSchema),
         defaultValues: {
-            roleName: role?.role || "",
-            roleDesc: role?.desc || "",
-            rolePermissions: role?.permissions || []
+            roleName: "",
+            roleDesc: "",
+            rolePermissions: []
         }
     });
 
     const handleSubmit = async (data) => {
-        const role = await editRole(data, slug);
+        const role = await addRole(data);
         const message = role?.message;
 
-        if (role?.success) {
-            toast.success(message);
-            router.replace(`/quan-tri/vai-tro/chinh-sua-vai-tro/${role?.data?.role?.slug}`);
-        }
-        else toast.error(message || "Lỗi chỉnh sửa vai trò!");
+        if (role?.success) toast.success(message);
+        else toast.error(message || "Lỗi thêm vai trò!");
     }
 
     return (
         <section className="space-y-[30px]">
             <header>
-                <h1 className="text-[24px] font-semibold">Chỉnh sửa vai trò</h1>
+                <h1 className="text-[24px] font-semibold">Thêm vai trò</h1>
             </header>
 
             <Form {...form}>
@@ -121,7 +115,7 @@ export default function RoleEditClient({ permissions, role, slug }) {
                     />
 
                     <div className="flex justify-end pt-[15px]">
-                        <Button>Lưu thay đổi</Button>
+                        <Button>Thêm vai trò</Button>
                     </div>
                 </form>
             </Form>

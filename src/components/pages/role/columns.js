@@ -10,8 +10,10 @@ const columns = [
         accessorKey: "role",
         header: () => <h2 className={headerClassName}>Vai trò</h2>,
         cell: ({ row }) => {
+            const data = row.original;
+
             return (
-                <p className="text-[14px] font-semibold">Tên vai trò</p>
+                <p className="text-[14px] font-semibold">{data?.role || "Tên vai trò"}</p>
             )
         }
     },
@@ -19,8 +21,10 @@ const columns = [
         accessorKey: "desc",
         header: () => <h2 className={headerClassName}>Mô tả</h2>,
         cell: ({ row }) => {
+            const data = row.original;
+
             return (
-                <p className="text-[14px]">Mô tả vai trò này phù hợp cho ai trong hệ thống.</p>
+                <p className="text-[14px]">{data?.desc || "Mô tả vai trò."}</p>
             )
         }
     },
@@ -39,30 +43,10 @@ const columns = [
             )
         },
         cell: ({ row }) => {
+            const data = row.original;
+
             return (
-                <p className="text-[14px] text-center font-medium">300 tài khoản</p>
-            )
-        }
-    },
-    {
-        accessorKey: "status",
-        header: () => {
-            return (
-                <h2
-                    className={cn(
-                        headerClassName,
-                        "text-center"
-                    )}
-                >
-                    Trạng thái
-                </h2>
-            )
-        },
-        cell: ({ row }) => {
-            return (
-                <div className="flex justify-center">
-                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] text-green-600 bg-green-600/10 border border-green-600/60">Kích hoạt</p>
-                </div>
+                <p className="text-[14px] text-center font-medium">{data?.account_used} tài khoản</p>
             )
         }
     },
@@ -80,7 +64,7 @@ const columns = [
                 </h2>
             )
         },
-        cell: ({ row }) => <RoleTableAction row={row} />
+        cell: ({ row }) => <RoleTableAction data={row.original} />
     }
 ];
 

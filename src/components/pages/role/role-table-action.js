@@ -1,11 +1,17 @@
 "use client"
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
+import RoleDeleteDialog from "./role-delete-dialog";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-export default function RoleTableAction({ row }) {
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+
+export default function RoleTableAction({ data }) {
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const router = useRouter();
 
     return (
@@ -21,20 +27,36 @@ export default function RoleTableAction({ row }) {
                     alignOffset={10}
                 >
                     <DropdownMenuItem
-                        className="cursor-pointer"
-                        onClick={() => { router.push("/quan-tri/vai-tro/chinh-sua-vai-tro/123") }}
+                        className={cn(
+                            "",
+                            data?.slug === "sieu-quan-tri" ? "opacity-50 cursor-not-allowed" : "cursor-pointer opacity-100"
+                        )}
+                        onClick={() => {
+                            if (data?.slug === "sieu-quan-tri") {
+                                toast.warning("Không thể chỉnh sửa vai trò siêu quản trị!");
+                                return;
+                            }
+                            router.push(`/quan-tri/vai-tro/chinh-sua-vai-tro/${data?.slug}`)
+                        }}
                     >
                         Chỉnh sửa
                     </DropdownMenuItem>
 
                     <DropdownMenuItem
-                        className="cursor-pointer"
-                        onClick={() => {}}
+                        className={cn(
+                            "",
+                            data?.slug === "sieu-quan-tri" ? "opacity-50 cursor-not-allowed" : "cursor-pointer opacity-100"
+                        )}
+                        onClick={() => {
+                            setOpenDeleteDialog(true);
+                        }}
                     >
                         Xóa
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
+
+            <RoleDeleteDialog open={openDeleteDialog} setOpen={setOpenDeleteDialog} slug={data?.slug} />
         </div>
     )
 }

@@ -25,7 +25,7 @@ export default function AdminProductEditColor({
         });
 
         form.setValue("images", synced);
-    }, [watchColors]);
+    }, [watchColors, form]);
 
     useEffect(() => {
         form.setValue("colorImages", {});

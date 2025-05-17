@@ -4,10 +4,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 const signIn = async (data) => {
-    let result;
-
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/account/sign_in`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/sign_in`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -16,20 +14,22 @@ const signIn = async (data) => {
             cache: "no-cache"
         });
 
-        result = await response.json();
+        const result = await response.json();
         if (result.success) {
             cookies().set({
                 name: "access_token",
                 value: result?.data?.accessToken,
                 httpOnly: true,
-                path: '/'
+                path: '/',
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
             });
 
             cookies().set({
                 name: "refresh_token",
                 value: result?.data?.refreshToken,
                 httpOnly: true,
-                path: '/'
+                path: '/',
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
             });
         };
 

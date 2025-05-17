@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 
 export default function CustomTable({ data, columns }) {
     const table = useReactTable({
-        data: data || [1, 1, 1, 1, 1],
+        data: data || [],
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
@@ -73,8 +73,8 @@ export default function CustomTable({ data, columns }) {
                     ))
                 ) : (
                     <TableRow>
-                        <TableCell className="h-24 text-center">
-                            Không có sản phẩm nào.
+                        <TableCell className="h-24 text-center" colSpan={columns.length}>
+                            Không có dữ liệu.
                         </TableCell>
                     </TableRow>
                 )}

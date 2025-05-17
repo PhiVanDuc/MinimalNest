@@ -46,11 +46,12 @@ export default function Register() {
         }
     });
 
+    const watchEmail = form.watch("email");
     useEffect(() => {
         const emailValue = form.getValues("email");
         const result = emailSchema.safeParse(emailValue);
         setIsEmailValid(result.success);
-    }, [form.watch("email")]);
+    }, [watchEmail, form]);
 
     const [otpCountdown, setOtpCountdown] = useState(0);
 
@@ -96,7 +97,7 @@ export default function Register() {
             if (submitting) return;
 
             setSubmitting(true);
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/account/register`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/register`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

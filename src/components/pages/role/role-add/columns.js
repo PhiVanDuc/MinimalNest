@@ -7,7 +7,9 @@ import {
     FormControl
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
+
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 const columns = [
     {
@@ -17,7 +19,7 @@ const columns = [
             const data = row.original;
 
             return (
-                <h3 className="text-[15px] text-darkMedium">{data.label}</h3>
+                <h3 className="text-[15px] text-darkMedium">{data?.label}</h3>
             );
         }
     },
@@ -25,9 +27,8 @@ const columns = [
         id: "permission-all",
         header: "",
         cell: ({ row }) => {
-            const { values, form } = row.original;
-            // Lọc bỏ các giá trị null
-            const perms = values.filter(Boolean);
+            const data = row.original;
+            const { array: permissions, form } = data;
 
             return (
                 <div className="flex justify-center">
@@ -35,8 +36,9 @@ const columns = [
                         control={form.control}
                         name="rolePermissions"
                         render={({ field }) => {
-                            // Kiểm tra xem đã chọn hết hay chưa
-                            const allChecked = perms.every(p => field.value?.includes(p));
+                            const checked = permissions.every((slug) =>
+                                field?.value.includes(slug)
+                            );
 
                             return (
                                 <FormItem className="flex items-center gap-[10px]">
@@ -44,21 +46,15 @@ const columns = [
 
                                     <FormControl>
                                         <Checkbox
-                                            checked={allChecked}
+                                            checked={checked}
                                             onCheckedChange={(checked) => {
-                                                if (checked) {
-                                                    // Thêm hết các quyền vào mảng
-                                                    const newValues = Array.from(new Set([
-                                                        ...(field.value || []),
-                                                        ...perms
-                                                    ]));
-                                                    field.onChange(newValues);
-                                                } else {
-                                                    // Bỏ hết các quyền này ra
+                                                return checked ?
+                                                    field.onChange([...field.value, ...permissions]) :
                                                     field.onChange(
-                                                        (field.value || []).filter(v => !perms.includes(v))
-                                                    );
-                                                }
+                                                        field.value?.filter(value => {
+                                                            return !permissions.includes(value)
+                                                        })
+                                                    )
                                             }}
                                         />
                                     </FormControl>
@@ -75,13 +71,15 @@ const columns = [
         header: "",
         cell: ({ row }) => {
             const data = row.original;
-            const form = data.form;
-            const values = data.values; 
+            const { array: permissions, form } = data;
+            
+            const checkboxValue = permissions.find(per => per.startsWith("list"));
 
             return (
                 <div className="flex justify-center">
                     {
-                        values[1] && (
+                        checkboxValue ?
+                        (
                             <FormField
                                 control={form.control}
                                 name="rolePermissions"
@@ -91,15 +89,15 @@ const columns = [
                                             <FormLabel className="text-[15px] font-normal">Xem danh sách</FormLabel>
                                             <FormControl>
                                                 <Checkbox
-                                                    checked={field.value?.includes(values[1])}
+                                                    checked={field.value?.includes(checkboxValue)}
                                                     onCheckedChange={(checked) => {
                                                         return checked ?
-                                                        field.onChange([...field.value, values[1]]) :
-                                                        field.onChange(
-                                                            field.value?.filter(
-                                                                (value) => value !== values[1]
+                                                            field.onChange([...field.value, checkboxValue]) :
+                                                            field.onChange(
+                                                                field.value?.filter(value => {
+                                                                    return !permissions.includes(value)
+                                                                })
                                                             )
-                                                        )
                                                     }}
                                                 />
                                             </FormControl>
@@ -107,55 +105,8 @@ const columns = [
                                     )
                                 }}
                             />
-                        )
-                    }
-                </div>
-            );
-        }
-    },
-    {
-        id: "permission-detail",
-        header: "",
-        cell: ({ row }) => {
-            const data = row.original;
-            const form = data.form;
-            const values = data.values; 
-
-            return (
-                <div className="flex justify-center">
-                    {
-                        values[2] && (
-                            <FormField
-                                control={form.control}
-                                name="rolePermissions"
-                                render={({ field }) => {
-                                    return (
-                                        <FormItem className="flex items-center gap-[10px]">
-                                            <FormLabel className="text-[15px] font-normal">Xem chi tiết</FormLabel>
-                                            <FormControl>
-                                                <Checkbox
-                                                    checked={field.value?.includes(values[2])}
-                                                    onCheckedChange={(checked) => {
-                                                        if (!field.value?.includes(values[1])) {
-                                                            toast.warning('Bạn cần chọn "Xem chi tiết trước"');
-                                                            return;
-                                                        }
-
-                                                        return checked ?
-                                                        field.onChange([...field.value, values[2]]) :
-                                                        field.onChange(
-                                                            field.value?.filter(
-                                                                (value) => value !== values[2]
-                                                            )
-                                                        )
-                                                    }}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )
-                                }}
-                            />
-                        )
+                        ) :
+                        ( <p className="text-[15px] font-normal">Ô rỗng.</p> )
                     }
                 </div>
             );
@@ -166,44 +117,54 @@ const columns = [
         header: "",
         cell: ({ row }) => {
             const data = row.original;
-            const form = data.form;
-            const values = data.values; 
+            const { array: permissions, form } = data;
+            
+            const listValue = permissions.find(per => per.startsWith("list"));
+            const checkboxValue = permissions.find(per => per.startsWith("add"));
 
             return (
                 <div className="flex justify-center">
                     {
-                        values[3] && (
+                        checkboxValue ?
+                        (
                             <FormField
                                 control={form.control}
                                 name="rolePermissions"
                                 render={({ field }) => {
+                                    const isListValue = field.value?.includes(listValue);
+
                                     return (
                                         <FormItem className="flex items-center gap-[10px]">
                                             <FormLabel className="text-[15px] font-normal">Thêm</FormLabel>
                                             <FormControl>
                                                 <Checkbox
-                                                    checked={field.value?.includes(values[3])}
+                                                    checked={field.value?.includes(checkboxValue)}
                                                     onCheckedChange={(checked) => {
-                                                        if (!field.value?.includes(values[1])) {
-                                                            toast.warning('Bạn cần chọn "Xem chi tiết trước"');
-                                                            return;
+                                                        if (!isListValue) {
+                                                            toast.warning('Vui lòng chọn quyền "Xem danh sách" tương ứng trước.');
+                                                            return false;
                                                         }
 
                                                         return checked ?
-                                                        field.onChange([...field.value, values[3]]) :
-                                                        field.onChange(
-                                                            field.value?.filter(
-                                                                (value) => value !== values[3]
+                                                            field.onChange([...field.value, checkboxValue]) :
+                                                            field.onChange(
+                                                                field.value?.filter(
+                                                                    (value) => value !== checkboxValue
+                                                                )
                                                             )
-                                                        )
                                                     }}
+                                                    className={cn(
+                                                        "",
+                                                        !isListValue ? "border-neutral-200 cursor-not-allowed" : ""
+                                                    )}
                                                 />
                                             </FormControl>
                                         </FormItem>
                                     )
                                 }}
                             />
-                        )
+                        ) :
+                        ( <p className="text-[15px] font-normal">Ô rỗng.</p> )
                     }
                 </div>
             );
@@ -214,44 +175,54 @@ const columns = [
         header: "",
         cell: ({ row }) => {
             const data = row.original;
-            const form = data.form;
-            const values = data.values; 
+            const { array: permissions, form } = data;
+            
+            const listValue = permissions.find(per => per.startsWith("list"));
+            const checkboxValue = permissions.find(per => per.startsWith("edit"));
 
             return (
                 <div className="flex justify-center">
                     {
-                        values[4] && (
+                        checkboxValue ?
+                        (
                             <FormField
                                 control={form.control}
                                 name="rolePermissions"
                                 render={({ field }) => {
+                                    const isListValue = field.value?.includes(listValue);
+
                                     return (
                                         <FormItem className="flex items-center gap-[10px]">
                                             <FormLabel className="text-[15px] font-normal">Chỉnh sửa</FormLabel>
                                             <FormControl>
                                                 <Checkbox
-                                                    checked={field.value?.includes(values[4])}
+                                                    checked={field.value?.includes(checkboxValue)}
                                                     onCheckedChange={(checked) => {
-                                                        if (!field.value?.includes(values[1])) {
-                                                            toast.warning('Bạn cần chọn "Xem chi tiết trước"');
-                                                            return;
+                                                        if (!isListValue) {
+                                                            toast.warning('Vui lòng chọn quyền "Xem danh sách" tương ứng trước.');
+                                                            return false;
                                                         }
 
                                                         return checked ?
-                                                        field.onChange([...field.value, values[4]]) :
-                                                        field.onChange(
-                                                            field.value?.filter(
-                                                                (value) => value !== values[4]
+                                                            field.onChange([...field.value, checkboxValue]) :
+                                                            field.onChange(
+                                                                field.value?.filter(
+                                                                    (value) => value !== checkboxValue
+                                                                )
                                                             )
-                                                        )
                                                     }}
+                                                    className={cn(
+                                                        "",
+                                                        !isListValue ? "border-neutral-200 cursor-not-allowed" : ""
+                                                    )}
                                                 />
                                             </FormControl>
                                         </FormItem>
                                     )
                                 }}
                             />
-                        )
+                        ) :
+                        ( <p className="text-[15px] font-normal">Ô rỗng.</p> )
                     }
                 </div>
             );
@@ -262,44 +233,54 @@ const columns = [
         header: "",
         cell: ({ row }) => {
             const data = row.original;
-            const form = data.form;
-            const values = data.values; 
+            const { array: permissions, form } = data;
+            
+            const listValue = permissions.find(per => per.startsWith("list"));
+            const checkboxValue = permissions.find(per => per.startsWith("delete"));
 
             return (
                 <div className="flex justify-center">
                     {
-                        values[5] && (
+                        checkboxValue ?
+                        (
                             <FormField
                                 control={form.control}
                                 name="rolePermissions"
                                 render={({ field }) => {
+                                    const isListValue = field.value?.includes(listValue);
+
                                     return (
                                         <FormItem className="flex items-center gap-[10px]">
                                             <FormLabel className="text-[15px] font-normal">Xóa</FormLabel>
                                             <FormControl>
                                                 <Checkbox
-                                                    checked={field.value?.includes(values[5])}
+                                                    checked={field.value?.includes(checkboxValue)}
                                                     onCheckedChange={(checked) => {
-                                                        if (!field.value?.includes(values[1])) {
-                                                            toast.warning('Bạn cần chọn "Xem chi tiết trước"');
-                                                            return;
+                                                        if (!isListValue) {
+                                                            toast.warning('Vui lòng chọn quyền "Xem danh sách" tương ứng trước.');
+                                                            return false;
                                                         }
 
                                                         return checked ?
-                                                        field.onChange([...field.value, values[5]]) :
-                                                        field.onChange(
-                                                            field.value?.filter(
-                                                                (value) => value !== values[5]
+                                                            field.onChange([...field.value, checkboxValue]) :
+                                                            field.onChange(
+                                                                field.value?.filter(
+                                                                    (value) => value !== checkboxValue
+                                                                )
                                                             )
-                                                        )
                                                     }}
+                                                    className={cn(
+                                                        "",
+                                                        !isListValue ? "border-neutral-200 cursor-not-allowed" : ""
+                                                    )}
                                                 />
                                             </FormControl>
                                         </FormItem>
                                     )
                                 }}
                             />
-                        )
+                        ) :
+                        ( <p className="text-[15px] font-normal">Ô rỗng.</p> )
                     }
                 </div>
             );

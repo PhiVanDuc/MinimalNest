@@ -33,13 +33,6 @@ export default function AccountTableAction({ row }) {
                     <DropdownMenuContent
                         alignOffset={10}
                     >
-                        <DropdownMenuItem
-                            className="cursor-pointer"
-                            onClick={() => { router.push("/quan-tri/tai-khoan/chi-tiet-tai-khoan/123") }}
-                        >
-                            Chi tiết
-                        </DropdownMenuItem>
-
                         <DialogTrigger asChild>
                             <DropdownMenuItem
                                 onSelect={(e) => {

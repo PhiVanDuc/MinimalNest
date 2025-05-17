@@ -27,9 +27,6 @@ export default function AdminProductAddVariant({ form }) {
                 });
             }
         }
-
-        console.log(combos);
-
         form.setValue("variants", combos);
     }, [watchColors, watchSizes]);
     
