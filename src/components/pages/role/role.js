@@ -11,11 +11,9 @@ import { getRoles } from "@/lib/api/server-action/role";
 import CustomPagination from "@/components/customs/admin/custom-pagination";
 import getAccessToken from "@/lib/utils/getAccessToken";
 
-const pageSize = process.env.NEXT_PUBLIC_PAGE_SIZE;
-
 export default async function Role({ searchParams }) {
     const { decode: { decode: { permissions } } } = getAccessToken();
-    const { response, roles } = await getRoles(searchParams?.role || "", searchParams?.page || 1, pageSize);
+    const { response, roles } = await getRoles(searchParams?.role || "", searchParams?.page || 1);
 
     return (
         <>
@@ -40,7 +38,7 @@ export default async function Role({ searchParams }) {
                                     data={roles?.data?.rows}
                                     columns={columns}
                                 />
-                                <CustomPagination page={searchParams?.page || 1} pageSize={pageSize} totalCount={roles?.data?.totalItems || 0} />
+                                <CustomPagination page={searchParams?.page || 1} pageSize={roles?.data?.pageSize || 0} totalCount={roles?.data?.totalItems || 0} />
                             </div>
                         </section>
                     </RoleFilterProvider>

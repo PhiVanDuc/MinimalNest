@@ -5,7 +5,7 @@ const BACKEND_API = process.env.NEXT_PUBLIC_BACKEND_API;
 const fetchWithAuth = async (method, url, options = {}) => {
     const accessToken = cookies().get("access_token")?.value;
 
-    const response = await fetch(`${BACKEND_API}/${url}`, {
+    const response = await fetch(`${BACKEND_API}${url}`, {
         method,
         cache: "no-cache",
         ...options,
