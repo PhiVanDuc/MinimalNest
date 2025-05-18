@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +25,7 @@ import { editRole } from "@/lib/api/server-action/role";
 import { toast } from "sonner";
 
 export default function RoleEditClient({ permissions, role, slug }) {
+    const [submitting, setSubmitting] = useState(false);
     const router = useRouter();
 
     const form = useForm({
@@ -36,6 +38,9 @@ export default function RoleEditClient({ permissions, role, slug }) {
     });
 
     const handleSubmit = async (data) => {
+        if (submitting) return;
+
+        setSubmitting(true);
         const role = await editRole(data, slug);
         const message = role?.message;
 
@@ -44,6 +49,7 @@ export default function RoleEditClient({ permissions, role, slug }) {
             router.replace(`/quan-tri/vai-tro/chinh-sua-vai-tro/${role?.data?.role?.slug}`);
         }
         else toast.error(message || "Lỗi chỉnh sửa vai trò!");
+        setSubmitting(false);
     }
 
     return (
@@ -121,7 +127,13 @@ export default function RoleEditClient({ permissions, role, slug }) {
                     />
 
                     <div className="flex justify-end pt-[15px]">
-                        <Button>Lưu thay đổi</Button>
+                        <Button
+                            disabled={submitting}
+                        >
+                            {
+                                submitting ? "Đang lưu" : "Lưu thay đổi"
+                            }
+                        </Button>
                     </div>
                 </form>
             </Form>

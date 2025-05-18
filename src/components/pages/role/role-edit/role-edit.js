@@ -14,7 +14,10 @@ export default async function RoleEdit({ slug = "slug" }) {
     // Nếu cả hai đều lỗi
     if (perError && roleError) {
         return (
-        <Error message={`Quyền: ${responsePer?.status},${permissions?.message} | Vai trò: ${responseRole?.status},${role?.message}`} />
+            <>
+                <Error message={`${responsePer?.status},${permissions?.message}`} />
+                <Error message={`${responseRole?.status},${role?.message}`} />
+            </>
         );
     }
 

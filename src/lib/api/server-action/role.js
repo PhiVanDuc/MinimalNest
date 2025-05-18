@@ -2,9 +2,9 @@
 
 import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 
-const getRoles = async (page) => {
+const getRoles = async (role, page, pageSize) => {
     try {
-        const { response, result } = await fetchHelperAuth.get(`/roles?page=${page}`);
+        const { response, result } = await fetchHelperAuth.get(`/roles?role=${role}&page=${page}&pageSize=${pageSize}`);
         return { response, roles: result };
     }
     catch(error) {
@@ -90,9 +90,27 @@ const deleteRole = async (slug) => {
 
         return {
             success: false,
-            message: "Lỗi gọi hàm chỉnh sửa vai trò!"
+            message: "Lỗi gọi hàm xóa vai trò!"
         }
     }
 }
 
-export { getRoles, getRole, addRole, editRole, deleteRole };
+const searchRole = async (data) => {
+    try {
+        const { response, result } = await fetchHelperAuth.post(
+            `/roles/search`,
+            { body: JSON.stringify(data) }
+        );
+        return { response, role: result };
+    }
+    catch(error) {
+        console.log(error);
+        
+        return {
+            success: false,
+            message: "Lỗi gọi hàm tìm kiếm vai trò!"
+        }
+    }
+}
+
+export { getRoles, getRole, addRole, editRole, deleteRole, searchRole };

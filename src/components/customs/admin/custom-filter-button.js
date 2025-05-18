@@ -3,16 +3,8 @@
 import { useState } from "react";
 
 import {
-    Search,
     SlidersHorizontal
 } from "lucide-react";
-
-import {
-    TooltipProvider,
-    Tooltip,
-    TooltipTrigger,
-    TooltipContent
-} from "@/components/ui/tooltip";
 
 import { cn } from "@/lib/utils";
 
@@ -33,27 +25,10 @@ export default function CustomFilterButton({ children }) {
             </div>
 
             <div className={cn(
-                "self-stretch flex flex-wrap items-center gap-[5px] w-full transition-all duration-300",
+                "self-stretch w-full transition-all duration-300",
                 openFilter ? "opacity-100 visible" : "opacity-0 invisible"
             )}>
                 {children}
-
-                {/* Nút tìm kiếm */}
-                <TooltipProvider delayDuration={100}>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <div
-                                className="shrink-0 h-full aspect-square rounded-full flex items-center justify-center border text-darkMedium bg-white cursor-pointer"
-                            >
-                                <Search size={15} />
-                            </div>
-                        </TooltipTrigger>
-
-                        <TooltipContent>
-                            <p>Tìm kiếm.</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
             </div>
         </div>
     )

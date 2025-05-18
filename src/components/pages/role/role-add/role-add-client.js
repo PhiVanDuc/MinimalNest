@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -23,6 +24,8 @@ import { addRole } from "@/lib/api/server-action/role";
 import { toast } from "sonner";
 
 export default function RoleAddClient({ permissions }) {
+    const [submitting, setSubmitting] = useState(false);
+
     const form = useForm({
         resolver: zodResolver(roleSchema),
         defaultValues: {
@@ -33,11 +36,15 @@ export default function RoleAddClient({ permissions }) {
     });
 
     const handleSubmit = async (data) => {
+        if (submitting) return;
+
+        setSubmitting(true);
         const role = await addRole(data);
         const message = role?.message;
 
         if (role?.success) toast.success(message);
         else toast.error(message || "Lỗi thêm vai trò!");
+        setSubmitting(false);
     }
 
     return (
@@ -115,7 +122,13 @@ export default function RoleAddClient({ permissions }) {
                     />
 
                     <div className="flex justify-end pt-[15px]">
-                        <Button>Thêm vai trò</Button>
+                        <Button
+                            disabled={submitting}
+                        >
+                            {
+                                submitting ? "Đang thêm" : "Thêm vai trò"
+                            }
+                        </Button>
                     </div>
                 </form>
             </Form>

@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -16,6 +17,7 @@ import { toast } from "sonner";
 import { deleteRole } from "@/lib/api/server-action/role";
 
 export default function RoleDeleteDialog({ open, setOpen, slug }) {
+    const [submitting, setSubmitting] = useState(false);
     const router = useRouter();
 
     return (
@@ -36,6 +38,9 @@ export default function RoleDeleteDialog({ open, setOpen, slug }) {
                     <Button
                         variant="destructive"
                         onClick={async () => {
+                            if (submitting) return;
+
+                            setSubmitting(true);
                             const result = await deleteRole(slug);
                             const message = result?.message;
 
@@ -45,9 +50,11 @@ export default function RoleDeleteDialog({ open, setOpen, slug }) {
                                 router.refresh();
                             }
                             else toast.error(message || "Lỗi xóa vai trò!");
+                            setSubmitting(false);
                         }}
+                        disabled={submitting}
                     >
-                        Xác nhận xóa
+                        { submitting ? "Đang xóa" : "Xác nhận xóa" }
                     </Button>
                 </DialogFooter>
             </DialogContent>

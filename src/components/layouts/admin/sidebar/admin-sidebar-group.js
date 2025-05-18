@@ -11,7 +11,7 @@ import {
 
 import { cn } from "@/lib/utils";
 
-export default function AdminSidebarGroup({ group }) {
+export default function AdminSidebarGroup({ group, permissions }) {
     const router = useRouter();
     const pathname = usePathname();
 

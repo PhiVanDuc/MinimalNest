@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 
 export default function CustomTable({ data, columns }) {
     const table = useReactTable({
-        data: data || [],
+        data: data || [1, 1, 1, 1, 1],
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
