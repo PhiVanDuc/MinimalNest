@@ -2,9 +2,10 @@
 
 import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 
-const getRoles = async (role, page) => {
+
+const getRoles = async (data) => {
     try {
-        const { response, result } = await fetchHelperAuth.get(`/roles?role=${role}&page=${page}`);
+        const { response, result } = await fetchHelperAuth.get(`/roles?role=${data?.role}&page=${data?.page}${data?.all ? `&all=${data?.all}` : ""}`);
         return { response, roles: result };
     }
     catch(error) {

@@ -105,7 +105,14 @@ const columns = [
                 </h2>
             )
         },
-        cell: ({ row }) => <EventTableAction row={row} />
+        cell: ({ row, table }) => {
+            const data = row?.original;
+
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return <EventTableAction data={data} permissions={permissions} />
+        }
     }
 ];
 

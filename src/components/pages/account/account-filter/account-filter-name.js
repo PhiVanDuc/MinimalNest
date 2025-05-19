@@ -1,10 +1,10 @@
 "use client"
 
-import { useRoleFilter } from "./role-filter-provider";
+import { useAccountFilter } from "./account-filter-provider";
 
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import {
     TooltipProvider,
@@ -13,19 +13,20 @@ import {
     TooltipContent
 } from "@/components/ui/tooltip";
 
-export default function RoleFilterName() {
+export default function AccountFilterName() {
     const router = useRouter();
-    const { role, setRole } = useRoleFilter();
+    const pathname = usePathname();
+    const { accountName, setAccountName } = useAccountFilter();
 
     return (
         <div className="h-full flex flex-wrap items-center gap-[5px] w-full">
             <div className="relative h-full">
                 <Input
-                    placeholder="Tìm tên sản phẩm . . ."
+                    placeholder="Tìm tên người dùng . . ."
                     className="w-[250px] h-full px-[12px] pr-[45px] rounded-full text-[13px] bg-white"
-                    value={role}
+                    value={accountName}
                     onChange={(e) => {
-                        setRole(e.target.value);
+                        setAccountName(e.target.value);
                     }}
                 />
 
@@ -45,12 +46,12 @@ export default function RoleFilterName() {
                         <div
                             className="shrink-0 h-full aspect-square rounded-full flex items-center justify-center border text-darkMedium bg-white cursor-pointer"
                             onClick={() => {
-                                if (!role) {
-                                    router.push(`/quan-tri/vai-tro`);
+                                if (!accountName) {
+                                    router.push(pathname);
                                     return;
                                 }
 
-                                router.push(`/quan-tri/vai-tro?role=${role}`);
+                                router.push(`${pathname}?name=${accountName}`);
                             }}
                         >
                             <Search size={15} />

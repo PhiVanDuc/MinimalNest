@@ -6,13 +6,17 @@ import ColorButtonAdd from "./color-button-add";
 import ColorFilter from "./color-filter/color-filter";
 import ColorFilterSelected from "./color-filter/color-filter-selected";
 
+import getAccessToken from "@/lib/utils/getAccessToken";
+
 export default function Color() {
+    const { decode: { decode: { permissions } } } = getAccessToken();
+
     return (
         <section className="space-y-[20px]">
             <header className="space-y-[10px] p-[20px] bg-white rounded-[10px]">
                 <div className="flex items-center justify-between">
                     <h1 className="text-[22px] font-semibold">Quản lý màu sắc</h1>
-                    <ColorButtonAdd />
+                    { permissions?.includes("add-color") && <ColorButtonAdd /> }
                 </div>
 
                 <ColorFilter />
@@ -20,7 +24,10 @@ export default function Color() {
 
             <div className="p-[20px] bg-white rounded-[10px] space-y-[5px]">
                 <ColorFilterSelected />
-                <CustomTable columns={columns} />
+                <CustomTable
+                    columns={columns}
+                    moreData={{ permissions: permissions || [] }}
+                />
                 <CustomPagination />
             </div>
         </section>

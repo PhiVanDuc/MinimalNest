@@ -25,9 +25,9 @@ import { cn } from "@/lib/utils";
 
 export default function CustomPagination({
     pageSizeSelectOptions,
-    pageSize,
-    totalCount,
-    page,
+    pageSize = 15,
+    totalCount = 1,
+    page = 1,
     pageSearchParam,
 }) {
     const router = useRouter();

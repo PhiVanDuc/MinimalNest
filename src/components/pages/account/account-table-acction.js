@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import {
     DropdownMenu,
@@ -9,45 +9,37 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
-import {
-    Dialog,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import AccountEdit from "./account-edit";
-
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-export default function AccountTableAction({ row }) {
+export default function AccountTableAction({ accountId, permissions }) {
     const router = useRouter();
+    const pathname = usePathname();
 
     return (
         <div className="flex justify-center">
-            <Dialog>
-                <DropdownMenu>
-                    <DropdownMenuTrigger>
-                        <div className="flex items-center justify-center w-[35px] aspect-square rounded-[5px]">
-                            <BsThreeDotsVertical size={20} />
-                        </div>
-                    </DropdownMenuTrigger>
+            {
+                !permissions?.includes("edit-account") ? 
+                ( <p>Không có quyền truy cập.</p> ) :
+                (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger>
+                            <div className="flex items-center justify-center w-[35px] aspect-square rounded-[5px]">
+                                <BsThreeDotsVertical size={20} />
+                            </div>
+                        </DropdownMenuTrigger>
 
-                    <DropdownMenuContent
-                        alignOffset={10}
-                    >
-                        <DialogTrigger asChild>
+                        <DropdownMenuContent
+                            alignOffset={10}
+                        >
                             <DropdownMenuItem
-                                onSelect={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                }}
+                                onClick={() => { router.push(`${pathname}/chinh-sua-tai-khoan/${accountId}`); }}
                             >
                                 Chỉnh sửa
                             </DropdownMenuItem>
-                        </DialogTrigger>
-                    </DropdownMenuContent>
-
-                    <AccountEdit />
-                </DropdownMenu>
-            </Dialog>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                )
+            }
         </div>
     )
 }

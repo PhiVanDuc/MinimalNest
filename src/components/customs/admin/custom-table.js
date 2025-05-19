@@ -17,11 +17,12 @@ import {
 
 import { cn } from "@/lib/utils";
 
-export default function CustomTable({ data, columns }) {
+export default function CustomTable({ data, columns, moreData = {} }) {
     const table = useReactTable({
         data: data || [1, 1, 1, 1, 1],
         columns,
         getCoreRowModel: getCoreRowModel(),
+        meta: { moreData }
     });
 
     return (

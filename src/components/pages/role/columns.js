@@ -64,7 +64,15 @@ const columns = [
                 </h2>
             )
         },
-        cell: ({ row }) => <RoleTableAction data={row.original} />
+        cell: ({ row, table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return <RoleTableAction
+                data={row.original}
+                permissions={permissions}
+            />
+        }
     }
 ];
 

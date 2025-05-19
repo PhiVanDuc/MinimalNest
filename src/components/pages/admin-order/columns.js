@@ -93,9 +93,12 @@ const columns = [
     {
         accessorKey: "watch",
         header: () => <h2 className={cn(headerClassName, "text-center")}>Xem đơn</h2>,
-        cell: ({ row }) => {
+        cell: ({ row, table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
             return (
-                <AdminOrderWatchCol />
+                <AdminOrderWatchCol permissions={permissions || []} />
             )
         }
     }

@@ -1,5 +1,6 @@
 import columns from "./columns";
 import CustomTable from "@/components/customs/admin/custom-table";
+import CustomPagination from "@/components/customs/admin/custom-pagination";
 
 import RoleButtonAdd from "./role-button-add";
 import RoleFilterProvider from "./role-filter/role-filter-provider";
@@ -8,13 +9,12 @@ import RoleFilterSelected from "./role-filter/role-filter-selected";
 import Error from "@/components/customs/error";
 
 import { getRoles } from "@/lib/api/server-action/role";
-import CustomPagination from "@/components/customs/admin/custom-pagination";
 import getAccessToken from "@/lib/utils/getAccessToken";
 
 export default async function Role({ searchParams }) {
     const { decode: { decode: { permissions } } } = getAccessToken();
-    const { response, roles } = await getRoles(searchParams?.role || "", searchParams?.page || 1);
-
+    const { response, roles } = await getRoles({ role: searchParams?.role || "", page: searchParams?.page || 1 });
+    
     return (
         <>
             {
@@ -37,8 +37,9 @@ export default async function Role({ searchParams }) {
                                 <CustomTable
                                     data={roles?.data?.rows}
                                     columns={columns}
+                                    moreData={{ permissions: permissions || [] }}
                                 />
-                                <CustomPagination page={searchParams?.page || 1} pageSize={roles?.data?.pageSize || 0} totalCount={roles?.data?.totalItems || 0} />
+                                <CustomPagination page={+searchParams?.page || 1} pageSize={roles?.data?.pageSize || 0} totalCount={roles?.data?.totalItems || 0} />
                             </div>
                         </section>
                     </RoleFilterProvider>

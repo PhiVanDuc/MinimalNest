@@ -92,7 +92,12 @@ const columns = [
                 </h2>
             )
         },
-        cell: ({ row }) => <SizeTableAction row={row} />
+        cell: ({ row, table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return <SizeTableAction row={row} permissions={permissions} />
+        }
     }
 ];
 

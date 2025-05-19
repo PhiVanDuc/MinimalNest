@@ -10,10 +10,12 @@ const columns = [
         accessorKey: "account",
         header: () => <h3 className="text-[14px] text-darkMedium font-medium">Tài khoản</h3>,
         cell: ({ row }) => {
+            const data = row.original;
+
             return (
                 <div className="space-y-[5px]">
-                    <h4 className="text-[15px] font-medium">Tên khách hàng.</h4>
-                    <p className="text-[14px] text-darkMedium">email@gmail.com</p>
+                    <h4 className="text-[15px] font-medium">{data?.full_name}</h4>
+                    <p className="text-[14px] text-darkMedium">{data?.email}</p>
                 </div>
             )
         }
@@ -22,10 +24,22 @@ const columns = [
         accessorKey: "roles",
         header: () => <h2 className={headerClassName}>Vai trò</h2>,
         cell: ({ row }) => {
+            const data = row.original;
+            
             return (
                 <div className="flex flex-wrap gap-[5px] max-w-[400px]">
-                    <p className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] rounded-full border">Quản trị sản phẩm</p>
-                    <p className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] rounded-full border">Quản trị đơn hàng</p>
+                    {
+                        data?.roles?.map(role => {
+                            return (
+                                <p
+                                    key={role?.id}
+                                    className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] rounded-full border"
+                                >
+                                    {role?.role}
+                                </p>
+                            )
+                        })
+                    }
                 </div>
             )
         }
@@ -65,9 +79,15 @@ const columns = [
             )
         },
         cell: ({ row }) => {
+            const data = row.original;
+
             return (
                 <div className="flex justify-center">
-                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] text-green-600 bg-green-600/10 border border-green-600/60">Kích hoạt</p>
+                    {
+                        data?.status === "active" ?
+                        ( <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] text-green-600 bg-green-600/10 border border-green-600/60">Kích hoạt</p> ) :
+                        ( <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] text-red-600 bg-red-600/10 border border-red-600/60">Đã bị chặn</p> )
+                    }
                 </div>
             )
         }
@@ -86,7 +106,16 @@ const columns = [
                 </h2>
             )
         },
-        cell: ({ row }) => <AccountTableAction row={row} />
+        cell: ({ row, table }) => {
+            const data = row.original;
+
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return (
+                <AccountTableAction accountId={data?.id} permissions={permissions} />
+            )
+        }
     }
 ];
 

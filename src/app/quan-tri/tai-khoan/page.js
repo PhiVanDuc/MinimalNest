@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import Account from "@/components/pages/account/account";
 
-export default function Page() {
+export default function Page({ searchParams }) {
     return (
         <Suspense fallback={"Đang tải . . ."}>
-            <Account />
+            <Account searchParams={searchParams} />
         </Suspense>
     )
 }

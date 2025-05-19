@@ -121,7 +121,14 @@ const columns = [
                 </h2>
             )
         },
-        cell: ({ row }) => <AdminCouponTableAction row={row} />
+        cell: ({ row, table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return (
+                <AdminCouponTableAction row={row} permissions={permissions} />
+            )
+        }
     }
 ];
 

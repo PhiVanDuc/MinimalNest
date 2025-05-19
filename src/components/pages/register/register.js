@@ -68,7 +68,7 @@ export default function Register() {
         setOtpCountdown(60);
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/account/create_otp`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/create_otp`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

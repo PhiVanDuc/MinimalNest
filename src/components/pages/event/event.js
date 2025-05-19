@@ -6,15 +6,18 @@ import EventFilter from "./event-filter/event-filter";
 import EventFilterSelected from "./event-filter/event-filter-selected";
 import CustomPagination from "@/components/customs/admin/custom-pagination";
 
+import getAccessToken from "@/lib/utils/getAccessToken";
+
 export default function Event() {
     // Fetch
+    const { decode: { decode: { permissions } } } = getAccessToken();
 
     return (
         <section className="space-y-[20px]">
             <header className="space-y-[10px] p-[20px] bg-white rounded-[10px]">
                 <div className="flex items-center justify-between">
                     <h1 className="text-[22px] font-semibold">Quản lý sự kiện</h1>
-                    <EventButtonAdd />
+                    { permissions?.includes("add-event") && <EventButtonAdd /> }
                 </div>
 
                 <EventFilter />
@@ -22,7 +25,10 @@ export default function Event() {
 
             <div className="p-[20px] bg-white rounded-[10px] space-y-[5px]">
                 <EventFilterSelected />
-                <CustomTable columns={columns} />
+                <CustomTable
+                    columns={columns}
+                    moreData={{ permissions: permissions || [] }}
+                />
                 <CustomPagination />
             </div>
         </section>

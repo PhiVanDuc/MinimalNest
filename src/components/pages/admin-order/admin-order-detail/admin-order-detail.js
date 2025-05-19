@@ -66,7 +66,7 @@ export default function AdminOrderDetail({ open, setOpen }) {
 
                                                     <div className="space-y-[10px]">
                                                         <div>
-                                                            <p className="flex items-center gap-[5px] text-[12px] text-blueChecked font-medium">
+                                                            <p className="flex items-center gap-[5px] text-[11px] text-blueChecked font-semibold">
                                                                 <span>SKU:</span>
                                                                 <span>GCTH-XL-FFFFFF</span>
                                                             </p>

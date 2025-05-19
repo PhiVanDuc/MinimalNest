@@ -61,7 +61,12 @@ const columns = [
                 </h2>
             )
         },
-        cell: ({ row }) => <ColorTableAction row={row} />
+        cell: ({ row, table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return <ColorTableAction row={row} permissions={permissions} />
+        }
     }
 ];
 

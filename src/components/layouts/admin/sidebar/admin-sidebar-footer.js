@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -14,8 +15,14 @@ import { FiUser } from "react-icons/fi";
 import { TbLogout } from "react-icons/tb";
 import { ShoppingCart } from "lucide-react";
 
-export default function AdminSidebarFooter() {
+export default function AdminSidebarFooter({ infoUser = {} }) {
     const router = useRouter();
+    const [letterName, setLetterName] = useState(() => {
+        const splitName = infoUser?.full_name?.split(" ");
+        const last = splitName[splitName?.length - 1];
+
+        return last[0];
+    });
 
     const handleRedirect = (path) => { router.push(path); }
 
@@ -27,10 +34,13 @@ export default function AdminSidebarFooter() {
                         className="flex items-center justify-between px-[15px] py-[10px] rounded-[10px] bg-slate-100 hover:opacity-80 cursor-pointer transition duration-300 overflow-x-hidden"
                     >
                         <div className="flex items-center gap-x-[15px] overflow-x-hidden">
-                            <div className="shrink-0 w-[30px] aspect-square rounded-full bg-slate-300" />
+                            <div className="flex items-center justify-center w-[30px] aspect-square rounded-full bg-darkBold">
+                                <p className="text-[14px] font-semibold text-white">{letterName}</p>
+                            </div>
+                            
                             <div className="overflow-x-hidden">
-                                <p className="text-[13px] font-semibold text-darkBold truncate">Phi Van Duc</p>
-                                <p className="text-[12px] font-medium text-darkMedium truncate">phivanduc325@gmail.com</p>
+                                <p className="text-[13px] font-semibold text-darkBold truncate">{infoUser?.full_name}</p>
+                                <p className="text-[12px] font-medium text-darkMedium truncate">{infoUser?.email}</p>
                             </div>
                         </div>
                     </div>
