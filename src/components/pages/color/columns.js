@@ -10,8 +10,10 @@ const columns = [
         accessorKey: "color",
         header: () => <h2 className={headerClassName}>Màu sắc</h2>,
         cell: ({ row }) => {
+            const data = row?.original;
+
             return (
-                <p className="text-[14px] font-medium">Màu đen</p>
+                <p className="text-[14px] font-medium">{data?.color}</p>
             )
         }
     },
@@ -19,34 +21,21 @@ const columns = [
         accessorKey: "colorCode",
         header: () => <h2 className={cn(headerClassName, "text-center")}>Mã màu</h2>,
         cell: ({ row }) => {
+            const data = row?.original;
+
             return (
                 <div className="flex items-center justify-center gap-[10px]">
-                    <span className="w-[20px] aspect-square rounded-full bg-black" />
-                    <p className="text-[14px] text-darkMedium font-medium text-center">#000000</p>
+                    <span
+                        className="w-[20px] aspect-square rounded-full border"
+                        style={{
+                            background: data?.code || "black"
+                        }}
+                    />
+                    <p className="text-[14px] text-darkMedium font-medium text-center">{data?.code}</p>
                 </div>
             )
         }
     },
-    {
-        accessorKey: "in-used-products",
-        header: () => <h2 className={cn(headerClassName, "text-center")}>Đang dùng</h2>,
-        cell: ({ row }) => {
-            return (
-                <p className="text-[14px] text-center font-medium">300 sản phẩm</p>
-            )
-        }
-    },
-    {
-            accessorKey: "status",
-            header: () => <h2 className={cn(headerClassName, "text-center")}>Trạng thái</h2>,
-            cell: ({ row }) => {
-                return (
-                    <div className="flex justify-center">
-                        <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] text-green-600 bg-green-600/10 border border-green-600/60">Kích hoạt</p>
-                    </div>
-                )
-            }
-        },
     {
         accessorKey: "actions",
         header: () => {
@@ -62,10 +51,12 @@ const columns = [
             )
         },
         cell: ({ row, table }) => {
+            const data = row?.original;
+
             const moreData = table?.options?.meta?.moreData;
             const permissions = moreData?.permissions;
 
-            return <ColorTableAction row={row} permissions={permissions} />
+            return <ColorTableAction colorId={data?.id} permissions={permissions} />
         }
     }
 ];

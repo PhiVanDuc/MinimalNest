@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 import { BsThreeDotsVertical } from "react-icons/bs";
+import SizeDeleteDialog from "./size-delete-dialog";
 
-export default function SizeTableAction({ row, permissions }) {
+export default function SizeTableAction({ sizeId, permissions }) {
     const router = useRouter();
 
+    const [openDialogDelete, setOpenDialogDelete] = useState(false);
     const [isEditSize, setIsEditSize] = useState(() => permissions?.includes("edit-size"));
     const [isDeleteSize, setIsDeleteSize] = useState(() => permissions?.includes("delete-size"));
 
@@ -33,7 +35,7 @@ export default function SizeTableAction({ row, permissions }) {
                                 (
                                     <DropdownMenuItem
                                         className="cursor-pointer"
-                                        onClick={() => { router.push("/quan-tri/kich-co/chinh-sua-kich-co/123") }}
+                                        onClick={() => { router.push(`/quan-tri/kich-co/chinh-sua-kich-co/${sizeId}`) }}
                                     >
                                         Chỉnh sửa
                                     </DropdownMenuItem>
@@ -45,7 +47,7 @@ export default function SizeTableAction({ row, permissions }) {
                                 (
                                     <DropdownMenuItem
                                         className="cursor-pointer"
-                                        onClick={() => {}}
+                                        onClick={() => { setOpenDialogDelete(true) }}
                                     >
                                         Xóa
                                     </DropdownMenuItem>
@@ -55,6 +57,8 @@ export default function SizeTableAction({ row, permissions }) {
                     </DropdownMenu>
                 )
             }
+
+            <SizeDeleteDialog open={openDialogDelete} setOpen={setOpenDialogDelete} sizeId={sizeId} />
         </div>
     )
 }

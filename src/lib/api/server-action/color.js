@@ -2,10 +2,11 @@
 
 import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 
-const getRoles = async (data) => {
+
+const getColors = async (data) => {
     try {
-        const { response, result } = await fetchHelperAuth.get(`/roles?role=${data?.role}&page=${data?.page}${data?.all ? `&all=${data?.all}` : ""}`);
-        return { response, roles: result };
+        const { response, result } = await fetchHelperAuth.get(`/colors?color=${data?.color}&page=${data?.page}${data?.all ? `&all=${data?.all}` : ""}`);
+        return { response, result };
     }
     catch(error) {
         console.log(error);
@@ -16,16 +17,16 @@ const getRoles = async (data) => {
             },
             roles: {
                 success: false,
-                message: "Lỗi gọi hàm lấy các vai trò!"
+                message: "Lỗi gọi hàm lấy các màu sắc!"
             }
         };
     }
 }
 
-const getRole = async (slug) => {
+const getColor = async (colorId) => {
     try {
-        const { response, result } = await fetchHelperAuth.get(`/roles/${slug}`);
-        return { response, role: result };
+        const { response, result } = await fetchHelperAuth.get(`/colors/${colorId}`);
+        return { response, result };
     }
     catch(error) {
         console.log(error);
@@ -36,16 +37,16 @@ const getRole = async (slug) => {
             },
             roles: {
                 success: false,
-                message: "Lỗi gọi hàm lấy vai trò!"
+                message: "Lỗi gọi hàm lấy màu sắc!"
             }
         };
     }
 }
 
-const addRole = async (data) => {
+const addColor = async (data) => {
     try {
         const { result } = await fetchHelperAuth.post(
-            `/roles`,
+            `/colors`,
             { body: JSON.stringify(data) }
         );
 
@@ -56,15 +57,15 @@ const addRole = async (data) => {
 
         return {
             success: false,
-            message: "Lỗi gọi hàm thêm vai trò!"
+            message: "Lỗi gọi hàm thêm màu sắc!"
         }
     }
 }
 
-const editRole = async (data, slug) => {
+const editColor = async (data, colorId) => {
     try {
         const { result } = await fetchHelperAuth.put(
-            `/roles/${slug}`,
+            `/colors/${colorId}`,
             { body: JSON.stringify(data) }
         );
 
@@ -75,14 +76,14 @@ const editRole = async (data, slug) => {
 
         return {
             success: false,
-            message: "Lỗi gọi hàm chỉnh sửa vai trò!"
+            message: "Lỗi gọi hàm chỉnh sửa màu sắc!"
         }
     }
 }
 
-const deleteRole = async (slug) => {
+const deleteColor = async (colorId) => {
     try {
-        const { result } = await fetchHelperAuth.delete(`/roles/${slug}`);
+        const { result } = await fetchHelperAuth.delete(`/colors/${colorId}`);
         return result;
     }
     catch(error) {
@@ -90,9 +91,9 @@ const deleteRole = async (slug) => {
 
         return {
             success: false,
-            message: "Lỗi gọi hàm xóa vai trò!"
+            message: "Lỗi gọi hàm xóa màu sắc!"
         }
     }
 }
 
-export { getRoles, getRole, addRole, editRole, deleteRole };
+export { getColors, getColor, addColor, editColor, deleteColor };

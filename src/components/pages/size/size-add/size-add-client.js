@@ -22,30 +22,30 @@ import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
-import { addSize, editSize } from "@/lib/api/server-action/size";
+import { addSize } from "@/lib/api/server-action/size";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import sizeSchema from "@/lib/schemas/size-schema";
 
-export default function SizeEditClient({ categories, size }) {
+export default function SizeAddClient({ categories }) {
     const [submitting, setSubmitting] = useState(false);
 
     const form = useForm({
         resolver: zodResolver(sizeSchema),
         defaultValues: {
-            category: size?.category_id || "",
-            size: size?.size || "",
-            desc: size?.desc || ""
+            category: "",
+            size: "",
+            desc: ""
         }
     });
 
     const onSubmit = async (data) => {
         setSubmitting(true);
 
-        const updateSize = await editSize(data, size?.id);
-        const message = updateSize?.message;
+        const size = await addSize(data);
+        const message = size?.message;
 
-        if (updateSize?.message) toast.success(message);
+        if (size?.message) toast.success(message);
         else toast.error(message);
 
         setSubmitting(false)
@@ -54,7 +54,7 @@ export default function SizeEditClient({ categories, size }) {
     return (
         <section className="space-y-[30px]">
             <header>
-                <h1 className="text-[24px] font-semibold">Chỉnh sửa kích cỡ</h1>
+                <h1 className="text-[24px] font-semibold">Thêm kích cỡ</h1>
             </header>
 
             <Form {...form}>
@@ -166,7 +166,7 @@ export default function SizeEditClient({ categories, size }) {
                         className="w-full"
                         disabled={submitting}
                     >
-                        { submitting ? "Đang chỉnh sửa" : "Chỉnh sửa kích cỡ" }
+                        { submitting ? "Đang thêm" : "Thêm kích cỡ" }
                     </Button>
                 </form>
             </Form>

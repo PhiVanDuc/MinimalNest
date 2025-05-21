@@ -1,6 +1,8 @@
 "use client"
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
     Form,
@@ -10,22 +12,35 @@ import {
     FormControl
 } from "@/components/ui/form";
 
-import {
-    RadioGroup,
-    RadioGroupItem
-} from "@/components/ui/radio-group";
-
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export default function ColorEditClient() {
+import colorSchema from "@/lib/schemas/color-schema";
+import { editColor } from "@/lib/api/server-action/color";
+import { toast } from "sonner";
+
+export default function ColorEditClient({ color }) {
+    const [submitting, setSubmitting] = useState(false);
+
     const form = useForm({
+        resolver: zodResolver(colorSchema),
         defaultValues: {
-            name: "",
-            code: "",
-            status: "active"
+            color: color?.color || "",
+            code: color?.code || ""
         }
     })
+
+    const onSubmit = async (data) => {
+        setSubmitting(true);
+
+        const updateColor = await editColor(data, color?.id);
+        const message = updateColor?.message;
+
+        if (!updateColor?.success) toast.success(message);
+        else toast.error(message);
+
+        setSubmitting(false);
+    }
 
     return (
         <section className="space-y-[30px]">
@@ -36,10 +51,11 @@ export default function ColorEditClient() {
             <Form {...form}>
                 <form
                     className="p-[20px] rounded-[10px] space-y-[20px] bg-white"
+                    onSubmit={form.handleSubmit(onSubmit)}
                 >
                     <FormField
                         control={form.control}
-                        name="name"
+                        name="color"
                         render={({ field }) => {
                             return (
                                 <FormItem>
@@ -81,51 +97,23 @@ export default function ColorEditClient() {
                         }}
                     />
 
-                    <FormField
-                        control={form.control}
-                        name="status"
-                        render={({ field }) => {
-                            return (
-                                <FormItem>
-                                    <div className="space-y-[5px]">
-                                        <FormLabel className="text-[15px] font-medium">Trạng thái</FormLabel>
+                    <div className="space-y-[5px]">
+                        <p className="text-[14px] font-medium">Xem trước màu sắc</p>
 
-                                        <FormControl>
-                                            <RadioGroup
-                                                onValueChange={field.onChange}
-                                                defaultValue={field.value}
-                                                className="flex items-center gap-[20px]"
-                                            >
-                                                <FormItem>
-                                                    <FormLabel className="flex items-center gap-[5px]">
-                                                        <FormControl>
-                                                            <RadioGroupItem value="active" />
-                                                        </FormControl>
-
-                                                        <span>Kích hoạt</span>
-                                                    </FormLabel>
-                                                </FormItem>
-
-                                                <FormItem>
-                                                    <FormLabel className="flex items-center gap-[5px]">
-                                                        <FormControl>
-                                                            <RadioGroupItem value="inactive" />
-                                                        </FormControl>
-
-                                                        <span>Không kích hoạt</span>
-                                                    </FormLabel>
-                                                </FormItem>
-                                            </RadioGroup>
-                                        </FormControl>
-                                    </div>
-                                </FormItem>
-                            )
-                        }}
-                    />
-
-                    <div className="flex justify-end">
-                        <Button>Lưu thay đổi</Button>
+                        <div
+                            className="inline-block w-full h-[100px] rounded-[10px]"
+                            style={{
+                                background: form.watch("code") || "white"
+                            }}
+                        />
                     </div>
+
+                    <Button
+                        className="w-full"
+                        disabled={submitting}
+                    >
+                        { submitting ? "Đang chỉnh sửa" : "Chỉnh sửa màu sắc" }
+                    </Button>
                 </form>
             </Form>
         </section>

@@ -2,10 +2,10 @@
 
 import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 
-const getRoles = async (data) => {
+const getSizes = async (data) => {
     try {
-        const { response, result } = await fetchHelperAuth.get(`/roles?role=${data?.role}&page=${data?.page}${data?.all ? `&all=${data?.all}` : ""}`);
-        return { response, roles: result };
+        const { response, result } = await fetchHelperAuth.get(`/sizes?size=${data?.size}&page=${data?.page}${data?.all ? `&all=${data?.all}` : ""}`);
+        return { response, result };
     }
     catch(error) {
         console.log(error);
@@ -16,16 +16,16 @@ const getRoles = async (data) => {
             },
             roles: {
                 success: false,
-                message: "Lỗi gọi hàm lấy các vai trò!"
+                message: "Lỗi gọi hàm lấy các kích cỡ!"
             }
         };
     }
 }
 
-const getRole = async (slug) => {
+const getSize = async (sizeId) => {
     try {
-        const { response, result } = await fetchHelperAuth.get(`/roles/${slug}`);
-        return { response, role: result };
+        const { response, result } = await fetchHelperAuth.get(`/sizes/${sizeId}`);
+        return { response, result };
     }
     catch(error) {
         console.log(error);
@@ -36,16 +36,16 @@ const getRole = async (slug) => {
             },
             roles: {
                 success: false,
-                message: "Lỗi gọi hàm lấy vai trò!"
+                message: "Lỗi gọi hàm lấy kích cỡ!"
             }
         };
     }
 }
 
-const addRole = async (data) => {
+const addSize = async (data) => {
     try {
         const { result } = await fetchHelperAuth.post(
-            `/roles`,
+            `/sizes`,
             { body: JSON.stringify(data) }
         );
 
@@ -56,15 +56,15 @@ const addRole = async (data) => {
 
         return {
             success: false,
-            message: "Lỗi gọi hàm thêm vai trò!"
+            message: "Lỗi gọi hàm thêm kích cỡ!"
         }
     }
 }
 
-const editRole = async (data, slug) => {
+const editSize = async (data, sizeId) => {
     try {
         const { result } = await fetchHelperAuth.put(
-            `/roles/${slug}`,
+            `/sizes/${sizeId}`,
             { body: JSON.stringify(data) }
         );
 
@@ -75,14 +75,14 @@ const editRole = async (data, slug) => {
 
         return {
             success: false,
-            message: "Lỗi gọi hàm chỉnh sửa vai trò!"
+            message: "Lỗi gọi hàm chỉnh sửa kích cỡ!"
         }
     }
 }
 
-const deleteRole = async (slug) => {
+const deleteSize = async (sizeId) => {
     try {
-        const { result } = await fetchHelperAuth.delete(`/roles/${slug}`);
+        const { result } = await fetchHelperAuth.delete(`/sizes/${sizeId}`);
         return result;
     }
     catch(error) {
@@ -90,9 +90,9 @@ const deleteRole = async (slug) => {
 
         return {
             success: false,
-            message: "Lỗi gọi hàm xóa vai trò!"
+            message: "Lỗi gọi hàm xóa kích cỡ!"
         }
     }
 }
 
-export { getRoles, getRole, addRole, editRole, deleteRole };
+export { getSizes, getSize, addSize, editSize, deleteSize };

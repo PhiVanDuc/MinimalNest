@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 import { BsThreeDotsVertical } from "react-icons/bs";
+import ColorDeleteDialog from "./color-delete-dialog";
 
-export default function ColorTableAction({ row, permissions }) {
+export default function ColorTableAction({ colorId, permissions }) {
     const router = useRouter();
 
+    const [openDialogDelete, setOpenDialogDelete] = useState(false);
     const [isEditColor, setIsEditColor] = useState(() => permissions?.includes("edit-color"));
     const [isDeleteColor, setIsDeleteColor] = useState(() => permissions?.includes("delete-color"));
 
@@ -33,7 +35,7 @@ export default function ColorTableAction({ row, permissions }) {
                                 (
                                     <DropdownMenuItem
                                         className="cursor-pointer"
-                                        onClick={() => { router.push("/quan-tri/mau-sac/chinh-sua-mau-sac/123") }}
+                                        onClick={() => { router.push(`/quan-tri/mau-sac/chinh-sua-mau-sac/${colorId}`) }}
                                     >
                                         Chỉnh sửa
                                     </DropdownMenuItem>
@@ -45,7 +47,7 @@ export default function ColorTableAction({ row, permissions }) {
                                 (
                                     <DropdownMenuItem
                                         className="cursor-pointer"
-                                        onClick={() => {}}
+                                        onClick={() => { setOpenDialogDelete(true); }}
                                     >
                                         Xóa
                                     </DropdownMenuItem>
@@ -55,6 +57,8 @@ export default function ColorTableAction({ row, permissions }) {
                     </DropdownMenu>
                 )
             }
+
+            <ColorDeleteDialog open={openDialogDelete} setOpen={setOpenDialogDelete} colorId={colorId} />
         </div>
     )
 }

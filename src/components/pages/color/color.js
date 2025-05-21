@@ -4,12 +4,16 @@ import CustomPagination from "@/components/customs/admin/custom-pagination";
 
 import ColorButtonAdd from "./color-button-add";
 import ColorFilter from "./color-filter/color-filter";
-import ColorFilterSelected from "./color-filter/color-filter-selected";
+import Error from "@/components/customs/error";
 
 import getAccessToken from "@/lib/utils/getAccessToken";
+import { getColors } from "@/lib/api/server-action/color";
 
-export default function Color() {
+export default async function Color({ searchParams }) {
     const { decode: { decode: { permissions } } } = getAccessToken();
+    const { response, result: colors } = await getColors({ page: searchParams?.page || 1, color: searchParams?.color || "" });
+
+    if (!colors?.success) return <Error message={`${response?.status},${colors?.message}`} />
 
     return (
         <section className="space-y-[20px]">
@@ -23,12 +27,12 @@ export default function Color() {
             </header>
 
             <div className="p-[20px] bg-white rounded-[10px] space-y-[5px]">
-                <ColorFilterSelected />
                 <CustomTable
+                    data={colors?.data?.rows}
                     columns={columns}
                     moreData={{ permissions: permissions || [] }}
                 />
-                <CustomPagination />
+                <CustomPagination page={colors?.data?.currentPage} pageSize={colors?.data?.pageSize} totalCount={colors?.data?.totalItems} />
             </div>
         </section>
     )
