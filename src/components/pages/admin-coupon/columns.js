@@ -12,20 +12,22 @@ const columns = [
         accessorKey: "event",
         header: () => <h2 className={headerClassName}>Sự kiện</h2>,
         cell: ({ row }) => {
+            const data = row.original;
+
             return (
                 <div className="space-y-[5px]">
-                    <h2 className="text-[15px] font-semibold">Tiêu đề sự kiện.</h2>
+                    <h2 className="text-[15px] font-semibold">{data?.event?.event}</h2>
                     
                     <div className="flex items-center gap-[10px] font-medium">
                         <p className="text-[13px] text-darkMedium min-w-[55px]">Bắt đầu</p>
                         <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                        <p className="text-[13px] text-darkBold">Ngày / tháng / năm</p>
+                        <p className="text-[13px] text-darkBold">{data?.event?.start_date}</p>
                     </div>
 
                     <div className="flex items-center gap-[10px] font-medium">
                         <p className="text-[13px] text-darkMedium min-w-[55px]">Kết thúc</p>
                         <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                        <p className="text-[13px] text-darkBold">Ngày / tháng / năm</p>
+                        <p className="text-[13px] text-darkBold">{data?.event?.end_date}</p>
                     </div>
                 </div>
             )
@@ -35,28 +37,16 @@ const columns = [
         accessorKey: "coupon",
         header: () => {
             return (
-                <h2 className={headerClassName}>
+                <h2 className={cn(headerClassName, "text-center")}>
                     Phiếu giảm giá
                 </h2>
             )
         },
         cell: ({ row }) => {
-            return (
-                <div className="space-y-[5px]">
-                    <h2 className="text-[15px] font-semibold">Tiêu đề phiếu giảm giá.</h2>
-                    
-                    <div className="flex items-center gap-[10px] font-medium">
-                        <p className="text-[13px] text-darkMedium min-w-[80px]">Khách hàng</p>
-                        <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                        <p className="text-[13px] text-darkBold">Khách hàng mới</p>
-                    </div>
+            const data = row.original;
 
-                    <div className="flex items-center gap-[10px] font-medium">
-                        <p className="text-[13px] text-darkMedium min-w-[80px]">Giảm theo</p>
-                        <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                        <p className="text-[13px] text-darkBold">Số tiền cố định</p>
-                    </div>
-                </div>
+            return (
+                <p className="text-[14px] font-medium text-center">{data?.code}</p>
             )
         }
     },
@@ -75,10 +65,12 @@ const columns = [
             )
         },
         cell: ({ row }) => {
+            const data = row?.original;
+
             return (
                 <div className="flex justify-center">
                     <Money
-                        price={300000}
+                        price={data?.discount_price}
                         moneyClassName="text-[14px] font-medium"
                     />
                 </div>
@@ -95,14 +87,14 @@ const columns = [
                         "text-center"
                     )}
                 >
-                    Trạng thái
+                    Hạn
                 </h2>
             )
         },
         cell: ({ row }) => {
             return (
                 <div className="flex justify-center">
-                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] text-green-600 bg-green-600/10 border border-green-600/60">Kích hoạt</p>
+                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] text-green-600 bg-green-600/10 border border-green-600/60">Đang hoạt động</p>
                 </div>
             )
         }
@@ -126,7 +118,7 @@ const columns = [
             const permissions = moreData?.permissions;
 
             return (
-                <AdminCouponTableAction row={row} permissions={permissions} />
+                <AdminCouponTableAction couponId={row?.original?.id} permissions={permissions} />
             )
         }
     }

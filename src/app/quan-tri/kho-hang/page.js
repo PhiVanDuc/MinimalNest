@@ -1,10 +1,10 @@
 import Inventory from "@/components/pages/inventory/inventory"
 import { Suspense } from "react"
 
-export default function Page() {
+export default function Page({ searchParams }) {
     return (
         <Suspense fallback={"Đang tải . . ."}>
-            <Inventory />
+            <Inventory searchParams={searchParams} />
         </Suspense>
     )
 }

@@ -7,32 +7,32 @@ import {
     Form,
 } from "@/components/ui/form";
 
-import AdminCouponEditEvent from "./admin-coupon-edit-event";
-import AdminCouponEditGeneral from "./admin-coupon-edit-general";
-import AdminCouponEditCondition from "./admin-coupon-edit-condition";
+import AdminCouponAddEvent from "./admin-coupon-add-event";
+import AdminCouponAddGeneral from "./admin-coupon-add-general";
+import AdminCouponAddCondition from "./admin-coupon-add-condition";
 
 import couponSchema from "@/lib/schemas/coupon-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { convertToNumber } from "@/lib/utils/format-currency";
-import { addCoupon, editCoupon } from "@/lib/api/server-action/coupon";
+import { addCoupon } from "@/lib/api/server-action/coupon";
 import { toast } from "sonner";
 
-export default function AdminCouponEditClient({ events, coupon, couponId }) {
+export default function AdminCouponAddClient({ events }) {
     const [submitting, setSubmitting] = useState();
 
     const form = useForm({
         resolver: zodResolver(couponSchema),
         defaultValues: {
-            event: coupon?.event || {},
-            code: coupon?.code || "",
-            desc: coupon?.desc || "",
-            discountType: coupon?.discount_type || "amount",
+            event: {},
+            code: "",
+            desc: "",
+            discountType: "amount",
             conditions: ["login"],
-            discountPrice: `${coupon?.discount_price}` || "0",
-            minOrderTotal: `${coupon?.min_order_total}` || "0",
-            minItems: `${coupon?.min_items}` || "0",
-            customerType: coupon?.customer_type || "first_time",
-            quantity: `${coupon?.quantity}` || "0"
+            discountPrice: "0",
+            minOrderTotal: "0",
+            minItems: "0",
+            customerType: "first_time",
+            quantity: "0"
         }
     });
 
@@ -47,7 +47,7 @@ export default function AdminCouponEditClient({ events, coupon, couponId }) {
             quantity: convertToNumber(data?.quantity),
         };
 
-        const coupon = await editCoupon(newData, couponId);
+        const coupon = await addCoupon(newData);
         const message = coupon?.message;
 
         if (coupon?.success) toast.success(message);
@@ -67,9 +67,9 @@ export default function AdminCouponEditClient({ events, coupon, couponId }) {
                     className="space-y-[20px]"
                     onSubmit={form.handleSubmit(onSubmit)}
                 >
-                    <AdminCouponEditEvent form={form} events={events} />
-                    <AdminCouponEditGeneral form={form} />
-                    <AdminCouponEditCondition form={form} submitting={submitting} />
+                    <AdminCouponAddEvent form={form} events={events} />
+                    <AdminCouponAddGeneral form={form} />
+                    <AdminCouponAddCondition form={form} submitting={submitting} />
                 </form>
             </Form>
         </section>

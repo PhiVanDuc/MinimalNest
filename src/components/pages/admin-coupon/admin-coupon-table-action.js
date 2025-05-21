@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 import { BsThreeDotsVertical } from "react-icons/bs";
+import AdminCouponDeleteDialog from "./admin-coupon-delete-dialog";
 
-export default function AdminCouponTableAction({ row, permissions }) {
+export default function AdminCouponTableAction({ couponId, permissions }) {
     const router = useRouter();
 
+    const [openDialogDelete, setOpenDialogDelete] = useState(false);
     const [isEditCoupon, setIsEditCoupon] = useState(() => permissions?.includes("edit-coupon"));
     const [isDeleteCoupon, setIsDeleteCoupon] = useState(() => permissions?.includes("delete-coupon"));
 
@@ -33,7 +35,7 @@ export default function AdminCouponTableAction({ row, permissions }) {
                                 (
                                     <DropdownMenuItem
                                         className="cursor-pointer"
-                                        onClick={() => { router.push("/quan-tri/phieu-giam-gia/chinh-sua-phieu-giam-gia/123") }}
+                                        onClick={() => { router.push(`/quan-tri/phieu-giam-gia/chinh-sua-phieu-giam-gia/${couponId}`) }}
                                     >
                                         Chỉnh sửa
                                     </DropdownMenuItem>
@@ -45,7 +47,7 @@ export default function AdminCouponTableAction({ row, permissions }) {
                                 (
                                     <DropdownMenuItem
                                         className="cursor-pointer"
-                                        onClick={() => {}}
+                                        onClick={() => { setOpenDialogDelete(true) }}
                                     >
                                         Xóa
                                     </DropdownMenuItem>
@@ -55,6 +57,8 @@ export default function AdminCouponTableAction({ row, permissions }) {
                     </DropdownMenu>
                 )
             }
+
+            <AdminCouponDeleteDialog open={openDialogDelete} setOpen={setOpenDialogDelete} couponId={couponId} />
         </div>
     )
 }

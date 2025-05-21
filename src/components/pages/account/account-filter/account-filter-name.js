@@ -1,10 +1,10 @@
 "use client"
 
-import { useAccountFilter } from "./account-filter-provider";
+import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { usePathname, useRouter } from "next/navigation";
 
 import {
     TooltipProvider,
@@ -16,10 +16,24 @@ import {
 export default function AccountFilterName() {
     const router = useRouter();
     const pathname = usePathname();
-    const { accountName, setAccountName } = useAccountFilter();
+    const [accountName, setAccountName] = useState("");
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        if (!accountName) {
+            router.push(pathname);
+            return;
+        }
+
+        router.push(`${pathname}?name=${accountName}`);
+    }
 
     return (
-        <div className="h-full flex flex-wrap items-center gap-[5px] w-full">
+        <form
+            className="h-full flex flex-wrap items-center gap-[5px] w-full"
+            onSubmit={onSubmit}
+        >
             <div className="relative h-full">
                 <Input
                     placeholder="Tìm tên người dùng . . ."
@@ -43,19 +57,11 @@ export default function AccountFilterName() {
             >
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <div
+                        <button
                             className="shrink-0 h-full aspect-square rounded-full flex items-center justify-center border text-darkMedium bg-white cursor-pointer"
-                            onClick={() => {
-                                if (!accountName) {
-                                    router.push(pathname);
-                                    return;
-                                }
-
-                                router.push(`${pathname}?name=${accountName}`);
-                            }}
                         >
                             <Search size={15} />
-                        </div>
+                        </button>
                     </TooltipTrigger>
 
                     <TooltipContent>
@@ -63,6 +69,6 @@ export default function AccountFilterName() {
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
-        </div>
+        </form>
     )
 }

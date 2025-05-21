@@ -96,22 +96,4 @@ const deleteRole = async (slug) => {
     }
 }
 
-const searchRole = async (data) => {
-    try {
-        const { response, result } = await fetchHelperAuth.post(
-            `/roles/search`,
-            { body: JSON.stringify(data) }
-        );
-        return { response, role: result };
-    }
-    catch(error) {
-        console.log(error);
-        
-        return {
-            success: false,
-            message: "Lỗi gọi hàm tìm kiếm vai trò!"
-        }
-    }
-}
-
-export { getRoles, getRole, addRole, editRole, deleteRole, searchRole };
+export { getRoles, getRole, addRole, editRole, deleteRole };

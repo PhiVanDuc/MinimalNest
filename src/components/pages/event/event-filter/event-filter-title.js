@@ -13,19 +13,19 @@ import {
     TooltipContent
 } from "@/components/ui/tooltip";
 
-export default function RoleFilterName() {
+export default function EventFilterTitle() {
     const router = useRouter();
-    const [role, setRole] = useState("");
+    const [title, setTitle] = useState("");
 
     const onSubmit = (e) => {
         e.preventDefault();
 
-        if (!role) {
-            router.push(`/quan-tri/vai-tro`);
+        if (!title) {
+            router.push(`/quan-tri/su-kien`);
             return;
         }
 
-        router.push(`/quan-tri/vai-tro?role=${role}`);
+        router.push(`/quan-tri/su-kien?event=${title}`);
     }
 
     return (
@@ -35,10 +35,10 @@ export default function RoleFilterName() {
         >
             <div className="relative h-full">
                 <Input
-                    placeholder="Tìm tên sản phẩm . . ."
+                    placeholder="Tìm tiêu đề sự kiện . . ."
                     className="w-[250px] h-full px-[12px] pr-[45px] rounded-full text-[13px] bg-white"
-                    value={role}
-                    onChange={(e) => { setRole(e.target.value) }}
+                    value={title}
+                    onChange={(e) => { setTitle(e.target.value) }}
                 />
 
                 <div className="text-darkMedium absolute top-[50%] translate-y-[-50%] right-0 px-[15px] bg-white rounded-full">
@@ -56,9 +56,6 @@ export default function RoleFilterName() {
                     <TooltipTrigger asChild>
                         <button
                             className="shrink-0 h-full aspect-square rounded-full flex items-center justify-center border text-darkMedium bg-white cursor-pointer"
-                            onClick={() => {
-                                
-                            }}
                         >
                             <Search size={15} />
                         </button>

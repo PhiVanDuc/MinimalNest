@@ -1,13 +1,17 @@
 "use client"
 
+import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
     Form,
     FormField,
     FormItem,
     FormLabel,
-    FormControl
+    FormControl,
+    FormMessage
 } from "@/components/ui/form";
 
 import {
@@ -16,81 +20,76 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 
-import {
-    RadioGroup,
-    RadioGroupItem
-} from "@/components/ui/radio-group"
+import EventEditImage from "./event-edit-image";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
-
-import { IoImage } from "react-icons/io5";
-import { FaMinus } from "react-icons/fa6";
 import { CalendarIcon } from "lucide-react"
 
+import { toast } from "sonner";
 import { format } from "date-fns"
 import { vi } from "date-fns/locale";
 import { cn } from "@/lib/utils";
+import eventSchema from "@/lib/schemas/event-schema";
+import { editEvent } from "@/lib/api/server-action/event";
 
-export default function EventEditClient() {
+export default function EventEditClient({ event, blurImage }) {
+    const [submitting, setIsSubmitting] = useState(false);
+    const router = useRouter();
+    const pathname = usePathname();
+    console.log(pathname);
+
     const form = useForm({
+        resolver: zodResolver(eventSchema),
         defaultValues: {
-            image: "",
-            title: "",
-            desc: "",
-            startDate: "",
-            endDate: "",
-            status: "active"
+            image: event?.image || "",
+            event: event?.event || "",
+            desc: event?.desc || "",
+            startDate: event?.start_date || new Date(),
+            endDate: event?.end_date || new Date()
         }
     });
+
+    const onSubmit = async (data) => {
+        setIsSubmitting(true);
+
+        const eventResult = await editEvent(data, event?.slug);
+        const message = eventResult?.message;
+
+        if (eventResult?.success) {
+            toast.success(message);
+            router.replace(`/quan-tri/su-kien/chinh-sua-su-kien/${eventResult?.data?.event?.slug}`);
+        }
+        else toast.error(message);
+
+        setIsSubmitting(false);
+    }
 
     return (
         <section className="space-y-[30px]">
             <header>
-                <h2 className="text-[24px] font-semibold">Chỉnh sửa sự kiện</h2>
+                <h2 className="text-[24px] font-semibold">Thêm sự kiện</h2>
             </header>
 
             <Form {...form}>
                 <form
-                    className="p-[20px] rounded-[10px] bg-white space-y-[20px]"
+                    className="p-[20px] rounded-[10px] bg-white space-y-[15px]"
+                    onSubmit={form.handleSubmit(onSubmit)}
                 >
                     {/* Thêm ảnh */}
-                    <div className="flex items-center justify-center w-full aspect-16/5 rounded-[10px] border border-dashed border-neutral-400 bg-neutral-100">
-                        <div className="flex flex-col items-center gap-[15px]">
-                            <IoImage
-                                size={80}
-                                className="text-yellowBold"
-                            />
-
-                            <div className="space-y-[40px]">
-                                <div className="space-y-[5px]">
-                                    <p className="text-[16px] text-center font-semibold text-neutral-600">Kéo và thả ảnh của bạn để tải lên</p>
-                                    <p className="text-[14px] text-center text-neutral-400">Định dạng có thể là JPG, PNG, WEBP. Bạn có thể kéo nhiều hoặc chọn nhiều ảnh để tải lên.</p>
-                                </div>
-
-                                <div className="text-center">
-                                    <Button
-                                        variant="outline"
-                                        className="shadow-none"
-                                    >
-                                        Chọn ảnh
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <EventEditImage form={form} blurImage={blurImage} />
 
                     {/* Tiêu đề */}
                     <FormField
                         control={form.control}
-                        name="title"
+                        name="event"
                         render={({ field }) => {
                             return (
                                 <FormItem>
                                     <div className="space-y-[5px]">
-                                        <FormLabel>Tiêu đề</FormLabel>
+                                        <FormLabel>Sự kiện</FormLabel>
 
                                         <FormControl>
                                             <Input
@@ -99,6 +98,7 @@ export default function EventEditClient() {
                                                 {...field}
                                             />
                                         </FormControl>
+                                        <FormMessage />
                                     </div>
                                 </FormItem>
                             )
@@ -113,7 +113,7 @@ export default function EventEditClient() {
                             return (
                                 <FormItem>
                                     <div className="space-y-[5px]">
-                                        <FormLabel>Miêu tả</FormLabel>
+                                        <FormLabel>Mô tả</FormLabel>
 
                                         <FormControl>
                                             <Textarea
@@ -122,6 +122,7 @@ export default function EventEditClient() {
                                                 {...field}
                                             />
                                         </FormControl>
+                                        <FormMessage />
                                     </div>
                                 </FormItem>
                             )
@@ -135,13 +136,13 @@ export default function EventEditClient() {
                             <p className="text-[14px] font-medium">Ngày kết thúc</p>
                         </div>
 
-                        <div className="flex items-center gap-[10px]">
+                        <div className="flex items-start gap-[10px]">
                             <FormField
                                 control={form.control}
                                 name="startDate"
                                 render={({ field }) => {
                                     return (
-                                        <FormItem className="w-full">
+                                        <FormItem className="w-full space-y-[5px]">
                                             <Popover>
                                                 <PopoverTrigger asChild>
                                                     <FormControl>
@@ -182,14 +183,10 @@ export default function EventEditClient() {
                                                     />
                                                 </PopoverContent>
                                             </Popover>
+                                            <FormMessage />
                                         </FormItem>
                                     )
                                 }}
-                            />
-
-                            <FaMinus
-                                size={18}
-                                className="text-darkMedium"
                             />
 
                             <FormField
@@ -197,7 +194,7 @@ export default function EventEditClient() {
                                 name="endDate"
                                 render={({ field }) => {
                                     return (
-                                        <FormItem className="w-full">
+                                        <FormItem className="w-full space-y-[5px]">
                                             <Popover>
                                                 <PopoverTrigger asChild>
                                                     <FormControl>
@@ -227,7 +224,7 @@ export default function EventEditClient() {
                                                         locale={vi}
                                                         selected={field.value}
                                                         onSelect={field.onChange}
-                                                        disabled={{ before: new Date() }}
+                                                        disabled={{ before: form.watch("startDate") || new Date() }}
                                                         todayButton="Hôm nay"
                                                         clearButton="Xóa"
                                                         previousMonthLabel="Tháng trước"
@@ -238,6 +235,7 @@ export default function EventEditClient() {
                                                     />
                                                 </PopoverContent>
                                             </Popover>
+                                            <FormMessage />
                                         </FormItem>
                                     )
                                 }}
@@ -245,50 +243,13 @@ export default function EventEditClient() {
                         </div>
                     </div>
 
-                    <FormField 
-                        control={form.control}
-                        name="status"
-                        render={({ field }) => {
-                            return (
-                                <FormItem>
-                                    <div className="space-y-[10px]">
-                                        <FormLabel className="text-[15px] font-medium">Trạng thái</FormLabel>
-
-                                        <FormControl>
-                                            <RadioGroup
-                                                onValueChange={field.onChange}
-                                                defaultValue={field.value}
-                                                className="flex items-center gap-[20px]"
-                                            >
-                                                <FormItem>
-                                                    <FormLabel className="flex items-center gap-[5px]">
-                                                        <FormControl>
-                                                            <RadioGroupItem value="active" />
-                                                        </FormControl>
-
-                                                        <span>Kích hoạt</span>
-                                                    </FormLabel>
-                                                </FormItem>
-
-                                                <FormItem>
-                                                    <FormLabel className="flex items-center gap-[5px]">
-                                                        <FormControl>
-                                                            <RadioGroupItem value="inactive" />
-                                                        </FormControl>
-
-                                                        <span>Không kích hoạt</span>
-                                                    </FormLabel>
-                                                </FormItem>
-                                            </RadioGroup>
-                                        </FormControl>
-                                    </div>
-                                </FormItem>
-                            )
-                        }}
-                    />
-
                     <div className="text-right">
-                        <Button>Lưu thay đổi</Button>
+                        <Button
+                            className="w-full"
+                            disabled={submitting}
+                        >
+                            { submitting ? "Đang thay đổi" : "Lưu thay đổi" }
+                        </Button>
                     </div>
                 </form>
             </Form>

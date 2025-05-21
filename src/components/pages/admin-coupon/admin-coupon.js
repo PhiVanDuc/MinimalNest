@@ -4,13 +4,17 @@ import CustomPagination from "@/components/customs/admin/custom-pagination";
 
 import AdminCouponButtonAdd from "./admin-coupon-button-add";
 import AdminCouponFilter from "./admin-coupon-filter/admin-coupon-filter";
-import AdminCouponFilterSelected from "./admin-coupon-filter/admin-coupon-filter-selected";
+import Error from "@/components/customs/error";
 
 import getAccessToken from "@/lib/utils/getAccessToken";
+import { getCoupons } from "@/lib/api/server-action/coupon";
 
-export default function AdminCoupon() {
+export default async function AdminCoupon({ searchParams }) {
     // Fetch
     const { decode: { decode: { permissions } } } = getAccessToken();
+    const { response, result: coupons } = await getCoupons({ page: searchParams?.page || 1, code: searchParams?.code || "" });
+
+    if (!coupons?.success) return <Error message={`${response?.status},${coupons?.message}`} />
 
     return (
         <section className="space-y-[20px]">
@@ -24,12 +28,12 @@ export default function AdminCoupon() {
             </header>
 
             <div className="p-[20px] bg-white rounded-[10px] space-y-[5px]">
-                <AdminCouponFilterSelected />
                 <CustomTable
+                    data={coupons?.data?.rows}
                     columns={columns}
                     moreData={{ permissions: permissions || [] }}
                 />
-                <CustomPagination />
+                <CustomPagination page={coupons?.data?.currentPage} pageSize={coupons?.data?.pageSize} totalCount={coupons?.data?.totalItems} />
             </div>
         </section>
     )

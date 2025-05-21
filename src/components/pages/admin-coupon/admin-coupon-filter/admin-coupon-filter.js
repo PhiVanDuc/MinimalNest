@@ -1,12 +1,12 @@
 "use client"
 
-import AdminCouponFilterName from "./admin-coupon-filter-name";
+import AdminCouponFilterCode from "./admin-coupon-filter-code";
 import CustomFilterButton from "@/components/customs/admin/custom-filter-button";
 
 export default function AdminCouponFilter() {
     return (
         <CustomFilterButton>
-            <AdminCouponFilterName />
+            <AdminCouponFilterCode />
         </CustomFilterButton>
     )
 }
