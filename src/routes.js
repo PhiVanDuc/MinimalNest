@@ -170,6 +170,10 @@ const PERMISSION_PATHS = [
     {
         permission: "edit-order",
         paths: ["/quan-tri", "/quan-tri/don-hang"]
+    },
+    {
+        permission: "list-inventory",
+        paths: ["/quan-tri", "/quan-tri/kho-hang"]
     }
 ];
 

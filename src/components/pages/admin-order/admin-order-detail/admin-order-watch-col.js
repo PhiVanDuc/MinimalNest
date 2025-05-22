@@ -17,31 +17,22 @@ const AdminOrderDetail = dynamic(
 
 import { HiOutlineNewspaper } from "react-icons/hi";
 
-export default function AdminOrderWatchCol({ permissions }) {
+export default function AdminOrderWatchCol() {
     const [openDialog, setOpenDialog] = useState(false);
-    const [isDetailOrder, setIsDetailOrder] = useState(() => permissions?.includes("detail-order"));
 
     return (
         <>
-            {
-                !isDetailOrder ?
-                ( <p>Không có quyền truy cập.</p> ) :
-                (
-                    <>
-                        <div className="flex justify-center">
-                            <div
-                                className="shrink-0 flex justify-center items-center text-darkMedium w-[35px] aspect-square cursor-pointer"
-                                onClick={() => { setOpenDialog(true); }}
-                            >
-                                <HiOutlineNewspaper size={22} className="shrink-0" />
-                            </div>
-                        </div>
+            <div className="flex justify-center">
+                <div
+                    className="shrink-0 flex justify-center items-center text-darkMedium w-[35px] aspect-square cursor-pointer"
+                    onClick={() => { setOpenDialog(true); }}
+                >
+                    <HiOutlineNewspaper size={22} className="shrink-0" />
+                </div>
+            </div>
 
-                        {
-                            openDialog && <AdminOrderDetail open={openDialog} setOpen={setOpenDialog} />
-                        }
-                    </>
-                )
+            {
+                openDialog && <AdminOrderDetail open={openDialog} setOpen={setOpenDialog} />
             }
         </>
     )

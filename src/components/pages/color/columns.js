@@ -38,8 +38,13 @@ const columns = [
     },
     {
         accessorKey: "actions",
-        header: () => {
-            return (
+        header: ({ table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return (!permissions?.includes("edit-color") && !permissions?.includes("delete-color")) ?
+            <></> :
+            (
                 <h2
                     className={cn(
                         headerClassName,
@@ -56,7 +61,9 @@ const columns = [
             const moreData = table?.options?.meta?.moreData;
             const permissions = moreData?.permissions;
 
-            return <ColorTableAction colorId={data?.id} permissions={permissions} />
+            return (!permissions?.includes("edit-color") && !permissions?.includes("delete-color")) ?
+            <></> :
+            <ColorTableAction colorId={data?.id} permissions={permissions} />
         }
     }
 ];

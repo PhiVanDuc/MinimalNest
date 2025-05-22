@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import EventTableAction from "./event-table-action";
+import formatDate, { compareTime } from "@/lib/utils/format-date";
 
 const headerClassName = "text-[14px] whitespace-nowrap font-semibold";
 
@@ -19,13 +20,13 @@ const columns = [
                     <div className="flex items-center gap-[10px] font-medium">
                         <p className="text-[13px] text-darkMedium min-w-[55px]">Bắt đầu</p>
                         <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                        <p className="text-[13px] text-darkBold">{data?.start_date}</p>
+                        <p className="text-[13px] text-darkBold">{formatDate(data?.start_date)}</p>
                     </div>
 
                     <div className="flex items-center gap-[10px] font-medium">
                         <p className="text-[13px] text-darkMedium min-w-[55px]">Kết thúc</p>
                         <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                        <p className="text-[13px] text-darkBold">{data?.end_date}</p>
+                        <p className="text-[13px] text-darkBold">{formatDate(data?.end_date)}</p>
                     </div>
                 </div>
             )
@@ -46,8 +47,13 @@ const columns = [
             )
         },
         cell: ({ row }) => {
+            const data = row?.original;
+            const totalCoupons = Array.isArray(data.coupons)
+            ? data.coupons.reduce((sum, c) => sum + (c.quantity || 0), 0)
+            : 0;
+
             return (
-                <p className="text-[14px] font-medium text-center">300</p>
+                <p className="text-[14px] font-medium text-center">{totalCoupons}</p>
             )
         }
     },
@@ -66,17 +72,32 @@ const columns = [
             )
         },
         cell: ({ row }) => {
+            const data = row?.original;
+            const startDate = data?.start_date;
+            const endDate = data?.end_date;
+            const final = compareTime(startDate, endDate);
+
             return (
                 <div className="flex justify-center">
-                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] text-green-600 bg-green-600/10 border border-green-600/60">Đang hoạt động</p>
+                    <p className={cn(
+                        "w-fit px-[15px] py-[5px] rounded-full text-[14px]",
+                        final?.color
+                    )}>
+                        {final?.label}
+                    </p>
                 </div>
             )
         }
     },
     {
         accessorKey: "actions",
-        header: () => {
-            return (
+        header: ({ table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return (!permissions?.includes("edit-event") && permissions?.includes("delete-event")) ?
+            <></> :
+            (
                 <h2
                     className={cn(
                         headerClassName,
@@ -93,7 +114,9 @@ const columns = [
             const moreData = table?.options?.meta?.moreData;
             const permissions = moreData?.permissions;
 
-            return <EventTableAction slug={data?.slug} permissions={permissions} />
+            return (!permissions?.includes("edit-event") && permissions?.includes("delete-event")) ?
+            <></> :
+            <EventTableAction slug={data?.slug} permissions={permissions} />
         }
     }
 ];

@@ -68,7 +68,7 @@ export default function AdminCouponAddCondition({ form, submitting }) {
                                 <div className="space-y-[5px]">
                                     <FormLabel>Điều kiện áp dụng</FormLabel>
 
-                                    <div className="flex items-center gap-[20px]">
+                                    <div className="flex items-center gap-[25px]">
                                         {
                                             listConditions.map((con, index) => {
                                                 return (
@@ -78,7 +78,7 @@ export default function AdminCouponAddCondition({ form, submitting }) {
                                                         name="conditions"
                                                         render={({ field }) => {
                                                             return (
-                                                                <FormItem className="flex items-center gap-[5px] w-full">
+                                                                <FormItem className="flex items-center gap-[5px]">
                                                                     <FormControl>
                                                                         <Checkbox
                                                                             checked={field.value?.includes(con.value)}
@@ -194,9 +194,9 @@ export default function AdminCouponAddCondition({ form, submitting }) {
                                     <RadioGroup
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
-                                        className="flex items-center gap-[20px]"
+                                        className="flex items-center gap-[25px]"
                                     >
-                                        <FormItem className="w-full">
+                                        <FormItem>
                                             <FormLabel className="flex items-center gap-[5px]">
                                                 <FormControl>
                                                     <RadioGroupItem value="all" />
@@ -206,7 +206,7 @@ export default function AdminCouponAddCondition({ form, submitting }) {
                                             </FormLabel>
                                         </FormItem>
 
-                                        <FormItem className="w-full">
+                                        <FormItem>
                                             <FormLabel className="flex items-center gap-[5px]">
                                                 <FormControl>
                                                     <RadioGroupItem value="first_time" />
@@ -216,7 +216,7 @@ export default function AdminCouponAddCondition({ form, submitting }) {
                                             </FormLabel>
                                         </FormItem>
 
-                                        <FormItem className="w-full">
+                                        <FormItem>
                                             <FormLabel className="flex items-center gap-[5px]">
                                                 <FormControl>
                                                     <RadioGroupItem value="new" />
@@ -226,7 +226,7 @@ export default function AdminCouponAddCondition({ form, submitting }) {
                                             </FormLabel>
                                         </FormItem>
 
-                                        <FormItem className="w-full">
+                                        <FormItem>
                                             <FormLabel className="flex items-center gap-[5px]">
                                                 <FormControl>
                                                     <RadioGroupItem value="vip" />

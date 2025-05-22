@@ -29,6 +29,8 @@ const columns = [
             return (
                 <div className="flex flex-wrap gap-[5px] max-w-[400px]">
                     {
+                        data?.roles?.length === 0 ?
+                        <p className="shrink-0 flex items-center px-[15px] py-[5px] text-[14px] rounded-full border">Người dùng</p> :
                         data?.roles?.map(role => {
                             return (
                                 <p
@@ -94,8 +96,12 @@ const columns = [
     },
     {
         accessorKey: "actions",
-        header: () => {
-            return (
+        header: ({ table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return permissions?.includes("edit-account") ?
+            (
                 <h2
                     className={cn(
                         headerClassName,
@@ -104,7 +110,8 @@ const columns = [
                 >
                     Hành động
                 </h2>
-            )
+            ) :
+            <></>
         },
         cell: ({ row, table }) => {
             const data = row.original;
@@ -112,9 +119,11 @@ const columns = [
             const moreData = table?.options?.meta?.moreData;
             const permissions = moreData?.permissions;
 
-            return (
-                <AccountTableAction accountId={data?.id} permissions={permissions} />
-            )
+            return permissions?.includes("edit-account") ?
+            (
+                <AccountTableAction accountId={data?.id} />
+            ) :
+            <></>
         }
     }
 ];

@@ -52,8 +52,13 @@ const columns = [
     },
     {
         accessorKey: "actions",
-        header: () => {
-            return (
+        header: ({ table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return (!permissions?.includes("edit-role") && !permissions?.includes("delete-role")) ?
+            <></> :
+            (
                 <h2
                     className={cn(
                         headerClassName,
@@ -63,15 +68,20 @@ const columns = [
                     Hành động
                 </h2>
             )
+            
         },
         cell: ({ row, table }) => {
             const moreData = table?.options?.meta?.moreData;
             const permissions = moreData?.permissions;
 
-            return <RoleTableAction
-                data={row.original}
-                permissions={permissions}
-            />
+            return (!permissions?.includes("edit-role") && !permissions?.includes("delete-role")) ?
+            <></> :
+            (
+                <RoleTableAction
+                    data={row.original}
+                    permissions={permissions}
+                />
+            )
         }
     }
 ];

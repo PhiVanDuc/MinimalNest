@@ -92,14 +92,21 @@ const columns = [
     },
     {
         accessorKey: "watch",
-        header: () => <h2 className={cn(headerClassName, "text-center")}>Xem đơn</h2>,
+        header: ({ table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return permissions?.includes("detail-order") ?
+            <h2 className={cn(headerClassName, "text-center")}>Xem đơn</h2> :
+            <></>
+        },
         cell: ({ row, table }) => {
             const moreData = table?.options?.meta?.moreData;
             const permissions = moreData?.permissions;
 
-            return (
-                <AdminOrderWatchCol permissions={permissions || []} />
-            )
+            return permissions?.includes("detail-order") ? (
+                <AdminOrderWatchCol />
+            ) : <></>
         }
     }
 ];

@@ -89,7 +89,8 @@ const sidebar = [
             {
                 id: v4(),
                 label: "Kho hàng",
-                href: "/quan-tri/kho-hang"
+                href: "/quan-tri/kho-hang",
+                permission: "list-inventory"
             },
         ]
     }

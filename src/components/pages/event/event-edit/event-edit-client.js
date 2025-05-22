@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -29,7 +29,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react"
 
 import { toast } from "sonner";
-import { format } from "date-fns"
+import { addDays, format } from "date-fns"
 import { vi } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import eventSchema from "@/lib/schemas/event-schema";
@@ -38,8 +38,6 @@ import { editEvent } from "@/lib/api/server-action/event";
 export default function EventEditClient({ event, blurImage }) {
     const [submitting, setIsSubmitting] = useState(false);
     const router = useRouter();
-    const pathname = usePathname();
-    console.log(pathname);
 
     const form = useForm({
         resolver: zodResolver(eventSchema),
@@ -48,9 +46,15 @@ export default function EventEditClient({ event, blurImage }) {
             event: event?.event || "",
             desc: event?.desc || "",
             startDate: event?.start_date || new Date(),
-            endDate: event?.end_date || new Date()
+            endDate: event?.end_date || addDays(new Date(), 1)
         }
     });
+
+    const watchStartDate = form.watch("startDate");
+    
+    useEffect(() => {
+        form.setValue("endDate", addDays(watchStartDate, 1))
+    }, [watchStartDate]);
 
     const onSubmit = async (data) => {
         setIsSubmitting(true);
@@ -224,7 +228,7 @@ export default function EventEditClient({ event, blurImage }) {
                                                         locale={vi}
                                                         selected={field.value}
                                                         onSelect={field.onChange}
-                                                        disabled={{ before: form.watch("startDate") || new Date() }}
+                                                        disabled={{ before: addDays(form.watch("startDate"), 1) }}
                                                         todayButton="Hôm nay"
                                                         clearButton="Xóa"
                                                         previousMonthLabel="Tháng trước"

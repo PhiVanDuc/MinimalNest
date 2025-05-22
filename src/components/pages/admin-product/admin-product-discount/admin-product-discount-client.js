@@ -27,6 +27,9 @@ export default function AdminProductDiscountClient() {
         name: "discounts"
     });
 
+    const watchDiscounts = form.watch("discounts");
+    const hasAnyApplyAll = watchDiscounts.some(d => d.applyAll);
+
     const data = {
         productTypes,
         categories,
@@ -51,8 +54,6 @@ export default function AdminProductDiscountClient() {
                 >
                     {
                         formArray.fields.map((field, index) => {
-                            console.log(index);
-
                             return (
                                 <AdminProductDiscountForm
                                     key={field.id}
@@ -60,16 +61,17 @@ export default function AdminProductDiscountClient() {
                                     formArray={formArray}
                                     index={index}
                                     data={data}
+                                    hasAnyApplyAll={hasAnyApplyAll}
                                 />
                             )
                         })
                     }
 
-                    <div className="flex gap-[10px] p-[20px] rounded-[10px] bg-white">
+                    <div className="p-[20px] rounded-[10px] bg-white">
                         <Button
                             type="button"
                             variant="outline"
-                            className="w-[30%] shadow-none"
+                            className="w-full shadow-none"
                             onClick={() => {
                                 formArray.append({
                                     applyAll: false,
@@ -80,14 +82,9 @@ export default function AdminProductDiscountClient() {
                                     discountPrice: ""
                                 });
                             }}
+                            disabled={hasAnyApplyAll}
                         >
                             Thêm giảm giá
-                        </Button>
-
-                        <Button
-                            className="w-[70%] shadow-none"
-                        >
-                            Lưu giảm giá
                         </Button>
                     </div>
                 </form>

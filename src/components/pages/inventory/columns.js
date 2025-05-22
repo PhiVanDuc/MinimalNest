@@ -1,10 +1,11 @@
 "use client"
 
 import Money from "@/components/customs/money";
-import InventoryTableAction from "./inventory-table-action";
 import CellStock from "../dashboard/dashboard-stock-quantity/cell-stock";
 
 import { cn } from "@/lib/utils";
+import { ChevronRight } from "lucide-react";
+import InventoryEditQuantity from "./inventory-edit-quantity";
 
 const headerClassName = "text-[14px] whitespace-nowrap text-darkMedium font-semibold";
 
@@ -81,9 +82,54 @@ const columns = [
         cell: ({ row }) => <CellStock row={row} />
     },
     {
-        accessorKey: "actions",
-        header: () => <h2 className={cn(headerClassName, "text-center")}>Hành động</h2>,
-        cell: ({ row }) => <InventoryTableAction />
+        accessorKey: "expander",
+        header: ({ table }) =>  {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return permissions?.includes("edit-inventory") ?
+            (
+                <h2 className={cn(headerClassName, "text-center")}>Mở rộng</h2>
+            ) :
+            <></>
+        },
+        cell: ({ row, table }) => {
+            const expand = row.getIsExpanded();
+
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return permissions?.includes("edit-inventory") ?
+            (
+                <div className="w-full flex justify-center">
+                    <button 
+                        className="w-[35px] aspect-square rounded-[10px] flex items-center justify-center hover:bg-neutral-200"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            row.toggleExpanded();
+                        }}
+                        aria-label="Toggle expand"
+                    >
+                        <ChevronRight
+                            size={20}
+                            className={cn(
+                                "transition-transform duration-300",
+                                expand ? "rotate-90" : "rotate-0"
+                            )}
+                        />
+                    </button>
+                </div>
+            ) :
+            <></>
+        },
+        expandedContent: ({ row, table }) => {
+            const data = row?.original;
+
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return permissions?.includes("edit-inventory") ? <InventoryEditQuantity data={data} /> : <></>
+        }
     }
 ];
 

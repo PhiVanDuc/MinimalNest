@@ -11,7 +11,7 @@ import {
 
 import { cn } from "@/lib/utils";
 
-export default function AdminSidebarGroup({ group, permissions }) {
+export default function AdminSidebarGroup({ group }) {
     const router = useRouter();
     const pathname = usePathname();
 
@@ -27,6 +27,9 @@ export default function AdminSidebarGroup({ group, permissions }) {
                 {
                     group.groupItems?.map((item, index) => {
                         const currentLev1 = (item?.href && pathname.startsWith(item?.href));
+                        const hasActiveSubItem = item?.subItems?.some(subItem => 
+                            pathname.startsWith(subItem.href)
+                        );
 
                         return !item?.subItems ?
                         (
@@ -47,7 +50,10 @@ export default function AdminSidebarGroup({ group, permissions }) {
                                 value={"Item " + index}
                             >
                                 <AccordionTrigger
-                                    className="flex items-center gap-[15px] px-[15px] py-[10px] rounded-[5px] text-darkMedium [&[data-state=open]]:text-white bg-transparent hover:bg-neutral-200 [&[data-state=open]]:hover:bg-yellowBold [&[data-state=open]]:bg-yellowBold cursor-pointer transition-all duration-300"
+                                    className={cn(
+                                        "flex items-center gap-[15px] px-[15px] py-[10px] rounded-[5px] text-darkMedium [&[data-state=open]]:text-white bg-transparent hover:bg-neutral-200 [&[data-state=open]]:hover:bg-yellowBold [&[data-state=open]]:bg-yellowBold cursor-pointer transition-all duration-300",
+                                        hasActiveSubItem ? "bg-yellowBold text-white hover:bg-yellowBold" : ""
+                                    )}
                                     iconSize="w-4 h-4"
                                 >
                                     <span className="text-[13px] font-medium">{item.label}</span>

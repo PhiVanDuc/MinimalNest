@@ -29,6 +29,7 @@ import { Button } from "@/components/ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import formatDate from "@/lib/utils/format-date";
 
 export default function AdminCouponAddEvent({ form, events }) {
     const watchEvent = form.watch("event");
@@ -120,13 +121,13 @@ export default function AdminCouponAddEvent({ form, events }) {
                         <div className="flex items-center gap-[10px] font-medium">
                             <p className="text-[14px] text-darkMedium min-w-[55px]">Bắt đầu</p>
                             <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                            <p className="text-[14px] text-darkBold">{dates[0]}</p>
+                            <p className="text-[14px] text-darkBold">{formatDate(dates[0])}</p>
                         </div>
 
                         <div className="flex items-center gap-[10px] font-medium">
                             <p className="text-[14px] text-darkMedium min-w-[55px]">Kết thúc</p>
                             <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                            <p className="text-[14px] text-darkBold">{dates[1]}</p>
+                            <p className="text-[14px] text-darkBold">{formatDate(dates[1])}</p>
                         </div>
                     </div>
                 ) : null

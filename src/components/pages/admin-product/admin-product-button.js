@@ -24,6 +24,18 @@ export default function AdminProductButton({ permissions }) {
                 ( <></> ) :
                 (
                     <div className="flex items-center gap-[10px]">
+                        {
+                            isEditProduct &&
+                            (
+                                <Button
+                                    variant="outline"
+                                    onClick={() => { router.push("/quan-tri/san-pham/giam-gia-chung") }}
+                                >
+                                    Giảm giá chung
+                                </Button>
+                            )
+                        }
+
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline">
@@ -47,18 +59,6 @@ export default function AdminProductButton({ permissions }) {
                                 }
                             </DropdownMenuContent>
                         </DropdownMenu>
-
-                        {
-                            isEditProduct &&
-                            (
-                                <Button
-                                    variant="outline"
-                                    onClick={() => { router.push("/quan-tri/san-pham/giam-gia-chung") }}
-                                >
-                                    Giảm giá chung
-                                </Button>
-                            )
-                        }
 
                         {
                             isAddProduct &&

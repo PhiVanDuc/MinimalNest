@@ -43,8 +43,13 @@ const columns = [
     },
     {
         accessorKey: "actions",
-        header: () => {
-            return (
+        header: ({ table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return (!permissions?.includes("edit-size") && !permissions?.includes("delete-size")) ?
+            <></> :
+            (
                 <h2
                     className={cn(
                         headerClassName,
@@ -61,7 +66,9 @@ const columns = [
             const moreData = table?.options?.meta?.moreData;
             const permissions = moreData?.permissions;
 
-            return <SizeTableAction sizeId={data?.id} permissions={permissions} />
+            return (!permissions?.includes("edit-size") && !permissions?.includes("delete-size")) ?
+            <></> :
+            <SizeTableAction sizeId={data?.id} permissions={permissions} />
         }
     }
 ];

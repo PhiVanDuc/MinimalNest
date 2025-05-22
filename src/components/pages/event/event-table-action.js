@@ -11,59 +11,48 @@ export default function EventTableAction({ slug, permissions }) {
     const router = useRouter();
 
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-    const [isEditEvent, setIsEditEvent] = useState(() => permissions?.includes("edit-event"));
-    const [isDeleteEvent, setIsDeleteEvent] = useState(() => permissions?.includes("delete-event"));
 
     return (
         <div className="flex justify-center">
+            <DropdownMenu>
+                <DropdownMenuTrigger>
+                    <div className="flex items-center justify-center w-[35px] aspect-square rounded-[5px]">
+                        <BsThreeDotsVertical size={20} />
+                    </div>
+                </DropdownMenuTrigger>
 
-            {
-                !isEditEvent || !isDeleteEvent ?
-                ( <p>Không có quyền truy cập.</p> ) :
-                (
-                    <>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger>
-                                <div className="flex items-center justify-center w-[35px] aspect-square rounded-[5px]">
-                                    <BsThreeDotsVertical size={20} />
-                                </div>
-                            </DropdownMenuTrigger>
-
-                            <DropdownMenuContent
-                                alignOffset={10}
+                <DropdownMenuContent
+                    alignOffset={10}
+                >
+                    {
+                        permissions?.includes("edit-event") &&
+                        (
+                            <DropdownMenuItem
+                                className="cursor-pointer"
+                                onClick={() => { router.push(`/quan-tri/su-kien/chinh-sua-su-kien/${slug}`) }}
                             >
-                                {
-                                    isEditEvent &&
-                                    (
-                                        <DropdownMenuItem
-                                            className="cursor-pointer"
-                                            onClick={() => { router.push(`/quan-tri/su-kien/chinh-sua-su-kien/${slug}`) }}
-                                        >
-                                            Chỉnh sửa
-                                        </DropdownMenuItem>
-                                    )
-                                }
+                                Chỉnh sửa
+                            </DropdownMenuItem>
+                        )
+                    }
 
-                                {
-                                    isDeleteEvent &&
-                                    (
-                                        <DropdownMenuItem
-                                            className="cursor-pointer"
-                                            onClick={() => {
-                                                setOpenDeleteDialog(true);
-                                            }}
-                                        >
-                                            Xóa
-                                        </DropdownMenuItem>
-                                    )
-                                }
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                    {
+                        permissions?.includes("delete-event") &&
+                        (
+                            <DropdownMenuItem
+                                className="cursor-pointer"
+                                onClick={() => {
+                                    setOpenDeleteDialog(true);
+                                }}
+                            >
+                                Xóa
+                            </DropdownMenuItem>
+                        )
+                    }
+                </DropdownMenuContent>
+            </DropdownMenu>
 
-                        <EventDeleteDialog open={openDeleteDialog} setOpen={setOpenDeleteDialog} slug={slug} />
-                    </>
-                )
-            }
+            <EventDeleteDialog open={openDeleteDialog} setOpen={setOpenDeleteDialog} slug={slug} />
         </div>
     )
 }

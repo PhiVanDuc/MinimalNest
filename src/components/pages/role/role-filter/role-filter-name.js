@@ -35,7 +35,7 @@ export default function RoleFilterName() {
         >
             <div className="relative h-full">
                 <Input
-                    placeholder="Tìm tên sản phẩm . . ."
+                    placeholder="Tìm tên vai trò . . ."
                     className="w-[250px] h-full px-[12px] pr-[45px] rounded-full text-[13px] bg-white"
                     value={role}
                     onChange={(e) => { setRole(e.target.value) }}

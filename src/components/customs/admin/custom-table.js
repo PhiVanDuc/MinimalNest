@@ -1,9 +1,12 @@
 "use client"
 
+import { Fragment, useState } from "react";
+
 import {
     flexRender,
     getCoreRowModel,
-    useReactTable
+    useReactTable,
+    getExpandedRowModel
 } from "@tanstack/react-table";
 
 import {
@@ -17,12 +20,19 @@ import {
 
 import { cn } from "@/lib/utils";
 
-export default function CustomTable({ data, columns, moreData = {} }) {
+export default function CustomTable({ data, columns, moreData = {}, enableExpandRow = false}) {
+    const [expanded, setExpanded] = useState({});
+
     const table = useReactTable({
-        data: data || [1, 1, 1, 1, 1],
+        data: data || [1, 2, 3, 4, 5],
         columns,
+        state: { expanded },
+        onExpandedChange: setExpanded,
         getCoreRowModel: getCoreRowModel(),
-        meta: { moreData }
+        getExpandedRowModel: getExpandedRowModel(),
+        getRowCanExpand: () => enableExpandRow,
+        autoResetPageIndex: false,
+        meta: { moreData },
     });
 
     return (
@@ -40,6 +50,7 @@ export default function CustomTable({ data, columns, moreData = {} }) {
                                         "p-[15px]",
                                         index === 0 ? "rounded-tl-[10px] rounded-bl-[10px]" : "",
                                         index === headerGroup.headers.length - 1 ? "rounded-tr-[10px] rounded-br-[10px]" : ""
+
                                     )}
                                 >
                                     {header.isPlaceholder
@@ -53,10 +64,13 @@ export default function CustomTable({ data, columns, moreData = {} }) {
 
             <TableBody>
                 {table.getRowModel().rows?.length ? (
-                    table.getRowModel().rows.map((row) => (
+                    table.getRowModel().rows.map((row) => [
                         <TableRow
-                            key={row.id}
-                            className="border-none bg-white transition cursor-pointer"
+                            key={row?.id}
+                            className={cn(
+                                "bg-white transition cursor-pointer",
+                                row.getIsExpanded() ? "bg-muted/50" : ""
+                            )}
                         >
                             {row.getVisibleCells().map((cell, index) => (
                                 <TableCell
@@ -70,8 +84,26 @@ export default function CustomTable({ data, columns, moreData = {} }) {
                                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                 </TableCell>
                             ))}
-                        </TableRow>
-                    ))
+                        </TableRow>,
+
+                        (enableExpandRow && row.getIsExpanded()) ?
+                        (
+                            <TableRow
+                                key={`${row?.id}-expanded`}
+                                className="hover:bg-white"
+                            >
+                                <TableCell colSpan={columns.length} className="p-[15px] rounded-[10px] border">
+                                    {columns.find(col => col.accessorKey === 'expander')?.expandedContent?.({ 
+                                        row,
+                                        table,
+                                        column: table.getColumn('expander'),
+                                        cell: row.getVisibleCells().find(cell => cell.column.id === 'expander')
+                                    })}
+                                </TableCell>
+                            </TableRow>
+                        ) :
+                        null
+                    ])
                 ) : (
                     <TableRow>
                         <TableCell className="h-24 text-center" colSpan={columns.length}>

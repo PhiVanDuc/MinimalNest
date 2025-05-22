@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -30,6 +30,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
+import { addDays } from "date-fns";
 import eventSchema from "@/lib/schemas/event-schema";
 import { addEvent } from "@/lib/api/server-action/event";
 
@@ -43,9 +44,15 @@ export default function EventAdd() {
             event: "",
             desc: "",
             startDate: new Date(),
-            endDate: new Date()
+            endDate: addDays(new Date(), 1)
         }
     });
+
+    const watchStartDate = form.watch("startDate");
+
+    useEffect(() => {
+        form.setValue("endDate", addDays(watchStartDate, 1))
+    }, [watchStartDate]);
 
     const onSubmit = async (data) => {
         setIsSubmitting(true);
@@ -216,7 +223,7 @@ export default function EventAdd() {
                                                         locale={vi}
                                                         selected={field.value}
                                                         onSelect={field.onChange}
-                                                        disabled={{ before: form.watch("startDate") || new Date() }}
+                                                        disabled={{ before: addDays(form.watch("startDate"), 1) }}
                                                         todayButton="Hôm nay"
                                                         clearButton="Xóa"
                                                         previousMonthLabel="Tháng trước"

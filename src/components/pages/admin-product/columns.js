@@ -84,12 +84,21 @@ const columns = [
     },
     {
         accessorKey: "actions",
-        header: () => <h2 className={cn(headerClassName, "text-center")}>Hành động</h2>,
+        header: ({ table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return (!permissions?.includes("edit-product") && !permissions?.includes("delete-product")) ?
+            <></> :
+            <h2 className={cn(headerClassName, "text-center")}>Hành động</h2>
+        },
         cell: ({ row, table }) => {
             const moreData = table?.options?.meta?.moreData;
             const permissions = moreData?.permissions;
 
-            return <AdminProductTableAction row={row} permissions={permissions} />
+            return (!permissions?.includes("edit-product") && !permissions?.includes("delete-product")) ?
+            <></> :
+            <AdminProductTableAction row={row} permissions={permissions} />
         }
     }
 ];

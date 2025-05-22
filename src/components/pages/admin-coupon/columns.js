@@ -4,6 +4,7 @@ import AdminCouponTableAction from "./admin-coupon-table-action";
 import Money from "@/components/customs/money";
 
 import { cn } from "@/lib/utils";
+import formatDate, { compareTime } from "@/lib/utils/format-date";
 
 const headerClassName = "text-[14px] whitespace-nowrap font-semibold";
 
@@ -21,13 +22,13 @@ const columns = [
                     <div className="flex items-center gap-[10px] font-medium">
                         <p className="text-[13px] text-darkMedium min-w-[55px]">Bắt đầu</p>
                         <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                        <p className="text-[13px] text-darkBold">{data?.event?.start_date}</p>
+                        <p className="text-[13px] text-darkBold">{formatDate(data?.event?.start_date)}</p>
                     </div>
 
                     <div className="flex items-center gap-[10px] font-medium">
                         <p className="text-[13px] text-darkMedium min-w-[55px]">Kết thúc</p>
                         <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                        <p className="text-[13px] text-darkBold">{data?.event?.end_date}</p>
+                        <p className="text-[13px] text-darkBold">{formatDate(data?.event?.end_date)}</p>
                     </div>
                 </div>
             )
@@ -78,6 +79,28 @@ const columns = [
         }
     },
     {
+        accessorKey: "quantity",
+        header: () => {
+            return (
+                <h2
+                    className={cn(
+                        headerClassName,
+                        "text-center"
+                    )}
+                >
+                    Số lượng
+                </h2>
+            )
+        },
+        cell: ({ row }) => {
+            const data = row?.original;
+
+            return (
+                <p className="text-[14px] font-medium text-center">{data?.quantity}</p>
+            )
+        }
+    },
+    {
         accessorKey: "status",
         header: () => {
             return (
@@ -92,17 +115,31 @@ const columns = [
             )
         },
         cell: ({ row }) => {
+            const data = row?.original;
+            const startDate = data?.event?.start_date;
+            const endDate = data?.event?.end_date;
+            const final = compareTime(startDate, endDate);
+
             return (
                 <div className="flex justify-center">
-                    <p className="w-fit px-[15px] py-[5px] rounded-full text-[14px] text-green-600 bg-green-600/10 border border-green-600/60">Đang hoạt động</p>
+                    <p className={cn(
+                        "w-fit px-[15px] py-[5px] rounded-full text-[14px]",
+                        final?.color
+                    )}>
+                        {final?.label}
+                    </p>
                 </div>
             )
         }
     },
     {
         accessorKey: "actions",
-        header: () => {
-            return (
+        header: ({ table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            return (!permissions?.includes("edit-coupon") && !permissions?.includes("delete-coupon")) ?
+            <></> : (
                 <h2
                     className={cn(
                         headerClassName,
@@ -117,9 +154,9 @@ const columns = [
             const moreData = table?.options?.meta?.moreData;
             const permissions = moreData?.permissions;
 
-            return (
-                <AdminCouponTableAction couponId={row?.original?.id} permissions={permissions} />
-            )
+            return (!permissions?.includes("edit-coupon") && !permissions?.includes("delete-coupon")) ?
+            <></> :
+            <AdminCouponTableAction couponId={row?.original?.id} permissions={permissions} />
         }
     }
 ];
