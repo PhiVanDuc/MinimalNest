@@ -95,7 +95,7 @@ export default function ResetPassword() {
             if (submitting) return;
 
             setSubmitting(true);
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/account/reset_password`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/reset_password`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
