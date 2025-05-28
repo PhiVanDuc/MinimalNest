@@ -1,21 +1,21 @@
 "use client"
 
+import { useState, useEffect, useMemo } from "react";
 import {
     useForm,
     useFieldArray
 } from "react-hook-form";
-import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
 
 import AdminProductDiscountForm from "./admin-product-discount-form";
 
-import {
-    productTypes,
-    categories,
-    livingSpaces
-} from "@/static/admin-product";
+import { Form } from "@/components/ui/form";
+import { FaPlus } from "react-icons/fa6";
 
-export default function AdminProductDiscountClient() {
+import { productTypes } from "@/static/admin-product";
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+
+export default function AdminProductDiscountClient({ categories, livingSpaces }) {
     const form = useForm({
         defaultValues: {
             discounts: []
@@ -27,14 +27,22 @@ export default function AdminProductDiscountClient() {
         name: "discounts"
     });
 
-    const watchDiscounts = form.watch("discounts");
-    const hasAnyApplyAll = watchDiscounts.some(d => d.applyAll);
+    const [discountSelected, setDiscountSelected] = useState(null);
+    useEffect(() => {
+        if (formArray.fields.length && discountSelected === null) {
+            setDiscountSelected(0);
+        }
+    }, [formArray.fields.length]);
 
-    const data = {
+    const data = useMemo(() => ({
+        productTypes,
+        categories: categories || [],
+        livingSpaces: livingSpaces || []
+    }), [
         productTypes,
         categories,
         livingSpaces
-    }
+    ]);
 
     const onSubmit = (data) => {
         console.log(data);
@@ -44,7 +52,7 @@ export default function AdminProductDiscountClient() {
         <div className="space-y-[30px]">
             <header className="space-y-[5px]">
                 <h1 className="text-[24px] font-semibold">Giảm giá chung</h1>
-                <p className="text-[14px] text-darkMedium font-medium">Nếu một chương trình giảm giá được chọn &quot;Áp dụng cho tất cả sản phẩm&ldquo;, thì các chương trình giảm giá khác sẽ không được áp dụng.</p>
+                <p className="text-[14px] text-darkMedium font-medium">Bạn có thể tạo ra nhiều giảm giá áp dụng cho nhiều sản phẩm khác nhau dựa vào bộ lọc.</p>
             </header>
 
             <Form {...form}>
@@ -52,41 +60,69 @@ export default function AdminProductDiscountClient() {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-[20px]"
                 >
-                    {
-                        formArray.fields.map((field, index) => {
-                            return (
-                                <AdminProductDiscountForm
-                                    key={field.id}
-                                    form={form}
-                                    formArray={formArray}
-                                    index={index}
-                                    data={data}
-                                    hasAnyApplyAll={hasAnyApplyAll}
-                                />
-                            )
-                        })
-                    }
+                    <div className="flex items-center gap-[5px] w-full bg-white rounded-[10px] p-[8px]">
+                        {
+                            formArray?.fields?.map((field, index) => {
+                                return (
+                                    <button
+                                        key={field.id}
+                                        type="button"
+                                        className={cn(
+                                            "shrink-0 flex items-center  px-[10px] py-[8px] rounded-[10px] text-[14px] font-medium transition-colors cursor-pointer",
+                                            discountSelected === index ? "bg-yellowBold text-white" : "text-darkMedium hover:bg-neutral-200"
+                                        )}
+                                        onClick={() => { setDiscountSelected(index) }}
+                                    >
+                                        Giảm giá {field?.discountName}
+                                    </button>
+                                )
+                            })
+                        }
 
-                    <div className="p-[20px] rounded-[10px] bg-white">
-                        <Button
-                            type="button"
-                            variant="outline"
-                            className="w-full shadow-none"
-                            onClick={() => {
-                                formArray.append({
-                                    applyAll: false,
-                                    productTypes: [],
-                                    categories: [],
-                                    livingSpaces: [],
-                                    discountType: "fixed",
-                                    discountPrice: ""
-                                });
-                            }}
-                            disabled={hasAnyApplyAll}
-                        >
-                            Thêm giảm giá
-                        </Button>
+                        {
+                            formArray?.fields?.length < 5 && (
+                                <button
+                                    type="button"
+                                    className="shrink-0 flex items-center gap-[10px] px-[10px] py-[8px] rounded-[10px] text-[14px] font-medium text-darkMedium hover:bg-neutral-200 cursor-pointer"
+                                    onClick={() => {
+                                        if (formArray?.fields?.length === 5) {
+                                            toast.warning("Đã đạt giới hạn 5 mã giảm giá. Không thể thêm mã mới.")
+                                            return;
+                                        }
+
+                                        formArray.append({
+                                            discountName: formArray?.fields?.length + 1,
+                                            applyAll: false,
+                                            productTypes: [],
+                                            categories: [],
+                                            livingSpaces: [],
+                                            discountType: "amount",
+                                            discountPrice: ""
+                                        });
+
+                                        setDiscountSelected(formArray?.fields?.length);
+                                    }}
+                                >
+                                    <span>Thêm giảm giá</span>
+                                    <FaPlus size={15} />
+                                </button>
+                            )
+                        }
                     </div>
+
+                    {
+                        typeof discountSelected === "number" &&
+                        (
+                            <AdminProductDiscountForm
+                                key={discountSelected}
+                                form={form}
+                                formArray={formArray}
+                                index={discountSelected}
+                                data={data}
+                                setDiscountSelected={setDiscountSelected}
+                            />
+                        )
+                    }
                 </form>
             </Form>
         </div>

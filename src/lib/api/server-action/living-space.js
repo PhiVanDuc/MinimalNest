@@ -2,9 +2,9 @@
 
 import fetchHelper from "../fetch-helper/fetch-helper";
 
-const getCategories = async () => {
+const getLivingSpaces = async () => {
     try {
-        const { response, result } = await fetchHelper.get(`/categories`);
+        const { response, result } = await fetchHelper.get(`/living_spaces`);
         return { response, result };
     }
     catch(error) {
@@ -16,10 +16,10 @@ const getCategories = async () => {
             },
             roles: {
                 success: false,
-                message: "Lỗi gọi hàm lấy các danh mục!"
+                message: "Lỗi gọi hàm lấy các không gian sống!"
             }
         };
     }
 }
 
-export { getCategories };
+export { getLivingSpaces };
