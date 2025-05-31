@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import ProfileCouponDetail from "@/components/pages/profile/coupon/profile-coupon-detail";
+import MainLoading from "@/components/customs/main-loading";
 
 export async function generateMetadata() {
     // fetch dữ liệu
@@ -11,7 +12,7 @@ export async function generateMetadata() {
 
 export default function Page() {
     return (
-        <Suspense fallback="Đang tải . . .">
+        <Suspense fallback={<MainLoading />}>
             <ProfileCouponDetail />
         </Suspense>
     )

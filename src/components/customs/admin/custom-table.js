@@ -26,12 +26,14 @@ export default function CustomTable({ data, columns, moreData = {}, enableExpand
     const table = useReactTable({
         data: data || [1, 2, 3, 4, 5],
         columns,
-        state: { expanded },
-        onExpandedChange: setExpanded,
         getCoreRowModel: getCoreRowModel(),
-        getExpandedRowModel: getExpandedRowModel(),
-        getRowCanExpand: () => enableExpandRow,
+        ...(enableExpandRow && {
+            getExpandedRowModel: getExpandedRowModel(),
+            getRowCanExpand: () => enableExpandRow,
+            onExpandedChange: setExpanded,
+        }),
         autoResetPageIndex: false,
+        state: { expanded },
         meta: { moreData },
     });
 

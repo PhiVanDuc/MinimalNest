@@ -88,6 +88,12 @@ const sidebar = [
             },
             {
                 id: v4(),
+                label: "Trả hàng",
+                href: "/quan-tri/tra-hang",
+                permission: "list-order"
+            },
+            {
+                id: v4(),
                 label: "Kho hàng",
                 href: "/quan-tri/kho-hang",
                 permission: "list-inventory"

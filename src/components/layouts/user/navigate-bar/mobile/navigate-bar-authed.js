@@ -13,6 +13,7 @@ import {
 import { FiUser } from "react-icons/fi";
 import { TbLogout } from "react-icons/tb";
 import { LayoutDashboard } from "lucide-react";
+import { TbArrowsExchange2 } from "react-icons/tb";
 
 import { signOut } from "@/lib/api/server-action/auth";
 
@@ -50,6 +51,16 @@ export default function NavigateBarAuthed({ userInfo }) {
                             <FiUser size={18} />
                         </div>
                         <p>Hồ sơ người dùng</p>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem
+                        className="flex items-center gap-[10px] cursor-pointer text-[13px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[10px] py-[10px]"
+                        onClick={() => { router.push("/tra-hang"); }}
+                    >
+                        <div className="shrink-0 w-[24px] flex justify-center">
+                            <TbArrowsExchange2 size={18} />
+                        </div>
+                        <p>Trả hàng</p>
                     </DropdownMenuItem>
 
                     {

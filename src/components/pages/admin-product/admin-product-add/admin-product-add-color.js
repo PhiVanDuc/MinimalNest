@@ -1,33 +1,43 @@
 "use client"
 
 import { useEffect } from "react";
+import { useWatch } from "react-hook-form";
 
-import { v4 } from "uuid";
-import { cn } from "@/lib/utils";
-import { colors } from "@/static/admin-product";
-
-export default function AdminProductAddColor({
-    form,
+import {
     FormField,
     FormItem,
     FormLabel,
     FormControl,
-    FormDescription,
-    Checkbox
-}) {
-    const watchColors = form.watch("colors");
-    
+    FormDescription
+} from "@/components/ui/form";
+
+import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "@/lib/utils";
+
+export default function AdminProductAddColor({ form, colors }) {
+    const watchColors = useWatch({
+        control: form.control,
+        name: "colors"
+    });
+
+    // Tạo trước các phần tử để chứa ảnh theo màu sắc đã chọn
     useEffect(() => {
-        const existing = form.getValues("images");
+        const watchImages = form.getValues("images");
 
-        const synced = watchColors.map((col) => {
-            const found = existing.find((img) => img.color.value === col.value);
-            return found ?? { color: col, files: [] };
-        });
+        const create = watchColors.map(color => {
+            const existing = watchImages?.find(image => image?.color?.id === color?.id);
+            return existing ?
+            existing :
+            {
+                color,
+                files: []
+            }
+        })
 
-        form.setValue("images", synced);
+        form.setValue("images", create);
     }, [watchColors, form]);
 
+    // Khi thay đổi lựa chọn lại màu sắc thì sẽ mất đi màu sắc đã chọn bên phía hình ảnh
     useEffect(() => {
         form.setValue("colorImages", {});
     }, [watchColors, form]);
@@ -45,13 +55,11 @@ export default function AdminProductAddColor({
                             {
                                 colors.map((color, index) => (
                                     <FormField
-                                        key={color.value + index}
+                                        key={color?.id}
                                         control={form.control}
                                         name="colors"
                                         render={({ field }) => {
-                                            const checked = field.value.some(
-                                                (v) => v.value === color.value
-                                            );
+                                            const checked = field.value.some(value => value?.id === color?.id);
 
                                             return (
                                                 <FormItem>
@@ -62,7 +70,7 @@ export default function AdminProductAddColor({
                                                                 const newVals = isChecked
                                                                     ? [...field.value, color]
                                                                     : field.value.filter(
-                                                                        (v) => v.value !== color.value
+                                                                        (v) => v?.id !== color?.id
                                                                     );
                                                                 field.onChange(newVals);
                                                             }}
@@ -80,7 +88,7 @@ export default function AdminProductAddColor({
                                                         <span
                                                             className="w-[25px] aspect-square rounded-full"
                                                             style={{
-                                                                backgroundColor: color.value
+                                                                backgroundColor: color?.code
                                                             }}
                                                         />
                                                     </FormLabel>

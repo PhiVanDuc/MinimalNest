@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import ProfileCoupon from "@/components/pages/profile/coupon/profile-coupon";
+import MainLoading from "@/components/customs/main-loading";
 
 export const metadata = {
 	title: `${process.env.WEBSITE_NAME} - Hồ sơ - Phiếu giảm giá`,
@@ -8,7 +9,7 @@ export const metadata = {
 
 export default function Page() {
     return (
-        <Suspense fallback="Đang tải . . .">
+        <Suspense fallback={<MainLoading />}>
             <ProfileCoupon />
         </Suspense>
     )

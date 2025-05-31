@@ -40,9 +40,9 @@ export default function EventAdd() {
     const form = useForm({
         resolver: zodResolver(eventSchema),
         defaultValues: {
-            image: "",
-            event: "",
-            desc: "",
+            image: null,
+            event: "Sự kiện dữ liệu mẫu",
+            desc: "Mô tả cho sự kiện.",
             startDate: new Date(),
             endDate: addDays(new Date(), 1)
         }
@@ -57,7 +57,14 @@ export default function EventAdd() {
     const onSubmit = async (data) => {
         setIsSubmitting(true);
 
-        const event = await addEvent(data);
+        const formData = new FormData();
+        formData.append("image", data.image);
+        formData.append("event", data.event);
+        formData.append("desc", data.desc);
+        formData.append("startDate", data.startDate.toISOString());
+        formData.append("endDate", data.endDate.toISOString());
+
+        const event = await addEvent(formData);
         const message = event?.message;
 
         if (event?.success) toast.success(message);

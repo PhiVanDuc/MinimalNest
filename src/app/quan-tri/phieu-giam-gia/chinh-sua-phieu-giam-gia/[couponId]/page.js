@@ -3,7 +3,7 @@ import { Suspense } from "react"
 
 export default function Page({ params }) {
     return (
-        <Suspense fallback={"Đang tải . . . "}>
+        <Suspense fallback={<MainLoading />}>
             <AdminCouponEdit params={params} />
         </Suspense>
     )

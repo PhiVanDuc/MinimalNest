@@ -1,0 +1,90 @@
+"use client"
+
+import {
+    FormField,
+    FormItem,
+    FormControl,
+    FormLabel,
+    FormDescription
+} from "@/components/ui/form";
+
+import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Textarea } from "@/components/ui/textarea";
+
+import { AiOutlineCloudUpload } from "react-icons/ai";
+
+export default function ReturnGoodsForm({ form }) {
+    return (
+        <div className="space-y-[20px]">
+            <FormField
+                control={form.control}
+                name=""
+                render={() => {
+                    return (
+                        <FormItem>
+                            <div className="space-y-[5px]">
+                                <FormLabel className="mb-[10px]">Tải ảnh lên</FormLabel>
+                                <FormControl>
+                                    <div className="grid grid-cols-5 gap-[10px]">
+                                        <Skeleton className="w-full aspect-square rounded-[10px] bg-neutral-100" />
+                                        <Skeleton className="w-full aspect-square rounded-[10px] bg-neutral-100" />
+                                        <Skeleton className="w-full aspect-square rounded-[10px] bg-neutral-100" />
+
+                                        <div className="flex flex-col items-center justify-center p-[10px] w-full aspect-square rounded-[10px] border border-dashed border-darkBland bg-neutral-100 hover:bg-neutral-50 transition-colors duration-300 cursor-pointer space-y-[5px]">
+                                            <AiOutlineCloudUpload size={30} className="text-yellowBold" />
+                                            <p className="text-[14px] text-darkMedium text-center font-medium">Nhấn vào để chọn ảnh.</p>
+                                        </div>
+                                    </div>
+                                </FormControl>
+                                <FormDescription>Vui lòng cung cấp hình ảnh tình trạng của sản phẩm.</FormDescription>
+                            </div>
+                        </FormItem>
+                    )
+                }}
+            />
+
+            <FormField
+                control={form.control}
+                name=""
+                render={({ field }) => {
+                    return (
+                        <FormItem>
+                            <div className="space-y-[5px]">
+                                <FormLabel>Số lượng</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        placeholder="Vui lòng nhập số lượng muốn trả . . ."
+                                        className="px-[15px] py-[20px]"
+                                        {...field}
+                                    />
+                                </FormControl>
+                            </div>
+                        </FormItem>
+                    )
+                }}
+            />
+
+            <FormField
+                control={form.control}
+                name=""
+                render={({ field }) => {
+                    return (
+                        <FormItem>
+                            <div className="space-y-[5px]">
+                                <FormLabel>Lý do</FormLabel>
+                                <FormControl>
+                                    <Textarea
+                                        placeholder="Vui lòng nhập lý do bạn muốn hoàn trả sản phẩm . . ."
+                                        className="px-[15px] py-[12px] h-[100px] resize-none"
+                                        {...field}
+                                    />
+                                </FormControl>
+                            </div>
+                        </FormItem>
+                    )
+                }}
+            />
+        </div>
+    )
+}

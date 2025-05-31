@@ -15,7 +15,7 @@ const AdminOrderDetail = dynamic(
     }
 );
 
-import { HiOutlineNewspaper } from "react-icons/hi";
+import { MdOutlineContentPaste } from "react-icons/md";
 
 export default function AdminOrderWatchCol() {
     const [openDialog, setOpenDialog] = useState(false);
@@ -27,7 +27,7 @@ export default function AdminOrderWatchCol() {
                     className="shrink-0 flex justify-center items-center text-darkMedium w-[35px] aspect-square cursor-pointer"
                     onClick={() => { setOpenDialog(true); }}
                 >
-                    <HiOutlineNewspaper size={22} className="shrink-0" />
+                    <MdOutlineContentPaste size={22} className="shrink-0" />
                 </div>
             </div>
 

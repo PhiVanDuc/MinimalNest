@@ -8,15 +8,16 @@ const PUBLIC_PATHS = [
     "/trang-chu",
     "/san-pham",
     "/san-pham/tim-kiem",
-    "/phieu-giam-gia",
-    "/gio-hang",
-    "/thanh-toan"
+    "/phieu-giam-gia"
 ];
 
 const PROTECTED_PATHS = [
     "/ho-so",
     "/ho-so/phieu-giam-gia",
-    "/ho-so/don-hang"
+    "/ho-so/don-hang",
+    "/gio-hang",
+    "/thanh-toan",
+    "/doi-tra-hang"
 ];
 
 const ADMIN_PATHS = [
@@ -44,6 +45,8 @@ const ADMIN_PATHS = [
     "/quan-tri/san-pham/chinh-sua-san-pham",
     "/quan-tri/san-pham/giam-gia-chung",
     "/quan-tri/don-hang",
+    "/quan-tri/tra-hang",
+    "/quan-tri/kho-hang",
 ];
 
 const PERMISSION_PATHS = [
@@ -161,7 +164,7 @@ const PERMISSION_PATHS = [
     },
     {
         permission: "list-order",
-        paths: ["/quan-tri", "/quan-tri/don-hang"]
+        paths: ["/quan-tri", "/quan-tri/don-hang", "/quan-tri/tra-hang"]
     },
     {
         permission: "detail-order",

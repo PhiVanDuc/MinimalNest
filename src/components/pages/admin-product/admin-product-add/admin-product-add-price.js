@@ -1,18 +1,21 @@
 "use client"
 
-export default function AdminProductAddPrice({
-    form,
+import {
     FormField,
     FormItem,
     FormLabel,
-    FormControl,
-    Input
-}) {
+    FormControl
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+import formatCurrency from "@/lib/utils/format-currency";
+
+export default function AdminProductAddPrice({ form }) {
     return (
         <div className="flex items-center gap-[10px]">
             <FormField
                 control={form.control}
-                name="rootPrice"
+                name="costPrice"
                 render={({ field }) => {
                     return (
                         <FormItem className="w-full">
@@ -23,7 +26,13 @@ export default function AdminProductAddPrice({
                                     <Input
                                         className="px-[15px] py-[20px]"
                                         placeholder="Nhập giá vốn sản phẩm . . ."
-                                        {...field}
+                                        value={formatCurrency(field.value)}
+                                        onChange={(e) => {
+                                            const rawValue = e.target.value;
+                                            const filteredValue = rawValue.replace(/[^0-9,]/g, '');
+
+                                            field.onChange(filteredValue);
+                                        }}
                                     />
                                 </FormControl>
                             </div>
@@ -34,7 +43,7 @@ export default function AdminProductAddPrice({
 
             <FormField
                 control={form.control}
-                name="profit"
+                name="interestRate"
                 render={({ field }) => {
                     return (
                         <FormItem className="w-full">
@@ -45,7 +54,16 @@ export default function AdminProductAddPrice({
                                     <Input
                                         className="px-[15px] py-[20px]"
                                         placeholder="Nhập lãi xuất theo % . . ."
-                                        {...field}
+                                        value={formatCurrency(field.value)}
+                                        onChange={(e) => {
+                                            const rawValue = e.target.value;
+                                            let filteredValue = rawValue.replace(/[^0-9,]/g, '');
+
+                                            if (+filteredValue < 0) filteredValue = 0;
+                                            else if (+filteredValue > 100) filteredValue = 100
+
+                                            field.onChange(filteredValue);
+                                        }}
                                     />
                                 </FormControl>
                             </div>

@@ -1,21 +1,23 @@
 "use client"
 
-import { v4 } from "uuid";
-import { cn } from "@/lib/utils";
-import { livingSpaces } from "@/static/admin-product";
-
-export default function AdminProductAddLivingSpace({
-    form,
+import {
     FormField,
     FormItem,
     FormLabel,
-    FormControl,
-    Checkbox
+    FormControl
+} from "@/components/ui/form";
+import { Checkbox } from "@/components/ui/checkbox";
+
+import { cn } from "@/lib/utils";
+
+export default function AdminProductAddLivingSpace({
+    form,
+    livingSpaces
 }) {
     return (
         <FormField
             control={form.control}
-            name="livingSpaces"
+            name="livingSpaceIds"
             render={() => {
                 return (
                     <FormItem>
@@ -27,27 +29,26 @@ export default function AdminProductAddLivingSpace({
                                     livingSpaces.map((livingSpace, index) => {
                                         return (
                                             <FormField
-                                                key={livingSpace.value + index}
+                                                key={livingSpace?.id}
                                                 control={form.control}
-                                                name="livingSpaces"
+                                                name="livingSpaceIds"
                                                 render={({ field }) => {
-                                                    const checked = field.value.some(value => value?.value === livingSpace?.value);
+                                                    const livChecked = field.value?.includes(livingSpace?.id);
 
                                                     return (
                                                         <FormItem>
                                                             <FormControl>
                                                                 <Checkbox
-                                                                    checked={checked}
+                                                                    checked={livChecked}
                                                                     onCheckedChange={(checked) => {
-                                                                        return checked ?
-                                                                        field.onChange([...field.value, livingSpace]) :
-                                                                        field.onChange(
-                                                                                field.value?.filter(
-                                                                                    (value) => value.value !== livingSpace.value
-                                                                                )
+                                                                    return checked
+                                                                        ? field.onChange([...field.value, livingSpace?.id])
+                                                                        : field.onChange(
+                                                                            field.value?.filter(
+                                                                            (value) => value !== livingSpace?.id
                                                                             )
-                                                                        }
-                                                                    }
+                                                                        )
+                                                                    }}
                                                                     className="hidden"
                                                                 />
                                                             </FormControl>
@@ -55,10 +56,10 @@ export default function AdminProductAddLivingSpace({
                                                             <FormLabel
                                                                 className={cn(
                                                                     "shrink-0 flex items-center px-[15px] py-[5px] text-[14px] font-medium rounded-full border cursor-pointer",
-                                                                    checked ? "border-neutral-400 bg-neutral-100" : ""
+                                                                    livChecked ? "border-neutral-400 bg-neutral-100" : ""
                                                                 )}
                                                             >
-                                                                {livingSpace.label}
+                                                                {livingSpace?.living_space}
                                                             </FormLabel>
                                                         </FormItem>
                                                     )

@@ -42,15 +42,8 @@ const getEvent = async (slug) => {
     }
 }
 
-const addEvent = async (data) => {
+const addEvent = async (formData) => {
     try {
-        const formData = new FormData();
-        formData.append("image", data.image); 
-        formData.append("event", data.event);
-        formData.append("desc", data.desc);
-        formData.append("startDate", data.startDate.toISOString());
-        formData.append("endDate", data.endDate.toISOString());
-
         const { result } = await fetchHelperAuth.post(
             `/events`,
             { body: formData }
@@ -67,15 +60,8 @@ const addEvent = async (data) => {
     }
 }
 
-const editEvent = async (data, slug) => {
+const editEvent = async (formData, slug) => {
     try {
-        const formData = new FormData();
-        formData.append("image", data.image); 
-        formData.append("event", data.event);
-        formData.append("desc", data.desc);
-        formData.append("startDate", data.startDate.toISOString());
-        formData.append("endDate", data.endDate.toISOString());
-
         const { result } = await fetchHelperAuth.put(
             `/events/${slug}`,
             { body: formData }

@@ -51,7 +51,7 @@ const items = [
     }
 ];
 
-export default function NavigateBarItems({ children }) {
+export default function NavigateBarItems({ children, decode }) {
     const firstPath = usePathname();
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -166,16 +166,20 @@ export default function NavigateBarItems({ children }) {
                                 </AccordionItem>
                             </Accordion>
 
-                            <div
-                                className={cn(
-                                    "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-neutral-100 text-[15px] text-darkMedium font-medium cursor-pointer",
-                                    pathname.startsWith("/gio-hang") ? "bg-neutral-100" : 'bg-transparent'
-                                )}
-                                onClick={() => { router.push("/gio-hang"); }}
-                            >
-                                <ShoppingCart size={20} />
-                                <p>Giỏ hàng</p>
-                            </div>
+                            {
+                                decode?.success && (
+                                    <div
+                                        className={cn(
+                                            "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-neutral-100 text-[15px] text-darkMedium font-medium cursor-pointer",
+                                            pathname.startsWith("/gio-hang") ? "bg-neutral-100" : 'bg-transparent'
+                                        )}
+                                        onClick={() => { router.push("/gio-hang"); }}
+                                    >
+                                        <ShoppingCart size={20} />
+                                        <p>Giỏ hàng</p>
+                                    </div>
+                                )
+                            }
                         </div>
                     </div>
                     

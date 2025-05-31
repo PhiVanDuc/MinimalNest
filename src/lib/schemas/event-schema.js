@@ -1,25 +1,24 @@
 import { z } from "zod";
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
-
 const eventSchema = z.object({
-    image: z
-        .custom((val) => val instanceof File || typeof val === "string")
-        .refine(
-            (val) => {
-                if (typeof val === "string") return true; // Cho phép base64 string
-                return val && val.size <= MAX_FILE_SIZE;
-            },
-            { message: "Ảnh phải nhỏ hơn 5MB" }
-        )
-        .refine(
-            (val) => {
-                if (typeof val === "string") return true;
-                return val && ACCEPTED_IMAGE_TYPES.includes(val.type);
-            },
-            { message: "Chỉ chấp nhận .jpg, .jpeg, .png và .webp" }
-        ),
+    image: z.union([
+        // Trường hợp là string (URL ảnh)
+        z.string()
+            .min(1, "URL ảnh không được để trống")
+            .refine(val => val.startsWith('http://') || val.startsWith('https://'), {
+                message: "URL ảnh phải bắt đầu bằng http:// hoặc https://"
+            }),
+        
+        // Trường hợp là File object
+        z.instanceof(File, { message: "Vui lòng chọn ảnh cho sự kiện" })
+            .refine(file => file.size > 0, { message: "File ảnh không hợp lệ" })
+            .refine(file => file.type.startsWith('image/'), { 
+                message: "File phải là định dạng ảnh" 
+            })
+    ], {
+        required_error: "Vui lòng cung cấp ảnh cho sự kiện",
+        invalid_type_error: "Ảnh phải là URL hợp lệ hoặc file ảnh"
+    }),
 
     event: z
         .string({ required_error: "Vui lòng nhập tiêu đề cho sự kiện." })

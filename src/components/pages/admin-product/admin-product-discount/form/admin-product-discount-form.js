@@ -8,6 +8,11 @@ import AdminProductDiscountName from "./admin-product-discount-name";
 import AdminProductDiscountProductType from "./admin-product-discount-product-type";
 
 export default function AdminProductDiscountForm({ form, formArray, index, data, setDiscountSelected }) {
+    const watchApplyAll = form.watch(
+        `discounts.${index}.applyAll`,
+        formArray.fields[index]?.applyAll ?? false
+    );
+
     return (
         <div className="rounded-[10px] bg-white space-y-[20px] p-[20px]">
             <AdminProductDiscountApplyAll
@@ -17,23 +22,29 @@ export default function AdminProductDiscountForm({ form, formArray, index, data,
                 setDiscountSelected={setDiscountSelected}
             />
 
-            <AdminProductDiscountProductType
-                form={form}
-                index={index}
-                productTypes={data?.productTypes}
-            />
+            {
+                !watchApplyAll && (
+                    <>
+                        <AdminProductDiscountProductType
+                            form={form}
+                            index={index}
+                            productTypes={data?.productTypes}
+                        />
 
-            <AdminProductDiscountCategory
-                form={form}
-                index={index}
-                categories={data?.categories}
-            />
+                        <AdminProductDiscountCategory
+                            form={form}
+                            index={index}
+                            categories={data?.categories}
+                        />
 
-            <AdminProductDiscountLivingSpace
-                form={form}
-                index={index}
-                livingSpaces={data?.livingSpaces}
-            />
+                        <AdminProductDiscountLivingSpace
+                            form={form}
+                            index={index}
+                            livingSpaces={data?.livingSpaces}
+                        />
+                    </>
+                )
+            }
 
             <AdminProductDiscountName
                 form={form}

@@ -1,169 +1,35 @@
-"use client"
+import Error from "@/components/customs/error";
+import AdminProductAddClient from "./admin-product-add-client";
 
-import { useForm } from "react-hook-form";
+import { getSizes } from "@/lib/api/server-action/size";
+import { getColors } from "@/lib/api/server-action/color";
+import { getCategories } from "@/lib/api/server-action/categories";
+import { getLivingSpaces } from "@/lib/api/server-action/living-space";
 
-import {
-    Form,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormControl,
-    FormDescription,
-} from "@/components/ui/form";
+export default async function AdminProductAdd() {
+    const [categoriesRes, livingSpacesRes, sizesRes, colorsRes] = await Promise.all([
+        getCategories(),
+        getLivingSpaces(),
+        getSizes({ all: true }),
+        getColors({ all: true })
+    ]);
 
-import {
-    RadioGroup,
-    RadioGroupItem
-} from "@/components/ui/radio-group";
+    const { response: categoriesResponse, result: categories } = categoriesRes;
+    const { response: livingSpacesResponse, result: livingSpaces } = livingSpacesRes;
+    const { response: sizesResponse, result: sizes } = sizesRes; 
+    const { response: colorsResponse, result: colors } = colorsRes;
 
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-
-import AdminProductAddName from "./admin-product-add-name";
-import AdminProductAddDesc from "./admin-product-add-desc";
-import AdminProductAddPrice from "./admin-product-add-price";
-import AdminProductAddDiscount from "./admin-product-add-discount";
-import AdminProductAddCategory from "./admin-product-add-category";
-import AdminProductAddLivingSpace from "./admin-product-add-living-space";
-import AdminProductAddSize from "./admin-product-add-size";
-import AdminProductAddColor from "./admin-product-add-color";
-import AdminProductAddImage from "./admin-product-add-image";
-import AdminProductAddStatus from "./admin-product-add-status";
-
-export default function AdminProductAdd() {
-    const form = useForm({
-        defaultValues: {
-            name: "",
-            desc: "",
-            rootPrice: "",
-            profit: "",
-            discount: false,
-            typeDiscount: "fixed",
-            discountPrice: "",
-            finalPrice: "",
-            category: {},
-            livingSpaces: [],
-            productTypes: [],
-            sizes: [],
-            colors: [],
-            colorImages: {},
-            images: [],
-            variants: [],
-            status: "active"
-        }
-    });
+    if (!categories?.success) return <Error message={`${categoriesResponse?.status},${categories?.message}`} />
+    if (!livingSpaces?.success) return <Error message={`${livingSpacesResponse?.status},${livingSpaces?.message}`} />
+    if (!sizes?.success) return <Error message={`${sizesResponse?.status},${sizes?.message}`} />
+    if (!colors?.success) return <Error message={`${colorsResponse?.status},${colors?.message}`} />
 
     return (
-        <section className="space-y-[30px]">
-            <header>
-                <h2 className="text-[24px] font-semibold">Thêm sản phẩm</h2>
-            </header>
-
-            <Form {...form}>
-                <form
-                    className="flex items-stretch gap-[20px]"
-                >
-                    <div className="space-y-[20px] w-[60%]">
-                        <div className="p-[20px] space-y-[20px] rounded-[10px] bg-white">
-                            <AdminProductAddName
-                                form={form}
-                                FormField={FormField}
-                                FormItem={FormItem}
-                                FormLabel={FormLabel}
-                                FormControl={FormControl}
-                                Input={Input}
-                            />
-
-                            <AdminProductAddDesc
-                                form={form}
-                                FormField={FormField}
-                                FormItem={FormItem}
-                                FormLabel={FormLabel}
-                                FormControl={FormControl}
-                                Textarea={Textarea}
-                            />
-
-                            <AdminProductAddPrice
-                                form={form}
-                                FormField={FormField}
-                                FormItem={FormItem}
-                                FormLabel={FormLabel}
-                                FormControl={FormControl}
-                                Input={Input}
-                            />
-                        </div>
-
-                        <div className="p-[20px] space-y-[20px] rounded-[10px] bg-white">
-                            <AdminProductAddDiscount
-                                form={form}
-                                FormField={FormField}
-                                FormItem={FormItem}
-                                FormLabel={FormLabel}
-                                FormControl={FormControl}
-                                Input={Input}
-                            />
-                        </div>
-
-                        <div className="p-[20px] space-y-[20px] rounded-[10px] bg-white">
-                            <AdminProductAddCategory
-                                form={form}
-                                FormField={FormField}
-                                FormItem={FormItem}
-                                FormLabel={FormLabel}
-                                FormControl={FormControl}
-                                RadioGroup={RadioGroup}
-                                RadioGroupItem={RadioGroupItem}
-                            />
-
-                            <AdminProductAddLivingSpace
-                                form={form}
-                                FormField={FormField}
-                                FormItem={FormItem}
-                                FormLabel={FormLabel}
-                                FormControl={FormControl}
-                                Checkbox={Checkbox}
-                            />
-
-                            <AdminProductAddSize
-                                form={form}
-                                FormField={FormField}
-                                FormItem={FormItem}
-                                FormLabel={FormLabel}
-                                FormControl={FormControl}
-                                Checkbox={Checkbox}
-                            />
-
-                            <AdminProductAddColor
-                                form={form}
-                                FormField={FormField}
-                                FormItem={FormItem}
-                                FormLabel={FormLabel}
-                                FormControl={FormControl}
-                                FormDescription={FormDescription}
-                                Checkbox={Checkbox}
-                            />
-
-                            <AdminProductAddStatus
-                                form={form}
-                                FormField={FormField}
-                                FormItem={FormItem}
-                                FormLabel={FormLabel}
-                                FormControl={FormControl}
-                                RadioGroup={RadioGroup}
-                                RadioGroupItem={RadioGroupItem}
-                            />
-
-                            <Button className="w-full">Thêm sản phẩm</Button>
-                        </div>
-                    </div>
-                    
-                    <AdminProductAddImage form={form} />
-                </form>
-            </Form>
-        </section>
+        <AdminProductAddClient
+            categories={categories?.data?.categories}
+            livingSpaces={livingSpaces?.data?.living_spaces}
+            sizes={sizes?.data?.sizes}
+            colors={colors?.data?.colors}
+        />
     )
 }
-
-{/* <AdminProductAddVariant form={form} /> */}

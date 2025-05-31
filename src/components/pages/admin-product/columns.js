@@ -9,8 +9,7 @@ const headerClassName = "text-[14px] whitespace-nowrap text-darkMedium font-semi
 
 const columns = [
     {
-        id: "product",
-        accesserKey: "product",
+        accessorKey: "product",
         header: () => <h3 className={cn(headerClassName)}>Sản phẩm</h3>,
         cell: ({ row }) => {
             return (
@@ -37,8 +36,7 @@ const columns = [
         }
     },
     {
-        id: "sku",
-        accesserKey: "sku",
+        accessorKey: "sku",
         header: () => <h2 className={cn(headerClassName, "text-center")}>Mã SKU</h2>,
         cell: ({ row }) => {
             return (
@@ -47,8 +45,7 @@ const columns = [
         }
     },
     {
-        id: "discount",
-        accesserKey: "discount",
+        accessorKey: "discount",
         header: () => <h2 className={cn(headerClassName, "text-center")}>Giảm giá</h2>,
         cell: ({ row }) => {
             return (
@@ -57,8 +54,7 @@ const columns = [
         }
     },
     {
-        id: "price",
-        accesserKey: "price",
+        accessorKey: "price",
         header: () => <h2 className={cn(headerClassName, "text-center")}>Giá cuối</h2>,
         cell: ({ row }) => {
             return (

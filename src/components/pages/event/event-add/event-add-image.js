@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useCallback } from "react";
+import { useRef } from "react";
 import ImageComponent from "next/image";
 
 import {
@@ -12,53 +12,27 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { IoImage } from "react-icons/io5";
-
-import convertImageToWebp from "@/lib/utils/convert-image-to-webp";
+import PreviewImage from "@/components/customs/preview-image";
 
 export default function EventAddImage({ form }) {
-    const image = form.watch("image");
     const fileInputRef = useRef(null);
+    const image = form.watch("image");
 
-    const [loadingImage, setLoadingImage] = useState(false);
-
-    const handleImageChange = useCallback(async (event) => {
-        const file = event.target.files[0];
+    const handleImageChange = (e) => {
+        const file = e.target.files?.[0];
         if (!file) return;
 
-        setLoadingImage(true);
-        form.clearErrors("image");
-
-        try {
-            // Kiểm tra kích thước và loại file trước khi xử lý
-            if (file.size > 5 * 1024 * 1024) {
-                throw new Error("Kích thước ảnh tối đa là 5MB");
-            }
-
-            if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-                throw new Error("Chỉ chấp nhận ảnh JPEG, PNG hoặc WEBP");
-            }
-
-            // Xử lý ảnh và chuyển đổi sang WebP
-            const processedImage = await convertImageToWebp(file);
-            form.setValue("image", processedImage, { shouldValidate: true });
+        if (!file.type.startsWith('image/')) {
+            alert('Vui lòng chọn file ảnh (JPEG, PNG, WEBP)');
+            return;
         }
-        catch (error) {
-            form.setError("image", {
-                type: "manual",
-                message: error.message,
-            });
-        }
-        finally {
-            setLoadingImage(false);
-        }
-    }, [form]);
 
-    const handleDelete = () => {
-        form.setValue("image", "");
-        if (fileInputRef.current) {
-            fileInputRef.current.value = null;
-        }
-    };
+        form.setValue("image", file);
+    }
+
+    const handleDeleteImage = () => {
+        form.setValue("image", null);
+    }
 
     return (
         <FormField
@@ -79,20 +53,17 @@ export default function EventAddImage({ form }) {
                             {image ? (
                                 <div className="w-full h-full p-[10px]">
                                     <div className="relative w-full h-full">
-                                        <ImageComponent
-                                            src={image}
-                                            alt="Uploaded event"
-                                            fill
-                                            className="object-cover rounded-[10px]"
-                                            placeholder="blur"
-                                            blurDataURL={image}
+                                        <PreviewImage
+                                            file={image}
+                                            alt={`Ảnh sự kiện`}
+                                            className="h-full"
                                         />
 
                                         <Button
                                             size="sm"
                                             variant="destructive"
                                             className="absolute top-[20px] right-[20px]"
-                                            onClick={handleDelete}
+                                            onClick={handleDeleteImage}
                                         >
                                             Xóa
                                         </Button>
@@ -111,22 +82,14 @@ export default function EventAddImage({ form }) {
                                         </p>
                                     </div>
 
-                                    <div className="text-center w-full">
-                                        {!loadingImage ? (
-                                            <Button
-                                                type="button"
-                                                variant="outline"
-                                                className="shadow-none"
-                                                onClick={() => fileInputRef.current?.click()}
-                                            >
-                                                Chọn ảnh
-                                            </Button>
-                                        ) : (
-                                            <p className="text-[14px] font-medium text-darkMeium">
-                                                Đang tải ảnh lên . . .
-                                            </p>
-                                        )}
-                                    </div>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        className="shadow-none"
+                                        onClick={() => { fileInputRef.current?.click() }}
+                                    >
+                                        Chọn ảnh
+                                    </Button>
                                 </div>
                             )}
                         </div>

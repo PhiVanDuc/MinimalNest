@@ -36,8 +36,8 @@ import eventSchema from "@/lib/schemas/event-schema";
 import { editEvent } from "@/lib/api/server-action/event";
 
 export default function EventEditClient({ event, blurImage }) {
-    const [submitting, setIsSubmitting] = useState(false);
     const router = useRouter();
+    const [submitting, setIsSubmitting] = useState(false);
 
     const form = useForm({
         resolver: zodResolver(eventSchema),
@@ -51,7 +51,7 @@ export default function EventEditClient({ event, blurImage }) {
     });
 
     const watchStartDate = form.watch("startDate");
-    
+
     useEffect(() => {
         form.setValue("endDate", addDays(watchStartDate, 1))
     }, [watchStartDate]);
@@ -59,7 +59,14 @@ export default function EventEditClient({ event, blurImage }) {
     const onSubmit = async (data) => {
         setIsSubmitting(true);
 
-        const eventResult = await editEvent(data, event?.slug);
+        const formData = new FormData();
+        formData.append("event", data.event);
+        formData.append("desc", data.desc);
+        formData.append("startDate", data.startDate.toISOString());
+        formData.append("endDate", data.endDate.toISOString());
+        if (data.image instanceof File) formData.append("image", data.image);
+
+        const eventResult = await editEvent(formData, event?.slug);
         const message = eventResult?.message;
 
         if (eventResult?.success) {

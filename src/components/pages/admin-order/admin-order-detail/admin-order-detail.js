@@ -28,9 +28,9 @@ export default function AdminOrderDetail({ open, setOpen }) {
                 <ScrollArea className="max-h-[500px] px-[24px]">
                     <div className="space-y-[25px]">
                         {/* Mã đơn */}
-                        <div className="flex items-center justify-between px-[15px] py-[10px] rounded-full border bg-neutral-50 border-neutral-300">
-                            <p className="text-[15px] font-semibold">Đơn hàng</p>
-                            <p className="text-[15px] text-darkMedium font-semibold">#0001</p>
+                        <div className="flex items-center justify-between px-[15px] py-[10px] text-[14px] text-blueChecked font-medium rounded-full border bg-blueChecked/10 border-blueChecked">
+                            <p>Đơn hàng</p>
+                            <p>#0001</p>
                         </div>
 
                         {/* Thông tin nhận hàng */}

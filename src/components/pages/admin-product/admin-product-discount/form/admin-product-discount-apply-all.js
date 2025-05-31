@@ -15,7 +15,7 @@ export default function AdminProductDiscountApplyAll({ form, formArray, index, s
         <div className="w-full flex justify-between items-center">
             <FormField
                 control={form.control}
-                name={`discounts.${index}.apply-all`}
+                name={`discounts.${index}.applyAll`}
                 render={({ field }) => {
                     return (
                         <FormItem className="flex items-center gap-[10px]">

@@ -1,3 +1,4 @@
+import MainLoading from "@/components/customs/main-loading";
 import Order from "@/components/pages/profile/order/order";
 import { Suspense } from "react";
 
@@ -8,7 +9,7 @@ export const metadata = {
 
 export default function Page({ searchParams }) {
     return (
-        <Suspense fallback={"Đang tải . . ."}>
+        <Suspense fallback={<MainLoading />}>
             <Order />
         </Suspense>
     )
