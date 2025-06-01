@@ -70,7 +70,7 @@ export default function AdminProductAddClient({
             }
         }
         form.setValue("variants", combos);
-    }, [watchName, watchColors, watchSizes]);
+    }, [watchName, watchColors, watchSizes, form]);
 
     // Các công đoạn chuẩn bị để submit form
     const onSubmit = async (data) => {
@@ -95,17 +95,15 @@ export default function AdminProductAddClient({
         formData.append("variants", JSON.stringify(variants));
 
         if (discount) {
+            formData.append("discount", discount.toString());
             formData.append("discountType", discountType);
             formData.append("discountAmount", convertToNumber(discountAmount));
         }
         
         images.forEach((image, index) => {
-            if (image.color) formData.append(`images[${index}][color]`, image.color?.id);
-
-            image.files.forEach((fileObj, fileIndex) => {
-                formData.append(`images[${index}][files][${fileIndex}][file]`, fileObj.file);
-                formData.append(`images[${index}][files][${fileIndex}][main]`, fileObj.main.toString());
-            });
+            formData.append(`images[${index}][colorId]`, image.colorId);
+            formData.append(`images[${index}][main]`, image.main.toString());
+            formData.append(`images[${index}][file]`, image.file);
         });
 
         const result = await addProduct(formData);
@@ -169,7 +167,7 @@ export default function AdminProductAddClient({
                                 className="w-full"
                                 disabled={submitting}
                             >
-                                { submitting ? "Đang thêm" : "Thêm sản phẩm" }
+                                { submitting ? "Đang thêm . . ." : "Thêm sản phẩm" }
                             </Button>
                         </div>
                     </div>

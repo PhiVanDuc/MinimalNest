@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react";
 import { useFieldArray, useWatch } from "react-hook-form";
 
 import PreviewImage from "@/components/customs/preview-image";
@@ -18,72 +19,90 @@ import { IoImage } from "react-icons/io5";
 import { cn } from "@/lib/utils";
 
 export default function AdminProductAddImage({ form }) {
+    const watchColors = useWatch({
+        control: form.control,
+        name: "colors"
+    });
+
     const watchColorImages = useWatch({
         control: form.control,
         name: "colorImages"
     });
 
-    const { fields } = useFieldArray({
+    const { fields, append, update, move, remove } = useFieldArray({
         control: form.control,
         name: "images"
     });
 
-    const indexInteractFiles = fields?.length > 0 ?
-    fields.findIndex(field => field?.color?.id === watchColorImages?.id) :
-    -1;
-    
+    const [groupImage, setGroupImage] = useState([]);
+
+    useEffect(() => {
+        setGroupImage([]);
+    }, [watchColors]);
+
+    useEffect(() => {
+        if (!watchColorImages?.id || fields?.length === 0) return setGroupImage([]);
+        setGroupImage(fields?.filter(filed => filed?.colorId === watchColorImages?.id));
+    }, [fields, watchColorImages]);
+
     const handleAddImages = (e) => {
-        const files = e.target.files;
-        if (!files || files.length === 0) return;
+        const selectedFiles = e.target.files;
+        if (!selectedFiles || selectedFiles.length === 0) return;
 
-        const newFiles = Array.from(files).map((file, index) => ({
-            main: index === 0 ? true : false,
-            file
-        }));
-
-        if (indexInteractFiles !== -1) {
-            const currentFiles = form.getValues(`images.${indexInteractFiles}.files`) || [];
-            form.setValue(`images.${indexInteractFiles}.files`, [...currentFiles, ...newFiles]);
-            e.target.value = '';
-        }
-    };
-
-    const handleSetMainImage = (index) => {
-        if (indexInteractFiles === -1) return;
-        
-        const currentFiles = form.getValues(`images.${indexInteractFiles}.files`);
-        const updatedFiles = currentFiles.map((file, i) => ({
-            ...file,
-            main: i === index
-        }));
-
-        const sortedFiles = updatedFiles.sort((a, b) => {
-            if (a.main) return -1;
-            if (b.main) return 1;
-            return 0;
+        const files = Array.from(selectedFiles).map((file, index) => {
+            return {
+                main: index === 0,
+                colorId: watchColorImages?.id,
+                file
+            }
         });
-        
-        form.setValue(`images.${indexInteractFiles}.files`, sortedFiles);
-    };
+
+        append([...files]);
+        e.target.value = '';
+    }
+
+    const handleMainImage = (index) => {
+        const selected = groupImage[index];
+        const idxInFields = fields.findIndex(field => field.id === selected.id);
+
+        if (idxInFields !== -1) {
+            fields.forEach((field, idx) => {
+                if (field.colorId === selected.colorId && field.main) {
+                    update(idx, { ...fields[idx], main: false });
+                }
+            });
+
+            update(idxInFields, { ...fields[idxInFields], main: true });
+            move(idxInFields, 0);
+        }
+    }
 
     const handleRemoveImage = (index) => {
-        if (indexInteractFiles === -1) return;
+        const imageToRemove = groupImage[index];
         
-        const currentFiles = form.getValues(`images.${indexInteractFiles}.files`);
-        const isMainImage = currentFiles[index]?.main;
-        
-        const newFiles = currentFiles.filter((_, i) => i !== index);
-        if (isMainImage && newFiles.length > 0) {
-            newFiles[0].main = true;
+        const removeIndexInFields = fields.findIndex(field => field.id === imageToRemove.id);
+        if (removeIndexInFields === -1) return;
+
+        if (imageToRemove.main) {
+            const otherImagesSameColor = fields.filter(field => 
+                field.colorId === watchColorImages?.id && 
+                field.id !== imageToRemove.id
+            );
+
+            if (otherImagesSameColor.length > 0) {
+                const newMainImage = otherImagesSameColor[0];
+                const newMainIndexInFields = fields.findIndex(field => field.id === newMainImage.id);
+                update(newMainIndexInFields, { ...newMainImage, main: true });
+            }
         }
-        
-        form.setValue(`images.${indexInteractFiles}.files`, newFiles);
-    };
+
+        remove(removeIndexInFields);
+    }
     
     return (
         <ScrollArea className="p-[20px] rounded-[10px] bg-white w-[40%]">
             {
-                fields?.length === 0 ?
+                watchColors?.length === 0 ?
                 (
                     <p className="text-[15px] text-darkMedium text-center font-medium">Chọn màu mà bạn muốn tải ảnh lên.</p>
                 ) :
@@ -96,8 +115,7 @@ export default function AdminProductAddImage({ form }) {
                                 className="flex flex-wrap items-center gap-[5px]"
                             >
                                 {
-                                    fields.map(field => {
-                                        const color = field?.color;
+                                    watchColors.map(color => {
                                         const checked = watchColorImages?.id === color?.id;
 
                                         return (
@@ -127,13 +145,13 @@ export default function AdminProductAddImage({ form }) {
                         </div>
                         
                         {
-                            indexInteractFiles !== -1 && (
+                            watchColorImages?.id && (
                                 <div className="grid grid-cols-2 gap-[10px]">
                                     {
-                                        form.watch(`images.${indexInteractFiles}.files`)?.map((image, index) => {
+                                        groupImage?.map((image, index) => {
                                             return (
                                                 <div 
-                                                    key={index}
+                                                    key={image?.id}
                                                     className="group relative w-full"
                                                 >
                                                     <PreviewImage
@@ -152,7 +170,7 @@ export default function AdminProductAddImage({ form }) {
                                                         <DropdownMenuContent>
                                                             <DropdownMenuItem
                                                                 className="text-[14px] text-darkMedium font-medium cursor-pointer"
-                                                                onClick={() => handleSetMainImage(index)}
+                                                                onClick={() => handleMainImage(index)}
                                                             >
                                                                 Ảnh chính
                                                             </DropdownMenuItem>

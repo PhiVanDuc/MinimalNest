@@ -38,7 +38,7 @@ export default function AdminProductAddDiscount({ form }) {
             form.setValue("discountAmount", "0");
             form.setValue("discountType", "amount");
         }
-    }, [watchDiscount]);
+    }, [watchDiscount, form]);
 
     useEffect(() => {
         let finalPrice = watchCostPrice + (watchCostPrice * (watchInterestRate / 100));
@@ -48,7 +48,7 @@ export default function AdminProductAddDiscount({ form }) {
         }
 
         form.setValue("finalPrice", finalPrice);
-    }, [watchCostPrice, watchInterestRate, watchDiscountAmount, watchTypeDiscount]);
+    }, [watchCostPrice, watchInterestRate, watchDiscountAmount, watchTypeDiscount, form]);
 
     return (
         <>

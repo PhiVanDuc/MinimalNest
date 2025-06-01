@@ -1,21 +1,24 @@
 "use client"
 
-import { cn } from "@/lib/utils";
-import { categories } from "@/static/admin-product";
-
-export default function AdminProductEditCategory({
-    form,
+import {
     FormField,
     FormItem,
     FormLabel,
-    FormControl,
+    FormControl
+} from "@/components/ui/form";
+
+import {
     RadioGroup,
     RadioGroupItem
-}) {
+} from "@/components/ui/radio-group";
+
+import { cn } from "@/lib/utils";
+
+export default function AdminProductEditCategory({ form, categories }) {
     return (
         <FormField
             control={form.control}
-            name="category"
+            name="categoryId"
             render={({ field }) => {
                 return (
                     <FormItem>
@@ -24,19 +27,17 @@ export default function AdminProductEditCategory({
 
                             <FormControl>
                                 <RadioGroup
-                                    onValueChange={(value) => {
-                                        const obj = categories.find(category => category.value === value);
-                                        if (obj) field.onChange(obj);
-                                    }}
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
                                     className="flex flex-wrap items-center gap-[5px]"
                                 >
                                     {
                                         categories.map((category, index) => {
-                                            const checked = field.value?.value === category.value;
+                                            const checked = field.value === category?.id;
 
                                             return (
                                                 <FormItem
-                                                    key={category.value + index}
+                                                    key={category?.id}
                                                 >
                                                     <FormLabel
                                                         className={cn(
@@ -45,10 +46,10 @@ export default function AdminProductEditCategory({
                                                         )}
                                                     >
                                                         <FormControl className="hidden">
-                                                            <RadioGroupItem value={category.value} />
+                                                            <RadioGroupItem value={category?.id} />
                                                         </FormControl>
 
-                                                        <span>{category.label}</span>
+                                                        <span>{category.category}</span>
                                                     </FormLabel>
                                                 </FormItem>
                                             )

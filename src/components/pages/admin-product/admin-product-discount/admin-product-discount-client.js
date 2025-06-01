@@ -48,14 +48,6 @@ export default function AdminProductDiscountClient({ categories, livingSpaces })
 
     // Theo dõi toàn bộ discount hiện tại - Hiển thị bảng sản phẩm
     const currentDiscount = form.watch(`discounts.${discountSelected}`);
-    const showTable = currentDiscount ?
-    (
-        currentDiscount?.applyAll ||
-        currentDiscount?.productTypes?.length > 0 ||
-        currentDiscount?.categories?.length > 0 ||
-        currentDiscount?.livingSpaces?.length > 0
-    ) :
-    false
 
     const onSubmit = (data) => {
         console.log(data);

@@ -28,7 +28,7 @@ export default function AdminProductAddVariant({ form }) {
             }
         }
         form.setValue("variants", combos);
-    }, [watchColors, watchSizes]);
+    }, [watchColors, watchSizes, form]);
     
     return (
         <div className="p-[20px] bg-white rounded-[10px]">

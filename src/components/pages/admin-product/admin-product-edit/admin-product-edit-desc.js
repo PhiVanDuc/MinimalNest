@@ -1,13 +1,14 @@
 "use client"
 
-export default function AdminProductEditDesc({
-    form,
+import {
     FormField,
     FormItem,
     FormLabel,
-    FormControl,
-    Textarea
-}) {
+    FormControl
+} from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+
+export default function AdminProductEditDesc({ form }) {
     return (
         <FormField
             control={form.control}

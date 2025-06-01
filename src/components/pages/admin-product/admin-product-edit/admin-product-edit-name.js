@@ -1,17 +1,18 @@
 "use client"
 
-export default function AdminProductEditName({
-    form,
+import {
     FormField,
     FormItem,
     FormLabel,
-    FormControl,
-    Input
-}) {
+    FormControl
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+export default function AdminProductEditName({ form }) {
     return (
         <FormField
             control={form.control}
-            name="name"
+            name="product"
             render={({ field }) => {
                 return (
                     <FormItem>

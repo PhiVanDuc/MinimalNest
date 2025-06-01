@@ -29,4 +29,13 @@ export function convertToNumber(value) {
     return isNaN(number) ? 0 : number;
 }
 
+export function convertToNumberDb(value) {
+  const number = parseFloat(value);
+  if (number % 1 === 0) {
+    return parseInt(value, 10);
+  }
+
+  return value.replace('.', ',');
+}
+
 export default formatCurrency;

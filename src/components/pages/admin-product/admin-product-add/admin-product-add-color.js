@@ -20,24 +20,6 @@ export default function AdminProductAddColor({ form, colors }) {
         name: "colors"
     });
 
-    // Tạo trước các phần tử để chứa ảnh theo màu sắc đã chọn
-    useEffect(() => {
-        const watchImages = form.getValues("images");
-
-        const create = watchColors.map(color => {
-            const existing = watchImages?.find(image => image?.color?.id === color?.id);
-            return existing ?
-            existing :
-            {
-                color,
-                files: []
-            }
-        })
-
-        form.setValue("images", create);
-    }, [watchColors, form]);
-
-    // Khi thay đổi lựa chọn lại màu sắc thì sẽ mất đi màu sắc đã chọn bên phía hình ảnh
     useEffect(() => {
         form.setValue("colorImages", {});
     }, [watchColors, form]);

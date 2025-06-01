@@ -1,32 +1,26 @@
 "use client"
 
 import { useEffect } from "react";
+import { useWatch } from "react-hook-form";
 
-import { cn } from "@/lib/utils";
-import { colors } from "@/static/admin-product";
-
-export default function AdminProductEditColor({
-    form,
+import {
     FormField,
     FormItem,
     FormLabel,
     FormControl,
-    FormDescription,
-    Checkbox
-}) {
-    const watchColors = form.watch("colors");
-    
-    useEffect(() => {
-        const existing = form.getValues("images");
+    FormDescription
+} from "@/components/ui/form";
 
-        const synced = watchColors.map((col) => {
-            const found = existing.find((img) => img.color.value === col.value);
-            return found ?? { color: col, files: [] };
-        });
+import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "@/lib/utils";
 
-        form.setValue("images", synced);
-    }, [watchColors, form]);
+export default function AdminProductEditColor({ form, colors }) {
+    const watchColors = useWatch({
+        control: form.control,
+        name: "colors"
+    });
 
+    // Khi thay đổi lựa chọn lại màu sắc thì sẽ mất đi màu sắc đã chọn bên phía hình ảnh
     useEffect(() => {
         form.setValue("colorImages", {});
     }, [watchColors, form]);
@@ -44,13 +38,11 @@ export default function AdminProductEditColor({
                             {
                                 colors.map((color, index) => (
                                     <FormField
-                                        key={color.value + index}
+                                        key={color?.id}
                                         control={form.control}
                                         name="colors"
                                         render={({ field }) => {
-                                            const checked = field.value.some(
-                                                (v) => v.value === color.value
-                                            );
+                                            const checked = field.value.some(value => value?.id === color?.id);
 
                                             return (
                                                 <FormItem>
@@ -61,7 +53,7 @@ export default function AdminProductEditColor({
                                                                 const newVals = isChecked
                                                                     ? [...field.value, color]
                                                                     : field.value.filter(
-                                                                        (v) => v.value !== color.value
+                                                                        (v) => v?.id !== color?.id
                                                                     );
                                                                 field.onChange(newVals);
                                                             }}
@@ -79,7 +71,7 @@ export default function AdminProductEditColor({
                                                         <span
                                                             className="w-[25px] aspect-square rounded-full"
                                                             style={{
-                                                                backgroundColor: color.value
+                                                                backgroundColor: color?.code
                                                             }}
                                                         />
                                                     </FormLabel>
