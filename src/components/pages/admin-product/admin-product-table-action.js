@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import AdminProductDeleteDialog from "./admin-product-delete-dialog";
 
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-export default function AdminProductTableAction({ row, permissions }) {
+export default function AdminProductTableAction({ product, permissions }) {
     const router = useRouter();
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
     return (
         <div className="flex justify-center">
@@ -26,7 +28,7 @@ export default function AdminProductTableAction({ row, permissions }) {
                         (
                             <DropdownMenuItem
                                 className="cursor-pointer"
-                                onClick={() => { router.push("/quan-tri/san-pham/chinh-sua-san-pham/123") }}
+                                onClick={() => { router.push(`/quan-tri/san-pham/chinh-sua-san-pham/${product?.slug}`) }}
                             >
                                 Chỉnh sửa
                             </DropdownMenuItem>
@@ -38,7 +40,9 @@ export default function AdminProductTableAction({ row, permissions }) {
                         (
                             <DropdownMenuItem
                                 className="cursor-pointer"
-                                onClick={() => {}}
+                                onClick={() => {
+                                    setOpenDeleteDialog(true);
+                                }}
                             >
                                 Xóa
                             </DropdownMenuItem>
@@ -46,6 +50,8 @@ export default function AdminProductTableAction({ row, permissions }) {
                     }
                 </DropdownMenuContent>
             </DropdownMenu>
+
+            <AdminProductDeleteDialog open={openDeleteDialog} setOpen={setOpenDeleteDialog} productId={product?.id} />
         </div>
     )
 }

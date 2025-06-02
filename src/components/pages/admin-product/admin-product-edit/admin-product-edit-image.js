@@ -67,6 +67,10 @@ export default function AdminProductEditImage({
             }
         });
 
+        if (!existingMainImage) {
+            setMainImages((prevState) => [...prevState, files[0]]);
+        }
+
         append([...files]);
         e.target.value = '';
         

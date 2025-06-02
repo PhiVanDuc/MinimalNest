@@ -2,6 +2,26 @@
 
 import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 
+const getProducts = async (data) => {
+    try {
+        const { response, result } = await fetchHelperAuth.get(`/products?product=${data?.product}&page=${data?.page}`);
+        return { response, result };
+    }
+    catch(error) {
+        console.log(error);
+
+        return {
+            response: {
+                status: -1
+            },
+            roles: {
+                success: false,
+                message: "Lỗi gọi hàm lấy danh sách sản phẩm!"
+            }
+        };
+    }
+}
+
 const getProduct = async (slug) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/products/${slug}`);
@@ -60,4 +80,19 @@ const editProduct = async (slug, formData) => {
     }
 }
 
-export { getProduct, addProduct, editProduct };
+const deleteProduct = async (productId) => {
+    try {
+        const { result } = await fetchHelperAuth.delete(`/products/${productId}`);
+        return result;
+    }
+    catch(error) {
+        console.log(error);
+
+        return {
+            success: false,
+            message: "Lỗi gọi hàm xóa sản phẩm!"
+        }
+    }
+}
+
+export { getProducts, getProduct, addProduct, editProduct, deleteProduct };

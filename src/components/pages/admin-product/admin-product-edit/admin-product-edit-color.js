@@ -14,7 +14,14 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 
-export default function AdminProductEditColor({ form, colors }) {
+export default function AdminProductEditColor({
+    form,
+    colors,
+    setEditImages,
+    setDeletedImages,
+    mainImages,
+    setMainImages
+}) {
     const watchColors = useWatch({
         control: form.control,
         name: "colors"
@@ -23,6 +30,42 @@ export default function AdminProductEditColor({ form, colors }) {
     // Khi thay đổi lựa chọn lại màu sắc thì sẽ mất đi màu sắc đã chọn bên phía hình ảnh
     useEffect(() => {
         form.setValue("colorImages", {});
+        setEditImages(true);
+    }, [watchColors, form]);
+
+    // Khi thay đổi lựa chọn lại màu sắc thì sẽ xóa những ảnh có màu sắc liên quan
+    useEffect(() => {
+        const images = form.getValues("images");
+
+        const deleteImages = images
+            .filter(image => {
+                const isColorRemoved = !watchColors?.some(color => color?.id === image?.colorId);
+                const isFileValid = typeof image?.file === 'string';
+                return isColorRemoved && isFileValid;
+            })
+            .map(image => image.rootId);
+
+        if (deleteImages?.length > 0) {
+            setDeletedImages((prevState) => {
+                return [...prevState, ...deleteImages]
+            });
+        }
+
+        if (mainImages && mainImages.length > 0) {
+            const updatedMainImages = mainImages.filter(mainImage => {
+                return watchColors?.some(color => color?.id === mainImage?.colorId);
+            });
+            
+            if (updatedMainImages.length !== mainImages.length) {
+                setMainImages(updatedMainImages);
+            }
+        }
+
+        const remainImages = images.filter(image => {
+            return watchColors?.some(color => color?.id === image?.colorId);
+        });
+
+        form.setValue("images", remainImages);
     }, [watchColors, form]);
 
     return (

@@ -35,7 +35,9 @@ export function convertToNumberDb(value) {
     return parseInt(value, 10);
   }
 
-  return value.replace('.', ',');
+  const processedValue = value.replace('.', ',');
+  const final = Number(processedValue);
+  return isNaN(final) ? 0 : final;
 }
 
 export default formatCurrency;

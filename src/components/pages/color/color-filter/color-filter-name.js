@@ -56,9 +56,6 @@ export default function ColorFilterName() {
                     <TooltipTrigger asChild>
                         <button
                             className="shrink-0 h-full aspect-square rounded-full flex items-center justify-center border text-darkMedium bg-white cursor-pointer"
-                            onClick={() => {
-                                
-                            }}
                         >
                             <Search size={15} />
                         </button>

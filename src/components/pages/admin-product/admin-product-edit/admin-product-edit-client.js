@@ -201,6 +201,10 @@ export default function AdminProductEditClient({
                             <AdminProductEditColor
                                 form={form}
                                 colors={colors}
+                                setEditImages={setEditImages}
+                                setDeletedImages={setDeletedImages}
+                                mainImages={mainImages}
+                                setMainImages={setMainImages}
                             />
 
                             <Button

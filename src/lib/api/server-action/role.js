@@ -12,7 +12,7 @@ const getRoles = async (data) => {
 
         return {
             response: {
-                status: -1 // Lỗi không xác định
+                status: -1
             },
             roles: {
                 success: false,
@@ -32,7 +32,7 @@ const getRole = async (slug) => {
 
         return {
             response: {
-                status: -1 // Lỗi không xác định
+                status: -1
             },
             roles: {
                 success: false,
