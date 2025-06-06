@@ -53,8 +53,7 @@ const navbarItems = [
         label: "Sản phẩm",
         href: "/san-pham",
         highlight: "/san-pham",
-        subNav: true,
-        subNavItems: livingSpaces
+        subNav: true
     },
     {
         label: "Phiếu giảm giá",

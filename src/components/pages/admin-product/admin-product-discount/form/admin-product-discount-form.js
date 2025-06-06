@@ -1,5 +1,7 @@
 "use client"
 
+import { useWatch } from "react-hook-form";
+
 import AdminProductDiscountApplyAll from "./admin-product-discount-apply-all";
 import AdminProductDiscountType from "./admin-product-discount-type";
 import AdminProductDiscountCategory from "./admin-product-discount-category";
@@ -7,11 +9,18 @@ import AdminProductDiscountLivingSpace from "./admin-product-discount-living-spa
 import AdminProductDiscountName from "./admin-product-discount-name";
 import AdminProductDiscountProductType from "./admin-product-discount-product-type";
 
-export default function AdminProductDiscountForm({ form, formArray, index, data, setDiscountSelected }) {
-    const watchApplyAll = form.watch(
-        `discounts.${index}.applyAll`,
-        formArray.fields[index]?.applyAll ?? false
-    );
+export default function AdminProductDiscountForm({
+    form,
+    formArray,
+    index,
+    data,
+    setDiscountSelected,
+    submitting
+}) {
+    const watchApplyAll = useWatch({
+        control: form.control,
+        name: `discounts.${index}.applyAll`
+    })
 
     return (
         <div className="rounded-[10px] bg-white space-y-[20px] p-[20px]">
@@ -20,6 +29,7 @@ export default function AdminProductDiscountForm({ form, formArray, index, data,
                 formArray={formArray}
                 index={index}
                 setDiscountSelected={setDiscountSelected}
+                submitting={submitting}
             />
 
             {

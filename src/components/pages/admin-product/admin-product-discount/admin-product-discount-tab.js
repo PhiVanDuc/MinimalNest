@@ -24,7 +24,7 @@ export default function AdminProductDiscountTab({
                             )}
                             onClick={() => { setDiscountSelected(index) }}
                         >
-                            Giảm giá {field?.discountName}
+                            Giảm giá: {field?.discountName}
                         </button>
                     )
                 })
@@ -42,14 +42,14 @@ export default function AdminProductDiscountTab({
                             }
 
                             formArray.append({
-                                discountName: formArray?.fields?.length + 1,
+                                discountName: `Test ${formArray?.fields?.length + 1}`,
                                 applyAll: false,
-                                productTypes: [],
-                                categories: [],
-                                livingSpaces: [],
+                                productTypeIds: [],
+                                categoryIds: [],
+                                livingSpaceIds: [],
                                 discountType: "amount",
-                                discountPrice: "",
-                                products: []
+                                discountAmount: "100000",
+                                productIds: []
                             });
 
                             setDiscountSelected(formArray?.fields?.length);

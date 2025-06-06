@@ -4,6 +4,7 @@ import AdminProductButton from "./admin-product-button";
 import CustomTable from "@/components/customs/admin/custom-table";
 import CustomPagination from "@/components/customs/admin/custom-pagination";
 import AdminProductFilter from "./admin-product-filter/admin-product-filter";
+import AdminProductButtonExcel from "./admin-product-button-excel";
 
 import Error from "@/components/customs/error";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -27,6 +28,8 @@ export default async function AdminProduct({ searchParams }) {
 
                 <AdminProductFilter />
             </header>
+
+            <AdminProductButtonExcel />
 
             <div className="p-[20px] bg-white rounded-[10px] space-y-[5px]">
                 <TooltipProvider>

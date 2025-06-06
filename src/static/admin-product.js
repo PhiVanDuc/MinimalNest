@@ -57,15 +57,18 @@ const livingSpaces = [
 ];
 
 const productTypes = [
-    {
+    {  
+        id: v4(),
         value: "latest",
         label: "Mới nhất",
     },
     {
+        id: v4(),
         value: "best-selling",
         label: "Bán chạy nhất",
     },
     {
+        id: v4(),
         value: "normal",
         label: "Bình thường",
     }

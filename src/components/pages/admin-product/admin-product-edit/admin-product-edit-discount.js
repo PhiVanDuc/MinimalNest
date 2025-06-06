@@ -26,7 +26,7 @@ import { LuPercent } from "react-icons/lu";
 
 import formatCurrency, { convertToNumber } from "@/lib/utils/format-currency";
 
-export default function AdminProductEditDiscount({ form }) {
+export default function AdminProductEditDiscount({ form, productInfo }) {
     const watchCostPrice = convertToNumber(useWatch({ control: form.control, name: "costPrice" }) || "0");
     const watchInterestRate = convertToNumber(useWatch({ control: form.control, name: "interestRate" }) || "0");
     const watchDiscountAmount = convertToNumber(useWatch({ control: form.control, name: "discountAmount" }) || "0");
@@ -52,6 +52,11 @@ export default function AdminProductEditDiscount({ form }) {
 
     return (
         <>
+            {
+                productInfo?.general_discount &&
+                <p className="text-[14px] font-medium text-red-500">Sản phẩm đang áp dụng giảm giá {productInfo?.general_discount?.discount_name}</p>
+            }
+
             <FormField
                 control={form.control}
                 name="discount"

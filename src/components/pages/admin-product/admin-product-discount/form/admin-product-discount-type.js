@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { LuPercent } from "react-icons/lu";
 import { MdOutlineAttachMoney } from "react-icons/md";
+import formatCurrency from "@/lib/utils/format-currency";
 
 export default function AdminProductDiscountType({ form, index }) {
     const watchDiscountType = form.watch(`discounts.${index}.discountType`);
@@ -59,7 +60,7 @@ export default function AdminProductDiscountType({ form, index }) {
 
             <FormField
                 control={form.control}
-                name={`discounts.${index}.discountPrice`}
+                name={`discounts.${index}.discountAmount`}
                 render={({ field }) => {
                     return (
                         <FormItem className="w-full">
@@ -71,8 +72,10 @@ export default function AdminProductDiscountType({ form, index }) {
                                         <Input
                                             placeholder="Nhập số tiền giảm giá"
                                             className="px-[15px] py-[20px] pr-[38px]"
-                                            {...field}
-                                            
+                                            value={formatCurrency(field?.value)}
+                                            onChange={(e) => {
+                                                field.onChange(e.target.value);
+                                            }}
                                         />
 
                                         <div className="absolute right-[10px] top-[50%] translate-y-[-50%] text-darkMedium">

@@ -174,7 +174,10 @@ export default function AdminProductEditClient({
                         </div>
 
                         <div className="p-[20px] space-y-[20px] rounded-[10px] bg-white">
-                            <AdminProductEditDiscount form={form} />
+                            <AdminProductEditDiscount
+                                form={form}
+                                productInfo={productInfo}
+                            />
                         </div>
 
                         <div className="p-[20px] space-y-[20px] rounded-[10px] bg-white">

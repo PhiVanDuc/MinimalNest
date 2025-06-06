@@ -10,15 +10,12 @@ import { AiOutlineLike } from "react-icons/ai";
 import { Truck } from "lucide-react";
 import BlurCircle from "../../customs/blur-circle";
 
-import { cn } from "@/lib/utils";
+import newProductFirst from '/public/new_product_1.jpg';
+import newProductSecond from '/public/new_product_2.jpg';
+import newProductThird from '/public/new_product_3.webp';
 import { v4 } from "uuid";
-import { dynamicBlurImage } from "@/lib/utils/dynamic-blur-image";
 
 export default async function Header() {
-    const blurImages = await Promise.all(Array.from({ length: 3 }).map(async (_, index) => {
-        return await dynamicBlurImage("https://fastly.picsum.photos/id/196/2000/2000.jpg?hmac=c27I0juvbEJwUvDCNbFMGwTHcnblrx8E5O4AJrbWZS4");
-    }));
-
     return (
         <header className="relative flex items-center">
             <div className="relative w-full flex flex-col lg:flex-row justify-between pt-[100px] xl:pt-[160px] xl:mb-[60px] gap-[40px] lg:gap-[80px]">
@@ -53,36 +50,68 @@ export default async function Header() {
                 {/* Hình ảnh bên phải */}
                 <div className="w-full space-y-[20px]">
                     <div className="w-full grid grid-cols-2 gap-[10px] lg:gap-[20px]">
-                        {
-                            blurImages.map((image, index) => {
-                                return (
-                                    <div
-                                        key={v4()}
-                                        className={cn(
-                                            "relative h-[140px] md:h-[200px] lg:h-[260px] rounded-[15px] bg-slate-300 overflow-hidden",
-                                            index === 2 ? "col-span-2" : "col-span-1"
-                                        )}
-                                    >
-                                        <Image
-                                            src={image.img.src}
-                                            alt="Lasest Product Image"
-                                            width={image.img.width}
-                                            height={image.img.height}
-                                            className="w-full h-[140px] md:h-[200px] lg:h-[260px] object-cover object-center"
-                                            placeholder="blur"
-                                            blurDataURL={image.base64}
-                                            loading="lazy"
-                                        />
+                        <div
+                            key={v4()}
+                            className="relative h-[140px] md:h-[200px] lg:h-[260px] rounded-[15px] bg-slate-300 overflow-hidden"
+                        >
+                            <Image
+                                src={newProductFirst}
+                                alt="Lasest Product Image"
+                                width={2000}
+                                height={2000}
+                                placeholder="blur"
+                                className="w-full h-[140px] md:h-[200px] lg:h-[260px] object-cover object-center"
+                                loading="lazy"
+                            />
 
-                                        <CustomBadge
-                                            text="Mới"
-                                            badgeClassName="absolute top-[15px] right-[15px] px-[10px] py-[5px] bg-yellowBold hover:bg-yellowBold hover:opacity-80 cursor-pointer"
-                                            textClassName="text-[14px]"
-                                        />
-                                    </div>
-                                )
-                            })
-                        }
+                            <CustomBadge
+                                text="Mới"
+                                badgeClassName="absolute top-[15px] right-[15px] px-[10px] py-[5px] bg-yellowBold hover:bg-yellowBold hover:opacity-80 cursor-pointer"
+                                textClassName="text-[14px]"
+                            />
+                        </div>
+
+                        <div
+                            key={v4()}
+                            className="relative h-[140px] md:h-[200px] lg:h-[260px] rounded-[15px] bg-slate-300 overflow-hidden"
+                        >
+                            <Image
+                                src={newProductThird}
+                                alt="Lasest Product Image"
+                                width={2000}
+                                height={2000}
+                                placeholder="blur"
+                                className="w-full h-[140px] md:h-[200px] lg:h-[260px] object-cover object-center"
+                                loading="lazy"
+                            />
+
+                            <CustomBadge
+                                text="Mới"
+                                badgeClassName="absolute top-[15px] right-[15px] px-[10px] py-[5px] bg-yellowBold hover:bg-yellowBold hover:opacity-80 cursor-pointer"
+                                textClassName="text-[14px]"
+                            />
+                        </div>
+
+                        <div
+                            key={v4()}
+                            className="relative h-[140px] md:h-[200px] lg:h-[260px] rounded-[15px] bg-slate-300 overflow-hidden col-span-2"
+                        >
+                            <Image
+                                src={newProductSecond}
+                                alt="Lasest Product Image"
+                                width={2000}
+                                height={2000}
+                                placeholder="blur"
+                                className="w-full h-[140px] md:h-[200px] lg:h-[260px] object-cover object-center"
+                                loading="lazy"
+                            />
+
+                            <CustomBadge
+                                text="Mới"
+                                badgeClassName="absolute top-[15px] right-[15px] px-[10px] py-[5px] bg-yellowBold hover:bg-yellowBold hover:opacity-80 cursor-pointer"
+                                textClassName="text-[14px]"
+                            />
+                        </div>
                     </div>
 
                     <div className="lg:hidden w-full flex justify-center">

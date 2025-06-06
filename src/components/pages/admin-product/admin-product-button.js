@@ -2,14 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 
-import {
-    DropdownMenu,
-    DropdownMenuTrigger,
-    DropdownMenuContent,
-    DropdownMenuItem
-} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 export default function AdminProductButton({ permissions }) {
     const router = useRouter();
@@ -35,30 +29,6 @@ export default function AdminProductButton({ permissions }) {
                                 </Button>
                             )
                         }
-
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="outline">
-                                    Excel
-                                </Button>
-                            </DropdownMenuTrigger>
-
-                            <DropdownMenuContent>
-                                {
-                                    isAddProduct && <DropdownMenuItem className="cursor-pointer px-[15px] py-[10px]">Thêm sản phẩm</DropdownMenuItem>
-                                }
-
-                                {
-                                    isEditProduct &&
-                                    (
-                                        <>
-                                            <DropdownMenuItem className="cursor-pointer px-[15px] py-[10px]">Chỉnh sửa sản phẩm</DropdownMenuItem>
-                                            <DropdownMenuItem className="cursor-pointer px-[15px] py-[10px]">Xuất sản phẩm</DropdownMenuItem>
-                                        </>
-                                    )
-                                }
-                            </DropdownMenuContent>
-                        </DropdownMenu>
 
                         {
                             isAddProduct &&

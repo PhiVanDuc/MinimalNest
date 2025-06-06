@@ -15,7 +15,7 @@ export default function AdminProductDiscountCategory({ form, index, categories }
     return (
         <FormField
             control={form.control}
-            name={`discounts.${index}.categories`}
+            name={`discounts.${index}.categoryIds`}
             render={() => {
                 return (
                     <FormItem>
@@ -29,7 +29,7 @@ export default function AdminProductDiscountCategory({ form, index, categories }
                                             <FormField
                                                 key={category?.id}
                                                 control={form.control}
-                                                name={`discounts.${index}.categories`}
+                                                name={`discounts.${index}.categoryIds`}
                                                 render={({ field }) => {
                                                     const checked = field.value.some(value => value === category?.id);
 

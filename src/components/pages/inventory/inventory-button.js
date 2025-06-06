@@ -1,25 +1,31 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
+import { useIntentoryExcel } from "./inventory-excel-provider";
+import { cn } from "@/lib/utils";
 
 export default function InventoryButton({ permissions }) {
-    return (
-        <div className="flex items-center gap-[10px]">
-            <Button
-                variant="outline"
-                className="shadow-none text-[14px]"
-            >
-                Xuất Excel
-            </Button>
+    const { isDisplay, setIsDisplay } = useIntentoryExcel();
 
+    return (
+        <>
             {
                 permissions?.includes("add-inventory") &&
                 <Button
-                    className="text-[14px] text-white bg-yellowBold hover:bg-yellowBold shadown-none"
+                    variant={isDisplay ? "" : "outline"}
+                    className={cn(
+                        "text-[14px] shadown-none",
+                        isDisplay ? "bg-yellowBold hover:bg-yellowBold hover:opacity-90 text-white transition-all" : ""
+                    )}
+                    onClick={() => {
+                        setIsDisplay(!isDisplay);
+                    }}
                 >
-                    Nhập hàng
+                    {
+                        isDisplay ? "Tắt thêm số lượng" : "Thêm số lượng"
+                    }
                 </Button>
-            }
-        </div>
+            }   
+        </>
     )
 }

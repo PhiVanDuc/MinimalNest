@@ -1,9 +1,10 @@
 "use client"
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Expand } from 'lucide-react';
 
 import 'swiper/css';
@@ -11,7 +12,10 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import ProductDetailImageExpand from './product-detail-image-expand';
 
-export default function ProductDetailImages() {
+export default function ProductDetailImages({
+    currentColor,
+    images,
+}) {
     const sliderNav = useRef(null);
     const [isExpand, setIsExpand] = useState({
         status: false,
@@ -35,6 +39,25 @@ export default function ProductDetailImages() {
         })
     }
 
+    const [currentImages, setCurrentImage] = useState(() => {
+        return images
+            ?.filter((img) => img?.color_id === currentColor?.id)
+            ?.sort((a, b) => {
+                // display_order true về đầu (true = 1, false = 0)
+                return (b.display_order === true) - (a.display_order === true);
+            });
+    });
+
+    useEffect(() => {
+        setCurrentImage(() => {
+            return images
+                ?.filter((img) => img?.color_id === currentColor?.id)
+                ?.sort((a, b) => {
+                    return (b.display_order === true) - (a.display_order === true);
+                });
+        });
+    }, [currentColor, images]);
+
     return (
         <>
             <Swiper
@@ -53,21 +76,24 @@ export default function ProductDetailImages() {
                 modules={[Pagination, Navigation]}
                 className="my-swiper relative w-full space-y-[15px]"
             >
-                <SwiperSlide>
-                    <div className="w-full aspect-square sm:aspect-video lg:aspect-16/7 2xl:aspect-square rounded-[15px] bg-slate-300" />
-                </SwiperSlide>
-
-                <SwiperSlide>
-                    <div className="w-full aspect-square sm:aspect-video lg:aspect-16/7 2xl:aspect-square rounded-[15px] bg-slate-300" />
-                </SwiperSlide>
-
-                <SwiperSlide>
-                    <div className="w-full aspect-square sm:aspect-video lg:aspect-16/7 2xl:aspect-square rounded-[15px] bg-slate-300" />
-                </SwiperSlide>
-
-                <SwiperSlide>
-                    <div className="w-full aspect-square sm:aspect-video lg:aspect-16/7 2xl:aspect-square rounded-[15px] bg-slate-300" />
-                </SwiperSlide>
+                {
+                    currentImages?.map(image => {
+                        return (
+                            <SwiperSlide
+                                key={image?.id}
+                            >
+                                <Image
+                                    src={image?.url}
+                                    alt='Ảnh sản phẩm'
+                                    width={2000}
+                                    height={2000}
+                                    priority={true}
+                                    className='w-full aspect-square sm:aspect-video lg:aspect-16/7 2xl:aspect-square rounded-[15px] bg-slate-300'                               
+                                />
+                            </SwiperSlide>
+                        )
+                    })
+                }
 
                 <div
                     className="delete-margin group absolute flex items-center gap-[10px] sm:gap-[15px] rounded-[8px] top-[10px] right-[10px] text-[13px] sm:text-[14px] text-darkBold font-medium cursor-pointer px-[15px] sm:px-[20px] py-[5px] sm:py-[8px] overflow-hidden"

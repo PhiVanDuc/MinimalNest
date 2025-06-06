@@ -3,28 +3,12 @@
 import useProductFilter from "@/hooks/use-product-filter";
 
 import ProductItem from "./product-item";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination";
+import CustomPagination from "@/components/customs/admin/custom-pagination";
 
-import { v4 } from "uuid";
 import { cn } from "@/lib/utils";
 
-export default function ProductsNormal() {
+export default function ProductsNormal({ searchParams, publicAllProducts }) {
     const { isOpen } = useProductFilter();
-
-    const componentProduct = Array.from({ length: 20 }).map((_, index) => {
-        return {
-            id: v4(),
-            component: <ProductItem />
-        }
-    })
 
     return (
         <div className="space-y-[20px]">
@@ -35,8 +19,11 @@ export default function ProductsNormal() {
                 isOpen ? "xl:grid-cols-3" : "xl:grid-cols-4"
             )}>
                 {
-                    componentProduct.map(product => {
-                        return <div key={product.id}>{product.component}</div>
+                    publicAllProducts?.rows?.map(product => {
+                        return <ProductItem
+                            key={product?.id}
+                            product={product}
+                        />
                     })
                 }
             </div>
@@ -45,33 +32,7 @@ export default function ProductsNormal() {
                 className="flex justify-center"
                 style={{ marginTop: "50px" }}
             >
-                <Pagination>
-                    <PaginationContent>
-                        <PaginationItem>
-                            <PaginationPrevious href="#" />
-                        </PaginationItem>
-
-                        <PaginationItem>
-                            <PaginationLink href="#">1</PaginationLink>
-                        </PaginationItem>
-
-                        <PaginationItem>
-                            <PaginationLink href="#" isActive>2</PaginationLink>
-                        </PaginationItem>
-
-                        <PaginationItem>
-                            <PaginationLink href="#">3</PaginationLink>
-                        </PaginationItem>
-
-                        <PaginationItem>
-                            <PaginationEllipsis />
-                        </PaginationItem>
-
-                        <PaginationItem>
-                            <PaginationNext href="#" />
-                        </PaginationItem>
-                    </PaginationContent>
-                </Pagination>
+                <CustomPagination page={+searchParams?.page || 1} pageSize={+publicAllProducts?.pageSize || 0} totalCount={publicAllProducts?.totalItems || 0} />
             </div>
         </div>
     )

@@ -41,7 +41,7 @@ export default function CustomTableUtil({
     const [columnFilters, setColumnFilters] = useState([]);
 
     const table = useReactTable({
-        data: data || [1, 2, 3, 4, 5],
+        data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         ...(

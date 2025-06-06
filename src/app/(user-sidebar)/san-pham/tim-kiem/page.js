@@ -24,7 +24,7 @@ export default async function Page({ searchParams }) {
 
     return (
         <Suspense fallback={<ProductsListSearchLoading />}>
-            <ProductsListSearch />
+            <ProductsListSearch searchParams={searchParams} />
         </Suspense>
     )
 }

@@ -1,25 +1,21 @@
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination";
 import ProductItem from "../product-item";
+import Error from "@/components/customs/error";
 import ProductsListSearchClient from "./products-list-search-client";
 import ProductFilterRightSide from "../filter/product-filter-right-side";
+import CustomPagination from "@/components/customs/admin/custom-pagination";
 
-import { v4 } from "uuid";
+import { getAllPublicProducts } from "@/lib/api/server-action/public-product";
 
-export default async function ProductsListSearch() {
-    const componentProduct = Array.from({ length: 20 }).map((_, index) => {
-        return {
-            id: v4(),
-            component: <ProductItem />
-        }
+
+export default async function ProductsListSearch({ searchParams }) {
+    const { response, result: publicAllProducts } = await getAllPublicProducts({
+        limit: 20,
+        page: searchParams?.page || 1
     });
+
+    console.log(publicAllProducts);
+
+    if (!publicAllProducts?.success) return <Error message={`${response?.status},${publicAllProducts?.message}`} />
 
     return (
         <ProductsListSearchClient>
@@ -30,8 +26,11 @@ export default async function ProductsListSearch() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[20px]">
                 {
-                    componentProduct.map(product => {
-                        return <div key={product.id}>{product.component}</div>
+                    publicAllProducts?.data?.rows.map(product => {
+                        return <ProductItem
+                            key={product?.id}
+                            product={product}
+                        />
                     })
                 }
             </div>
@@ -40,33 +39,7 @@ export default async function ProductsListSearch() {
                 className="flex justify-center"
                 style={{ marginTop: "50px" }}
             >
-                <Pagination>
-                    <PaginationContent>
-                        <PaginationItem>
-                            <PaginationPrevious href="#" />
-                        </PaginationItem>
-
-                        <PaginationItem>
-                            <PaginationLink href="#">1</PaginationLink>
-                        </PaginationItem>
-
-                        <PaginationItem>
-                            <PaginationLink href="#" isActive>2</PaginationLink>
-                        </PaginationItem>
-
-                        <PaginationItem>
-                            <PaginationLink href="#">3</PaginationLink>
-                        </PaginationItem>
-
-                        <PaginationItem>
-                            <PaginationEllipsis />
-                        </PaginationItem>
-
-                        <PaginationItem>
-                            <PaginationNext href="#" />
-                        </PaginationItem>
-                    </PaginationContent>
-                </Pagination>
+                <CustomPagination page={+searchParams?.page || 1} pageSize={+publicAllProducts?.data?.pageSize || 0} totalCount={publicAllProducts?.data?.totalItems || 0} />
             </div>
         </ProductsListSearchClient>
     )

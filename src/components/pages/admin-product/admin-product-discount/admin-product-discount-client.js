@@ -1,10 +1,11 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import {
     useForm,
     useFieldArray
 } from "react-hook-form";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 import AdminProductDiscountTab from "./admin-product-discount-tab";
 import AdminProductDiscountForm from "./form/admin-product-discount-form";
@@ -12,13 +13,19 @@ import AdminProductDiscountTable from "./table/admin-product-discount-table";
 
 import { Form } from "@/components/ui/form";
 
-import { productTypes } from "@/static/admin-product";
+import { toast } from "sonner";
+import { convertToNumber, convertToNumberDb } from "@/lib/utils/format-currency";
+import { addGeneralDiscount, editGeneralDiscount } from "@/lib/api/server-action/general-discount";
 
-export default function AdminProductDiscountClient({ categories, livingSpaces }) {
-    // Khởi tạo - Quản lý Form
+export default function AdminProductDiscountClient({
+    generalDiscounts,
+    productTypes,
+    categories,
+    livingSpaces
+}) {
     const form = useForm({
         defaultValues: {
-            discounts: []
+            discounts: generalDiscounts?.map(item => ({ ...item, discountAmount: `${convertToNumberDb(item?.discountAmount)}` })) || []
         }
     });
 
@@ -27,30 +34,48 @@ export default function AdminProductDiscountClient({ categories, livingSpaces })
         name: "discounts"
     });
 
-    // Chọn discount tab
-    const [discountSelected, setDiscountSelected] = useState(null);
+    const [submitting, setSubmitting] = useState(false); // Trạng thái submit form
+    const [discountSelected, setDiscountSelected] = useState(null); // Index của tab giảm giá hiện tại
+    const [products, setProducts] = useState([]); // Danh sách sản phẩm có thể áp dụng đối với giảm giá hiện tại
+    
+    // Lấy ra tab giảm giá hiện tại
+    const currentDiscount = form.watch(`discounts.${discountSelected}`);
+
+    // Nếu một tab bị xóa - Tự động chọn tab đầu
     useEffect(() => {
         if (formArray.fields.length && discountSelected === null) {
             setDiscountSelected(0);
         }
     }, [formArray.fields.length]);
 
-    // Dữ liệu cho từng discount
-    const data = useMemo(() => ({
-        productTypes,
-        categories: categories || [],
-        livingSpaces: livingSpaces || []
-    }), [
-        productTypes,
-        categories,
-        livingSpaces
-    ]);
+    // Chọn tab mới sẽ reset lại danh sách sản phẩm
+    useEffect(() => {
+        setProducts([]);
+    }, [currentDiscount]);
 
-    // Theo dõi toàn bộ discount hiện tại - Hiển thị bảng sản phẩm
-    const currentDiscount = form.watch(`discounts.${discountSelected}`);
+    // Submit form
+    const onSubmit = async (data) => {
+        if (submitting) return;
+        setSubmitting(true);
 
-    const onSubmit = (data) => {
-        console.log(data);
+        const generalDiscount = currentDiscount?.rootId ?
+        await editGeneralDiscount({ ...data?.discounts[discountSelected], discountAmount: convertToNumber(data?.discounts[discountSelected]?.discountAmount) }, currentDiscount?.rootId) :
+        await addGeneralDiscount(data?.discounts[discountSelected]);
+
+        const message = generalDiscount?.message;
+        if (generalDiscount?.success) {
+            toast.success(message);
+
+            if (!currentDiscount?.rootId) {
+                formArray.update(discountSelected, {
+                    ...formArray?.fields[discountSelected],
+                    rootId: generalDiscount?.data?.general_discount?.id
+                });
+            }
+        }
+        else toast.error(message);
+
+        setSubmitting(false);
     }
 
     return (
@@ -73,27 +98,38 @@ export default function AdminProductDiscountClient({ categories, livingSpaces })
 
                     {
                         typeof discountSelected === "number" &&
-                        (
+                        ( 
                             <AdminProductDiscountForm
                                 key={discountSelected}
                                 form={form}
                                 formArray={formArray}
                                 index={discountSelected}
-                                data={data}
+                                data={{
+                                    productTypes,
+                                    categories,
+                                    livingSpaces
+                                }}
                                 setDiscountSelected={setDiscountSelected}
+                                submitting={submitting}
                             />
                         )
                     }
                 </form>
             </Form>
 
-            {/* { showTable && <AdminProductDiscountTable /> } */}
-            <AdminProductDiscountTable
-                form={form}
-                formArray={formArray}
-                index={discountSelected}
-                currentDiscount={currentDiscount}
-            />
+            {
+                currentDiscount &&
+                <TooltipProvider>
+                    <AdminProductDiscountTable
+                        form={form}
+                        formArray={formArray}
+                        index={discountSelected}
+                        currentDiscount={currentDiscount}
+                        products={products}
+                        setProducts={setProducts}
+                    />
+                </TooltipProvider>
+            }
         </div>
     )
 }

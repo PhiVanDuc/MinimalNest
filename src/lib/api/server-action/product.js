@@ -61,6 +61,25 @@ const addProduct = async (formData) => {
     }
 }
 
+const addProductsExcel = async (formData) => {
+    try {
+        const { result } = await fetchHelperAuth.post(
+            `/products/excel`,
+            { body: formData }
+        );
+
+        return result;
+    }
+    catch(error) {
+        console.log(error);
+
+        return {
+            success: false,
+            message: "Lỗi gọi hàm thêm các sản phẩm với excel!"
+        }
+    }
+}
+
 const editProduct = async (slug, formData) => {
     try {
         const { result } = await fetchHelperAuth.put(
@@ -95,4 +114,4 @@ const deleteProduct = async (productId) => {
     }
 }
 
-export { getProducts, getProduct, addProduct, editProduct, deleteProduct };
+export { getProducts, getProduct, addProduct, addProductsExcel, editProduct, deleteProduct };

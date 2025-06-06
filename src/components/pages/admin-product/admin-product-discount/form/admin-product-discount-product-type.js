@@ -15,7 +15,7 @@ export default function AdminProductDiscountProductType({ form, index, productTy
     return (
         <FormField
             control={form.control}
-            name={`discounts.${index}.productTypes`}
+            name={`discounts.${index}.productTypeIds`}
             render={() => {
                 return (
                     <FormItem>
@@ -27,11 +27,11 @@ export default function AdminProductDiscountProductType({ form, index, productTy
                                     productTypes.map((productType) => {
                                         return (
                                             <FormField
-                                                key={productType.value}
+                                                key={productType?.id}
                                                 control={form.control}
-                                                name={`discounts.${index}.productTypes`}
+                                                name={`discounts.${index}.productTypeIds`}
                                                 render={({ field }) => {
-                                                    const checked = field.value?.some(value => value?.value === productType?.value);
+                                                    const checked = field.value?.some(value => value === productType?.id);
 
                                                     return (
                                                         <FormItem>
@@ -40,10 +40,10 @@ export default function AdminProductDiscountProductType({ form, index, productTy
                                                                     checked={checked}
                                                                     onCheckedChange={(checked) => {
                                                                         return checked ?
-                                                                        field.onChange([...field.value, productType]) :
+                                                                        field.onChange([...field.value, productType?.id]) :
                                                                         field.onChange(
                                                                                 field.value?.filter(
-                                                                                    (value) => value.value !== productType.value
+                                                                                    (value) => value !== productType?.id
                                                                                 )
                                                                             )
                                                                         }
@@ -59,7 +59,7 @@ export default function AdminProductDiscountProductType({ form, index, productTy
                                                                     checked ? "border-neutral-400 bg-neutral-100" : ""
                                                                 )}
                                                             >
-                                                                {productType.label}
+                                                                {productType.product_type}
                                                             </FormLabel>
                                                         </FormItem>
                                                     )

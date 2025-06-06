@@ -1,5 +1,8 @@
 "use client"
 
+import { useState } from "react";
+import { useWatch } from "react-hook-form";
+
 import {
     FormField,
     FormItem,
@@ -9,8 +12,15 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import GeneralDiscountDeleteDialog from "../general-discount-delete-dialog";
 
-export default function AdminProductDiscountApplyAll({ form, formArray, index, setDiscountSelected }) {
+export default function AdminProductDiscountApplyAll({ form, formArray, index, setDiscountSelected, submitting }) {
+    const [openDialog, setOpenDialog] = useState(false);
+    const watchCurrentDiscount = useWatch({
+        control: form.control,
+        name: `discounts.${index}`
+    });
+
     return (
         <div className="w-full flex justify-between items-center">
             <FormField
@@ -38,6 +48,11 @@ export default function AdminProductDiscountApplyAll({ form, formArray, index, s
                     variant="outline"
                     className="shadow-none"
                     onClick={() => {
+                        if (watchCurrentDiscount?.rootId) {
+                            setOpenDialog(true);
+                            return;
+                        }
+
                         formArray.remove(index);
                         setDiscountSelected(null);
                     }}
@@ -45,7 +60,24 @@ export default function AdminProductDiscountApplyAll({ form, formArray, index, s
                 >
                     Xóa
                 </Button>
-                <Button >Lưu giảm giá</Button>
+                <GeneralDiscountDeleteDialog
+                    open={openDialog}
+                    setOpen={setOpenDialog}
+                    id={watchCurrentDiscount?.rootId || ""}
+                    formArray={formArray}
+                    index={index}
+                    setDiscountSelected={setDiscountSelected}
+                />
+
+                <Button
+                    disabled={submitting}
+                >
+                    {
+                        watchCurrentDiscount?.rootId ?
+                        submitting ? "Đang lưu . . ." : "Lưu giảm giá" :
+                        submitting ? "Đang thêm . . ." : "Thêm giảm giá"
+                    }
+                </Button>
             </div>
         </div>
     )

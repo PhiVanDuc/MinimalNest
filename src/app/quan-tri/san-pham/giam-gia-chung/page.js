@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { Suspense } from "react";
 import AdminProductDiscount from "@/components/pages/admin-product/admin-product-discount/admin-product-discount";
 import MainLoading from "@/components/customs/main-loading";

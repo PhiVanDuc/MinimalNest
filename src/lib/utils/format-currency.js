@@ -1,21 +1,21 @@
-const formatCurrency = (value) => {
-    if (value === null || value === undefined || value === '') return '';
-
-    let str = String(value);
-    str = str.replace(/\./g, ',');
-    const [intPart, decimalPart] = str.split(',');
-
-    const formattedInt = new Intl.NumberFormat('vi-VN', {
-        useGrouping: true,
-        maximumFractionDigits: 0,
-    }).format(Number(intPart || 0));
-
-    // Chỉ thêm phần thập phân nếu có và không phải là "00"
-    if (decimalPart !== undefined && decimalPart !== "00") {
-        return `${formattedInt},${decimalPart}`;
+function formatCurrency(input) {
+    let str = input.toString().trim();
+    
+    let sign = "";
+    if (str.startsWith("-")) {
+        sign = "-";
+        str = str.slice(1);
     }
-    return formattedInt;
-};
+
+    let parts = str.split(",");
+    let integerPart = parts[0];
+    let decimalPart = parts[1] || "";
+
+    integerPart = integerPart.replace(/\D/g, "");
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return sign + integerPart + (decimalPart !== "" ? "," + decimalPart : "");
+}
 
 export function convertToNumber(value) {
     if (typeof value !== 'string') {
@@ -35,9 +35,7 @@ export function convertToNumberDb(value) {
     return parseInt(value, 10);
   }
 
-  const processedValue = value.replace('.', ',');
-  const final = Number(processedValue);
-  return isNaN(final) ? 0 : final;
+  return value.replace('.', ',');
 }
 
 export default formatCurrency;

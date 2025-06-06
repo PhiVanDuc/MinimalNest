@@ -1,12 +1,17 @@
 "use client"
 
-import { CircleCheckBig } from "lucide-react";
+import { useState } from "react";
+
 import ProductDetailBasicInfo from "./product-detail-basic-info";
 import ProductDetailImages from "./image/product-detail-images";
-import ProductDetailRelatedProduct from "./product-detail-related-product";
 import ProductDetailTabs from "./product-detail-tabs";
 
-export default function ProductDetailClient() {
+import { CircleCheckBig } from "lucide-react";
+
+export default function ProductDetailClient({ product }) {
+    const [currentColor, setCurrentColor] = useState(product?.colors[0]);
+    const [currentSize, setCurrentSize] = useState(product?.sizes[0]);
+
     return (
         <div className="flex justify-center">
             <div className="responsive-horizontal max-width transition-all duration-300 space-y-[60px]">
@@ -17,13 +22,21 @@ export default function ProductDetailClient() {
                     </div>
                     
                     <div className="flex flex-col 2xl:flex-row items-center gap-[50px] 2xl:gap-[80px]">
-                        <ProductDetailImages />
-                        <ProductDetailBasicInfo />
+                        <ProductDetailImages
+                            currentColor={currentColor}
+                            images={product?.product_images}
+                        />
+                        <ProductDetailBasicInfo
+                            product={product}
+                            currentColor={currentColor}
+                            setCurrentColor={setCurrentColor}
+                            currentSize={currentSize}
+                            setCurrentSize={setCurrentSize}
+                        />
                     </div>
                 </div>
 
                 <ProductDetailTabs />
-                <ProductDetailRelatedProduct />
             </div>
         </div>
     )

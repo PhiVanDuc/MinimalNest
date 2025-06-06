@@ -10,10 +10,10 @@ export async function generateMetadata() {
     };
 }
 
-export default function Page() {
+export default function Page({ params }) {
     return (
         <Suspense fallback={<ProductDetailLoading />}>
-            <ProductDetail />
+            <ProductDetail params={params} />
         </Suspense>
     )
 }

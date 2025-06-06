@@ -15,7 +15,7 @@ export default function AdminProductDiscountLivingSpace({ form, index, livingSpa
     return (
         <FormField
             control={form.control}
-            name={`discounts.${index}.livingSpaces`}
+            name={`discounts.${index}.livingSpaceIds`}
             render={() => {
                 return (
                     <FormItem>
@@ -29,7 +29,7 @@ export default function AdminProductDiscountLivingSpace({ form, index, livingSpa
                                             <FormField
                                                 key={livingSpace?.id}
                                                 control={form.control}
-                                                name={`discounts.${index}.livingSpaces`}
+                                                name={`discounts.${index}.livingSpaceIds`}
                                                 render={({ field }) => {
                                                     const checked = field.value.some(value => value === livingSpace?.id);
 
