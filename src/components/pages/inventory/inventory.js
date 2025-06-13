@@ -5,7 +5,7 @@ import CustomPagination from "@/components/customs/admin/custom-pagination";
 import InventoryButton from "./inventory-button";
 import InventoryFilter from "./inventory-filter/inventory-filter";
 import InventoryBasicAnalysis from "./inventory-basic-analysis";
-import InventoryButtonExcel from "./inventory-button-excel";
+import InventoryAddExcel from "./inventory-add-excel";
 import Error from "@/components/customs/error";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -33,14 +33,15 @@ export default async function Inventory({ searchParams }) {
             <InventoryExcelProvider>
                 <header className="space-y-[10px] p-[20px] bg-white rounded-[10px]">
                     <div className="flex items-center justify-between">
-                        <h1 className="text-[22px] font-semibold">Quản lý kho hàng</h1>
+                        <h1 className="text-[22px] font-semibold">Quản lý tồn kho</h1>
                         <InventoryButton permissions={permissions || []} />
                     </div>
-
                     <InventoryFilter />
                 </header>
 
-                <InventoryButtonExcel />
+                {
+                    permissions?.includes("add-inventory") && <InventoryAddExcel />
+                }
             </InventoryExcelProvider>
 
             <InventoryBasicAnalysis analysis={analysis?.data} />

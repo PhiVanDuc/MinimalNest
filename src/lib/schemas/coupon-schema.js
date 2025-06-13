@@ -21,15 +21,8 @@ const couponSchema = z.object({
 
     discountPrice: z
         .string({ required_error: "Vui lòng nhập giảm giá." })
-        .nonempty({ message: "Vui lòng nhập giảm giá." })
-        .refine(val => {
-            const cleaned = val.replace(/\./g, '').replace(/,/g, '.');
-            return Number(cleaned) >= 10000;
-        }, {
-            message: "Giảm giá phải từ 10.000 trở lên.",
-        }),
+        .nonempty({ message: "Vui lòng nhập giảm giá." }),
 
-    
     minOrderTotal: z
         .string()
         .optional(),
@@ -39,7 +32,7 @@ const couponSchema = z.object({
         .optional(),
 
     customerType: z
-        .enum(["all", "first_time", "new", "vip"]),
+        .enum(["all", "first_time_customer", "new_customer", "vip_customer"]),
 
     quantity: z
         .string({ required_error: "Vui lòng nhập số lượng." })
@@ -51,6 +44,28 @@ const couponSchema = z.object({
     conditions: z
         .array(z.enum(["login", "min-total", "min-product"]))
         .optional()
+})
+.superRefine((data, ctx) => {
+    const cleanedPrice = data.discountPrice.replace(/\./g, "").replace(/,/g, ".");
+    const num = Number(cleanedPrice);
+
+    if (data.discountType === "amount" && num < 10000) {
+        ctx.addIssue({
+            path: ["discountPrice"],
+            message: "Giảm giá tiền phải từ 10.000 trở lên.",
+            code: z.ZodIssueCode.custom
+        });
+    }
+
+    if (data.discountType === "percent") {
+        if (num < 1 || num > 100) {
+            ctx.addIssue({
+                path: ["discountPrice"],
+                message: "Giảm giá phần trăm phải từ 1% đến 100%.",
+                code: z.ZodIssueCode.custom
+            });
+        }
+    }
 });
 
 export default couponSchema;

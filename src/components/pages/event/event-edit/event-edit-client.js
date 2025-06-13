@@ -20,6 +20,11 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 
+import {
+    RadioGroup,
+    RadioGroupItem
+} from "@/components/ui/radio-group";
+
 import EventEditImage from "./event-edit-image";
 
 import { Input } from "@/components/ui/input";
@@ -28,12 +33,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react"
 
+import slugify from "slugify";
 import { toast } from "sonner";
 import { addDays, format } from "date-fns"
 import { vi } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import eventSchema from "@/lib/schemas/event-schema";
 import { editEvent } from "@/lib/api/server-action/event";
+import generateSignatureClient from "@/lib/utils/generate-signature-client";
 
 export default function EventEditClient({ event, blurImage }) {
     const router = useRouter();
@@ -45,16 +52,46 @@ export default function EventEditClient({ event, blurImage }) {
             image: event?.image || "",
             event: event?.event || "",
             desc: event?.desc || "",
+            link: event?.link || "",
+            eventType: event?.event_type,
             startDate: event?.start_date || new Date(),
             endDate: event?.end_date || addDays(new Date(), 1)
         }
     });
 
     const watchStartDate = form.watch("startDate");
+    const watchEndDate = form.watch("endDate");
+    const watchEvent = form.watch("event");
+    const watchEventType = form.watch("eventType");
 
     useEffect(() => {
-        form.setValue("endDate", addDays(watchStartDate, 1))
+        if (!watchEndDate) {
+            form.setValue("endDate", addDays(watchStartDate, 1));
+        }
     }, [watchStartDate]);
+
+    useEffect(() => {
+        const debounceTimeout = setTimeout(() => {
+            let slug;
+
+            if (watchEvent) {
+                slug = slugify(watchEvent, {
+                    lower: true,
+                    locale: 'vi',
+                    remove: /[*+~.()'"!:@]/g
+                });
+            }
+
+            if (watchEventType === "discount" && slug) {
+                const signature = generateSignatureClient(`events=${slug}`);
+                form.setValue("link", `/phieu-giam-gia?events=${slug}&signature=${signature}`);
+            } else {
+                form.setValue("link", ``);
+            }
+        }, 500);
+
+        return () => clearTimeout(debounceTimeout); 
+    }, [watchEventType, watchEvent]);
 
     const onSubmit = async (data) => {
         setIsSubmitting(true);
@@ -62,6 +99,8 @@ export default function EventEditClient({ event, blurImage }) {
         const formData = new FormData();
         formData.append("event", data.event);
         formData.append("desc", data.desc);
+        formData.append("link", data.link);
+        formData.append("eventType", data.eventType);
         formData.append("startDate", data.startDate.toISOString());
         formData.append("endDate", data.endDate.toISOString());
         if (data.image instanceof File) formData.append("image", data.image);
@@ -134,6 +173,29 @@ export default function EventEditClient({ event, blurImage }) {
                                             />
                                         </FormControl>
                                         <FormMessage />
+                                    </div>
+                                </FormItem>
+                            )
+                        }}
+                    />
+
+                    {/* Đường dẫn */}
+                    <FormField
+                        control={form.control}
+                        name="link"
+                        render={({ field }) => {
+                            return (
+                                <FormItem>
+                                    <div className="space-y-[5px]">
+                                        <FormLabel>Đường dẫn sự kiện</FormLabel>
+
+                                        <FormControl>
+                                            <Input
+                                                placeholder="Nhập đường dẫn đến sự kiện . . ."
+                                                className="px-[15px] py-[20px]"
+                                                {...field}
+                                            />
+                                        </FormControl>
                                     </div>
                                 </FormItem>
                             )
@@ -253,6 +315,45 @@ export default function EventEditClient({ event, blurImage }) {
                             />
                         </div>
                     </div>
+
+                    {/* Sự kiện giảm giá hay nhấn mạnh sản phẩm */}
+                    <FormField
+                        control={form.control}
+                        name="eventType"
+                        render={({ field }) => {
+                            return (
+                                <FormItem>
+                                    <div className="space-y-[5px]">
+                                        <FormLabel>Loại sự kiện</FormLabel>
+
+                                        <FormControl>
+                                            <RadioGroup
+                                                onValueChange={field.onChange}
+                                                defaultValue={field.value}
+                                                className="flex items-center gap-[20px]"
+                                            >
+                                                <FormItem className="flex items-center gap-[10px]">
+                                                    <FormLabel>Sự kiện giảm giá</FormLabel>
+                                                    <FormControl>
+                                                        <RadioGroupItem value="discount" />
+                                                    </FormControl>
+                                                </FormItem>
+
+                                                <FormItem className="flex items-center gap-[10px]">
+                                                    <FormLabel>Sự kiện quảng bá sản phẩm</FormLabel>
+                                                    <FormControl>
+                                                        <RadioGroupItem value="promote-product" />
+                                                    </FormControl>
+                                                </FormItem>
+                                            </RadioGroup>
+                                        </FormControl>
+
+                                        <FormMessage />
+                                    </div>
+                                </FormItem>
+                            )
+                        }}
+                    />
 
                     <div className="text-right">
                         <Button

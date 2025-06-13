@@ -1,10 +1,13 @@
 import { v4 } from "uuid";
-import PaymentProductsTable from "@/components/pages/payment/payment-products-table";
+
+import OrderDetailSummary from "./order-detail-summary";
+import CustomTable from "@/components/customs/admin/custom-table";
 import OrderDetailCoupon from "@/components/pages/profile/order/detail/order-detail-coupon";
 import OrderDetailAddress from "@/components/pages/profile/order/detail/order-detail-address";
 import OrderDetailMessage from "@/components/pages/profile/order/detail/order-detail-message";
 import OrderDetailPayment from "@/components/pages/profile/order/detail/order-detail-payment";
-import OrderDetailSummary from "./order-detail-summary";
+
+import paymentProductColumns from "@/components/pages/payment/payment-product-columns";
 
 const data = Array.from({ length: 3 }).map((_, index) => {
     return {
@@ -44,7 +47,10 @@ export default function OrderDetail() {
             <div className="relative flex flex-col xl:flex-row items-start gap-[20px]">
                 <div className="space-y-[50px] w-full">
                     <OrderDetailAddress />
-                    <PaymentProductsTable data={data} />
+                    <CustomTable
+                        data={data}
+                        columns={paymentProductColumns}
+                    />
                     <OrderDetailCoupon />
                     <OrderDetailMessage />
                     <OrderDetailPayment />

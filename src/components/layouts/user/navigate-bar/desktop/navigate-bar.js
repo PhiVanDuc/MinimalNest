@@ -2,10 +2,11 @@ import Logo from "@/components/customs/logo/logo";
 
 import NavigateBarItems from "./navigate-bar-items";
 import NavigateBarActions from "./navigate-bar-actions";
+
 import { getLivingSpaces } from "@/lib/api/server-action/living-space";
 
 export default async function NavigateBar() {
-    const { response, result: livingSpaces } = await getLivingSpaces();
+    const { response: livingSpacesResponse, result: livingSpaces } = await getLivingSpaces();
 
     return (
         <nav

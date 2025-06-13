@@ -45,7 +45,7 @@ export default function ProfileGeneralBasicForm() {
                                             <FormControl>
                                                 <Input
                                                     placeholder="Nhập họ . . ."
-                                                    className="px-[15px] py-[22px] border-darkBland rounded-[10px]"
+                                                    className="px-[15px] py-[22px] border-neutral-300 rounded-[10px]"
                                                     {...field}
                                                 />
                                             </FormControl>
@@ -63,7 +63,7 @@ export default function ProfileGeneralBasicForm() {
                                             <FormControl>
                                                 <Input
                                                     placeholder="Nhập tên đệm và tên . . ."
-                                                    className="px-[15px] py-[22px] border-darkBland rounded-[10px]"
+                                                    className="px-[15px] py-[22px] border-neutral-300 rounded-[10px]"
                                                     {...field}
                                                 />
                                             </FormControl>
@@ -89,7 +89,7 @@ export default function ProfileGeneralBasicForm() {
                                     <FormControl>
                                         <Input
                                             placeholder="Nhập email . . ."
-                                            className="px-[15px] py-[22px] border-darkBland rounded-[10px]"
+                                            className="px-[15px] py-[22px] border-neutral-300 rounded-[10px]"
                                             style={{
                                                 margin: "0px"
                                             }}

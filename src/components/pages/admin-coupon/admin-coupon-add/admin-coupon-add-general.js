@@ -1,7 +1,5 @@
 "use client"
 
-import { useEffect } from "react";
-
 import {
     FormField,
     FormItem,
@@ -27,10 +25,6 @@ import formatCurrency from "@/lib/utils/format-currency";
 
 export default function AdminCouponAddGeneral({ form }) {
     const discountType = form.watch("discountType");
-
-    useEffect(() => {
-        form.setValue("discount", "0");
-    }, [form, discountType]);
 
     return (
         <div className="space-y-[20px] p-[20px] rounded-[10px] bg-white">
@@ -130,7 +124,12 @@ export default function AdminCouponAddGeneral({ form }) {
                                                 value={formatCurrency(field.value || '')}
                                                 onChange={(e) => {
                                                     const rawValue = e.target.value;
-                                                    const filteredValue = rawValue.replace(/[^0-9,]/g, '');
+                                                    let filteredValue = rawValue.replace(/[^0-9,]/g, '');
+
+                                                    if (discountType !== "amount") {
+                                                        if (+filteredValue < 0) filteredValue = 0;
+                                                        else if (+filteredValue > 100) filteredValue = 100
+                                                    }
 
                                                     field.onChange(filteredValue);
                                                 }}

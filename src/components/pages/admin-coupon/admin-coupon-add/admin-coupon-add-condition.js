@@ -209,7 +209,7 @@ export default function AdminCouponAddCondition({ form, submitting }) {
                                         <FormItem>
                                             <FormLabel className="flex items-center gap-[5px]">
                                                 <FormControl>
-                                                    <RadioGroupItem value="first_time" />
+                                                    <RadioGroupItem value="first_time_customer" />
                                                 </FormControl>
 
                                                 <span>Khách hàng lần đầu</span>
@@ -219,7 +219,7 @@ export default function AdminCouponAddCondition({ form, submitting }) {
                                         <FormItem>
                                             <FormLabel className="flex items-center gap-[5px]">
                                                 <FormControl>
-                                                    <RadioGroupItem value="new" />
+                                                    <RadioGroupItem value="new_customer" />
                                                 </FormControl>
 
                                                 <span>Khách hàng mới</span>
@@ -229,7 +229,7 @@ export default function AdminCouponAddCondition({ form, submitting }) {
                                         <FormItem>
                                             <FormLabel className="flex items-center gap-[5px]">
                                                 <FormControl>
-                                                    <RadioGroupItem value="vip" />
+                                                    <RadioGroupItem value="vip_customer" />
                                                 </FormControl>
 
                                                 <span>Khách hàng quen</span>

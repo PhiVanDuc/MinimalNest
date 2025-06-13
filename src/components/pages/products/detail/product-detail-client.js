@@ -3,12 +3,15 @@
 import { useState } from "react";
 
 import ProductDetailBasicInfo from "./product-detail-basic-info";
-import ProductDetailImages from "./image/product-detail-images";
+import ProductDetailImages from "./product-detail-images";
 import ProductDetailTabs from "./product-detail-tabs";
 
 import { CircleCheckBig } from "lucide-react";
 
-export default function ProductDetailClient({ product }) {
+export default function ProductDetailClient({
+    decode,
+    product
+}) {
     const [currentColor, setCurrentColor] = useState(product?.colors[0]);
     const [currentSize, setCurrentSize] = useState(product?.sizes[0]);
 
@@ -21,13 +24,15 @@ export default function ProductDetailClient({ product }) {
                         <p>Còn sản phẩm</p>
                     </div>
                     
-                    <div className="flex flex-col 2xl:flex-row items-center gap-[50px] 2xl:gap-[80px]">
+                    <div className="flex flex-col 2xl:flex-row items-stretch gap-[50px] 2xl:gap-[80px]">
                         <ProductDetailImages
                             currentColor={currentColor}
                             images={product?.product_images}
                         />
+
                         <ProductDetailBasicInfo
                             product={product}
+                            decode={decode}
                             currentColor={currentColor}
                             setCurrentColor={setCurrentColor}
                             currentSize={currentSize}
@@ -36,7 +41,9 @@ export default function ProductDetailClient({ product }) {
                     </div>
                 </div>
 
-                <ProductDetailTabs />
+                <ProductDetailTabs
+                    product={product}
+                />
             </div>
         </div>
     )

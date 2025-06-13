@@ -1,11 +1,10 @@
-import PaymentCoupon from "@/components/pages/payment/payment-coupon";
-import PaymentMethod from "@/components/pages/payment/payment-method";
-import PaymentMessage from "@/components/pages/payment/payment-message";
-import PaymentSummary from "@/components/pages/payment/payment-summary";
-import PaymentProductsTable from "@/components/pages/payment/payment-products-table";
-import ProfileGeneralBookAddress from "@/components/pages/profile/general/profile-general-book-address";
+import PaymentClient from "./payment-client";
+import Error from "@/components/customs/error";
 
 import { v4 } from "uuid";
+import getAccessToken from "@/lib/utils/getAccessToken";
+import { getBookAddresses } from "@/lib/api/server-action/book-address";
+import { getReservedOrder } from "@/lib/api/server-action/reserved_order";
 
 const data = Array.from({ length: 3 }).map((_, index) => {
     return {
@@ -29,26 +28,24 @@ const data = Array.from({ length: 3 }).map((_, index) => {
     }
 });
 
-export default function Payment() {
+export default async function Payment({ params }) {
+    const { decode } = getAccessToken();
+
+    const [bookAddressesRes, reservedOrderRes] = await Promise.all([
+        getBookAddresses(decode?.decode?.id),
+        getReservedOrder(params?.reservedOrderId || "")
+    ]);
+
+    const { response: bookAddressesResponse, result: bookAddresses } = bookAddressesRes;
+    const { response: reservedOrderResponse, result: reservedOrder } = reservedOrderRes;
+
+    if (!bookAddresses?.success) return <Error message={`${bookAddressesResponse?.status},${bookAddresses?.message}`} />
+    if (!reservedOrder?.success) return <Error message={`${reservedOrderResponse?.status},${reservedOrder?.message}`} />
+    
     return (
-        <div>
-            <header className="flex items-center gap-[15px] mb-[20px]">
-                <p className="hidden sm:block text-[16px] md:text-[18px] font-semibold">MinimalNest</p>
-                <span className="hidden sm:block self-stretch my-[4px] w-[3px] rounded-full bg-yellowBold" />
-                <h1 className="text-[20px] md:text-[24px] font-semibold">Thanh toán</h1>
-            </header>
-
-            <div className="relative flex flex-col xl:flex-row items-start gap-[20px]">
-                <div className="space-y-[50px] w-full">
-                    <ProfileGeneralBookAddress />
-                    <PaymentProductsTable data={data} />
-                    <PaymentCoupon />
-                    <PaymentMessage />
-                    <PaymentMethod />
-                </div>
-
-                <PaymentSummary />
-            </div>
-        </div>
+        <PaymentClient
+            bookAddresses={bookAddresses?.data?.book_addresses}
+            reservedOrderInfo={reservedOrder?.data}
+        />
     )
 }

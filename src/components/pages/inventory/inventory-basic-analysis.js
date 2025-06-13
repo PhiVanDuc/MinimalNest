@@ -11,38 +11,46 @@ export default function InventoryBasicAnalysis({ analysis }) {
 
                 <div className="flex items-center gap-[5px]">
                     {
-                        (analysis?.percentages?.manyInStock > 0 && !!analysis?.percentages?.manyInStock) &&
-                        (
-                            <div
-                                className="rounded-full h-[8px] bg-green-500"
-                                style={{
-                                    width: `${analysis?.percentages?.manyInStock}%`
-                                }}
-                            />
-                        )
-                    }
+                        (analysis?.percentages?.manyInStock === 0 && analysis?.percentages?.inStock === 0 && analysis?.percentages?.lowStock === 0) ?
+                        <div className="rounded-full w-full h-[8px] bg-neutral-300" />
+                        : (
+                            <>
+                                {
+                                    (analysis?.percentages?.manyInStock > 0 && !!analysis?.percentages?.manyInStock) &&
+                                    (
+                                        <div
+                                            className="rounded-full h-[8px] bg-green-500"
+                                            style={{
+                                                width: `${analysis?.percentages?.manyInStock}%`
+                                            }}
+                                        />
+                                    )
+                                }
 
-                    {
-                        (analysis?.percentages?.inStock > 0 && !!analysis?.percentages?.inStock) &&
-                        (
-                            <div
-                                className="rounded-full h-[8px] bg-amber-400"
-                                style={{
-                                    width: `${analysis?.percentages?.inStock}%`
-                                }}
-                            />
-                        )
-                    }
+                                {
+                                    (analysis?.percentages?.inStock > 0 && !!analysis?.percentages?.inStock) &&
+                                    (
+                                        <div
+                                            className="rounded-full h-[8px] bg-amber-400"
+                                            style={{
+                                                width: `${analysis?.percentages?.inStock}%`
+                                            }}
+                                        />
+                                    )
+                                }
 
-                    {
-                        (analysis?.percentages?.lowStock > 0 && !!analysis?.percentages?.lowStock) &&
-                        (
-                            <div
-                                className="rounded-full h-[8px] bg-red-500"
-                                style={{
-                                    width: `${analysis?.percentages?.lowStock}%`
-                                }}
-                            />
+                                {
+                                    (analysis?.percentages?.lowStock > 0 && !!analysis?.percentages?.lowStock) &&
+                                    (
+                                        <div
+                                            className="rounded-full h-[8px] bg-red-500"
+                                            style={{
+                                                width: `${analysis?.percentages?.lowStock}%`
+                                            }}
+                                        />
+                                    )
+                                }
+                            </>
                         )
                     }
                 </div>

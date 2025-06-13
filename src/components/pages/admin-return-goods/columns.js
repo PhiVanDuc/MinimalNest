@@ -67,11 +67,21 @@ const columns = [
     {
         accessorKey: "consider",
         header: ({ table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            if (!permissions?.includes("edit-return")) return <></>
+
             return (
                 <h2 className={cn(headerClassName, "text-center")}>Xem xét</h2>
             )
         },
-        cell: () => {
+        cell: ({ table }) => {
+            const moreData = table?.options?.meta?.moreData;
+            const permissions = moreData?.permissions;
+
+            if (!permissions?.includes("edit-return")) return <></>
+
             return <AdminReturnGoodsTableAction />
         }
     }

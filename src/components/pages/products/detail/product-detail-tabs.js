@@ -5,12 +5,13 @@ import {
     TabsContent,
     TabsList,
     TabsTrigger
-} from "@/components/ui/tabs"
-import { ScrollArea } from "@radix-ui/react-scroll-area"
-import ProductDetailTextEditor from "./comment/product-detail-text-editor"
-import ProductDetailComments from "./comment/product-detail-comments"
+} from "@/components/ui/tabs";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
-export default function ProductDetailTabs() {
+// import ProductDetailTextEditor from "./comment/product-detail-text-editor";
+// import ProductDetailComments from "./comment/product-detail-comments";
+
+export default function ProductDetailTabs({ product }) {
     return (
         <Tabs
             defaultValue="desc"
@@ -32,30 +33,50 @@ export default function ProductDetailTabs() {
                         Tiêu chuẩn kích thước
                     </TabsTrigger>
 
-                    <TabsTrigger
+                    {/* <TabsTrigger
                         value="comments"
                         className="shrink-0 data-[state=active]:bg-transparent data-[state=active]:text-darkBold data-[state=active]:shadow-none p-0 pb-[10px] text-[16px] font-medium text-darkMedium hover:text-darkBold"
                     >
                         Đánh giá sản phẩm
-                    </TabsTrigger>
+                    </TabsTrigger> */}
                 </TabsList>
             </ScrollArea>
 
             <TabsContent value="desc">
-                <p className="text-[15px] leading-[30px] text-darkMedium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce non mauris non metus convallis pretium. Praesent eget suscipit mi, in tincidunt nunc. Quisque a risus a sapien pharetra semper. Nam sit amet lectus in ante sollicitudin lacinia. Cras et felis urna. Suspendisse potenti.</p>
+                <p className="text-[15px] leading-[30px] text-darkMedium">{product?.desc || ""}</p>
             </TabsContent>
 
             <TabsContent value="size">
-                <p className="text-[15px] leading-[30px] text-darkMedium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce non mauris non metus convallis pretium. Praesent eget suscipit mi, in tincidunt nunc. Quisque a risus a sapien pharetra semper. Nam sit amet lectus in ante sollicitudin lacinia. Cras et felis urna. Suspendisse potenti.</p>
+                <div className="space-y-[20px]">
+                    <p className="text-sm text-darkMedium italic">
+                        Lưu ý: Kích thước có thể chênh lệch 1 - 2cm tùy thuộc vào phương thức đo. Vui lòng kiểm tra kỹ trước khi đặt hàng.
+                    </p>
+
+                    <div className="text-[15px] leading-[30px] text-darkMedium space-y-[8px]">
+                        {
+                            product?.sizes?.map(size => {
+                                return (
+                                    <div
+                                        key={size?.id}
+                                        className="flex items-stretch gap-[8px]"
+                                    >
+                                        <p className="w-fit sm:shrink-0 sm:w-[200px] flex items-center px-[20px] py-[10px] bg-neutral-100 rounded-[8px]">{size?.size}</p>
+                                        <p className="w-full px-[20px] py-[10px] bg-neutral-100 rounded-[8px]">{size?.desc}</p>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
             </TabsContent>
 
-            <TabsContent
+            {/* <TabsContent
                 value="comments"
                 className="space-y-[40px]"
             >
                 <ProductDetailTextEditor />
                 <ProductDetailComments />
-            </TabsContent>
+            </TabsContent> */}
         </Tabs>
     )
 }

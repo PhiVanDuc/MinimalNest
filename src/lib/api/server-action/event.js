@@ -4,7 +4,7 @@ const { default: fetchHelperAuth } = require("../fetch-helper/fetch-helper-auth"
 
 const getEvents = async (data) => {
     try {
-        const { response, result } = await fetchHelperAuth.get(`/events?page=${data?.page || 1}&event=${data?.event}${ data?.all ? `&all=${data?.all}` : "" }`);
+        const { response, result } = await fetchHelperAuth.get(`/events?page=${data?.page || 1}&event=${data?.event}${ data?.all ? `&all=${data?.all}` : "" }${ data?.isDiscount ? `&is_discount=${data?.isDiscount}` : "" }`);
         return { response, result };
     }
     catch(error) {

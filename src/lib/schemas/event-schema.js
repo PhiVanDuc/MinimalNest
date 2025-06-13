@@ -1,24 +1,11 @@
 import { z } from "zod";
 
 const eventSchema = z.object({
-    image: z.union([
-        // Trường hợp là string (URL ảnh)
-        z.string()
-            .min(1, "URL ảnh không được để trống")
-            .refine(val => val.startsWith('http://') || val.startsWith('https://'), {
-                message: "URL ảnh phải bắt đầu bằng http:// hoặc https://"
-            }),
-        
-        // Trường hợp là File object
-        z.instanceof(File, { message: "Vui lòng chọn ảnh cho sự kiện" })
-            .refine(file => file.size > 0, { message: "File ảnh không hợp lệ" })
-            .refine(file => file.type.startsWith('image/'), { 
-                message: "File phải là định dạng ảnh" 
-            })
-    ], {
-        required_error: "Vui lòng cung cấp ảnh cho sự kiện",
-        invalid_type_error: "Ảnh phải là URL hợp lệ hoặc file ảnh"
-    }),
+    image: z
+        .any()
+        .refine((val) => val !== null && val !== undefined, {
+            message: "Vui lòng chọn ảnh cho sự kiện.",
+        }),
 
     event: z
         .string({ required_error: "Vui lòng nhập tiêu đề cho sự kiện." })
@@ -27,6 +14,14 @@ const eventSchema = z.object({
     desc: z
         .string({ required_error: "Vui lòng nhập mô tả cho sự kiện." })
         .nonempty("Vui lòng nhập mô tả cho sự kiện."),
+
+    link: z
+        .string()
+        .optional(),
+
+    eventType: z
+        .string({ required_error: "Vui lòng chọn loại sự kiện." })
+        .nonempty("Vui lòng chọn loại sự kiện."),
 
     startDate: z.preprocess(
         (val) => {

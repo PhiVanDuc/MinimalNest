@@ -3,9 +3,11 @@ import ProductsPromote from "./products-promote";
 import ProductsListClient from "./products-list-client";
 
 import { getAllPublicProducts, getPublicProducts } from "@/lib/api/server-action/public-product";
+import { getPublicEvents } from "@/lib/api/server-action/public-event";
 
 export default async function ProductsList({ searchParams }) {
-    const [publicLatestProductsRes, publicBestSellerProductsRes, publicAllProductsRes] = await Promise.all([
+    const [publicEventsRes, publicLatestProductsRes, publicBestSellerProductsRes, publicAllProductsRes] = await Promise.all([
+        getPublicEvents(),
         getPublicProducts({
             productType: 'moi-nhat'
         }),
@@ -18,6 +20,7 @@ export default async function ProductsList({ searchParams }) {
         })
     ]);
 
+    const { result: publicEvents } = publicEventsRes;
     const { result: publicLatestProducts } = publicLatestProductsRes;
     const { result: publicBestSellerProducts } = publicBestSellerProductsRes;
     const { result: publicAllProducts } = publicAllProductsRes;
@@ -25,6 +28,7 @@ export default async function ProductsList({ searchParams }) {
     return (
         <ProductsListClient>
             <ProductsPromote
+                publicEvents={publicEvents?.data?.events}
                 publicLatestProducts={publicLatestProducts?.data?.products}
                 publicBestSellerProducts={publicBestSellerProducts?.data?.products}
             />

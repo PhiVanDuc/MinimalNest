@@ -68,7 +68,7 @@ export default function AdminCouponEditCondition({ form, submitting }) {
                                 <div className="space-y-[5px]">
                                     <FormLabel>Điều kiện áp dụng</FormLabel>
 
-                                    <div className="flex items-center gap-[20px]">
+                                    <div className="flex items-center gap-[25px]">
                                         {
                                             listConditions.map((con, index) => {
                                                 return (
@@ -78,7 +78,7 @@ export default function AdminCouponEditCondition({ form, submitting }) {
                                                         name="conditions"
                                                         render={({ field }) => {
                                                             return (
-                                                                <FormItem className="flex items-center gap-[5px] w-full">
+                                                                <FormItem className="flex items-center gap-[5px]">
                                                                     <FormControl>
                                                                         <Checkbox
                                                                             checked={field.value?.includes(con.value)}
@@ -209,7 +209,7 @@ export default function AdminCouponEditCondition({ form, submitting }) {
                                         <FormItem className="w-full">
                                             <FormLabel className="flex items-center gap-[5px]">
                                                 <FormControl>
-                                                    <RadioGroupItem value="first_time" />
+                                                    <RadioGroupItem value="first_time_customer" />
                                                 </FormControl>
 
                                                 <span>Khách hàng lần đầu</span>
@@ -219,7 +219,7 @@ export default function AdminCouponEditCondition({ form, submitting }) {
                                         <FormItem className="w-full">
                                             <FormLabel className="flex items-center gap-[5px]">
                                                 <FormControl>
-                                                    <RadioGroupItem value="new" />
+                                                    <RadioGroupItem value="new_customer" />
                                                 </FormControl>
 
                                                 <span>Khách hàng mới</span>
@@ -229,7 +229,7 @@ export default function AdminCouponEditCondition({ form, submitting }) {
                                         <FormItem className="w-full">
                                             <FormLabel className="flex items-center gap-[5px]">
                                                 <FormControl>
-                                                    <RadioGroupItem value="vip" />
+                                                    <RadioGroupItem value="vip_customer" />
                                                 </FormControl>
 
                                                 <span>Khách hàng quen</span>

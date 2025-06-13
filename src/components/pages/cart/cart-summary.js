@@ -1,6 +1,6 @@
 "use client"
 
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import Money from "@/components/customs/money";
@@ -9,10 +9,61 @@ import { Separator } from "@/components/ui/separator";
 import CustomButton from "@/components/customs/custom-button";
 
 import { toast } from "sonner";
+import calcPrice from "@/lib/utils/calc-price";
+import { createReservedOrder } from "@/lib/api/server-action/reserved_order";
 
-export default function CartSummary() {
+export default function CartSummary({
+    accountId,
+    form
+}) {
     const router = useRouter();
-    const selectedProducts = useSelector(state => state.cartSelectedProducts.selectedProducts);
+    const [calc, setCalc] = useState(0);
+    const [submitting, setSubmitting] = useState(false);
+    const watchProducts = form.watch("products");
+
+    useEffect(() => {
+        const selectedItems = watchProducts?.filter(item => item.selected) || [];
+
+        if (selectedItems?.length === 0) setCalc(0);
+        else {
+            let total = 0;
+
+            selectedItems.forEach(item => {
+                const { product: { cost_price, interest_rate, general_discount, discount_amount, discount_type }, quantity } = item;
+                const isDiscount = ((discount_amount && discount_type) || general_discount);
+
+                const price = isDiscount ?
+                (discount_amount && discount_type) ?
+                calcPrice(cost_price, interest_rate, discount_type, discount_amount) :
+                general_discount &&
+                calcPrice(cost_price, interest_rate, general_discount?.discount_type, general_discount?.discount_amount) :
+                calcPrice(cost_price, interest_rate, null, null);
+
+                total = total + (price * +quantity);
+            });
+
+            setCalc(total);
+        }
+    }, [watchProducts]);
+    
+    const handleCreateReservedOrder = async () => {
+        if (submitting) return;
+        setSubmitting(true);
+
+        const reservedOrder = await createReservedOrder({
+            accountId,
+            products: watchProducts?.filter(prod => prod?.selected)
+        });
+        const message = reservedOrder?.message;
+
+        if (reservedOrder?.success) {
+            toast.success(message);
+            router.push(`/thanh-toan/${reservedOrder?.data?.reserved_order_id}`);
+        }
+        else toast.error(message);
+
+        setSubmitting(false);
+    }
 
     return (
         <div className="xl:sticky xl:top-[100px] shrink-0 w-full xl:w-[370px] rounded-[10px] p-[20px] border space-y-[20px] bg-white">
@@ -25,7 +76,7 @@ export default function CartSummary() {
                 <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[14px] text-darkMedium font-medium">
                     <p>Tổng tiền hàng</p>
                     <Money
-                        price={1200000000}
+                        price={calc}
                         moneyClassName="text-[14px] text-darkBold"
                         currencyClassName="text-[12px]"
                     />
@@ -43,7 +94,7 @@ export default function CartSummary() {
                 <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0">
                     <p className="text-[16px] font-semibold text-darkBold">Tổng tạm</p>
                     <Money
-                        price={1200000000}
+                        price={calc}
                         moneyClassName="text-[16px] text-darkBold"
                         currencyClassName="text-[12px]"
                     />
@@ -53,25 +104,15 @@ export default function CartSummary() {
             </div>
 
             {
-                selectedProducts.length > 0 &&
+                watchProducts?.filter(item => item.selected)?.length > 0 &&
                 (
-                    <div className="flex items-center gap-x-[5px]">
-                        <CustomButton
-                            icon={<Trash2 size={20} />}
-                            variant="outline"
-                            className="py-[20px] font-medium text-darkMedium hover:bg-transparent hover:border-red-200 hover:text-red-500 transition-colors duration-300"
-                            onClick={() => { toast.warning("Vui lòng chọn xóa 1 lần nữa để xác nhận."); }}
-                        >
-                        </CustomButton>
-
-                        <CustomButton
-                            icon={<ShoppingCart size={20} />}
-                            className="w-full py-[20px] bg-yellowBold hover:bg-yellowBold"
-                            onClick={() => { router.push("/thanh-toan") }}
-                        >
-                            Mua
-                        </CustomButton>
-                    </div>
+                    <CustomButton
+                        icon={<ShoppingCart size={20} />}
+                        className="w-full py-[20px] bg-yellowBold hover:bg-yellowBold"
+                        onClick={handleCreateReservedOrder}
+                    >
+                        { submitting ? "Đang chuẩn bị . . ." : "Thanh toán" }
+                    </CustomButton>
                 )
             }
         </div>

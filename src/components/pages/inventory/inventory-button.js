@@ -22,7 +22,7 @@ export default function InventoryButton({ permissions }) {
                     }}
                 >
                     {
-                        isDisplay ? "Tắt thêm số lượng" : "Thêm số lượng"
+                        isDisplay ? "Tắt thêm" : "Thêm số lượng"
                     }
                 </Button>
             }   

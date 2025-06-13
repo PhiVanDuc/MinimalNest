@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
-const display = ["/ho-so", "/ho-so/phieu-giam-gia", "/ho-so/don-hang"];
+const display = ["/ho-so", "/ho-so/so-dia-chi", "/ho-so/don-hang"];
 
 export default function ProfileOptions() {
     const pathname = usePathname();
@@ -29,13 +29,13 @@ export default function ProfileOptions() {
                 </Link>
 
                 <Link
-                    href="/ho-so/phieu-giam-gia"
+                    href="/ho-so/so-dia-chi"
                     className={cn(
                         "text-[14px] font-medium text-darkBold px-[15px] py-[12px] rounded-[10px] hover:bg-neutral-100 transition-colors duration-300",
-                        pathname.startsWith("/ho-so/phieu-giam-gia") ? "bg-darkBold hover:bg-darkBold text-white" : ""
+                        pathname.startsWith("/ho-so/so-dia-chi") ? "bg-darkBold hover:bg-darkBold text-white" : ""
                     )}
                 >
-                    Phiếu giảm giá
+                    Sổ địa chỉ
                 </Link>
 
                 <Link

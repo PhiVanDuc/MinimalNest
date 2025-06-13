@@ -21,11 +21,11 @@ export default function InventoryFilterName() {
         e.preventDefault();
 
         if (!product) {
-            router.push(`/quan-tri/kho-hang`);
+            router.push(`/quan-tri/ton-kho`);
             return;
         }
 
-        router.push(`/quan-tri/kho-hang?product=${product}`);
+        router.push(`/quan-tri/ton-kho?product=${product}`);
     }
 
     return (

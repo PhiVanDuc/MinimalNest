@@ -42,7 +42,7 @@ export default function ProfileGeneralDeleteAccount() {
             <Dialog>
                 <DialogTrigger className="w-fit shrink-0">
                     <div
-                        className="flex items-center gap-x-[15px] py-[15px] px-[18px] text-[14px] font-semibold text-white bg-red-500 hover:bg-red-500 hover:opacity-80 transition duration-300 rounded-[10px]"
+                        className="flex items-center gap-x-[15px] py-[14px] px-[15px] text-[14px] font-semibold text-white bg-red-500 hover:bg-red-500 hover:opacity-80 transition duration-300 rounded-[10px]"
                     >
                         <p className="shrink-0">Xóa tài khoản</p>
                         <FiTrash size={20} className="shrink-0" />

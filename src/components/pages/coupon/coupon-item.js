@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 import generateSignatureClient from "@/lib/utils/generate-signature-client";
+import formatDate from "@/lib/utils/format-date";
 
 export default function CouponItem({ coupon }) {
     const pathname = usePathname();
@@ -24,12 +25,11 @@ export default function CouponItem({ coupon }) {
         >
             <div className="relative w-full sm:w-[45%] aspect-video sm:aspect-auto sm:self-stretch rounded-tl-[15px] rounded-bl-[15px] rounded-tr-[15px] rounded-br-[15px] sm:rounded-tr-0 sm:rounded-br-0 overflow-hidden">
                 <Image
-                    src={voucherImage}
-                    alt="Product Image"
+                    src={coupon?.event?.image}
+                    alt="Ảnh sự kiện"
                     width={1000}
                     height={1000}
                     className="absolute inset-0 h-full w-full object-cover object-left bg-slate-300"
-                    placeholder="blur"
                     loading="lazy"
                 />
 
@@ -46,14 +46,14 @@ export default function CouponItem({ coupon }) {
                 <div className="space-y-[5px] mb-[20px]">
                     <div className="flex items-center gap-x-[10px]">
                         <span className="inline-block w-[8px] aspect-square rounded-full bg-yellowBold" />
-                        <p className="text-[11px] sm:text-[12px] font-medium text-darkMedium">{coupon.code}</p>
+                        <p className="text-[11px] sm:text-[12px] font-medium text-darkMedium">{coupon?.code}</p>
                     </div>
 
-                    <p className="truncate-2 text-[13px] sm:text-[14px] font-semibold text-darkBold">{coupon.title}</p>
+                    <p className="truncate-2 text-[13px] sm:text-[14px] font-semibold text-darkBold">{coupon?.event?.event}</p>
 
                     <div className="flex flex-wrap gap-x-[15px] gap-y-[3px] text-[12px] sm:text-[13px] text-darkMedium">
-                        <p className="whitespace-nowrap">NBĐ: {coupon.prodDate}</p>
-                        <p className="whitespace-nowrap">HSD: {coupon.expDate}</p>
+                        <p className="whitespace-nowrap">NBĐ: {formatDate(coupon?.event?.start_date)}</p>
+                        <p className="whitespace-nowrap">HSD: {formatDate(coupon?.event?.start_date)}</p>
                     </div>
                 </div>
 

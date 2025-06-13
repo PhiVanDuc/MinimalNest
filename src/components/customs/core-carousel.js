@@ -12,7 +12,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export default function CoreCarousel({ data, numberCardClassName, options = {}, isPlugins = false }) {
+export default function CoreCarousel({ data, numberCardClassName, navigatorClassName, options = {}, isPlugins = false }) {
     const [api, setApi] = useState();
     const [current, setCurrent] = useState(0);
     const [count, setCount] = useState(0);
@@ -28,7 +28,7 @@ export default function CoreCarousel({ data, numberCardClassName, options = {}, 
     }, [api]);
 
     return (
-        <div className="space-y-[10px]">
+        <div className="relative">
             <Carousel
                 setApi={setApi}
                 opts={{
@@ -37,7 +37,7 @@ export default function CoreCarousel({ data, numberCardClassName, options = {}, 
                 }}
                 plugins={!isPlugins ? [] : [
                     Autoplay({
-                      delay: 3000,
+                      delay: 5000,
                     }),
                 ]}
                 className="w-full"
@@ -47,9 +47,9 @@ export default function CoreCarousel({ data, numberCardClassName, options = {}, 
                         data?.map(item => (
                             <CarouselItem
                                 key={item.id}
-                                className={numberCardClassName}
+                                className={cn("", numberCardClassName)}
                             >
-                                <div className="sm:p-1">
+                                <div className="sm:p-1 h-full">
                                     {item.component}
                                 </div>
                             </CarouselItem>
@@ -58,28 +58,35 @@ export default function CoreCarousel({ data, numberCardClassName, options = {}, 
                 </CarouselContent>
             </Carousel>
 
-            <div className="flex items-center justify-between">
-                <div
-                    onClick={() => {api?.scrollTo(current - 1)}}
-                    className={
-                        cn(
+            <div
+                className={cn(
+                    "mt-[10px]",
+                    navigatorClassName
+                )}
+            >
+                <div className="flex items-center justify-between">
+                    <div
+                        onClick={() => {api?.scrollTo(current - 1)}}
+                        className={
+                            cn(
+                                "flex items-center justify-center text-darkMedium w-[40px] aspect-square rounded-full border shadow-sm cursor-pointer bg-white",
+                                current === 0 ? "opacity-80 cursor-not-allowed" : "",
+
+                            )
+                        }
+                    >
+                        <ChevronLeft size={25} />
+                    </div>
+
+                    <div
+                        onClick={() => {api?.scrollTo(current + 1)}}
+                        className={cn(
                             "flex items-center justify-center text-darkMedium w-[40px] aspect-square rounded-full border shadow-sm cursor-pointer bg-white",
-                            current === 0 ? "opacity-80 cursor-not-allowed" : "",
-
-                        )
-                    }
-                >
-                    <ChevronLeft size={25} />
-                </div>
-
-                <div
-                    onClick={() => {api?.scrollTo(current + 1)}}
-                    className={cn(
-                        "flex items-center justify-center text-darkMedium w-[40px] aspect-square rounded-full border shadow-sm cursor-pointer bg-white",
-                        current + 1 === count ? "opacity-80 cursor-not-allowed" : "",
-                    )}
-                >
-                    <ChevronRight size={25} />
+                            current + 1 === count ? "opacity-80 cursor-not-allowed" : "",
+                        )}
+                    >
+                        <ChevronRight size={25} />
+                    </div>
                 </div>
             </div>
         </div>

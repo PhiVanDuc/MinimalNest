@@ -31,7 +31,7 @@ export default function AdminCouponAddClient({ events }) {
             discountPrice: "0",
             minOrderTotal: "0",
             minItems: "0",
-            customerType: "first_time",
+            customerType: "all",
             quantity: "0"
         }
     });

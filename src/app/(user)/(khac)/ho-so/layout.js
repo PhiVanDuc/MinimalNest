@@ -1,4 +1,4 @@
-import ProfileOptions from "@/components/pages/profile/profile-options";
+import ProfileOptions from "@/components/pages/profile/profile-options"
 
 export default function Layout({ children }) {
     return (

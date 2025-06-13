@@ -3,7 +3,6 @@ import CoreCarousel from "@/components/customs/core-carousel";
 import ProductItem from "@/components/pages/products/product-item";
 
 import { ChevronRight } from "lucide-react";
-import { v4 } from "uuid";
 import { getPublicProducts } from "@/lib/api/server-action/public-product";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +19,8 @@ export default async function LatestProducts() {
             component: <ProductItem product={product} />
         }
     }) : [];
+
+    if (componentProduct?.length === 0) return <></>;
 
     return (
         <section className={cn(

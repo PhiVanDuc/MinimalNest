@@ -13,8 +13,8 @@ import AdminCouponEditCondition from "./admin-coupon-edit-condition";
 
 import couponSchema from "@/lib/schemas/coupon-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { convertToNumber } from "@/lib/utils/format-currency";
-import { addCoupon, editCoupon } from "@/lib/api/server-action/coupon";
+import { convertToNumber, convertToNumberDb } from "@/lib/utils/format-currency";
+import { editCoupon } from "@/lib/api/server-action/coupon";
 import { toast } from "sonner";
 
 export default function AdminCouponEditClient({ events, coupon, couponId }) {
@@ -28,13 +28,15 @@ export default function AdminCouponEditClient({ events, coupon, couponId }) {
             desc: coupon?.desc || "",
             discountType: coupon?.discount_type || "amount",
             conditions: ["login"],
-            discountPrice: `${coupon?.discount_price}` || "0",
-            minOrderTotal: `${coupon?.min_order_total}` || "0",
+            discountPrice: `${convertToNumberDb(coupon?.discount_price || "0")}`,
+            minOrderTotal: `${convertToNumberDb(coupon?.min_order_total || "0")}`,
             minItems: `${coupon?.min_items}` || "0",
-            customerType: coupon?.customer_type || "first_time",
+            customerType: coupon?.customer_type || "all",
             quantity: `${coupon?.quantity}` || "0"
         }
     });
+
+    console.log(coupon);
 
     const onSubmit = async (data) => {
         setSubmitting(true);
@@ -59,7 +61,7 @@ export default function AdminCouponEditClient({ events, coupon, couponId }) {
     return (
         <section className="space-y-[30px]">
             <header>
-                <h2 className="text-[24px] font-semibold">Thêm phiếu giảm giá</h2>
+                <h2 className="text-[24px] font-semibold">Chỉnh sửa phiếu giảm giá</h2>
             </header>
 
             <Form {...form}>

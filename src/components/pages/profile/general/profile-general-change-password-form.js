@@ -46,7 +46,7 @@ export default function ProfileGeneralChangePasswordForm() {
                                     <FormControl>
                                         <Input
                                             placeholder="Nhập mật khẩu cũ . . ."
-                                            className="px-[15px] py-[22px] border-darkBland rounded-[10px]"
+                                            className="px-[15px] py-[22px] border-neutral-300 rounded-[10px]"
                                             style={{
                                                 margin: "0px"
                                             }}
@@ -73,7 +73,7 @@ export default function ProfileGeneralChangePasswordForm() {
                                     <FormControl>
                                         <Input
                                             placeholder="Nhập mật khẩu mới . . ."
-                                            className="px-[15px] py-[22px] border-darkBland rounded-[10px]"
+                                            className="px-[15px] py-[22px] border-neutral-300 rounded-[10px]"
                                             style={{
                                                 margin: "0px"
                                             }}
@@ -100,7 +100,7 @@ export default function ProfileGeneralChangePasswordForm() {
                                     <FormControl>
                                         <Input
                                             placeholder="Xác thực mật khẩu mới . . ."
-                                            className="px-[15px] py-[22px] border-darkBland rounded-[10px]"
+                                            className="px-[15px] py-[22px] border-neutral-300 rounded-[10px]"
                                             style={{
                                                 margin: "0px"
                                             }}

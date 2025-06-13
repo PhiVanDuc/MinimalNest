@@ -5,9 +5,8 @@ import { getEvents } from "@/lib/api/server-action/event";
 import { getCoupon } from "@/lib/api/server-action/coupon";
 
 export default async function AdminCouponEdit({ params }) {
-    // Fetch
     const [eventsRes, couponRes] = await Promise.all([
-        getEvents({ all: true }),
+        getEvents({ all: true, isDiscount: true }),
         getCoupon(params?.couponId)
     ]);
 

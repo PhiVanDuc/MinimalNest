@@ -10,7 +10,6 @@ import getAccessToken from "@/lib/utils/getAccessToken";
 import { getCoupons } from "@/lib/api/server-action/coupon";
 
 export default async function AdminCoupon({ searchParams }) {
-    // Fetch
     const { decode: { decode: { permissions } } } = getAccessToken();
     const { response, result: coupons } = await getCoupons({ page: searchParams?.page || 1, code: searchParams?.code || "" });
 

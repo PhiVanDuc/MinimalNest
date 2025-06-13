@@ -10,6 +10,7 @@ import {
     TooltipTrigger
 } from "@/components/ui/tooltip";
 
+import { Badge } from "@/components/ui/badge";
 import Money from "@/components/customs/money";
 import { IoPricetagOutline } from "react-icons/io5";
 
@@ -20,6 +21,7 @@ import { cn } from "@/lib/utils";
 export default function ProductItem({ product }) {
     const {
         product: productName,
+        product_types: productTypes,
         colors = [],
         general_discount,
         cost_price,
@@ -32,7 +34,7 @@ export default function ProductItem({ product }) {
     return (
         <Link
             href={`/san-pham/${product?.slug}`}
-            className="block rounded-[15px] cursor-pointer border shadow-sm overflow-hidden"
+            className="relative block h-full rounded-[15px] cursor-pointer border shadow-sm overflow-hidden"
         >
             <div className="group relative w-full aspect-square rounded-[15px] rounded-br-none rounded-bl-none bg-white overflow-hidden">
                 {
@@ -42,6 +44,7 @@ export default function ProductItem({ product }) {
                         alt={productName}
                         fill
                         className="object-cover object-center scale-[0.8] group-hover:scale-[0.7] rounded-[15px] transition-all"
+                        sizes="100%"
                         priority={false}
                     /> : 
                     <div className="w-full aspect-square rounded-[15px] rounded-br-none rounded-bl-none bg-slate-300 overflow-hidden" />
@@ -111,6 +114,23 @@ export default function ProductItem({ product }) {
                         )
                     }
                 </div>
+            </div>
+
+            <div className="flex gap-[5px] items-center absolute top-[10px] right-[10px]">
+                {
+                    productTypes?.map(type => {
+                        if (type?.slug !== "binh-thuong") {
+                            return (
+                                <Badge
+                                    key={type?.id}
+                                    className="bg-yellowBold hover:bg-yellowBold hover:opacity-80"
+                                >
+                                    {type?.product_type}
+                                </Badge>
+                            )
+                        }
+                    })
+                }
             </div>
         </Link>
     )

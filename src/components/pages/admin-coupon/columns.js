@@ -4,6 +4,7 @@ import AdminCouponTableAction from "./admin-coupon-table-action";
 import Money from "@/components/customs/money";
 
 import { cn } from "@/lib/utils";
+import { convertToNumberDb } from "@/lib/utils/format-currency";
 import formatDate, { compareTime } from "@/lib/utils/format-date";
 
 const headerClassName = "text-[14px] whitespace-nowrap font-semibold";
@@ -70,10 +71,16 @@ const columns = [
 
             return (
                 <div className="flex justify-center">
-                    <Money
-                        price={data?.discount_price}
-                        moneyClassName="text-[14px] font-medium"
-                    />
+                    {
+                        data?.discount_type === "amount" ?
+                        (
+                            <Money
+                                price={convertToNumberDb(data?.discount_price)}
+                                moneyClassName="text-[14px] font-medium"
+                            />
+                        ) :
+                        <p className="text-[14px] font-medium text-center">{convertToNumberDb(data?.discount_price)}%</p>
+                    }
                 </div>
             )
         }

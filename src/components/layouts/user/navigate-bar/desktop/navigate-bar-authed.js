@@ -1,7 +1,8 @@
 "use client"
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
     DropdownMenu,
@@ -17,22 +18,45 @@ import { LayoutDashboard } from "lucide-react";
 import { TbArrowsExchange2 } from "react-icons/tb";
 
 import { signOut } from "@/lib/api/server-action/auth";
+import { rewriteQuantity } from "@/redux/slices/cart-products/cart-quantity-slice";
 
-export default function NavigateBarAuthed({ userInfo }) {
+export default function NavigateBarAuthed({
+    userInfo,
+    cart
+}) {
     const router = useRouter();
+    const dispatch = useDispatch();
+    const cartItemIds = useSelector((state) => state.cartQuantity.cartItemIds);
+    
     const permissions = userInfo?.decode?.permissions;
 
     const lastName = userInfo?.decode?.last_name?.split(" ");
     const letterLastName = (lastName?.[lastName?.length - 1])?.[0];
 
+    useEffect(() => {
+        const cartItemIds = cart?.cart_items?.map(item => item?.id) || [];
+        dispatch(rewriteQuantity(cartItemIds));
+    }, [cart]);
+
     return (
         <div className="flex items-center gap-x-[5px]">
-            <Link
-                href="/gio-hang"
-                className="hidden xl:flex px-[16px] py-[8px] text-[14px] text-darkMedium font-medium leading-0 rounded-[8px] hover:bg-neutral-100 hover:text-darkBold transition-colors duration-300"
-            >
-                Giỏ hàng
-            </Link>
+            <div className="relative">
+                <a
+                    href="/gio-hang"
+                    className="hidden xl:flex px-[16px] py-[8px] text-[14px] text-darkMedium font-medium leading-0 rounded-[8px] hover:bg-neutral-100 hover:text-darkBold transition-colors duration-300"
+                >
+                    Giỏ hàng
+                </a>
+
+                {
+                    cartItemIds?.length > 0 &&
+                    (
+                        <p className="absolute top-1/2 translate-y-[-50%] left-[-20px] px-[10px] py-[2px] rounded-full bg-yellowBold text-[13px] text-white font-medium">
+                            {cartItemIds?.length}
+                        </p>
+                    )
+                }
+            </div>
             
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>

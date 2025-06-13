@@ -1,11 +1,9 @@
 import { RiCopperCoinLine } from "react-icons/ri";
-import ProfileGeneralBookAddress from "./profile-general-book-address";
 import ProfileGeneralBasicForm from "./profile-general-basic-form";
 import ProfileGeneralChangePasswordForm from "./profile-general-change-password-form";
 import ProfileGeneralDeleteAccount from "./profile-general-delete-account";
 
-export default function ProfileGeneral() {
-    return (
+export default function ProfileGeneral() {return (
         <div className="space-y-[40px] w-full">
             <header className="sm:flex items-center justify-between space-y-[10px] sm:space-y-0">
                 <h1 className="text-[20px] md:text-[24px] text-darkBold font-semibold">Thông tin chung</h1>
@@ -15,7 +13,6 @@ export default function ProfileGeneral() {
                 </div>
             </header>
 
-            <ProfileGeneralBookAddress />
             <ProfileGeneralBasicForm />
             <ProfileGeneralChangePasswordForm />
             <ProfileGeneralDeleteAccount />

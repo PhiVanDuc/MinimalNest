@@ -14,7 +14,7 @@ export default function AdminProductButton({ permissions }) {
     return (
         <>
             {
-                !isAddProduct || !isEditProduct ?
+                (!isAddProduct && !isEditProduct) ?
                 ( <></> ) :
                 (
                     <div className="flex items-center gap-[10px]">

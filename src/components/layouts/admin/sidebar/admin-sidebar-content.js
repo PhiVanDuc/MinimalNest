@@ -77,7 +77,13 @@ const sidebar = [
                         label: "Sản phẩm",
                         href: "/quan-tri/san-pham",
                         permission: "list-product"
-                    }
+                    },
+                    {
+                        id: v4(),
+                        label: "Tồn kho",
+                        href: "/quan-tri/ton-kho",
+                        permission: "list-inventory"
+                    },
                 ]
             },
             {
@@ -90,14 +96,8 @@ const sidebar = [
                 id: v4(),
                 label: "Trả hàng",
                 href: "/quan-tri/tra-hang",
-                permission: "list-order"
-            },
-            {
-                id: v4(),
-                label: "Kho hàng",
-                href: "/quan-tri/kho-hang",
-                permission: "list-inventory"
-            },
+                permission: "list-return"
+            }
         ]
     }
 ];

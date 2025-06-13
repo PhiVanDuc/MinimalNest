@@ -42,6 +42,30 @@ const columns = [
                         "text-center"
                     )
                 }>
+                    Loại sự kiện
+                </h2>
+            )
+        },
+        cell: ({ row }) => {
+            const data = row?.original;
+
+            return (
+                <p className="text-[14px] font-medium text-center">{
+                    data?.event_type === "discount" ? "Giảm giá" : "Quản bá sản phẩm"
+                }</p>
+            )
+        }
+    },
+    {
+        accessorKey: "coupon-quantity",
+        header: ({ row }) => {
+            return (
+                <h2 className={
+                    cn(
+                        headerClassName,
+                        "text-center"
+                    )
+                }>
                     Số phiếu giảm giá
                 </h2>
             )
@@ -51,6 +75,8 @@ const columns = [
             const totalCoupons = Array.isArray(data.coupons)
             ? data.coupons.reduce((sum, c) => sum + (c.quantity || 0), 0)
             : 0;
+
+            if (data?.event_type !== "discount") return <p className="text-[14px] font-medium text-center">Không có phiếu giảm giá.</p>
 
             return (
                 <p className="text-[14px] font-medium text-center">{totalCoupons}</p>

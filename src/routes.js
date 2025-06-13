@@ -13,7 +13,7 @@ const PUBLIC_PATHS = [
 
 const PROTECTED_PATHS = [
     "/ho-so",
-    "/ho-so/phieu-giam-gia",
+    "/ho-so/so-dia-chi",
     "/ho-so/don-hang",
     "/gio-hang",
     "/thanh-toan",
@@ -44,9 +44,10 @@ const ADMIN_PATHS = [
     "/quan-tri/san-pham/them-san-pham",
     "/quan-tri/san-pham/chinh-sua-san-pham",
     "/quan-tri/san-pham/giam-gia-chung",
+    "/quan-tri/ton-kho",
     "/quan-tri/don-hang",
     "/quan-tri/tra-hang",
-    "/quan-tri/kho-hang",
+    "/quan-tri/tra-hang/xem-xet",
 ];
 
 const PERMISSION_PATHS = [
@@ -163,20 +164,20 @@ const PERMISSION_PATHS = [
         paths: ["/quan-tri", "/quan-tri/san-pham"]
     },
     {
-        permission: "list-order",
-        paths: ["/quan-tri", "/quan-tri/don-hang", "/quan-tri/tra-hang"]
-    },
-    {
-        permission: "detail-order",
-        paths: ["/quan-tri", "/quan-tri/don-hang"]
-    },
-    {
-        permission: "edit-order",
-        paths: ["/quan-tri", "/quan-tri/don-hang"]
-    },
-    {
         permission: "list-inventory",
-        paths: ["/quan-tri", "/quan-tri/kho-hang"]
+        paths: ["/quan-tri", "/quan-tri/ton-kho"]
+    },
+    {
+        permission: "list-order",
+        paths: ["/quan-tri", "/quan-tri/don-hang"]
+    },
+    {
+        permission: "list-return",
+        paths: ["/quan-tri", "/quan-tri/tra-hang"]
+    },
+    {
+        permission: "edit-return",
+        paths: ["/quan-tri", "/quan-tri/tra-hang/xem-xet"]
     }
 ];
 

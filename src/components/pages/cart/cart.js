@@ -1,31 +1,19 @@
 import CartClient from "./cart-client";
+import Error from "@/components/customs/error";
 
-import { v4 } from "uuid";
+import { getCart } from "@/lib/api/server-action/cart";
+import getAccessToken from "@/lib/utils/getAccessToken";
 
-const data = Array.from({ length: 3 }).map((_, index) => {
-    return {
-        id: v4(),
-        category: "Danh mục",
-        productName: "Tên sản phẩm",
-        color: {
-            id: v4(),
-            label: "Màu đen",
-            param: "black",
-            codeColor: "#000000"
-        },
-        size: {
-            id: v4(),
-            label: "S",
-            param: "s"
-        },
-        quantity: 1,
-        singlePrice: "400000000",
-        totalPrice: "400000000"
-    }
-});
+export default async function Cart() {
+    const { decode } = getAccessToken();
+    const { response, result: cart } = await getCart(decode?.decode?.id || "");
 
-export default function Cart() {
+    if (!cart?.success) return <Error message={`${response?.status},${cart?.message}`} />
+
     return (
-        <CartClient data={data} />
+        <CartClient
+            decode={decode}
+            cart={cart?.data?.cart}
+        />
     )
 }

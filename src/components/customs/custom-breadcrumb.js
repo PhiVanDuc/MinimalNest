@@ -57,10 +57,11 @@ const breadcrumbMap = {
     "chinh-sua-kich-co": "Chỉnh sửa kích cỡ",
     "them-san-pham": "Thêm sản phẩm",
     "chinh-sua-san-pham": "Chỉnh sửa sản phẩm",
-    "kho-hang": "Kho hàng",
+    "ton-kho": "Tồn kho",
     "giam-gia-chung": "Giảm giá chung",
     "tra-hang": "Trả hàng",
-    "xem-xet": "Xem xét"
+    "xem-xet": "Xem xét",
+    "so-dia-chi": "Sổ địa chỉ"
 };
 
 export default function CustomBreadcrumb({ style, isAdmin = false }) {

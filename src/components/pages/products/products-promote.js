@@ -7,14 +7,17 @@ import ProductFilterRightSide from "./filter/product-filter-right-side";
 import ProductItem from "./product-item";
 
 import { cn } from "@/lib/utils";
+import ProductEvent from "./product-event";
 
-export default function ProductsPromote({ publicLatestProducts, publicBestSellerProducts }) {
+export default function ProductsPromote({ publicEvents, publicLatestProducts, publicBestSellerProducts }) {
     const { isOpen } = useProductFilter();
 
     return (
         <div className="space-y-[60px]">
             <div className="space-y-[20px]">
-                <div className="w-full aspect-square sm:aspect-16/7 lg:aspect-16/6 rounded-[15px] bg-slate-300" />
+                <ProductEvent
+                    publicEvents={publicEvents}
+                />
                 <ProductFilterRightSide />
             </div>
             

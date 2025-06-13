@@ -1,4 +1,4 @@
-const formatDate = (isoDate) => {
+const formatDate = (isoDate, changeFormat = false) => {
     if (!isoDate) return "Lỗi chuyển đổi ngày tháng năm!";
 
     const date = new Date(isoDate);
@@ -7,7 +7,8 @@ const formatDate = (isoDate) => {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
 
-    return `Ngày ${day} tháng ${month} năm ${year}`;
+    if (!changeFormat) return `Ngày ${day} tháng ${month} năm ${year}`;
+    else return `${day}.${month}.${year}`;
 }
 
 export const compareTime = (startIsoDate, endIsoDate) => {
