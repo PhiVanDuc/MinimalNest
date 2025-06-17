@@ -60,20 +60,3 @@ export default function AdminOrderFilterTime({
         </Popover>
     )
 }
-
-{/* <PopoverContent>
-    <Calendar
-        mode="single"
-        locale={vi}
-        selected={field.value}
-        onSelect={field.onChange}
-        disabled={{ before: new Date() }}
-        todayButton="Hôm nay"
-        clearButton="Xóa"
-        previousMonthLabel="Tháng trước"
-        nextMonthLabel="Tháng sau"
-        monthYearHeaderFormat="MMMM yyyy"
-        weekStartsOn={1}
-        initialFocus
-    />
-</PopoverContent> */}

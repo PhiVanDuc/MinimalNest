@@ -20,9 +20,12 @@ const cartQuantitySlice = createSlice({
             if (index !== -1) {
                 state.cartItemIds.splice(index, 1);
             }
+        },
+        resetQuantity: (state, action) => {
+            state.cartItemIds = [];
         }
     }
 });
 
 export default cartQuantitySlice.reducer;
-export const { rewriteQuantity, increaseQuantity, decreaseQuantity } = cartQuantitySlice.actions;
+export const { rewriteQuantity, increaseQuantity, decreaseQuantity, resetQuantity } = cartQuantitySlice.actions;

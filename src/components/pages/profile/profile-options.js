@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
-const display = ["/ho-so", "/ho-so/so-dia-chi", "/ho-so/don-hang"];
+const display = ["/ho-so", "/ho-so/so-dia-chi", "/ho-so/don-hang", "/ho-so/tra-hang"];
 
 export default function ProfileOptions() {
     const pathname = usePathname();
@@ -46,6 +46,16 @@ export default function ProfileOptions() {
                     )}
                 >
                     Đơn hàng
+                </Link>
+
+                <Link
+                    href="/ho-so/tra-hang"
+                    className={cn(
+                        "text-[14px] font-medium text-darkBold px-[15px] py-[12px] rounded-[10px] hover:bg-neutral-100 transition-colors duration-300",
+                        pathname.startsWith("/ho-so/tra-hang") ? "bg-darkBold hover:bg-darkBold text-white" : ""
+                    )}
+                >
+                    Trả hàng
                 </Link>
             </div>
         </div>

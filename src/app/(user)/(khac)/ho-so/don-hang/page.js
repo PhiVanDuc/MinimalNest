@@ -10,7 +10,7 @@ export const metadata = {
 export default function Page({ searchParams }) {
     return (
         <Suspense fallback={<MainLoading />}>
-            <Order />
+            <Order searchParams={searchParams} />
         </Suspense>
     )
 }

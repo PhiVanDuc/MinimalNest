@@ -17,7 +17,7 @@ const AdminOrderDetail = dynamic(
 
 import { MdOutlineContentPaste } from "react-icons/md";
 
-export default function AdminOrderWatchCol() {
+export default function AdminOrderWatchCol({ order }) {
     const [openDialog, setOpenDialog] = useState(false);
 
     return (
@@ -32,7 +32,14 @@ export default function AdminOrderWatchCol() {
             </div>
 
             {
-                openDialog && <AdminOrderDetail open={openDialog} setOpen={setOpenDialog} />
+                openDialog &&
+                (
+                    <AdminOrderDetail
+                        open={openDialog}
+                        setOpen={setOpenDialog}
+                        order={order}
+                    />
+                )
             }
         </>
     )

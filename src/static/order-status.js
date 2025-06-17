@@ -8,31 +8,29 @@ const orderStatuses = [
     },
     {
         id: v4(),
-        label: "Chờ xử lý",
-        value: "pending-processing"
+        label: "Chờ duyệt",
+        value: "pending"
     },
     {
         id: v4(),
-        label: "Đang giao hàng",
+        label: "Đang đóng gói",
+        value: "packing"
+    },
+    {
+        id: v4(),
+        label: "Đang vận chuyển",
         value: "shipping"
     },
     {
         id: v4(),
-        label: "Trả / Hoàn tiền",
-        value: "refund"
-    },
-    {
-        id: v4(),
         label: "Đã hủy",
-        value: "cancel"
+        value: "canceled"
     },
     {
         id: v4(),
         label: "Hoàn thành",
-        value: "success"
+        value: "fulfilled"
     }
 ];
 
-const paramOrderStatus = "order-status";
-
-export { orderStatuses, paramOrderStatus };
+export default orderStatuses;

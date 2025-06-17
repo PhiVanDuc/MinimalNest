@@ -1,7 +1,9 @@
 "use client"
 
 import { useState } from "react";
+
 import dynamic from "next/dynamic";
+import { toast } from "sonner";
 
 const AdminOrderCancel = dynamic(
     () => import("./admin-order-cancel"),
@@ -15,7 +17,11 @@ const AdminOrderCancel = dynamic(
     }
 );
 
-export default function AdminOrderCancelButton({ Button, toast }) {
+export default function AdminOrderCancelButton({
+    chooseOrders,
+    setChooseOrders,
+    Button
+}) {
     const [openDialog, setOpenDialog] = useState();
 
     return (
@@ -24,7 +30,10 @@ export default function AdminOrderCancelButton({ Button, toast }) {
                 variant="outline"
                 className="shadow-none"
                 onClick={() => {
-                    // toast.warning("Hãy chọn đơn hàng bạn muốn hủy.");
+                    if (chooseOrders?.length === 0) {
+                        toast.warning("Hãy chọn đơn hàng bạn muốn hủy.");
+                        return;
+                    }
                     setOpenDialog(true);
                 }}
             >
@@ -36,6 +45,8 @@ export default function AdminOrderCancelButton({ Button, toast }) {
                     <AdminOrderCancel
                         open={openDialog}
                         setOpen={setOpenDialog}
+                        chooseOrders={chooseOrders}
+                        setChooseOrders={setChooseOrders}
                     />
                 )
             }

@@ -14,9 +14,13 @@ import {
     addProductName,
     updateInitialState
 } from "@/redux/slices/product-filter/product-filter-slice";
-import { types, categories, colors } from "@/static/product-filter";
 
-export default function ProductFilterWrapper({ children }) {
+export default function ProductFilterWrapper({
+    children,
+    productTypes,
+    categories,
+    colors
+}) {
     const searchParams = useSearchParams();
     
     const dispatch = useDispatch();
@@ -43,19 +47,38 @@ export default function ProductFilterWrapper({ children }) {
                 }
 
                 case "type": {
-                    const index = types.findIndex(type => type.param === params[key]);
-                    if (index !== -1) dispatch(updateInitialState({ filter: "type", data: types[index] })) 
+                    const index = productTypes.findIndex(type => type.slug === params[key]);
+                    if (index !== -1) {
+                        dispatch(
+                            updateInitialState(
+                                {
+                                    filter: "type",
+                                    data: {
+                                        id: productTypes[index]?.id,
+                                        label: productTypes[index]?.product_type,
+                                        param: productTypes[index]?.slug
+                                    }
+                                }
+                            )
+                        ) 
+                    }
                     break;
                 }
 
                 case "categories": {
                     const values = params[key].split(",");
                     const array = values.reduce((prev, curr) => {
-                        const index = categories.findIndex(category => category.param === curr);
+                        const index = categories.findIndex(category => category.slug === curr);
+
                         if (index !== -1) {
-                            prev.push(categories[index]);
+                            prev.push({
+                                id: categories[index]?.id,
+                                label: categories[index]?.category,
+                                param: categories[index]?.slug
+                            });
                             return prev;
                         }
+                        return prev;
                     }, []);
 
                     dispatch(updateInitialState({ filter: "categories", data: array }));
@@ -75,11 +98,18 @@ export default function ProductFilterWrapper({ children }) {
                 case "colors": {
                     const values = params[key].split(",");
                     const array = values.reduce((prev, curr) => {
-                        const index = colors.findIndex(color => color.param === curr);
+                        const index = colors.findIndex(color => color.slug === curr);
+
                         if (index !== -1) {
-                            prev.push(colors[index]);
+                            prev.push({
+                                id: colors[index]?.id,
+                                label: colors[index]?.color,
+                                param: colors[index]?.slug,
+                                colorCode: colors[index]?.code
+                            });
                             return prev;
                         }
+                        return prev;
                     }, []);
 
                     dispatch(updateInitialState({ filter: "colors", data: array }));

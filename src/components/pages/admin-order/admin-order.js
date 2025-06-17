@@ -1,33 +1,25 @@
-import columns from "./columns";
-import CustomTable from "@/components/customs/admin/custom-table";
-import CustomPagination from "@/components/customs/admin/custom-pagination";
-
-import AdminOrderButton from "./admin-order-button";
-import AdminOrderFilter from "./admin-order-filter/admin-order-filter";
+import Error from "@/components/customs/error";
+import AdminOrderClient from "./admin-order-client";
 
 import getAccessToken from "@/lib/utils/getAccessToken";
+import { getAdminOrders } from "@/lib/api/server-action/order";
 
-export default function AdminOrder() {
+export default async function AdminOrder({ searchParams }) {
     const { decode: { decode: { permissions } } } = getAccessToken();
 
+    const page = Number(searchParams?.page || 1);
+    const status = searchParams?.status || "all";
+    const from = searchParams?.from || "";
+    const to = searchParams?.to || "";
+
+    const { response, result: orders } = await getAdminOrders({ page, status, from, to });
+    if (!orders?.success) return <Error message={`${response?.status},${orders?.message}`} />
+
     return (
-        <section className="space-y-[20px]">
-            <div className="space-y-[25px] p-[20px] bg-white rounded-[10px]">
-                <header className="flex items-center justify-between">
-                    <h1 className="text-[22px] font-semibold">Quản lý đơn hàng</h1>
-                    <AdminOrderButton permissions={permissions || []} />
-                </header>
-
-                <AdminOrderFilter />
-            </div>
-
-            <div className="p-[20px] bg-white rounded-[10px] space-y-[5px]">
-                <CustomTable
-                    columns={columns}
-                    moreData={{ permissions: permissions || [] }}
-                />
-                <CustomPagination />
-            </div>
-        </section>
+        <AdminOrderClient
+            searchParams={searchParams}
+            permissions={permissions}
+            orders={orders}
+        />
     )
 }

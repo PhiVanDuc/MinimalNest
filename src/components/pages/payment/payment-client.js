@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 
 import PaymentBookAddress from "./payment-book-address";
 import CustomTable from "@/components/customs/admin/custom-table";
@@ -14,12 +16,18 @@ import { Form } from "@/components/ui/form";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 import { toast } from "sonner";
+import calcPrice from "@/lib/utils/calc-price";
+import { createOrder } from "@/lib/api/server-action/order";
 import paymentProductColumns from "./payment-product-columns";
+import { resetQuantity } from "@/redux/slices/cart-products/cart-quantity-slice";
 
 export default function PaymentClient({
     bookAddresses,
     reservedOrderInfo
 }) {
+    const router = useRouter();
+    const dispatch = useDispatch()
+
     const { reserved_order, coupons, totalOrder } = reservedOrderInfo;
     const [submitting, setSubmitting] = useState(false);
 
@@ -43,24 +51,79 @@ export default function PaymentClient({
         const elements = data?.paymentStripe?.elements;
         const clientSecret = data?.paymentStripe?.clientSecret;
 
-        if (!stripe || !elements || !clientSecret) return;
         if (submitting) return;
         setSubmitting(true);
-        
-        if (data?.paymentMethod === "other") {
+
+        if (!data?.address?.id) {
+            setSubmitting(false);
+            toast.warning("Vui lòng chọn địa chỉ bạn muốn giao hàng!");
+            return;
+        }
+
+        if (data?.paymentMethod === "stripe") {
+            if (!stripe || !elements || !clientSecret) return;
             const { error: formError } = await elements.submit();
             if (formError) {
                 setSubmitting(false);
                 return;
             }
+        }
 
+        const order = await createOrder({
+            reserved_order_id: reserved_order?.id,
+            user: data?.address,
+            products: data?.products?.map(prod => {
+                const { cost_price, interest_rate, general_discount, discount_amount, discount_type } = prod?.product;
+
+                const isDiscount = ((discount_amount && discount_type) || general_discount);
+
+                const beforeDiscountPrice = calcPrice(cost_price, interest_rate, null, null);
+                const price = isDiscount ?
+                general_discount ?
+                calcPrice(cost_price, interest_rate, general_discount?.discount_type, general_discount?.discount_amount) :
+                calcPrice(cost_price, interest_rate, discount_type, discount_amount) :
+                calcPrice(cost_price, interest_rate, null, null);
+
+                return {
+                    ...prod,
+                    price: beforeDiscountPrice,
+                    ...(isDiscount && { price_discount: price })
+                }
+            }),
+            ...(data?.coupon?.id && { coupon: data?.coupon }),
+            ...(
+                data?.message &&
+                {message: data?.message}
+            ),
+            totalOrder: totalOrder,
+            ...(
+                data?.coupon?.id &&
+                {totalOrderDiscount: calcPrice(totalOrder, 0, data?.coupon?.discount_type, data?.coupon?.discount_price)}
+            ),
+            paymentMethod: data?.paymentMethod,
+            paymentIntentId: clientSecret?.split("_secret")?.[0]
+        });
+        
+        if (order?.success) {
+            dispatch(resetQuantity());
+            if (data?.paymentMethod === "cod") {
+                router.push("/ho-so/don-hang");
+                return;
+            }
+        }
+        if (!order?.success) {
+            setSubmitting(false);
+            toast.error(order?.message); 
+            return;
+        }
+        
+        if (data?.paymentMethod === "stripe") {
             const { error } = await stripe.confirmPayment({
                 elements,
                 clientSecret,
                 confirmParams: {
                     return_url: window.location.origin + "/ho-so/don-hang",
-                },
-                redirect: "if_required"
+                }
             });
 
             if (error) {

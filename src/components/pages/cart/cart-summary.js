@@ -33,10 +33,9 @@ export default function CartSummary({
                 const isDiscount = ((discount_amount && discount_type) || general_discount);
 
                 const price = isDiscount ?
-                (discount_amount && discount_type) ?
-                calcPrice(cost_price, interest_rate, discount_type, discount_amount) :
-                general_discount &&
+                general_discount ?
                 calcPrice(cost_price, interest_rate, general_discount?.discount_type, general_discount?.discount_amount) :
+                calcPrice(cost_price, interest_rate, discount_type, discount_amount) :
                 calcPrice(cost_price, interest_rate, null, null);
 
                 total = total + (price * +quantity);

@@ -25,7 +25,7 @@ const getAccounts = async (page, name) => {
 const getAccount = async (accountId) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/accounts/${accountId}`);
-        return { response, account: result };
+        return { response, result };
     }
     catch(error) {
         console.log(error);
@@ -65,4 +65,40 @@ const editAccount = async (accountId, data) => {
     }
 }
 
-export { getAccounts, getAccount, editAccount };
+const profileChangeInfo = async (accountId, data) => {
+    try {
+        const { result } = await fetchHelperAuth.patch(
+            `/accounts/profile/info/${accountId}`,
+            { body: JSON.stringify(data) }
+        );
+        return result;
+    }
+    catch(error) {
+        console.log(error);
+
+        return {
+            success: false,
+            message: "Lỗi gọi hàm thay đổi thông tin trong hồ sơ!"
+        }
+    }
+}
+
+const profileChangePassword = async (accountId, data) => {
+    try {
+        const { result } = await fetchHelperAuth.patch(
+            `/accounts/profile/password/${accountId}`,
+            { body: JSON.stringify(data) }
+        );
+        return result;
+    }
+    catch(error) {
+        console.log(error);
+
+        return {
+            success: false,
+            message: "Lỗi gọi hàm thay đổi mật khẩu trong hồ sơ!"
+        }
+    }
+}
+
+export { getAccounts, getAccount, editAccount, profileChangeInfo, profileChangePassword };

@@ -1,0 +1,10 @@
+[lcl-host]
+realm-apid = 'localhost'
+
+[org]
+apid = 'phivanduc'
+
+[service]
+apid = 'minimal-nest'
+category = 'javascript'
+cert-style = 'acme'

@@ -17,7 +17,7 @@ export default function ProductEvent({ publicEvents }) {
                         alt={event?.event}
                         width={3000}
                         height={3000}
-                        className="aspect-square sm:aspect-16/7 lg:aspect-16/6 object-cover object-center rounded-[15px]"
+                        className="aspect-square sm:aspect-16/7 lg:aspect-16/6 object-cover object-left rounded-[15px]"
                         priority={true}
                     />
                 </Link>

@@ -23,7 +23,7 @@ export default function PaymentMethod({
     useEffect(() => {
         let timeout;
 
-        if (watchValue === "other") {
+        if (watchValue === "stripe") {
             timeout = setTimeout(() => {
                 setAccordionValue("details")
             }, 100)
@@ -64,7 +64,7 @@ export default function PaymentMethod({
                             <FormItem>
                                 <FormLabel className="border-b flex items-center gap-[20px] p-[20px] cursor-pointer">
                                     <FormControl>
-                                        <RadioGroupItem value="other" />
+                                        <RadioGroupItem value="stripe" />
                                     </FormControl>
 
                                     <div className="flex items-center gap-[10px]">
@@ -74,7 +74,7 @@ export default function PaymentMethod({
                                 </FormLabel>
 
                                 {
-                                    watchValue === "other" && (
+                                    watchValue === "stripe" && (
                                         <Accordion
                                             type="single"
                                             collapsible

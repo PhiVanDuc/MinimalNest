@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 
 import Link from "next/link";
 
-import { orderStatuses, paramOrderStatus } from "@/static/order-status";
+import orderStatuses from "@/static/order-status";
 import { cn } from "@/lib/utils";
 
 export default function OrderStatus() {
@@ -18,16 +18,16 @@ export default function OrderStatus() {
                 orderStatuses.map((status, index) => (
                     <Link
                         key={status.id}
-                        href={`/ho-so/don-hang?${paramOrderStatus}=${status.value}`}
+                        href={`/ho-so/don-hang?status=${status.value}`}
                         className={cn(
                             "relative w-full px-[20px] py-[15px] text-[14px] text-center text-darkBland hover:text-yellowBold whitespace-nowrap font-medium transition-colors duration-300 ",
-                            ((index === 0 && !searchParams.get("order-status")) || searchParams.get("order-status") === status.value) ? "text-yellowBold" : "text-darkBland"
+                            ((index === 0 && !searchParams.get("status")) || searchParams.get("status") === status.value) ? "text-yellowBold" : "text-darkBland"
                         )}
                     >
                         {status.label}
 
                         {
-                            ((index === 0 && !searchParams.get("order-status")) || searchParams.get("order-status") === status.value) &&
+                            ((index === 0 && !searchParams.get("status")) || searchParams.get("status") === status.value) &&
                             <span className="absolute bottom-0 right-0 left-0 h-[2.5px] rounded-full bg-yellowBold" />
                         }
                     </Link>

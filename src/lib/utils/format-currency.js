@@ -29,13 +29,15 @@ export function convertToNumber(value) {
     return isNaN(number) ? 0 : number;
 }
 
-export function convertToNumberDb(value) {
-  const number = parseFloat(value);
+export function convertToNumberDb(value = 0) {
+  const newValue = `${value}`;
+
+  const number = parseFloat(newValue);
   if (number % 1 === 0) {
-    return parseInt(value, 10);
+    return parseInt(newValue, 10);
   }
 
-  return value.replace('.', ',');
+  return newValue.replace('.', ',');
 }
 
 export default formatCurrency;

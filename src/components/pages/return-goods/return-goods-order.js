@@ -1,23 +1,39 @@
 "use client"
 
 import Money from "@/components/customs/money";
+
 import {
     Accordion,
     AccordionItem,
     AccordionTrigger,
     AccordionContent
 } from "@/components/ui/accordion";
+
+import {
+    Tooltip,
+    TooltipTrigger,
+    TooltipContent
+} from "@/components/ui/tooltip";
+
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { TooltipProvider } from "@/components/ui/tooltip";
+
 import { cn } from "@/lib/utils";
+import formatDate from "@/lib/utils/format-date";
+import { convertToNumberDb } from "@/lib/utils/format-currency";
 
 export default function ReturnGoodsOrder({ form, orders }) {
     const watchOrder = form.watch("order");
 
-    const handleSelectOrder = (index) => {
-        form.setValue("order", { id: index, product: 2 });
-        form.setValue("products", []);
-        
+    const handleSelectOrder = (id) => {
+        const order = orders?.find(order => order?.id === id);
+
+        form.setValue("order", {
+            ...order,
+            bankInfo: ""
+        });
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -33,147 +49,180 @@ export default function ReturnGoodsOrder({ form, orders }) {
                     collapsible
                     className="space-y-[10px]"
                 >
-                    {
-                        Array.from({ length: 10 }).map((_, index) => {
-                            return (
-                                <AccordionItem
-                                    key={index}
-                                    value={`order-${index}`}
-                                >
-                                    <AccordionTrigger className={cn(
-                                        "px-[16px] py-[16px] rounded-[10px] border",
-                                        watchOrder?.id === index + 1 ? "bg-neutral-100" : "bg-transparent"
-                                    )}>
-                                        Đơn hàng: {index + 1}
-                                    </AccordionTrigger>
-
-                                    <AccordionContent
-                                        className="mt-[10px] p-[16px] rounded-[10px] border space-y-[25px]"
+                    <TooltipProvider>
+                        {
+                            orders?.length > 0 ?
+                            orders.map(order => {
+                                return (
+                                    <AccordionItem
+                                        key={order?.id}
+                                        value={`order-${order?.id}`}
                                     >
-                                        <div className="space-y-[10px]">
-                                            <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[14px] text-darkMedium font-medium">
-                                                <p>Tạo đơn</p>
-                                                <p className="text-darkBold">Thời gian</p>
-                                            </div>
+                                        <AccordionTrigger className={cn(
+                                            "px-[16px] py-[16px] rounded-[10px] border",
+                                            watchOrder?.id === order?.id ? "bg-neutral-100" : "bg-transparent"
+                                        )}>
+                                            Đơn hàng: {order?.id}
+                                        </AccordionTrigger>
 
-                                            <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[14px] text-darkMedium font-medium">
-                                                <p>Hoàn thành</p>
-                                                <p className="text-darkBold">Thời gian</p>
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-[10px]">
-                                            <h2 className="text-[15px] font-semibold">Sản phẩm</h2>
-
-                                            <div
-                                                className="flex items-center justify-between gap-[15px] p-[15px] rounded-[10px] bg-neutral-50 hover:bg-neutral-100 cursor-pointer"
-                                            >
-                                                <div className="flex items-center gap-[15px] ">
-                                                    <span className="inline-block w-[80px] aspect-square rounded-[10px] bg-slate-300" />
-
-                                                    <div className="space-y-[10px]">
-                                                        <h4 className="text-[15px] font-semibold">Tên sản phẩm</h4>
-
-                                                        <div className="space-y-[5px]">
-                                                            <div className="flex items-center gap-[10px]">
-                                                                <p className="text-[13px] text-darkMedium font-medium min-w-[55px]">Màu sắc</p>
-                                                                <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                                                                <p className="text-[13px] text-darkBold font-semibold">Màu trắng</p>
-                                                            </div>
-
-                                                            <div className="flex items-center gap-[10px]">
-                                                                <p className="text-[13px] text-darkMedium font-medium min-w-[55px]">Kích cỡ</p>
-                                                                <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                                                                <p className="text-[13px] text-darkBold font-semibold">XL</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                        <AccordionContent
+                                            className="mt-[10px] p-[16px] rounded-[10px] border space-y-[25px]"
+                                        >
+                                            <div className="space-y-[10px]">
+                                                <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[14px] text-darkMedium font-medium">
+                                                    <p>Tạo đơn</p>
+                                                    <p className="text-darkBold">{formatDate(order?.created_at)}</p>
                                                 </div>
 
-                                                <p className="text-[15px] font-medium text-darkMedium">x2</p>
-                                            </div>
-
-                                            <div
-                                                className="flex items-center justify-between gap-[15px] p-[15px] rounded-[10px] bg-neutral-50 hover:bg-neutral-100 cursor-pointer"
-                                            >
-                                                <div className="flex items-center gap-[15px] ">
-                                                    <span className="inline-block w-[80px] aspect-square rounded-[10px] bg-slate-300" />
-
-                                                    <div className="space-y-[10px]">
-                                                        <h4 className="text-[15px] font-semibold">Tên sản phẩm</h4>
-
-                                                        <div className="space-y-[5px]">
-                                                            <div className="flex items-center gap-[10px]">
-                                                                <p className="text-[13px] text-darkMedium font-medium min-w-[55px]">Màu sắc</p>
-                                                                <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                                                                <p className="text-[13px] text-darkBold font-semibold">Màu trắng</p>
-                                                            </div>
-
-                                                            <div className="flex items-center gap-[10px]">
-                                                                <p className="text-[13px] text-darkMedium font-medium min-w-[55px]">Kích cỡ</p>
-                                                                <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                                                                <p className="text-[13px] text-darkBold font-semibold">XL</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[14px] text-darkMedium font-medium">
+                                                    <p>Hoàn thành</p>
+                                                    <p className="text-darkBold">{formatDate(order?.updated_at)}</p>
                                                 </div>
+                                            </div>
 
-                                                <p className="text-[15px] font-medium text-darkMedium">x2</p>
-                                            </div>
-                                        </div>
+                                            <div className="space-y-[10px]">
+                                                <h2 className="text-[15px] font-semibold">Sản phẩm</h2>
 
-                                        <Separator />
-                                        
-                                        {/* Tiền */}
-                                        <div className="space-y-[12px]">
-                                            <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[13px] text-darkMedium font-medium">
-                                                <p>Tổng tiền hàng</p>
-                                                <Money
-                                                    price={1200000000}
-                                                    moneyClassName="text-[13px] text-darkBold"
-                                                    currencyClassName="text-[12px]"
-                                                />
+                                                {
+                                                    order?.order_items?.map(item => {
+                                                        return (
+                                                            <div
+                                                                key={item?.id}
+                                                                className="flex items-center justify-between gap-[15px] p-[15px] rounded-[10px] bg-neutral-50 hover:bg-neutral-100 cursor-pointer"
+                                                            >
+                                                                <div className="flex items-center gap-[15px] ">
+                                                                    <div className="w-[80px] aspect-square rounded-[8px] overflow-hidden bg-slate-300 relative">
+                                                                        {
+                                                                            item?.image ?
+                                                                            <Image
+                                                                                src={item.image}
+                                                                                alt={item.product_name}
+                                                                                fill
+                                                                                className="object-cover"
+                                                                                sizes="80px"
+                                                                                priority={false}
+                                                                            /> : 
+                                                                            <span className="w-[80px] aspect-square rounded-[8px] bg-slate-300" />
+                                                                        }
+                                                                    </div>
+
+                                                                    <div className="space-y-[10px]">
+                                                                        <h4 className="text-[15px] font-semibold">{item.product_name}</h4>
+
+                                                                        <div className="space-y-[5px]">
+                                                                            <div className="flex items-center gap-[10px]">
+                                                                                <p className="text-[13px] text-darkMedium font-medium min-w-[55px]">Màu sắc</p>
+                                                                                <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
+                                                                                <Tooltip
+                                                                                    delayDuration={100}
+                                                                                >
+                                                                                    <TooltipTrigger asChild>
+                                                                                        <span
+                                                                                            className="shrink-0 w-[15px] aspect-square rounded-full outline outline-[1.5px] outline-offset-2 outline-neutral-300"
+                                                                                            style={{
+                                                                                                background: `${item?.code_color}`
+                                                                                            }}
+                                                                                        />
+                                                                                    </TooltipTrigger>
+
+                                                                                    <TooltipContent>
+                                                                                        {item?.color}
+                                                                                    </TooltipContent>
+                                                                                </Tooltip>
+                                                                            </div>
+
+                                                                            <div className="flex items-center gap-[10px]">
+                                                                                <p className="text-[13px] text-darkMedium font-medium min-w-[55px]">Kích cỡ</p>
+                                                                                <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
+                                                                                <Tooltip
+                                                                                    delayDuration={100}
+                                                                                >
+                                                                                    <TooltipTrigger asChild>
+                                                                                        <p className="text-[12px] text-darkMedium font-semibold px-[10px] py-[2px] rounded-[2px] bg-neutral-200">
+                                                                                            {item?.size}
+                                                                                        </p>
+                                                                                    </TooltipTrigger>
+
+                                                                                    <TooltipContent>
+                                                                                        {item?.size_desc}
+                                                                                    </TooltipContent>
+                                                                                </Tooltip>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <p className="text-[15px] font-medium text-darkMedium">x{item?.quantity}</p>
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
                                             </div>
-                            
-                                            <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[13px] text-darkMedium font-medium">
-                                                <p>Phí vận chuyển</p>
-                                                <p className="text-darkBold">Miễn phí</p>
-                                            </div>
-                            
-                                            <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[13px] text-darkMedium font-medium">
-                                                <p>Giảm giá</p>
-                                                <div className="flex items-center gap-[3px]">
-                                                    <span>-</span>
+
+                                            <Separator />
+                                            
+                                            {/* Tiền */}
+                                            <div className="space-y-[12px]">
+                                                <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[13px] text-darkMedium font-medium">
+                                                    <p>Tổng tiền hàng</p>
                                                     <Money
-                                                        price={80000}
+                                                        price={convertToNumberDb(order?.total_order)}
                                                         moneyClassName="text-[13px] text-darkBold"
                                                         currencyClassName="text-[12px]"
                                                     />
                                                 </div>
+                                
+                                                <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[13px] text-darkMedium font-medium">
+                                                    <p>Phí vận chuyển</p>
+                                                    <p className="text-darkBold">Miễn phí</p>
+                                                </div>
+                                
+                                                {
+                                                    order?.coupon_code &&
+                                                    <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[13px] text-darkMedium font-medium">
+                                                        <p>Giảm giá</p>
+                                                        <div className="flex items-center gap-[3px]">
+                                                            <span>-</span>
+                                                            {
+                                                                order?.discount_type === "amount" ?
+                                                                <Money
+                                                                    price={convertToNumberDb(order?.discount_amount)}
+                                                                    moneyClassName="text-[14px] md:text-[15px]"
+                                                                /> :
+                                                                <span className="text-[14px] md:text-[15px] text-darkBold">{convertToNumberDb(order?.discount_amount)}%</span>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
+                    
+                                                <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0">
+                                                    <p className="text-[15px] font-semibold text-darkBold">Tổng hóa đơn</p>
+                                                    <Money
+                                                        price={
+                                                            order?.total_order_discount ?
+                                                            convertToNumberDb(order?.total_order_discount) :
+                                                            convertToNumberDb(order?.total_order)
+                                                        }
+                                                        moneyClassName="text-[16px] text-darkBold"
+                                                        currencyClassName="text-[12px]"
+                                                    />
+                                                </div>
                                             </div>
-                
-                                            <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0">
-                                                <p className="text-[15px] font-semibold text-darkBold">Tổng hóa đơn</p>
-                                                <Money
-                                                    price={1199920000}
-                                                    moneyClassName="text-[16px] font-semibold text-darkBold"
-                                                    currencyClassName="text-[12px]"
-                                                />
-                                            </div>
-                                        </div>
 
-                                        <Button
-                                            type="button"
-                                            className="w-full bg-yellowBold hover:opacity-90 hover:bg-yellowBold"
-                                            onClick={() => { handleSelectOrder(index + 1); }}
-                                        >
-                                            Chọn đơn hàng
-                                        </Button>
-                                    </AccordionContent>
-                                </AccordionItem>
-                            )
-                        })
-                    }
+                                            <Button
+                                                type="button"
+                                                className="w-full bg-yellowBold hover:opacity-90 hover:bg-yellowBold"
+                                                onClick={() => { handleSelectOrder(order?.id); }}
+                                            >
+                                                Chọn đơn hàng
+                                            </Button>
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                )
+                            }) :
+                            <p className="text-[14px] md:text-[15px] italic text-center">Bạn chưa có đơn hàng hoàn thành nào.</p>
+                        }
+                    </TooltipProvider>
                 </Accordion>
             </div>
         </div>

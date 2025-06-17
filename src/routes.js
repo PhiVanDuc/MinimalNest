@@ -17,7 +17,7 @@ const PROTECTED_PATHS = [
     "/ho-so/don-hang",
     "/gio-hang",
     "/thanh-toan",
-    "/doi-tra-hang"
+    "/tra-hang"
 ];
 
 const ADMIN_PATHS = [

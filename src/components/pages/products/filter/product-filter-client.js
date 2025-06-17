@@ -14,7 +14,11 @@ import { cn } from "@/lib/utils";
 
 const showPaths = ["/san-pham", "/san-pham/tim-kiem"];
 
-export default function ProductFilterClient() {
+export default function ProductFilterClient({
+    productTypes,
+    categories,
+    colors
+}) {
     const dispatch = useDispatch();
     const isOpen = useSelector(state => state.productFilterOpen);
 
@@ -37,9 +41,17 @@ export default function ProductFilterClient() {
                 !isShow ? "hidden" : ""
             )}>
                 <aside className="flex flex-col h-full">
-                    <ProductFilterWrapper>
+                    <ProductFilterWrapper
+                        productTypes={productTypes}
+                        categories={categories}
+                        colors={colors}
+                    >
                         <ProductFilterHeader />
-                        <ProductFilterContent />
+                        <ProductFilterContent
+                            productTypes={productTypes}
+                            categories={categories}
+                            colors={colors}
+                        />
                         <ProductFilterFooter />
                     </ProductFilterWrapper>
                 </aside>

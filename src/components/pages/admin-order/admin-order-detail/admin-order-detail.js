@@ -1,6 +1,14 @@
 "use client"
 
+import Image from "next/image";
 import Money from "@/components/customs/money";
+
+import {
+    Tooltip,
+    TooltipTrigger,
+    TooltipContent,
+    TooltipProvider
+} from "@/components/ui/tooltip";
 
 import {
     Dialog,
@@ -12,8 +20,9 @@ import {
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { convertToNumberDb } from "@/lib/utils/format-currency";
 
-export default function AdminOrderDetail({ open, setOpen }) {
+export default function AdminOrderDetail({ open, setOpen, order }) {
     return (
         <Dialog
             open={open}
@@ -30,70 +39,118 @@ export default function AdminOrderDetail({ open, setOpen }) {
                         {/* Mã đơn */}
                         <div className="flex items-center justify-between px-[15px] py-[10px] text-[14px] text-blueChecked font-medium rounded-full border bg-blueChecked/10 border-blueChecked">
                             <p>Đơn hàng</p>
-                            <p>#0001</p>
+                            <p>#{order?.id}</p>
                         </div>
 
                         {/* Thông tin nhận hàng */}
                         <div className="space-y-[2px]">
                             <div className="flex items-center gap-[5px] text-[15px] font-semibold">
-                                <p className="">Phí Văn Đức</p>
+                                <p className="">{order?.full_name}</p>
                                 <p>-</p>
-                                <p>0328895451</p>
+                                <p>{order?.phone_number}</p>
                             </div>
-                            <p className="text-[15px] text-darkMedium font-medium">Đây là địa chỉ nhận hàng mà khách hàng đã chọn.</p>
+                            <p className="text-[15px] text-darkMedium font-medium">{order?.address}</p>
                         </div>
 
                         {/* Lời nhắn */}
-                        <div className="space-y-[2px]">
-                            <p className="text-[15px] font-semibold">Lời nhắn</p>
-                            <p className="text-[15px] text-darkMedium font-medium">Khách hàng không để lại lời nhắn nào.</p>
-                        </div>
+                        {
+                            order?.message &&
+                            <div className="space-y-[2px]">
+                                <p className="text-[15px] font-semibold">Lời nhắn</p>
+                                <p className="text-[15px] text-darkMedium font-medium">{order?.message}</p>
+                            </div>
+                        }
+
+                        {/* Hủy hàng */}
+                        {
+                            order?.cancel_message &&
+                            <div className="space-y-[2px]">
+                                <p className="text-[15px] font-semibold">Hủy đơn</p>
+                                <p className="text-[15px] text-darkMedium font-medium">{order?.cancel_message}</p>
+                            </div>
+                        }
 
                         {/* Các sản phẩm */}
                         <div className="space-y-[5px]">
                             <p className="text-[15px] font-semibold">Sản phẩm</p>
 
                             <div className="space-y-[10px]">
-                                {
-                                    Array.from({ length: 3 }).map((_, index) => {
-                                        return (
-                                            <div
-                                                key={index}
-                                                className="flex items-center justify-between gap-[15px] p-[15px] rounded-[10px] bg-neutral-50 hover:bg-neutral-100 cursor-pointer"
-                                            >
-                                                <div className="flex items-center gap-[15px] ">
-                                                    <span className="inline-block w-[100px] aspect-square rounded-[10px] bg-slate-300" />
-
-                                                    <div className="space-y-[10px]">
-                                                        <div>
-                                                            <p className="flex items-center gap-[5px] text-[11px] text-blueChecked font-semibold">
-                                                                <span>SKU:</span>
-                                                                <span>GCTH-XL-FFFFFF</span>
-                                                            </p>
-                                                            <h4 className="text-[15px] font-semibold">Tên sản phẩm</h4>
+                                <TooltipProvider>
+                                    {
+                                        order?.order_items?.map(item => {
+                                            return (
+                                                <div
+                                                    key={item?.id}
+                                                    className="flex items-center justify-between gap-[15px] p-[15px] rounded-[10px] bg-neutral-50 hover:bg-neutral-100 cursor-pointer"
+                                                >
+                                                    <div className="flex items-center gap-[15px] ">
+                                                        <div className="w-[100px] aspect-square rounded-[8px] overflow-hidden bg-slate-300 relative">
+                                                            {
+                                                                item?.image ?
+                                                                <Image
+                                                                    src={item.image}
+                                                                    alt={item.product_name}
+                                                                    fill
+                                                                    className="object-cover"
+                                                                    sizes="100px"
+                                                                    priority={false}
+                                                                /> : 
+                                                                <span className="w-[100px] aspect-square rounded-[8px] bg-slate-300" />
+                                                            }
                                                         </div>
 
-                                                        <div className="space-y-[5px]">
-                                                            <div className="flex items-center gap-[10px]">
-                                                                <p className="text-[13px] text-darkMedium font-medium min-w-[55px]">Màu sắc</p>
-                                                                <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                                                                <p className="text-[13px] text-darkBold font-semibold">Màu trắng</p>
-                                                            </div>
+                                                        <div className="space-y-[10px]">
+                                                            <h4 className="text-[15px] font-semibold">{item?.product_name}</h4>
 
-                                                            <div className="flex items-center gap-[10px]">
-                                                                <p className="text-[13px] text-darkMedium font-medium min-w-[55px]">Kích cỡ</p>
-                                                                <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
-                                                                <p className="text-[13px] text-darkBold font-semibold">XL</p>
+                                                            <div className="space-y-[5px]">
+                                                                <div className="flex items-center gap-[10px]">
+                                                                    <p className="text-[13px] text-darkMedium font-medium min-w-[55px]">Màu sắc</p>
+                                                                    <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
+                                                                    <Tooltip
+                                                                        delayDuration={100}
+                                                                    >
+                                                                        <TooltipTrigger asChild>
+                                                                            <span
+                                                                                className="shrink-0 w-[15px] aspect-square rounded-full outline outline-[1.5px] outline-offset-2 outline-neutral-300"
+                                                                                style={{
+                                                                                    background: `${item?.code_color}`
+                                                                                }}
+                                                                            />
+                                                                        </TooltipTrigger>
+
+                                                                        <TooltipContent>
+                                                                            {item?.color}
+                                                                        </TooltipContent>
+                                                                    </Tooltip>
+                                                                </div>
+
+                                                                <div className="flex items-center gap-[10px]">
+                                                                    <p className="text-[13px] text-darkMedium font-medium min-w-[55px]">Kích cỡ</p>
+                                                                    <span className="shrink-0 inline-block w-[5px] aspect-square rounded-full bg-darkBold" />
+                                                                    <Tooltip
+                                                                        delayDuration={100}
+                                                                    >
+                                                                        <TooltipTrigger asChild>
+                                                                            <p className="text-[12px] text-darkMedium font-semibold px-[10px] py-[2px] rounded-[2px] bg-neutral-200">
+                                                                                {item?.size}
+                                                                            </p>
+                                                                        </TooltipTrigger>
+
+                                                                        <TooltipContent>
+                                                                            {item?.size_desc}
+                                                                        </TooltipContent>
+                                                                    </Tooltip>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                <p className="text-[16px] font-semibold text-darkMedium">x2</p>
-                                            </div>
-                                        )
-                                    })
-                                }
+                                                    <p className="text-[16px] font-semibold text-darkMedium">x{item?.quantity}</p>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </TooltipProvider>
                             </div>
                         </div>
 
@@ -104,7 +161,7 @@ export default function AdminOrderDetail({ open, setOpen }) {
                             <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[14px] text-darkMedium font-medium">
                                 <p>Tổng tiền hàng</p>
                                 <Money
-                                    price={1200000000}
+                                    price={convertToNumberDb(order?.total_order)}
                                     moneyClassName="text-[14px] text-darkBold"
                                     currencyClassName="text-[12px]"
                                 />
@@ -115,22 +172,37 @@ export default function AdminOrderDetail({ open, setOpen }) {
                                 <p className="text-darkBold">Miễn phí</p>
                             </div>
             
-                            <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[14px] text-darkMedium font-medium">
-                                <p>Giảm giá</p>
-                                <div className="flex items-center gap-[3px]">
-                                    <span>-</span>
-                                    <Money
-                                        price={80000}
-                                        moneyClassName="text-[14px] text-darkBold"
-                                        currencyClassName="text-[12px]"
-                                    />
+                            {
+                                order?.coupon_code &&
+                                <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0 text-[14px] text-darkMedium font-medium">
+                                    <p>Giảm giá</p>
+                                    <div className="flex items-center gap-[3px]">
+                                        <span>-</span>
+                                        {
+                                            order?.discount_type === "amount" ?
+                                            (
+                                                <Money
+                                                    price={convertToNumberDb(order?.discount_amount)}
+                                                    moneyClassName="text-[14px] text-darkBold"
+                                                    currencyClassName="text-[12px]"
+                                                />
+                                            ) :
+                                            <span>{convertToNumberDb(order?.discount_amount)}%</span>
+                                        }
+                                    </div>
                                 </div>
-                            </div>
+                            }
 
                             <div className="md:flex items-center justify-between space-y-[5px] md:space-y-0">
                                 <p className="text-[16px] font-semibold text-darkBold">Tổng hóa đơn</p>
                                 <Money
-                                    price={1199920000}
+                                    price={
+                                        convertToNumberDb(
+                                            order?.total_order_discount ?
+                                            order?.total_order_discount :
+                                            order?.total_order
+                                        )
+                                    }
                                     moneyClassName="text-[16px] font-semibold text-darkBold"
                                     currencyClassName="text-[12px]"
                                 />
@@ -138,7 +210,11 @@ export default function AdminOrderDetail({ open, setOpen }) {
                         </div>
                         
                         {/* Thanh toán */}
-                        <p className="text-center px-[20px] py-[10px] bg-yellowBold/10 border rounded-full border-yellowBold/60 text-[14px] font-semibold text-amber-600">Thanh toán khi nhận hàng.</p>
+                        <p className="text-center px-[20px] py-[10px] bg-blueChecked/10 border-blueChecked text-blueChecked border rounded-full text-[14px] font-semibold">
+                            {
+                                order?.payment_method === "cod" ? "Thanh toán khi nhận hàng" : "Thanh toán qua stripe"
+                            }
+                        </p>
                     </div>
                 </ScrollArea>
             </DialogContent>

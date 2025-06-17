@@ -3,11 +3,42 @@
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import AdminOrderCancelButton from "./admin-order-cancel/admin-order-cancel-button";
 
-export default function AdminOrderButton({ permissions }) {
-    const [isEditOrder, setIsEditOrder] = useState(() => permissions?.includes("edit-order"))
+import { toast } from "sonner";
+import { updateStatusOrders } from "@/lib/api/server-action/order";
+
+export default function AdminOrderButton({
+    permissions,
+    chooseOrders,
+    setChooseOrders
+}) {
+    const [isEditOrder, setIsEditOrder] = useState(() => permissions?.includes("edit-order"));
+    const [submitting, setSubmitting] = useState(false);
+
+    const handleUpdateStatusOrder = async (status) => {
+        if (chooseOrders?.length === 0) {
+            toast.warning("Vui lòng chọn đơn hàng để cập nhật trạng thái!");
+            return;
+        }
+
+        if (submitting) return;
+        setSubmitting(true);
+
+        const updated = await updateStatusOrders({
+            status,
+            orderIds: chooseOrders
+        });
+        const message = updated?.message;
+
+        if (updated?.success) {
+            setChooseOrders([]);
+            toast.success(message);
+        }
+        else toast.error(message);
+
+        setSubmitting(false);
+    }
 
     return (
         <>
@@ -24,21 +55,24 @@ export default function AdminOrderButton({ permissions }) {
                         </Button>
 
                         <AdminOrderCancelButton
+                            chooseOrders={chooseOrders}
+                            setChooseOrders={setChooseOrders}
                             Button={Button}
-                            toast={toast}
                         />
 
                         <Button
                             variant="outline"
                             className="shadow-none"
-                            onClick={() => { toast.warning("Hãy chọn đơn hàng bạn muốn đóng gói.") }}
+                            onClick={() => { handleUpdateStatusOrder("packing") }}
+                            disabled={submitting}
                         >
                             Đóng gói
                         </Button>
 
                         <Button
                             className="bg-yellowBold hover:bg-yellowBold hover:text-white"
-                            onClick={() => { toast.warning("Hãy chọn những đơn hàng đã đóng gói để giao hàng.") }}
+                            onClick={() => { handleUpdateStatusOrder("shipping") }}
+                            disabled={submitting}
                         >
                             Giao hàng
                         </Button>

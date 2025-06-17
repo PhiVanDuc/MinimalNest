@@ -10,7 +10,7 @@ export default function Logo() {
             className="cursor-pointer"
             onClick={() => { router.push("/san-pham") }}
         >
-            <p className="text-[16px] font-medium px-[15px] py-[5px] rounded-[6px] bg-yellowBold text-white">Minimal Nest</p>
+            <p className="w-fit text-[16px] font-medium px-[15px] py-[5px] rounded-[6px] bg-yellowBold text-white">Minimal Nest</p>
         </div>
     )
 }

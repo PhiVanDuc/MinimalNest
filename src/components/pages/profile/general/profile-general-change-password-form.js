@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import {
@@ -10,8 +11,14 @@ import {
     FormControl
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-export default function ProfileGeneralChangePasswordForm() {
+import { toast } from "sonner";
+import { profileChangePassword } from "@/lib/api/server-action/account";
+
+export default function ProfileGeneralChangePasswordForm({ account }) {
+    const [submitting, setSubmitting] = useState(false);
+
     const form = useForm({
         defaultValues: {
             oldPassword: "",
@@ -20,7 +27,25 @@ export default function ProfileGeneralChangePasswordForm() {
         }
     });
 
-    const handleSubmit = () => {}
+    const watchOldPass = form.watch("oldPassword");
+    const watchNewPass = form.watch("newPassword");
+    const watchConfirmNewPass = form.watch("confirmNewPassword");
+
+    const handleSubmit = async (data) => {
+        if (submitting) return;
+        setSubmitting(true);
+
+        const result = await profileChangePassword(account?.id, data);
+        const message = result?.message;
+
+        if (result?.success) {
+            form.reset();
+            toast.success(message);
+        }
+        else toast.error(message);
+
+        setSubmitting(false);
+    }
 
     return (
         <div className="space-y-[15px]">
@@ -45,6 +70,7 @@ export default function ProfileGeneralChangePasswordForm() {
 
                                     <FormControl>
                                         <Input
+                                            type="password"
                                             placeholder="Nhập mật khẩu cũ . . ."
                                             className="px-[15px] py-[22px] border-neutral-300 rounded-[10px]"
                                             style={{
@@ -72,6 +98,7 @@ export default function ProfileGeneralChangePasswordForm() {
 
                                     <FormControl>
                                         <Input
+                                            type="password"
                                             placeholder="Nhập mật khẩu mới . . ."
                                             className="px-[15px] py-[22px] border-neutral-300 rounded-[10px]"
                                             style={{
@@ -99,6 +126,7 @@ export default function ProfileGeneralChangePasswordForm() {
 
                                     <FormControl>
                                         <Input
+                                            type="password"
                                             placeholder="Xác thực mật khẩu mới . . ."
                                             className="px-[15px] py-[22px] border-neutral-300 rounded-[10px]"
                                             style={{
@@ -111,6 +139,19 @@ export default function ProfileGeneralChangePasswordForm() {
                             );
                         }}
                     />
+
+                    {
+                        (watchOldPass && watchNewPass && watchConfirmNewPass) &&
+                        (
+                            <div className="text-right">
+                                <Button
+                                    disabled={submitting}
+                                >
+                                    { submitting ? "Đang thay đổi" : "Thay đổi mật khẩu" }
+                                </Button>
+                            </div>
+                        )
+                    }
                 </form>
             </Form>
         </div>

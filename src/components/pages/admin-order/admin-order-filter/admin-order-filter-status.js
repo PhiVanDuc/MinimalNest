@@ -1,33 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils";
-
-const filters = [
-    {
-        label: "Tất cả",
-        param: "all"
-    },
-    {
-        label: "Chờ duyệt",
-        param: "pending"
-    },
-    {
-        label: "Đang đóng gói",
-        param: "packing"
-    },
-    {
-        label: "Đang vận chuyển",
-        param: "shipping"
-    },
-    {
-        label: "Đã hủy",
-        param: "canceled"
-    },
-    {
-        label: "Hoàn thành",
-        param: "fulfilled"
-    }
-]
+import orderStatuses from "@/static/order-status";
 
 export default function AdminOrderFilterStatus({
     status,
@@ -36,17 +10,17 @@ export default function AdminOrderFilterStatus({
     return (
         <div className="flex p-[5px] bg-neutral-100 rounded-[10px] w-fit">
             {
-                filters.map((filter, index) => {
+                orderStatuses.map(item => {
                     return (
                         <div
-                            key={index + filter?.param}
+                            key={item?.id}
                             className={cn(
                                 "flex items-center gap-[10px] text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
-                                status === filter?.param ? "text-darkBold bg-white" : "text-darkMedium"
+                                status === item?.param ? "text-darkBold bg-white" : "text-darkMedium"
                             )}
-                            onClick={() => { setStatus(filter?.param) }}
+                            onClick={() => { setStatus(item?.param); }}
                         >
-                            <p>{filter?.label}</p>
+                            <p>{item?.label}</p>
                         </div>
                     )
                 })

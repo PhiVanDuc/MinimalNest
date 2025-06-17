@@ -29,8 +29,13 @@ const getPublicProducts = async (data) => {
 const getAllPublicProducts = async (data) => {
     try {
         const query = new URLSearchParams();
-        if (data?.limit) query.append("limit", data.limit);
-        if (data?.page) query.append("page", data.page);
+
+        // Duyệt toàn bộ key trong data
+        for (const key in data) {
+            if (data[key] !== undefined && data[key] !== null) {
+                query.append(key, data[key]);
+            }
+        }
 
         const { response, result } = await fetchHelper.get(
             `/public_products/all?${query.toString()}`
