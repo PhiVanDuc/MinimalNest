@@ -38,13 +38,6 @@ const finalData = feedbacks.map(feedback => ({
         <div
             className="space-y-[25px] p-[30px] border rounded-[15px] shadow-sm cursor-grab overflow-hidden"
         >
-            <Image
-                src="/quote.png"
-                alt="Quote icon"
-                width={60}
-                height={60}
-                className="w-[30px] aspect-square object-contain object-center"
-            />
             <p className="text-[16px] leading-[28px] text-darkMedium truncate-text">{feedback.feedback}</p>
 
             <div className="flex items-center justify-between gap-[10px]">

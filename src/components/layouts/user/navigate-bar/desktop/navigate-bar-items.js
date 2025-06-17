@@ -43,9 +43,8 @@ export default function NavigateBarItems({ livingSpaces }) {
                                 </Link>
                             ) :
                             (
-                                livingSpaces ?
-                                <NavigateBarLivingSpace item={item} livingSpaces={livingSpaces} /> :
-                                <></>
+                                livingSpaces &&
+                                (<NavigateBarLivingSpace item={item} livingSpaces={livingSpaces} />)
                             )
                         }
                     </li>
