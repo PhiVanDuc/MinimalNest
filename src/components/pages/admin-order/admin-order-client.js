@@ -1,20 +1,49 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import columns from "./columns";
+import Error from "@/components/customs/error";
+import MainLoading from "@/components/customs/main-loading";
 import CustomTable from "@/components/customs/admin/custom-table";
 import CustomPagination from "@/components/customs/admin/custom-pagination";
 
 import AdminOrderButton from "./admin-order-button";
 import AdminOrderFilter from "./admin-order-filter/admin-order-filter";
 
+import { getAdminOrders } from "@/lib/api/server-action/order";
+
 export default function AdminOrderClient({
     searchParams,
-    permissions,
-    orders
+    permissions
 }) {
+    const [orders, setOrders] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
     const [chooseOrders, setChooseOrders] = useState([]);
+
+    useEffect(() => {
+        const page = Number(searchParams?.page || 1);
+        const status = searchParams?.status || "all";
+        const from = searchParams?.from || "";
+        const to = searchParams?.to || "";
+
+        (async () => {
+            const { status: ordersStatus, result: orders } = await getAdminOrders({ page, status, from, to });
+
+            if (!orders?.success) {
+                setError(`${ordersStatus},${orders?.message}`);
+                setLoading(true);
+                return;
+            }
+
+            setOrders(orders);
+            setLoading();
+        })();
+    }, [searchParams]);
+
+    if (loading) return <MainLoading />
+    if (error) return <Error message={error} />
 
     return (
         <section className="space-y-[20px]">
@@ -44,7 +73,11 @@ export default function AdminOrderClient({
                 
                 {
                     orders?.data?.rows?.length > 0 &&
-                    <CustomPagination page={+searchParams?.page || 1} pageSize={orders?.data?.pageSize || 0} totalCount={orders?.data?.totalItems || 0} />
+                    <CustomPagination
+                        page={+searchParams?.page || 1}
+                        pageSize={orders?.data?.pageSize || 0}
+                        totalCount={orders?.data?.totalItems || 0}
+                    />
                 }
             </div>
         </section>

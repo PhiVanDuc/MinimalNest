@@ -16,9 +16,9 @@ export default function AdminOrderFilterStatus({
                             key={item?.id}
                             className={cn(
                                 "flex items-center gap-[10px] text-[14px] whitespace-nowrap font-medium px-[15px] py-[8px] rounded-[10px] cursor-pointer",
-                                status === item?.param ? "text-darkBold bg-white" : "text-darkMedium"
+                                status === item?.value ? "text-darkBold bg-white" : "text-darkMedium"
                             )}
-                            onClick={() => { setStatus(item?.param); }}
+                            onClick={() => { setStatus(item?.value); }}
                         >
                             <p>{item?.label}</p>
                         </div>

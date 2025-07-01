@@ -43,7 +43,7 @@ const columns = [
             const order = row?.original;
 
             return (
-                <div className="flex items-center gap-[10px] text-[14px] font-semibold max-w-[250px]">
+                <div className="flex items-center gap-[5px] text-[14px] font-semibold">
                     <p className="text-darkBland">#</p>
                     <p className="leading-[24px]">{order?.id}</p>
                 </div>

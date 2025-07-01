@@ -46,6 +46,8 @@ export default function AdminOrderFilter({ searchParams }) {
         router.replace(`?${queryString}`);
     };
 
+    console.log(status);
+
     return (
         <div className="flex flex-wrap items-center justify-between gap-y-[10px] gap-x-[20px]">
             <AdminOrderFilterTime

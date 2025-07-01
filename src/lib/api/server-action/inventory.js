@@ -5,15 +5,13 @@ import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 const analysisInventory = async () => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/inventories/analysis`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy phân tích kho hàng thất bại!"
@@ -25,15 +23,13 @@ const analysisInventory = async () => {
 const getInventories = async (data) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/inventories?product=${data?.product}&page=${data?.page}`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách số lượng sản phẩm!"

@@ -32,15 +32,13 @@ const getAdminReturnGoods = async ({ page = 1, status = "all", from = "", to = "
         const queryString = queryParams.toString();
         const { response, result } = await fetchHelperAuth.get(`/return_goods/admin?${queryString}`);
 
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách yêu cầu trả hàng!"
@@ -52,15 +50,13 @@ const getAdminReturnGoods = async ({ page = 1, status = "all", from = "", to = "
 const getDetailAdminReturnGoods = async (returnGoodsId) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/return_goods/admin/${returnGoodsId}`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy chi tiết đơn hoàn trả hàng!"
