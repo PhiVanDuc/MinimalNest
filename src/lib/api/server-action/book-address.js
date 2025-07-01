@@ -5,15 +5,13 @@ import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 const getBookAddresses = async (accountId) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/book_addresses/${accountId}`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách sổ địa chỉ!"

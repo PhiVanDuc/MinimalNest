@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import calcPrice from "@/lib/utils/calc-price";
 import { addCart } from "@/lib/api/server-action/cart";
-import { increaseQuantity } from "@/redux/slices/cart-products/cart-quantity-slice";
+import { addCartItemId } from "@/redux/slices/cart-products/cart-item-ids-slice";
 
 export default function ProductDetailBasicInfo({
     product,
@@ -88,7 +88,10 @@ export default function ProductDetailBasicInfo({
     };
 
     const handleAddCart = async () => {
-        if (!decode?.success) toast.warning("Vui lòng đăng nhập để tiếp tục!");
+        if (!decode?.success) {
+            toast.warning("Vui lòng đăng nhập để tiếp tục!");
+            return;
+        }
 
         if (submitting) return;
         setSubmitting(true);
@@ -103,7 +106,7 @@ export default function ProductDetailBasicInfo({
 
         if (cartItem?.success) {
             toast.success(message);
-            dispatch(increaseQuantity(cartItem?.data?.cart_item?.id));
+            dispatch(addCartItemId(cartItem?.data?.cart_item?.id));
         }
         else toast.error(message);
 

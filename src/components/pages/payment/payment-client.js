@@ -1,11 +1,13 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
+import Error from "@/components/customs/error";
 import PaymentBookAddress from "./payment-book-address";
+import MainLoading from "@/components/customs/main-loading";
 import CustomTable from "@/components/customs/admin/custom-table";
 import PaymentCoupon from "@/components/pages/payment/payment-coupon";
 import PaymentMethod from "@/components/pages/payment/payment-method";
@@ -19,22 +21,29 @@ import { toast } from "sonner";
 import calcPrice from "@/lib/utils/calc-price";
 import { createOrder } from "@/lib/api/server-action/order";
 import paymentProductColumns from "./payment-product-columns";
-import { resetQuantity } from "@/redux/slices/cart-products/cart-quantity-slice";
+import { getBookAddresses } from "@/lib/api/server-action/book-address";
+import { getReservedOrder } from "@/lib/api/server-action/reserved_order";
+import { resetCartItemIds } from "@/redux/slices/cart-products/cart-item-ids-slice";
 
 export default function PaymentClient({
-    bookAddresses,
-    reservedOrderInfo
+    params,
+    userInfo
 }) {
     const router = useRouter();
     const dispatch = useDispatch()
 
-    const { reserved_order, coupons, totalOrder } = reservedOrderInfo;
+    const [reservedOrderInfo, setReservedOrderInfo] = useState({});
+    const [bookAddresses, setBookAddresses] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
     const [submitting, setSubmitting] = useState(false);
+
+    const { reserved_order, coupons, totalOrder } = reservedOrderInfo;
 
     const form = useForm({
         defaultValues: {
-            address: bookAddresses?.find(address => address?.default_address) || {},
-            products: reserved_order?.reserved_order_items || [],
+            address: {},
+            products: [],
             coupon: {},
             message: "",
             paymentMethod: "cod",
@@ -45,6 +54,38 @@ export default function PaymentClient({
             }
         }
     });
+
+    useEffect(() => {
+        (async () => {
+            const [reservedOrderRes, bookAddressesRes] = await Promise.all([
+                getReservedOrder(params?.reservedOrderId),
+                getBookAddresses(userInfo?.id)
+            ]);
+
+            const { status: reservedOrderStatus, result: reservedOrderData } = reservedOrderRes;
+            const { status: bookAddressesStatus, result: bookAddressesData } = bookAddressesRes;
+
+            if (!reservedOrderData?.success || !bookAddressesData?.success) {
+                if (!reservedOrderData?.success) {
+                    setError(`${reservedOrderStatus},${reservedOrderData?.message}`);
+                    setLoading(false);
+                    return;
+                }
+                if (!bookAddressesData?.success || !bookAddressesData?.data) {
+                    setError(`${bookAddressesStatus},${bookAddressesData?.message}`);
+                    setLoading(false);
+                    return;
+                }
+            }
+            
+            setReservedOrderInfo(reservedOrderData?.data);
+            setBookAddresses(bookAddressesData?.data?.book_addresses);
+
+            form.setValue("address", bookAddressesData?.data?.book_addresses?.find(address => address?.default_address) || {});
+            form.setValue("products", reservedOrderData?.data?.reserved_order?.reserved_order_items || []);
+            setLoading(false);
+        })();
+    }, []);
 
     const onSubmit = async (data) => {
         const stripe = data?.paymentStripe?.stripe;
@@ -105,7 +146,7 @@ export default function PaymentClient({
         });
         
         if (order?.success) {
-            dispatch(resetQuantity());
+            dispatch(resetCartItemIds());
             if (data?.paymentMethod === "cod") {
                 router.push("/ho-so/don-hang");
                 return;
@@ -137,6 +178,9 @@ export default function PaymentClient({
 
         setSubmitting(false);
     }
+
+    if (loading) return <MainLoading />
+    if (error) return <Error message={error} />
 
     return (
         <Form {...form}>

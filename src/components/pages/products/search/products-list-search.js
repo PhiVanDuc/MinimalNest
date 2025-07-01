@@ -6,15 +6,14 @@ import CustomPagination from "@/components/customs/admin/custom-pagination";
 
 import { getAllPublicProducts } from "@/lib/api/server-action/public-product";
 
-
 export default async function ProductsListSearch({ searchParams }) {
-    const { response, result: publicAllProducts } = await getAllPublicProducts({
+    const { status, result: publicAllProducts } = await getAllPublicProducts({
         ...searchParams,
         limit: 20,
         page: searchParams?.page || 1
     });
 
-    if (!publicAllProducts?.success) return <Error message={`${response?.status},${publicAllProducts?.message}`} />
+    if (!publicAllProducts?.success) return <Error message={`${status},${publicAllProducts?.message}`} />
 
     return (
         <ProductsListSearchClient>

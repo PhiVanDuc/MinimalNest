@@ -5,15 +5,13 @@ const { default: fetchHelperAuth } = require("../fetch-helper/fetch-helper-auth"
 const getEvents = async (data) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/events?page=${data?.page || 1}&event=${data?.event}${ data?.all ? `&all=${data?.all}` : "" }${ data?.isDiscount ? `&is_discount=${data?.isDiscount}` : "" }`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
         
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy các sự kiện!"
@@ -25,15 +23,13 @@ const getEvents = async (data) => {
 const getEvent = async (slug) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/events/${slug}`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy sự kiện!"

@@ -7,7 +7,7 @@ import { getPublicProducts } from "@/lib/api/server-action/public-product";
 import { cn } from "@/lib/utils";
 
 export default async function LatestProducts() {
-    const { response, result: products } = await getPublicProducts({
+    const { result: products } = await getPublicProducts({
         limit: 10,
         productType: 'moi-nhat'
     });

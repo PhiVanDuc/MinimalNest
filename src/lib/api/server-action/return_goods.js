@@ -5,15 +5,13 @@ import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 const getReturnGoods = async (accountId, status = "all") => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/return_goods/${accountId}?status=${status}`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh yêu cầu hoản trả hàng!"

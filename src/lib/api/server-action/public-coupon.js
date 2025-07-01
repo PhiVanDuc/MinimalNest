@@ -9,15 +9,13 @@ const getPublicCoupons = async (data) => {
         const { response, result } = await fetchHelper.get(
             `/public_coupons?${query.toString()}`
         );
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách phiếu giảm giá!"

@@ -11,7 +11,7 @@ export default function AdminSidebar() {
         <AdminSidebarContainer>
             <AdminSidebarHeader />
             <AdminSidebarContent />
-            <AdminSidebarFooter infoUser={decode?.decode} />
+            <AdminSidebarFooter userInfo={decode?.decode} />
         </AdminSidebarContainer>
     )
 }

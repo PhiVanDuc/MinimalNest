@@ -21,34 +21,35 @@ export default function NavigateBarItems({ livingSpaces }) {
     return (
         <ul className="w-fit hidden xl:flex items-center gap-x-[55px]">
             {
-                navbarItems.map(item => (
-                    <li
-                        key={item.label}
-                    >
-                        {
-                            !item.subNav ?
-                            (
-                                <Link
-                                    href={item.href}
-                                    className={cn(
-                                        "group relative text-[15px] font-medium",
-                                        pathname.startsWith(item.highlight) ? "text-yellowBold" : "text-darkMedium"
-                                    )}
-                                >
-                                    {item.label}
-                                    <Mark className={cn(
-                                        "group-hover:opacity-100",
-                                        pathname.startsWith(item.highlight) ? "opacity-100 bg-yellowBold" : ""
-                                    )} />
-                                </Link>
-                            ) :
-                            (
-                                livingSpaces &&
-                                (<NavigateBarLivingSpace item={item} livingSpaces={livingSpaces} />)
-                            )
-                        }
-                    </li>
-                ))
+                navbarItems.map(item => {
+                    return (
+                        <li
+                            key={item.label}
+                        >
+                            {
+                                !item.subNav ?
+                                (
+                                    <Link
+                                        href={item.href}
+                                        className={cn(
+                                            "group relative text-[15px] font-medium",
+                                            pathname.startsWith(item.highlight) ? "text-yellowBold" : "text-darkMedium"
+                                        )}
+                                    >
+                                        {item.label}
+                                        <Mark className={cn(
+                                            "group-hover:opacity-100",
+                                            pathname.startsWith(item.highlight) ? "opacity-100 bg-yellowBold" : ""
+                                        )} />
+                                    </Link>
+                                ) :
+                                (
+                                    <NavigateBarLivingSpace item={item} livingSpaces={livingSpaces} />
+                                )
+                            }
+                        </li>
+                    )
+                })
             }
         </ul>
     )

@@ -5,15 +5,13 @@ import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 const getSizes = async (data) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/sizes?size=${data?.size}&page=${data?.page}${data?.all ? `&all=${data?.all}` : ""}`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1 // Lỗi không xác định
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy các kích cỡ!"
@@ -25,15 +23,13 @@ const getSizes = async (data) => {
 const getSize = async (sizeId) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/sizes/${sizeId}`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1 // Lỗi không xác định
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy kích cỡ!"

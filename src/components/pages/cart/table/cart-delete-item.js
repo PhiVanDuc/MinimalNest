@@ -8,13 +8,12 @@ import { FiTrash } from "react-icons/fi";
 
 import { toast } from "sonner";
 import { deleteCartItem } from "@/lib/api/server-action/cart";
-import { decreaseQuantity } from "@/redux/slices/cart-products/cart-quantity-slice";
+import { deleteCartItemId } from "@/redux/slices/cart-products/cart-item-ids-slice";
 
 export default function CartDeleteItem({
     cartItemId,
     moreData
 }) {
-    const router = useRouter();
     const dispatch = useDispatch();
     const [submitting, setSubmitting] = useState(false);
 
@@ -28,13 +27,17 @@ export default function CartDeleteItem({
         if (deleteCart?.success) {
             toast.success(message);
 
-            // Xóa cart item trong dữ liệu hiệu tại
-            const leftCartItems = moreData?.productsArray?.fields?.filter(item => item?.id !== cartItemId);
-            moreData?.form.setValue("products", leftCartItems);
+            const index = moreData?.productsArray?.fields?.findIndex(item => item.id === cartItemId);
+            if (index !== -1) {
+                moreData?.productsArray.remove(index);
+            }
 
-            // Giảm số lượng trọng cart
-            dispatch(decreaseQuantity(cartItemId));
-            router.refresh();
+            dispatch(deleteCartItemId(cartItemId));
+
+            moreData?.setCart(prev => ({
+                ...prev,
+                cart_items: prev?.cart_items?.filter(item => item.id !== cartItemId)
+            }));
         }
         else toast.error(message);
 

@@ -72,7 +72,11 @@ export default function PaymentSummary({
                 className="w-full bg-yellowBold hover:bg-yellowBold hover:opacity-90 transition-opacity duration-300"
                 disabled={submitting}
             >
-                { submitting ? "Đang xử lý…" : "Thanh toán" }
+                {
+                    submitting ?
+                    "Đang xử lý…" :
+                    "Thanh toán"
+                }
             </CustomButton>
         </div>
     )

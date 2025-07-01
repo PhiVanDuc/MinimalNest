@@ -5,7 +5,6 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 
 import _ from "lodash";
-import { livingSpaces } from "@/static/navbar";
 import {
     addDiscount,
     addLivingSpace,
@@ -19,7 +18,8 @@ export default function ProductFilterWrapper({
     children,
     productTypes,
     categories,
-    colors
+    colors,
+    livingSpaces
 }) {
     const searchParams = useSearchParams();
     
@@ -31,8 +31,22 @@ export default function ProductFilterWrapper({
         for (const key in params) {
             switch(key) {
                 case "living-space": {
-                    const index = livingSpaces.findIndex(livingSpace => livingSpace.param === params[key]);
-                    if (index !== -1) dispatch(addLivingSpace(livingSpaces[index])) 
+                    const formatLivingSpaces = livingSpaces.map(livingSpace => {
+                        return {
+                            id: livingSpace?.id,
+                            label: livingSpace?.living_space,
+                            param: livingSpace?.param
+                        }
+                    });
+
+                    formatLivingSpaces.push({
+                        id: "Living-space-all-id",
+                        label: "Tất cả",
+                        param: "all"
+                    });
+
+                    const index = formatLivingSpaces.findIndex(livingSpace => livingSpace?.param === params[key]);
+                    if (index !== -1) dispatch(addLivingSpace(livingSpaces[index]));
                     break;
                 }
 

@@ -27,6 +27,8 @@ export default function NavigateBarLivingSpace({ item, livingSpaces }) {
     const router = useRouter();
     const dispatch = useDispatch();
 
+    const isLivingSpacesEmpty = livingSpaces?.length === 0;
+
     const handleClickSubNav = (livingSpace) => {
         if (livingSpace.slug === "tat-ca") {
             router.push("/san-pham");
@@ -80,7 +82,9 @@ export default function NavigateBarLivingSpace({ item, livingSpaces }) {
                 sideOffset={15}
                 className="rounded-[10px] p-[15px]"
             >
-                <DropdownMenuGroup className="grid grid-cols-3 gap-x-[80px] gap-y-[10px]">
+                <DropdownMenuGroup className={cn(
+                    isLivingSpacesEmpty ? "" : "grid grid-cols-3 gap-x-[80px] gap-y-[10px]"
+                )}>
                     <DropdownMenuItem
                         className={cn(
                             "flex items-center text-darkMedium hover:text-darkBold px-[15px] py-[10px] gap-x-[20px] rounded-[5px] cursor-pointer",
@@ -90,7 +94,12 @@ export default function NavigateBarLivingSpace({ item, livingSpaces }) {
                             handleClickSubNav({ slug: 'tat-ca' })
                         }}
                     >
-                        <p className="text-[15px]">Tất cả</p>
+                        <p className={cn(
+                            "",
+                            isLivingSpacesEmpty ? "text-[15px] text-center w-full" : ""
+                        )}>
+                            Tất cả
+                        </p>
                     </DropdownMenuItem> 
 
                     {

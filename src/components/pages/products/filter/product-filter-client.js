@@ -17,7 +17,8 @@ const showPaths = ["/san-pham", "/san-pham/tim-kiem"];
 export default function ProductFilterClient({
     productTypes,
     categories,
-    colors
+    colors,
+    livingSpaces
 }) {
     const dispatch = useDispatch();
     const isOpen = useSelector(state => state.productFilterOpen);
@@ -45,6 +46,7 @@ export default function ProductFilterClient({
                         productTypes={productTypes}
                         categories={categories}
                         colors={colors}
+                        livingSpaces={livingSpaces}
                     >
                         <ProductFilterHeader />
                         <ProductFilterContent

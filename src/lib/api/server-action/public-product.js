@@ -9,15 +9,13 @@ const getPublicProducts = async (data) => {
         const { response, result } = await fetchHelper.get(
             `/public_products?${query.toString()}`
         );
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách sản phẩm!"
@@ -30,7 +28,6 @@ const getAllPublicProducts = async (data) => {
     try {
         const query = new URLSearchParams();
 
-        // Duyệt toàn bộ key trong data
         for (const key in data) {
             if (data[key] !== undefined && data[key] !== null) {
                 query.append(key, data[key]);
@@ -40,15 +37,13 @@ const getAllPublicProducts = async (data) => {
         const { response, result } = await fetchHelper.get(
             `/public_products/all?${query.toString()}`
         );
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách sản phẩm!"
@@ -62,15 +57,13 @@ const getPublicProduct = async (slug) => {
         const { response, result } = await fetchHelper.get(
             `/public_products/${slug}`
         );
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy sản phẩm!"

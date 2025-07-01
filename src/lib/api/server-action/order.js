@@ -14,15 +14,13 @@ const getAdminOrders = async ({ page = 1, status = "all", from = "", to = "" }) 
         const queryString = queryParams.toString();
         const { response, result } = await fetchHelperAuth.get(`/orders/admin?${queryString}`);
 
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách đơn hàng!"
@@ -34,15 +32,13 @@ const getAdminOrders = async ({ page = 1, status = "all", from = "", to = "" }) 
 const getOrders = async (accountId, status = "all") => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/orders/${accountId}?status=${status}`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách đơn hàng!"

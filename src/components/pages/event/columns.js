@@ -33,7 +33,7 @@ const columns = [
         }
     },
     {
-        accessorKey: "coupon-quantity",
+        accessorKey: "event-type",
         header: () => {
             return (
                 <h2 className={

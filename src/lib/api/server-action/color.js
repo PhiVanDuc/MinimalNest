@@ -6,15 +6,13 @@ import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 const getColors = async (data) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/colors?color=${data?.color}&page=${data?.page}${data?.all ? `&all=${data?.all}` : ""}`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1 // Lỗi không xác định
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy các màu sắc!"
@@ -26,15 +24,13 @@ const getColors = async (data) => {
 const getColor = async (colorId) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/colors/${colorId}`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1 // Lỗi không xác định
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy màu sắc!"

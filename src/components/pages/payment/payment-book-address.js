@@ -36,7 +36,7 @@ export default function PaymentBookAddress({
     }
 
     return (
-        <section className="space-y-[20px]">
+        <section>
             <Accordion
                 type="single"
                 collapsible
@@ -118,7 +118,7 @@ export default function PaymentBookAddress({
             {
                 watchAddress?.id &&
                 (
-                    <div className="space-y-[10px]">
+                    <div className="space-y-[10px] mt-[20px]">
                         <div className="space-y-[5px]">
                             <h3 className="text-[18px] font-semibold">Địa chỉ</h3>
                             <p className="text-[14px] font-medium text-darkBland">Hàng sẽ được gửi đến địa chỉ bạn đã chọn bên dưới.</p>

@@ -1,26 +1,46 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
+import Error from "@/components/customs/error";
 import BookAddressForm from "./book-address-form";
 import BookAddressList from "./book-address-list";
+import MainLoading from "@/components/customs/main-loading";
 
-export default function BookAddressClient({
-    decode,
-    bookAddresses
-}) {
+import { getBookAddresses } from "@/lib/api/server-action/book-address";
+
+export default function BookAddressClient({ userInfo }) {
     const form = useForm({
         defaultValues: {
             id: "",
-            fullName: decode?.full_name || "",
+            fullName: userInfo?.full_name || "",
             phoneNumber: "",
             address: "",
             defaultAddress: true
         }
     });
 
-    const [bookAddressesList, setBookAddressesList] = useState(bookAddresses || []);
+    const [bookAddressesList, setBookAddressesList] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
+
+    useEffect(() => {
+        (async () => {
+            const { status, result } = await getBookAddresses(userInfo?.id);
+            if (!result?.success) {
+                setError(`${status},${result?.message}`);
+                setLoading(false);
+                return;
+            }
+
+            setBookAddressesList(result?.data?.book_addresses);
+            setLoading(false);
+        })();
+    }, []);
+
+    if (loading) return <MainLoading />
+    if (error) return <Error message={error} />
 
     return (
         <div className="space-y-[40px] w-full">
@@ -31,13 +51,13 @@ export default function BookAddressClient({
 
             <BookAddressForm
                 form={form}
-                decode={decode}
+                userInfo={userInfo}
                 setBookAddressesList={setBookAddressesList}
             />
 
             <BookAddressList
                 form={form}
-                decode={decode}
+                userInfo={userInfo}
                 bookAddressesList={bookAddressesList}
             />
         </div>

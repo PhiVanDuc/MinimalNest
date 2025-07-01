@@ -1,23 +1,25 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import {
-    Form,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 
 import AdminCouponAddEvent from "./admin-coupon-add-event";
+import MainLoading from "@/components/customs/main-loading";
 import AdminCouponAddGeneral from "./admin-coupon-add-general";
 import AdminCouponAddCondition from "./admin-coupon-add-condition";
 
-import couponSchema from "@/lib/schemas/coupon-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { convertToNumber } from "@/lib/utils/format-currency";
-import { addCoupon } from "@/lib/api/server-action/coupon";
 import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
+import couponSchema from "@/lib/schemas/coupon-schema";
+import { getEvents } from "@/lib/api/server-action/event";
+import { addCoupon } from "@/lib/api/server-action/coupon";
+import { convertToNumber } from "@/lib/utils/format-currency";
 
-export default function AdminCouponAddClient({ events }) {
+export default function AdminCouponAddClient() {
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState();
 
     const form = useForm({
@@ -35,6 +37,17 @@ export default function AdminCouponAddClient({ events }) {
             quantity: "0"
         }
     });
+
+    useEffect(() => {
+        (async () => {
+            const { result: events } = await getEvents({ all: true, isDiscount: true });
+            if (events?.success) {
+                setEvents(events?.data?.events);
+            }
+            
+            setLoading(false);
+        })();
+    }, []);
 
     const onSubmit = async (data) => {
         setSubmitting(true);
@@ -55,6 +68,8 @@ export default function AdminCouponAddClient({ events }) {
 
         setSubmitting(false);
     }
+
+    if (loading) return <MainLoading />
 
     return (
         <section className="space-y-[30px]">

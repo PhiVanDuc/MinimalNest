@@ -5,15 +5,13 @@ import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 const getAccounts = async (page, name) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/accounts?page=${page}&name=${name}`);
-        return { response, accounts: result };
+        return { status: response?.status, accounts: result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy các tài khoản!"
@@ -25,16 +23,14 @@ const getAccounts = async (page, name) => {
 const getAccount = async (accountId) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/accounts/${accountId}`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
-            roles: {
+            status: -1,
+            account: {
                 success: false,
                 message: "Lỗi gọi hàm lấy tài khoản!"
             }

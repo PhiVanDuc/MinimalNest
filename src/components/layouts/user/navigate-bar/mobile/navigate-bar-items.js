@@ -32,7 +32,6 @@ import { FiShoppingBag } from "react-icons/fi";
 import { BookText, House, ShoppingCart } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { livingSpaces } from "@/static/navbar";
 import generateSignatureClient from "@/lib/utils/generate-signature-client";
 import { addLivingSpace } from "@/redux/slices/product-filter/product-filter-slice";
 
@@ -51,7 +50,11 @@ const items = [
     }
 ];
 
-export default function NavigateBarItems({ children, decode }) {
+export default function NavigateBarItems({
+    children,
+    userInfo,
+    livingSpaces
+}) {
     const firstPath = usePathname();
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -65,7 +68,7 @@ export default function NavigateBarItems({ children, decode }) {
     }, [firstPath]);
 
     const handleClickSubNav = (item) => {
-        if (item.livingSpace === "all") {
+        if (item.slug === "all") {
             router.push("/san-pham");
             setIsOpen(false);
             return;
@@ -73,11 +76,11 @@ export default function NavigateBarItems({ children, decode }) {
 
         const params = pathname.startsWith("/san-pham/tim-kiem") ? new URLSearchParams(searchParams.toString()) : new URLSearchParams();
 
-        params.set("living-space", item.livingSpace);
+        params.set("living-space", item.slug);
         params.delete("signature");
         dispatch(addLivingSpace({
-            label: item.label,
-            param: item.livingSpace
+            label: item.living_space,
+            param: item.slug
         }));
 
         const stringSearchParams = params.toString().replace(/%2C/g, ",");
@@ -109,7 +112,7 @@ export default function NavigateBarItems({ children, decode }) {
                 </SheetHeader>
 
                 <div className="flex items-center justify-between px-[20px] pt-[20px]">
-                    <Logo className="text-[20px] md:text-[22px]" />
+                    <Logo className="text-[15px] md:text-[16px]" />
 
                     <Button
                         variant="ghost"
@@ -146,19 +149,34 @@ export default function NavigateBarItems({ children, decode }) {
                                             <p>Sản phẩm</p>
                                         </div>
                                     </AccordionTrigger>
+
                                     <AccordionContent className="mt-[10px] p-[10px] space-y-[10px] border-[1.5px] rounded-[10px]">
+                                        <div
+                                            className={cn(
+                                                "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-neutral-100 text-[15px] text-darkMedium font-medium cursor-pointer",
+                                                searchParams.get("living-space") === "all" ? "bg-yellowMedium hover:bg-yellowMedium hover:opacity-80" : ""
+                                            )}
+                                            onClick={() => {
+                                                handleClickSubNav({
+                                                    slug: "all",
+                                                    living_space: "Tất cả"
+                                                })
+                                            }}
+                                        >
+                                            Tất cả
+                                        </div>
+
                                         {
                                             livingSpaces.map(livingSpace => (
                                                 <div
-                                                    key={livingSpace.label}
+                                                    key={livingSpace.id}
                                                     className={cn(
                                                         "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-neutral-100 text-[15px] text-darkMedium font-medium cursor-pointer",
-                                                        livingSpace.livingSpace === searchParams.get("living-space") ? "bg-yellowMedium hover:bg-yellowMedium hover:opacity-80" : ""
+                                                        livingSpace.slug === searchParams.get("living-space") ? "bg-yellowMedium hover:bg-yellowMedium hover:opacity-80" : ""
                                                     )}
-                                                    onClick={() => { handleClickSubNav(livingSpace); }}
+                                                    onClick={() => { handleClickSubNav(livingSpace) }}
                                                 >
-                                                    <livingSpace.icon size={20} />
-                                                    {livingSpace.label}
+                                                    {livingSpace?.living_space}
                                                 </div>
                                             ))
                                         }
@@ -167,7 +185,7 @@ export default function NavigateBarItems({ children, decode }) {
                             </Accordion>
 
                             {
-                                decode?.success && (
+                                userInfo?.success && (
                                     <div
                                         className={cn(
                                             "flex items-center gap-x-[15px] py-[10px] px-[20px] rounded-[10px] hover:bg-neutral-100 text-[15px] text-darkMedium font-medium cursor-pointer",

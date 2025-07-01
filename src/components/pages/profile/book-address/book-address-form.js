@@ -25,7 +25,7 @@ import { addBookAddress, editBookAddress } from "@/lib/api/server-action/book-ad
 
 export default function BookAddressForm({
     form,
-    decode,
+    userInfo,
     setBookAddressesList
 }) {
     const watchId = form.watch("id");
@@ -38,7 +38,7 @@ export default function BookAddressForm({
         setSubmitting(true);
 
         if (watchId) {
-            const updatedAddress = await editBookAddress(data, decode?.id);
+            const updatedAddress = await editBookAddress(data, userInfo?.id);
             const message = updatedAddress?.message;
 
             if (updatedAddress?.success) {
@@ -55,7 +55,7 @@ export default function BookAddressForm({
             else toast.error(message);
         }
         else {
-            const newAddress = await addBookAddress(data, decode?.id);
+            const newAddress = await addBookAddress(data, userInfo?.id);
             const message = newAddress?.message;
 
             if (newAddress?.success) {

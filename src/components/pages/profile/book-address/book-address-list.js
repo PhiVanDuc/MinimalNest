@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export default function BookAddressList({
     form,
-    decode,
+    userInfo,
     bookAddressesList
 }) {
     const watchId = form.watch("id");
@@ -25,7 +25,7 @@ export default function BookAddressList({
     const handleCancelEdit = () => {
         form.reset({
             id: "",
-            fullName: decode?.full_name || "",
+            fullName: userInfo?.full_name || "",
             phoneNumber: "",
             address: "",
             defaultAddress: true

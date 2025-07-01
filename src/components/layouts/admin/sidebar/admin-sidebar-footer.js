@@ -17,14 +17,10 @@ import { ShoppingCart } from "lucide-react";
 
 import { signOut } from "@/lib/api/server-action/auth";
 
-export default function AdminSidebarFooter({ infoUser = {} }) {
+export default function AdminSidebarFooter({ userInfo = {} }) {
     const router = useRouter();
-    const [letterName, setLetterName] = useState(() => {
-        const splitName = infoUser?.full_name?.split(" ");
-        const last = splitName[splitName?.length - 1];
-
-        return last[0];
-    });
+    const lastName = userInfo?.last_name?.split(" ");
+    const letterLastName = lastName?.[lastName.length - 1]?.[0] || "";
 
     const handleRedirect = (path) => { router.push(path); }
 
@@ -37,12 +33,12 @@ export default function AdminSidebarFooter({ infoUser = {} }) {
                     >
                         <div className="flex items-center gap-x-[15px] overflow-x-hidden">
                             <div className="flex items-center justify-center w-[30px] aspect-square rounded-full bg-darkBold">
-                                <p className="text-[14px] font-semibold text-white">{letterName}</p>
+                                <p className="text-[14px] font-semibold text-white">{letterLastName}</p>
                             </div>
                             
                             <div className="overflow-x-hidden">
-                                <p className="text-[13px] font-semibold text-darkBold truncate">{infoUser?.full_name}</p>
-                                <p className="text-[12px] font-medium text-darkMedium truncate">{infoUser?.email}</p>
+                                <p className="text-[13px] font-semibold text-darkBold truncate">{userInfo?.full_name}</p>
+                                <p className="text-[12px] font-medium text-darkMedium truncate">{userInfo?.email}</p>
                             </div>
                         </div>
                     </div>

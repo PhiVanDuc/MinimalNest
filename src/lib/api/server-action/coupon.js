@@ -5,15 +5,13 @@ const { default: fetchHelperAuth } = require("../fetch-helper/fetch-helper-auth"
 const getCoupons = async (data) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/coupons?page=${data?.page || 1}&code=${data?.code}${ data?.all ? `&all=${data?.all}` : "" }`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
         
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy các phiếu giảm giá!"
@@ -25,15 +23,13 @@ const getCoupons = async (data) => {
 const getCoupon = async (couponId) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/coupons/${couponId}`);
-        return { response, result };
+        return { status: response?.status, result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy phiếu giảm giá!"

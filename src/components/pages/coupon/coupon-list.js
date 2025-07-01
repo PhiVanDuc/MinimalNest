@@ -4,9 +4,9 @@ import CouponListContent from "./coupon-list-content";
 import { getPublicCoupons } from "@/lib/api/server-action/public-coupon";
 
 export default async function CouponList({ searchParams }) {
-    const { response, result: coupons } = await getPublicCoupons({ page: searchParams?.page, limit: 15 });
+    const { status, result: coupons } = await getPublicCoupons({ page: searchParams?.page, limit: 15 });
 
-    if (!coupons?.success) return <Error message={`${response?.status},${coupons?.message}`} />
+    if (!coupons?.success) return <Error message={`${status},${coupons?.message}`} />
 
     return (
         <div className="space-y-[60px]">

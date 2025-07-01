@@ -5,15 +5,13 @@ import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 const getRoles = async (data) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/roles?role=${data?.role}&page=${data?.page}${data?.all ? `&all=${data?.all}` : ""}`);
-        return { response, roles: result };
+        return { status: response?.status, roles: result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy các vai trò!"
@@ -25,15 +23,13 @@ const getRoles = async (data) => {
 const getRole = async (slug) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/roles/${slug}`);
-        return { response, role: result };
+        return { status: response?.status, role: result };
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy vai trò!"

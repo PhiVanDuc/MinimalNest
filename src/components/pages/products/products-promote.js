@@ -28,16 +28,20 @@ export default function ProductsPromote({ publicEvents, publicLatestProducts, pu
                         <h2 className="text-[20px] md:text-[24px] text-darkBold font-semibold">Sản phẩm mới</h2>
 
                         <CoreCarousel
-                            data={publicLatestProducts?.map(product => {
-                                return {
-                                    id: product?.id,
-                                    component: <ProductItem product={product} />
-                                }
-                            })}
-                            numberCardClassName={cn(
-                                "sm:basis-1/2 lg:basis-1/3",
-                                isOpen ? "xl:basis-1/3" : "xl:basis-1/4"
-                            )}
+                            data={
+                                publicLatestProducts?.map(product => {
+                                    return {
+                                        id: product?.id,
+                                        component: <ProductItem product={product} />
+                                    }
+                                })
+                            }
+                            numberCardClassName={
+                                cn(
+                                    "sm:basis-1/2 lg:basis-1/3",
+                                    isOpen ? "xl:basis-1/3" : "xl:basis-1/4"
+                                )
+                            }
                         />
                     </div>
                 )
@@ -50,16 +54,20 @@ export default function ProductsPromote({ publicEvents, publicLatestProducts, pu
                         <h2 className="text-[20px] md:text-[24px] text-darkBold font-semibold">Sản phẩm bán chạy nhất</h2>
 
                         <CoreCarousel
-                            data={publicBestSellerProducts?.map(product => {
-                                return {
-                                    id: product?.id,
-                                    component: <ProductItem product={product} />
-                                }
-                            })}
-                            numberCardClassName={cn(
-                                "sm:basis-1/2 lg:basis-1/3",
-                                isOpen ? "xl:basis-1/3" : "xl:basis-1/4"
-                            )}
+                            data={
+                                publicBestSellerProducts?.map(product => {
+                                    return {
+                                        id: product?.id,
+                                        component: <ProductItem product={product} />
+                                    }
+                                })
+                            }
+                            numberCardClassName={
+                                cn(
+                                    "sm:basis-1/2 lg:basis-1/3",
+                                    isOpen ? "xl:basis-1/3" : "xl:basis-1/4"
+                                )
+                            }
                         />
                     </div>
                 )

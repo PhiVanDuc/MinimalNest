@@ -1,3 +1,5 @@
+"use server"
+
 import { getPlaiceholder } from 'plaiceholder';
 
 export const dynamicBlurImage = async (src) => {

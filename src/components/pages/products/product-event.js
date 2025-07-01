@@ -25,7 +25,12 @@ export default function ProductEvent({ publicEvents }) {
         }
     });
 
-    let finalItems = items?.length < 4 ? [...items, ...items] : items;
+    let finalItems = items?.length < 4 
+    ? items?.map(item => ({
+        ...item,
+        id: `${item?.id}-${Math.random()}`
+    }))
+    : items;
 
     return (
         <CoreCarousel

@@ -5,15 +5,13 @@ import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 const getCart = async (accountId) => {
     try {
         const { response, result } = await fetchHelperAuth.get(`/carts/${accountId}?cart=true`);
-        return { response, result };
+        return { status: response?.status, result }
     }
     catch(error) {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
+            status: -1,
             roles: {
                 success: false,
                 message: "Lỗi gọi hàm lấy giỏ hàng!"

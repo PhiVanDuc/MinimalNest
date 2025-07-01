@@ -37,10 +37,10 @@ const fetchWithoutAuth = async (method, url, options = {}) => {
 };
 
 const fetchHelper = {
-  get:    (url, opts) => fetchWithoutAuth("GET",    url, opts),
-  post:   (url, opts) => fetchWithoutAuth("POST",   url, opts),
-  put:    (url, opts) => fetchWithoutAuth("PUT",    url, opts),
-  patch:  (url, opts) => fetchWithoutAuth("PATCH",  url, opts),
+  get: (url, opts) => fetchWithoutAuth("GET", url, opts),
+  post: (url, opts) => fetchWithoutAuth("POST", url, opts),
+  put: (url, opts) => fetchWithoutAuth("PUT", url, opts),
+  patch: (url, opts) => fetchWithoutAuth("PATCH", url, opts),
   delete: (url, opts) => fetchWithoutAuth("DELETE", url, opts),
 };
 

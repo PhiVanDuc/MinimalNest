@@ -1,23 +1,25 @@
 "use client"
 
+import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 
-import cartColumns from "./table/cart-columns";
 import CartSummary from "./cart-summary";
+import cartColumns from "./table/cart-columns";
+import Error from "@/components/customs/error";
+import MainLoading from "@/components/customs/main-loading";
 import CustomTable from "@/components/customs/admin/custom-table";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { getCart } from "@/lib/api/server-action/cart";
 
-export default function CartClient({
-    decode,
-    cart
-}) {
+export default function CartClient({ decode }) {
+    const [cart, setCart] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const form = useForm({
         defaultValues: {
-            products: cart?.cart_items?.map(item => ({
-                ...item,
-                selected: false
-            }))
+            products: []
         }
     });
 
@@ -26,6 +28,33 @@ export default function CartClient({
         name: "products",
         keyName: "_id"
     });
+
+    useEffect(() => {
+        const fetchCart = async () => {
+            const { status, result: cartResult } = await getCart(decode?.decode?.id || "");
+            if (!cartResult?.success) {
+                setError(`${status},${cartResult?.message}`);
+                setLoading(false);
+                return;
+            }
+            
+            setCart(cartResult?.data?.cart);
+
+            form.reset({
+                products: cartResult?.data?.cart?.cart_items?.map(item => ({
+                    ...item,
+                    selected: false
+                })) || []
+            });
+            
+            setLoading(false);
+        };
+
+        fetchCart();
+    }, []);
+
+    if (loading) return <MainLoading />
+    if (error) return <Error message={error} />
 
     return (
         <div className="space-y-[40px]">
@@ -41,7 +70,8 @@ export default function CartClient({
                         columns={cartColumns}
                         moreData={{
                             form,
-                            productsArray
+                            productsArray,
+                            setCart
                         }}
                     />
                 </TooltipProvider>

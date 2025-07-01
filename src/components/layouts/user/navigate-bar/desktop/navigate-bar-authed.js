@@ -1,8 +1,10 @@
 "use client"
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
+
+import Link from "next/link";
 
 import {
     DropdownMenu,
@@ -13,40 +15,51 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { FiUser } from "react-icons/fi";
-import { TbLogout } from "react-icons/tb";
 import { LayoutDashboard } from "lucide-react";
-import { TbArrowsExchange2 } from "react-icons/tb";
+import { TbLogout, TbArrowsExchange2 } from "react-icons/tb";
 
 import { signOut } from "@/lib/api/server-action/auth";
-import { rewriteQuantity } from "@/redux/slices/cart-products/cart-quantity-slice";
+import { getCart } from "@/lib/api/server-action/cart";
+import { initialCartItemId } from "@/redux/slices/cart-products/cart-item-ids-slice";
 
-export default function NavigateBarAuthed({
-    userInfo,
-    cart
-}) {
+export default function NavigateBarAuthed({ userInfo }) {
     const router = useRouter();
     const dispatch = useDispatch();
-    const cartItemIds = useSelector((state) => state.cartQuantity.cartItemIds);
-    
-    const permissions = userInfo?.decode?.permissions;
 
-    const lastName = userInfo?.decode?.last_name?.split(" ");
-    const letterLastName = (lastName?.[lastName?.length - 1])?.[0];
+    const [cart, setCart] = useState([]);
+    const cartItemIds = useSelector(state => state.cartItemIds.cartItemIds);
+
+    const userId = userInfo?.id;
+    const permissions = userInfo?.permissions || [];
+    const lastName = userInfo?.last_name?.split(" ");
+    const letterLastName = lastName?.[lastName.length - 1]?.[0] || "";
 
     useEffect(() => {
-        const cartItemIds = cart?.cart_items?.map(item => item?.id) || [];
-        dispatch(rewriteQuantity(cartItemIds));
-    }, [cart]);
+        const fetchCart = async () => {
+            const { result } = await getCart(userId);
+
+            if (result?.success) {
+                setCart(result?.data?.cart);
+            }
+        };
+
+        fetchCart();
+    }, []);
+
+    useEffect(() => {
+        const itemIds = cart?.cart_items?.map(item => item?.id) || [];
+        dispatch(initialCartItemId(itemIds));
+    }, [cart, dispatch]);
 
     return (
         <div className="flex items-center gap-x-[5px]">
             <div className="relative">
-                <a
+                <Link
                     href="/gio-hang"
                     className="hidden xl:flex px-[16px] py-[8px] text-[14px] text-darkMedium font-medium leading-0 rounded-[8px] hover:bg-neutral-100 hover:text-darkBold transition-colors duration-300"
                 >
                     Giỏ hàng
-                </a>
+                </Link>
 
                 {
                     cartItemIds?.length > 0 &&
