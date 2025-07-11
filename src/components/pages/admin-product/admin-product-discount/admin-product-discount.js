@@ -48,7 +48,7 @@ export default function AdminProductDiscount() {
 
     useEffect(() => {
         (async () => {
-            const [ generalDiscountsRes, productTypesRes, categoriesRes, livingSpacesRes] = await Promise.all([
+            const [generalDiscountsRes, productTypesRes, categoriesRes, livingSpacesRes] = await Promise.all([
                 getGeneralDiscounts(),
                 getProductTypes(),
                 getCategories(),

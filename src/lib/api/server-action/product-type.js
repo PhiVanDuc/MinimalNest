@@ -3,7 +3,14 @@ import fetchHelper from "../fetch-helper/fetch-helper";
 const getProductTypes = async () => {
     try {
         const { response, result } = await fetchHelper.get(
-            "/product_types"
+            "/product_types",
+            {
+                cacheOff: true,
+                next: {
+                    revalidate: 86400,
+                    tags: ["fetch_public_get_product_types"]
+                }
+            }
         );
         return { status: response?.status, result };
     }
