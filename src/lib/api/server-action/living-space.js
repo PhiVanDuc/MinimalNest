@@ -12,7 +12,7 @@ const getLivingSpaces = async () => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy các không gian sống!"
             }

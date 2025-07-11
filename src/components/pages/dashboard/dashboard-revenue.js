@@ -1,14 +1,18 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
+import Error from "@/components/customs/error";
+import Money from "@/components/customs/money";
+import MainLoading from "@/components/customs/main-loading";
+
+// import {
+//     Select,
+//     SelectContent,
+//     SelectItem,
+//     SelectTrigger,
+//     SelectValue,
+// } from "@/components/ui/select";
 
 import {
     Bar,
@@ -23,43 +27,60 @@ import {
     ChartTooltipContent
 } from "@/components/ui/chart";
 
-import Money from "@/components/customs/money";
+import { convertToNumberDb } from "@/lib/utils/format-currency";
+import { getTotalRevenueDetail } from "@/lib/api/server-action/dashboard";
 
-const chartData = [
-    { month: 1, profit: 186, expense: 100 },
-    { month: 2, profit: 305, expense: 150 },
-    { month: 3, profit: 237, expense: 120 },
-    { month: 4, profit: 73, expense: 40 },
-    { month: 5, profit: 209, expense: 120 },
-    { month: 6, profit: 214, expense: 125 },
-    { month: 7, profit: 214, expense: 125 },
-    { month: 8, profit: 214, expense: 125 },
-    { month: 9, profit: 214, expense: 125 },
-    { month: 10, profit: 214, expense: 125 },
-    { month: 11, profit: 214, expense: 125 },
-    { month: 12, profit: 214, expense: 125 },
-];
+export default function DashboardRevenue() {
+    // const [selectRevenueTime, setSelectRevenueTime] = useState("yearly");
+    const [totalRevenueDetail, setTotalRevenueDetail] = useState(0);
+    const [chartData, setChartData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
 
-const chartConfig = {
-    expense: {
-        label: "Chi phí",
-        color: "#487FFF"
-    },
-    profit: {
-        label: "Lợi nhuận",
-        color: "#487FFF"
-    },
-}
+    const chartConfig = {
+        expense: {
+            label: "Chi phí",
+            color: "#487FFF"
+        },
+        profit: {
+            label: "Lợi nhuận",
+            color: "#487FFF"
+        },
+    }
 
-export default function DashboardRevenueClient() {
-    const [selectRevenueTime, setSelectRevenueTime] = useState("yearly");
+    useEffect(() => {
+        (async () => {
+            const { status, result: totalRevenueDetail } = await getTotalRevenueDetail();
+            
+            if (!totalRevenueDetail?.success) {
+                setError(`${status},${totalRevenueDetail?.message}`);
+                setLoading(false);
+                return;
+            }
+
+            setTotalRevenueDetail(totalRevenueDetail?.data);
+            setChartData(() => {
+                return totalRevenueDetail?.data?.monthly?.map(item => {
+                    return {
+                        month: item?.month,
+                        profit: convertToNumberDb(item?.profit),
+                        expense: convertToNumberDb(item?.cost)
+                    }
+                });
+            });
+            setLoading(false);
+        })();
+    }, []);
+
+    if (loading) return <MainLoading className="p-[10px]" />
+    if (error) return <Error message={error} />
 
     return (
         <div className="p-[25px] w-full border-r self-stretch">
             <header className="flex items-center justify-between mb-[15px]">
                 <h2 className="text-[17px] font-bold">Báo cáo doanh thu.</h2>
 
-                <Select
+                {/* <Select
                     defaultValue={selectRevenueTime}
                     onValueChange={value => { setSelectRevenueTime(value); }}
                 >
@@ -75,7 +96,9 @@ export default function DashboardRevenueClient() {
                         <SelectItem value="weekly">Theo tuần</SelectItem>
                         <SelectItem value="today">Hôm nay</SelectItem>
                     </SelectContent>
-                </Select>
+                </Select> */}
+
+                <p className="w-[150px] text-[14px] rounded-[5px] border border-neutral-300 px-[15px] py-[5px] cursor-pointer">Theo năm</p>
             </header>
 
             <div className="space-y-[10px] mb-[30px]">
@@ -84,7 +107,7 @@ export default function DashboardRevenueClient() {
                     <div className="flex items-center text-[14px]">
                         <p className="font-semibold w-[85px]">Chi phí:</p>
                         <Money
-                            price={6000000000}
+                            price={convertToNumberDb(totalRevenueDetail?.annual?.cost)}
                             moneyClassName="text-[14px]"
                         />
                     </div>
@@ -95,7 +118,7 @@ export default function DashboardRevenueClient() {
                     <div className="flex items-center text-[14px]">
                         <p className="font-semibold w-[85px]">Lợi nhuận:</p>
                         <Money
-                            price={14000000000}
+                            price={convertToNumberDb(totalRevenueDetail?.annual?.profit)}
                             moneyClassName="text-[14px]"
                         />
                     </div>
@@ -126,7 +149,12 @@ export default function DashboardRevenueClient() {
 
                     <ChartTooltip
                         cursor={false}
-                        content={<ChartTooltipContent indicator="line" />}
+                        content={
+                            <ChartTooltipContent
+                                className="w-[300px]"
+                                indicator="line"
+                            />
+                        }
                     />
 
                     <Bar dataKey="expense" fill="#F39E50" radius={8} />

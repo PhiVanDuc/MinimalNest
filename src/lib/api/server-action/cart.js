@@ -12,7 +12,7 @@ const getCart = async (accountId) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy giỏ hàng!"
             }

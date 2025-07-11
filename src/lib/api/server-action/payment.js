@@ -14,14 +14,9 @@ const createPaymentIntent = async (amount) => {
         console.log(error);
 
         return {
-            response: {
-                status: -1 // Lỗi không xác định
-            },
-            permissions: {
-                success: false,
-                message: "Lỗi gọi hàm tạo đơn thanh toán đang chờ xử lý từ stripe!"
-            }
-        };
+            success: false,
+            message: "Lỗi gọi hàm tạo đơn thanh toán đang chờ xử lý từ stripe!"
+        }
     }
 }
 

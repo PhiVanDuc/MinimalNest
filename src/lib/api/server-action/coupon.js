@@ -30,7 +30,7 @@ const getCoupon = async (couponId) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy phiếu giảm giá!"
             }

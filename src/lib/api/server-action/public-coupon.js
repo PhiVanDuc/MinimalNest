@@ -16,7 +16,7 @@ const getPublicCoupons = async (data) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách phiếu giảm giá!"
             }

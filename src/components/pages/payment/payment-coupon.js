@@ -19,6 +19,7 @@ import { TbTicket } from "react-icons/tb";
 
 import formatDate from "@/lib/utils/format-date";
 import { convertToNumberDb } from "@/lib/utils/format-currency";
+import Image from "next/image";
 
 export default function PaymentCoupon({
     form,
@@ -90,7 +91,19 @@ export default function PaymentCoupon({
                                                                             key={coupon?.id}
                                                                             className="rounded-[10px] bg-white flex items-center gap-[15px] cursor-pointer"
                                                                         >
-                                                                            <div className="shrink-0 w-[80px] aspect-square rounded-[10px] bg-slate-200" />
+                                                                            
+                                                                            <div className="relative w-[80px] aspect-square rounded-[10px] overflow-hidden">
+                                                                                {
+                                                                                    coupon?.event?.image ?
+                                                                                    <Image
+                                                                                        src={coupon?.event?.image}
+                                                                                        alt={coupon?.code}
+                                                                                        fill
+                                                                                        className="object-cover object-left"
+                                                                                    /> :
+                                                                                    <div className="shrink-0 w-[80px] aspect-square rounded-[10px] bg-slate-200" />
+                                                                                }
+                                                                            </div>
 
                                                                             <div className="w-full flex items-center justify-between gap-[20px]">
                                                                                 <div className="space-y-[10px]">

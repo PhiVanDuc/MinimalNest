@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress";
 export default function CellStock({ row }) {
     const data = row?.original;
 
-    const [stock, setStock] = useState(data?.total_quantity || 0);
+    const [stock, setStock] = useState(data?.available_quantity || 0);
 
     const getStockStatus = () => {
         if (stock >= 50) {

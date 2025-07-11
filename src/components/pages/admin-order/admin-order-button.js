@@ -33,7 +33,7 @@ export default function AdminOrderButton({
 
         if (updated?.success) {
             setChooseOrders([]);
-            toast.success(message);
+            window.location.reload();
         }
         else toast.error(message);
 
@@ -47,13 +47,6 @@ export default function AdminOrderButton({
                 ( <></> ) :
                 (
                     <div className="flex items-center gap-[5px]">
-                        <Button
-                            variant="outline"
-                            className="shadow-none"
-                        >
-                            Xuất Excel
-                        </Button>
-
                         <AdminOrderCancelButton
                             chooseOrders={chooseOrders}
                             setChooseOrders={setChooseOrders}

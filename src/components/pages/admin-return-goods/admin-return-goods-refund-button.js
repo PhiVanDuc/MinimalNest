@@ -25,7 +25,7 @@ export default function AdminReturnGoodsRefundButton({ data }) {
 
         if (result?.message) {
             toast.success(message);
-            router.refresh();
+            window.location.reload();
         }
         else toast.error(message);
 

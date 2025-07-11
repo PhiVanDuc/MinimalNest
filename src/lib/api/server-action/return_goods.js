@@ -39,7 +39,7 @@ const getAdminReturnGoods = async ({ page = 1, status = "all", from = "", to = "
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách yêu cầu trả hàng!"
             }
@@ -57,7 +57,7 @@ const getDetailAdminReturnGoods = async (returnGoodsId) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy chi tiết đơn hoàn trả hàng!"
             }

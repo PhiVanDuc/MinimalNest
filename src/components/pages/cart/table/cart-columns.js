@@ -247,12 +247,13 @@ const cartColumns = [
         accessorKey: "delete-cart-item",
         header: () => <div className={cn(headerClassName, "text-right")}>Xóa</div>,
         cell: ({ row, table }) => {
-            const { id } = row?.original;
+            const { id, product_id } = row?.original;
             const moreData = table?.options?.meta?.moreData;
 
             return (
                 <CartDeleteItem
                     cartItemId={id}
+                    productId={product_id}
                     moreData={moreData}
                 />
             )

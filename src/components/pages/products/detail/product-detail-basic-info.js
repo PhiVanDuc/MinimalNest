@@ -106,7 +106,7 @@ export default function ProductDetailBasicInfo({
 
         if (cartItem?.success) {
             toast.success(message);
-            dispatch(addCartItemId(cartItem?.data?.cart_item?.id));
+            dispatch(addCartItemId(cartItem?.data?.cart_item?.product_id));
         }
         else toast.error(message);
 

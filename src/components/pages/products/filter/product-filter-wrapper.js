@@ -35,7 +35,7 @@ export default function ProductFilterWrapper({
                         return {
                             id: livingSpace?.id,
                             label: livingSpace?.living_space,
-                            param: livingSpace?.param
+                            param: livingSpace?.slug
                         }
                     });
 
@@ -46,7 +46,7 @@ export default function ProductFilterWrapper({
                     });
 
                     const index = formatLivingSpaces.findIndex(livingSpace => livingSpace?.param === params[key]);
-                    if (index !== -1) dispatch(addLivingSpace(livingSpaces[index]));
+                    if (index !== -1) dispatch(addLivingSpace(formatLivingSpaces[index]));
                     break;
                 }
 

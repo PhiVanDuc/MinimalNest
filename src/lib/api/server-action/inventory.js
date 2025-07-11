@@ -12,7 +12,7 @@ const analysisInventory = async () => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy phân tích kho hàng thất bại!"
             }
@@ -30,7 +30,7 @@ const getInventories = async (data) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách số lượng sản phẩm!"
             }
@@ -50,14 +50,9 @@ const editInventory = async (id, data) => {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
-            roles: {
-                success: false,
-                message: "Lỗi gọi hàm cập nhật số lượng sản phẩm!"
-            }
-        };
+            success: false,
+            message: "Lỗi gọi hàm cập nhật số lượng sản phẩm!"
+        }
     }
 }
 
@@ -72,14 +67,9 @@ const addInventoriesExcel = async (formData) => {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
-            roles: {
-                success: false,
-                message: "Lỗi gọi hàm thêm số lượng sản phẩm qua excel!"
-            }
-        };
+            success: false,
+            message: "Lỗi gọi hàm thêm số lượng sản phẩm qua excel!"
+        }
     }
 }
 

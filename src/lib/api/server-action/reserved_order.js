@@ -2,15 +2,15 @@
 
 import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 
-const getReservedOrder = async (reservedOrderId) => {
+const getReservedOrder = async (accountId, reservedOrderId) => {
     try {
-        const { response, result } = await fetchHelperAuth.get(`/reserved_orders/${reservedOrderId}`);
+        const { response, result } = await fetchHelperAuth.get(`/reserved_orders?accountId=${accountId}&reservedOrderId=${reservedOrderId}`);
         return { status: response?.status, result };
     }
     catch(error) {
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy đơn hàng tạm thời!"
             }

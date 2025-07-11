@@ -1,10 +1,12 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
+import Error from "@/components/customs/error";
 import ReturnGoodsOrder from "./return-goods-order";
+import MainLoading from "@/components/customs/main-loading";
 import CustomTable from "@/components/customs/admin/custom-table";
 
 import { Input } from "@/components/ui/input";
@@ -16,21 +18,16 @@ import { FaArrowRotateLeft } from "react-icons/fa6";
 import { toast } from "sonner";
 import columns from "./columns";
 import { cn } from "@/lib/utils";
+import { getOrders } from "@/lib/api/server-action/order";
 import { convertToNumberDb } from "@/lib/utils/format-currency";
 import { addReturnGoods } from "@/lib/api/server-action/return_goods";
 
-export default function ReturnGoodsClient({
-    decode,
-    orders = []
-}) {
+export default function ReturnGoodsClient({ decode }) {
     const router = useRouter();
 
     const form = useForm({
         defaultValues: {
-            order: {
-                ...orders[0] || {},
-                bank_info: "",
-            },
+            order: {},
             products: []
         }
     });
@@ -38,7 +35,35 @@ export default function ReturnGoodsClient({
     const watchOrder = form.watch("order");
     const selectedOrder = watchOrder?.id;
 
+    const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
     const [submitting, setSubmitting] = useState();
+
+    useEffect(() => {
+        (async () => {
+            const { status, result: orders } = await getOrders(decode?.decode?.id, "fulfilled");
+
+            if (!orders?.success) {
+                setError(`${status},${orders?.message}`);
+                setLoading(false);
+                return;
+            }
+
+            const dataOrders = orders?.data?.orders;
+
+            form.reset({
+                order: {
+                    ...dataOrders[0] || {},
+                    bank_info: ""
+                },
+                products: []
+            });
+            
+            setOrders(dataOrders);
+            setLoading(false);
+        })();
+    }, []);
 
     const onSubmit = async (data) => {
         if (submitting) return;
@@ -84,7 +109,7 @@ export default function ReturnGoodsClient({
 
         // Lấy ra thông tin return_goods_items
         const return_goods_items = products.map(product => {
-            const { product_id, variant_id, product_name, image, color, code_color, size, size_desc, return_quantity, message, price_discount, price } = product;
+            const { product_id, variant_id, product_name, image, color, code_color, size, size_desc, return_quantity, message, cost_price, price_discount, price } = product;
 
             return {
                 product_id,
@@ -96,6 +121,7 @@ export default function ReturnGoodsClient({
                 size,
                 size_desc,
                 return_quantity,
+                cost_price,
                 message,
                 price_discount,
                 price,
@@ -132,6 +158,9 @@ export default function ReturnGoodsClient({
 
         setSubmitting(false);
     }
+
+    if (loading) return <MainLoading />
+    if (error) return <Error message={error} />
 
     return (
         <section className="space-y-[30px]">

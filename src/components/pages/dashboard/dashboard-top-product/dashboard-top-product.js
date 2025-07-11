@@ -8,15 +8,10 @@ export default function DashboardTopProduct() {
         <div className="p-[25px] rounded-[10px] bg-white space-y-[20px]">
             <header className="flex justify-between">
                 <h2 className="text-[18px] font-semibold">Sản phẩm bán chạy</h2>
-                <Link
-                    href="/quan-tri/bang-thong-ke"
-                    className="text-[15px] text-yellowBold font-semibold underline underline-offset-2"
-                >
-                    Xem thêm
-                </Link>
             </header>
 
             <CustomTable
+                data={[]}
                 columns={columns}
             />
         </div>

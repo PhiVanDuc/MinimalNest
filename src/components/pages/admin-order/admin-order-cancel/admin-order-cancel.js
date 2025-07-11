@@ -57,7 +57,7 @@ export default function AdminOrderCancel({
 
         if (updated?.success) {
             setChooseOrders([]);
-            toast.success(message);
+            window.location.reload();
         }
         else toast.error(message);
 

@@ -12,6 +12,7 @@ import { deleteCartItemId } from "@/redux/slices/cart-products/cart-item-ids-sli
 
 export default function CartDeleteItem({
     cartItemId,
+    productId,
     moreData
 }) {
     const dispatch = useDispatch();
@@ -27,16 +28,16 @@ export default function CartDeleteItem({
         if (deleteCart?.success) {
             toast.success(message);
 
-            const index = moreData?.productsArray?.fields?.findIndex(item => item.id === cartItemId);
+            const index = moreData?.productsArray?.fields?.findIndex(item => item.product_id === productId);
             if (index !== -1) {
                 moreData?.productsArray.remove(index);
             }
 
-            dispatch(deleteCartItemId(cartItemId));
+            dispatch(deleteCartItemId(productId));
 
             moreData?.setCart(prev => ({
                 ...prev,
-                cart_items: prev?.cart_items?.filter(item => item.id !== cartItemId)
+                cart_items: prev?.cart_items?.filter(item => item.product_id !== productId)
             }));
         }
         else toast.error(message);

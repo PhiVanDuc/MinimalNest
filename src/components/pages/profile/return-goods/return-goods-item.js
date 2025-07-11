@@ -64,10 +64,10 @@ export default function ReturnGoodsItem({ returnGood }) {
                 </div>
 
                 {
-                    (!returnGood?.is_refund && returnGood.status === "fulfilled") &&
-                    (
-                        <p className="text-[15px] text-darkMedium italic text-center">Hàng hoàn trả đang được kiểm tra, khoản hoàn tiền sẽ được xử lý sau khi xác nhận.</p>
-                    )
+                    returnGood.status === "fulfilled" &&
+                    !returnGood?.is_refunded ?
+                    <p className="text-[15px] text-darkMedium italic text-center">Hàng hoàn trả đang được kiểm tra, khoản hoàn tiền sẽ được xử lý sau khi xác nhận.</p> :
+                    <p className="text-[15px] text-darkMedium italic text-center">Tiền đã được hoàn trả.</p>
                 }
             </div>
         </div>

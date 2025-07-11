@@ -12,7 +12,7 @@ const getAccounts = async (page, name) => {
 
         return {
             status: -1,
-            roles: {
+            accounts: {
                 success: false,
                 message: "Lỗi gọi hàm lấy các tài khoản!"
             }
@@ -30,7 +30,7 @@ const getAccount = async (accountId) => {
 
         return {
             status: -1,
-            account: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy tài khoản!"
             }
@@ -40,7 +40,7 @@ const getAccount = async (accountId) => {
 
 const editAccount = async (accountId, data) => {
     try {
-        const { response, result } = await fetchHelperAuth.put(
+        const { result } = await fetchHelperAuth.put(
             `/accounts/${accountId}`,
             { body: JSON.stringify(data) }
         );
@@ -50,13 +50,8 @@ const editAccount = async (accountId, data) => {
         console.log(error);
 
         return {
-            response: {
-                status: -1
-            },
-            roles: {
-                success: false,
-                message: "Lỗi gọi hàm chỉnh sửa tài khoản!"
-            }
+            success: false,
+            message: "Lỗi gọi hàm chỉnh sửa tài khoản!"
         };
     }
 }

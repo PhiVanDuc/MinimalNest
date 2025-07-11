@@ -1,11 +1,12 @@
-import { Suspense } from "react";
+// import { Suspense } from "react";
 
 import DashboardTotal from "./dashboard-total";
+import DashboardOrder from "./dashboard-order";
+import DashboardRevenue from "./dashboard-revenue";
+
 import DashboardTopProduct from "./dashboard-top-product/dashboard-top-product";
 import DashboardTopCustomer from "./dashboard-top-customer/dashboard-top-customer";
-import DashboardStockQuantity from "./dashboard-stock-quantity/dashboard-stock-quantity";
-import DashboardRevenue from "./dashboard-revenue/dashboard-revenue";
-import DashboardOrder from "./dashboard-order/dashboard-order";
+// import DashboardStockQuantity from "./dashboard-stock-quantity/dashboard-stock-quantity";
 
 export default function Dashboard() {
     return (
@@ -13,32 +14,18 @@ export default function Dashboard() {
             <h1 className="text-[24px] font-semibold">Bảng thống kê</h1>
 
             <div className="space-y-[25px]">
-                <Suspense fallback="Loading . . .">
-                    <DashboardTotal />
-                </Suspense>
+                <DashboardTotal />
 
                 <section className="flex items-start border rounded-[10px] bg-white">
-                    <Suspense fallback="Loading . . .">
-                        <DashboardRevenue />
-                    </Suspense>
-
-                    <Suspense fallback="Loading . . .">
-                        <DashboardOrder />
-                    </Suspense>
+                    <DashboardRevenue />
+                    <DashboardOrder />
                 </section>
 
-                <Suspense fallback="Loading . . .">
-                    <DashboardTopProduct />
-                </Suspense>
+                <DashboardTopProduct />
                 
                 <div className="flex items-start gap-[25px]">
-                    <Suspense fallback="Loading . . .">
-                        <DashboardTopCustomer />
-                    </Suspense>
-
-                    <Suspense fallback="Loading . . .">
-                        <DashboardStockQuantity />
-                    </Suspense>
+                    <DashboardTopCustomer />
+                    {/* <DashboardStockQuantity /> */}
                 </div>
             </div>
         </div>

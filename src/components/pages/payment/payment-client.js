@@ -55,10 +55,12 @@ export default function PaymentClient({
         }
     });
 
+    const watchProducts = form.watch("products");
+
     useEffect(() => {
         (async () => {
             const [reservedOrderRes, bookAddressesRes] = await Promise.all([
-                getReservedOrder(params?.reservedOrderId),
+                getReservedOrder(userInfo?.id, params?.reservedOrderId),
                 getBookAddresses(userInfo?.id)
             ]);
 
@@ -86,6 +88,12 @@ export default function PaymentClient({
             setLoading(false);
         })();
     }, []);
+
+    useEffect(() => {
+        if (reserved_order?.is_paid) {
+            router.push('/gio-hang');
+        }
+    }, [reserved_order]);
 
     const onSubmit = async (data) => {
         const stripe = data?.paymentStripe?.stripe;
@@ -128,6 +136,7 @@ export default function PaymentClient({
                 return {
                     ...prod,
                     price: beforeDiscountPrice,
+                    cost_price: cost_price,
                     ...(isDiscount && { price_discount: price })
                 }
             }),
@@ -146,7 +155,11 @@ export default function PaymentClient({
         });
         
         if (order?.success) {
-            dispatch(resetCartItemIds());
+            const productIds = watchProducts?.map(reservedOrderItem => {
+                return reservedOrderItem?.product?.id || "";
+            });
+            dispatch(resetCartItemIds(productIds));
+
             if (data?.paymentMethod === "cod") {
                 router.push("/ho-so/don-hang");
                 return;
@@ -181,6 +194,7 @@ export default function PaymentClient({
 
     if (loading) return <MainLoading />
     if (error) return <Error message={error} />
+    if (reserved_order?.is_paid) return <></>
 
     return (
         <Form {...form}>

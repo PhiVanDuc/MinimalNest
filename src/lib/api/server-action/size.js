@@ -12,7 +12,7 @@ const getSizes = async (data) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy các kích cỡ!"
             }
@@ -30,7 +30,7 @@ const getSize = async (sizeId) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy kích cỡ!"
             }

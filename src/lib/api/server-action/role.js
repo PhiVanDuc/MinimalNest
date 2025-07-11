@@ -12,7 +12,7 @@ const getRoles = async (data) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy các vai trò!"
             }
@@ -30,7 +30,7 @@ const getRole = async (slug) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy vai trò!"
             }

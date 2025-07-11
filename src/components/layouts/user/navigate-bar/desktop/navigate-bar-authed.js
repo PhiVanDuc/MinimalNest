@@ -47,7 +47,7 @@ export default function NavigateBarAuthed({ userInfo }) {
     }, []);
 
     useEffect(() => {
-        const itemIds = cart?.cart_items?.map(item => item?.id) || [];
+        const itemIds = cart?.cart_items?.map(item => item?.product_id) || [];
         dispatch(initialCartItemId(itemIds));
     }, [cart, dispatch]);
 

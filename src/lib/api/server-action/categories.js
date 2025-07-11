@@ -12,7 +12,7 @@ const getCategories = async () => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy các danh mục!"
             }

@@ -16,7 +16,7 @@ const getPublicProducts = async (data) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách sản phẩm!"
             }
@@ -44,7 +44,7 @@ const getAllPublicProducts = async (data) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách sản phẩm!"
             }
@@ -64,7 +64,7 @@ const getPublicProduct = async (slug) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy sản phẩm!"
             }

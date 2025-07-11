@@ -13,7 +13,7 @@ const getColors = async (data) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy các màu sắc!"
             }
@@ -31,7 +31,7 @@ const getColor = async (colorId) => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy màu sắc!"
             }

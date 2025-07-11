@@ -21,7 +21,7 @@ const getAdminOrders = async ({ page = 1, status = "all", from = "", to = "" }) 
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách đơn hàng!"
             }
@@ -39,7 +39,7 @@ const getOrders = async (accountId, status = "all") => {
 
         return {
             status: -1,
-            roles: {
+            result: {
                 success: false,
                 message: "Lỗi gọi hàm lấy danh sách đơn hàng!"
             }
