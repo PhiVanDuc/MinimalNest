@@ -61,25 +61,25 @@ export default function AdminProductDiscount() {
             const { status: livingSpacesStatus, result: livingSpaces } = livingSpacesRes;
 
             if (!generalDiscounts?.success) {
-                setError(`${generalDiscountsStatus},${generalDiscounts?.message}`);
+                setError(`${generalDiscountsStatus},${generalDiscounts?.message} - Giảm giá chung`);
                 setLoading(false);
                 return;
             }
 
             if (!productTypes?.success) {
-                setError(`${productTypesStatus},${productTypes?.message}`);
+                setError(`${productTypesStatus},${productTypes?.message} - Loại sản phẩm`);
                 setLoading(false);
                 return;
             }
 
             if (!categories?.success) {
-                setError(`${categoriesStatus},${categories?.message}`);
+                setError(`${categoriesStatus},${categories?.message} - Danh mục`);
                 setLoading(false);
                 return;
             }
 
             if (!livingSpaces?.success) {
-                setError(`${livingSpacesStatus},${livingSpaces?.message}`);
+                setError(`${livingSpacesStatus},${livingSpaces?.message} - Không gian sống`);
                 setLoading(false);
                 return;
             }

@@ -23,7 +23,19 @@ const fetchWithoutAuth = async (method, url, options = {}) => {
     };
 
     const response = await fetch(`${BACKEND_API}${url}`, fetchOptions);
-    let result = await response.json();
+    
+    let result;
+    try {
+        result = await response.json();
+    }
+    catch(error) {
+        console.log(error);
+
+        result = {
+            success: false,
+            message: "Không thể chuyển sang JSON"
+        }
+    }
 
     return { response, result };
 };
