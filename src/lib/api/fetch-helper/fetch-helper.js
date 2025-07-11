@@ -15,24 +15,15 @@ const fetchWithoutAuth = async (method, url, options = {}) => {
 
     const fetchOptions = {
         method,
-        ...(!cacheOff && { cache: "no-cache" }),
-        ...(next && { next }),
+        ...(!cacheOff ? { cache: "no-cache" } : {}),
+        ...(next ? { next } : {}),
         ...rest,
         headers: mergedHeaders,
         ...(body !== undefined ? { body } : {}),
     };
 
     const response = await fetch(`${BACKEND_API}${url}`, fetchOptions);
-
-    let result;
-    try {
-        result = await response.json();
-    } catch {
-        result = {
-            success: false,
-            message: "Phản hồi không phải là JSON hợp lệ."
-        };
-    }
+    let result = await response.json();
 
     return { response, result };
 };

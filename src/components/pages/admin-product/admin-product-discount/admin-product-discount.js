@@ -39,8 +39,7 @@ export default function AdminProductDiscount() {
     const [products, setProducts] = useState([]);
     const [submitting, setSubmitting] = useState(false);
     const [discountSelected, setDiscountSelected] = useState(null);
-
-    const [generalDiscounts, setGeneralDiscounts] = useState([]);
+    
     const [productTypes, setProductTypes] = useState([]);
     const [categories, setCategories] = useState([]);
     const [livingSpaces, setLivingSpaces] = useState([]);

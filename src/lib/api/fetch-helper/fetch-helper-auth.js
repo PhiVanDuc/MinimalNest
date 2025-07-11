@@ -50,8 +50,8 @@ const fetchWithAuth = async (method, url, options = {}) => {
 
     let fetchOptions = {
         method,
-        ...(!cacheOff && { cache: "no-cache" }),
-        ...(next && { next }),
+        ...(!cacheOff ? { cache: "no-cache" } : {}),
+        ...(next ? { next } : {}),
         ...rest,
         headers: mergedHeaders,
         ...(body !== undefined ? { body } : {}),
