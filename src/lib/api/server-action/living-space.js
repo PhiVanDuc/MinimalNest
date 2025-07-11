@@ -9,8 +9,7 @@ const getLivingSpaces = async () => {
             {
                 cacheOff: true,
                 next: { 
-                    revalidate: 86400,
-                    tags: ['fetch_public_get_living_spaces']
+                    revalidate: 86400
                 }
             }
         );

@@ -7,8 +7,7 @@ const getProductTypes = async () => {
             {
                 cacheOff: true,
                 next: {
-                    revalidate: 86400,
-                    tags: ["fetch_public_get_product_types"]
+                    revalidate: 86400
                 }
             }
         );

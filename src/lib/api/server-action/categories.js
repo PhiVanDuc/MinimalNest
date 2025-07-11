@@ -9,8 +9,7 @@ const getCategories = async () => {
             {
                 cacheOff: true,
                 next: {
-                    revalidate: 86400,
-                    tags: ["fetch_public_get_categories"]
+                    revalidate: 86400
                 }
             }
         );
