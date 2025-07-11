@@ -1,20 +1,10 @@
 "use server"
 
-import { revalidateTag } from "next/cache";
 import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 
 const getCart = async (accountId) => {
     try {
-        const { response, result } = await fetchHelperAuth.get(
-            `/carts/${accountId}?cart=true`,
-            {
-                cacheOff: true,
-                next: {
-                    revalidate: 86400,
-                    tags: ["fetch_get_cart"]
-                }
-            }
-        );
+        const { response, result } = await fetchHelperAuth.get(`/carts/${accountId}?cart=true`);
         return { status: response?.status, result }
     }
     catch(error) {
@@ -36,8 +26,6 @@ const addCart = async (data) => {
             "/carts?cart=true",
             { body: JSON.stringify(data) }
         );
-
-        revalidateTag("fetch_get_cart");
         return result;
     }
     catch(error) {
@@ -53,8 +41,6 @@ const addCart = async (data) => {
 const deleteCartItem = async (cartItemId) => {
     try {
         const { result } = await fetchHelperAuth.delete(`/carts/${cartItemId}?cart=true`);
-
-        revalidateTag("fetch_get_cart");
         return result;
     }
     catch(error) {

@@ -1,6 +1,5 @@
 "use server"
 
-import { revalidateTag } from "next/cache";
 import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 
 const getAdminOrders = async ({ page = 1, status = "all", from = "", to = "" }) => {
@@ -54,8 +53,6 @@ const createOrder = async (data) => {
             "/orders",
             { body: JSON.stringify(data) }
         );
-
-        revalidateTag("fetch_get_cart");
         return result;
     }
     catch(error) {

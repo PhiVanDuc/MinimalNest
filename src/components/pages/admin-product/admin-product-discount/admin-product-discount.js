@@ -116,6 +116,8 @@ export default function AdminProductDiscount() {
         await editGeneralDiscount({ ...data?.discounts[discountSelected], discountAmount: convertToNumber(data?.discounts[discountSelected]?.discountAmount) }, currentDiscount?.rootId) :
         await addGeneralDiscount(data?.discounts[discountSelected]);
 
+        console.log(data?.discounts[discountSelected]);
+
         const message = generalDiscount?.message;
         if (generalDiscount?.success) {
             toast.success(message);

@@ -2,15 +2,7 @@ import fetchHelper from "../fetch-helper/fetch-helper";
 
 const getProductTypes = async () => {
     try {
-        const { response, result } = await fetchHelper.get(
-            "/product_types",
-            {
-                cacheOff: true,
-                next: {
-                    revalidate: 86400
-                }
-            }
-        );
+        const { response, result } = await fetchHelper.get("/product_types");
         return { status: response?.status, result };
     }
     catch(error) {
