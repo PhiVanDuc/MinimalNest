@@ -1,11 +1,12 @@
 import { Suspense } from "react";
+import NavigateBarLoading from "./navigate-bar/navigate-bar-loading";
 
 import NavigateBar from "./navigate-bar/desktop/navigate-bar";
-import NavigateBarLoading from "./navigate-bar/navigate-bar-loading";
 import NavigateBarMobile from "./navigate-bar/mobile/navigate-bar-mobile";
 import CustomBreadcrumb from "@/components/customs/custom-breadcrumb";
 import Newsletter from "./newsletter";
 import Footer from "./footer";
+
 import { cn } from "@/lib/utils";
 
 export default function UserLayout({ children, isOverflow = false }) {

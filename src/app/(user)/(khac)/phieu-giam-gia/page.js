@@ -23,7 +23,7 @@ export default async function Page({ searchParams }) {
     }
 
     return (
-        <Suspense fallback={<MainLoading className="responsive-horizontal" />}>
+        <Suspense fallback={<MainLoading />}>
             <CouponList searchParams={searchParams} />
         </Suspense>
     )

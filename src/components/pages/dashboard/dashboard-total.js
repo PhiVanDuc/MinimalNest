@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import Money from "@/components/customs/money";
 import Error from "@/components/customs/error";
-import MainLoading from "@/components/customs/main-loading";
+import DashboardTotalLoading from "./dashboard-total-loading";
 
 import { FaBoxOpen } from "react-icons/fa";
 import { ShoppingCart } from "lucide-react";
@@ -57,7 +57,7 @@ export default function DashboardTotal() {
         })();
     }, []);
 
-    if (loading) return <MainLoading />
+    if (loading) return <DashboardTotalLoading />
     if (error) return <Error message={error} />
 
     return (

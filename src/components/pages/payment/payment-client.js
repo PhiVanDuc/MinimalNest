@@ -112,6 +112,7 @@ export default function PaymentClient({
         if (data?.paymentMethod === "stripe") {
             if (!stripe || !elements || !clientSecret) return;
             const { error: formError } = await elements.submit();
+            
             if (formError) {
                 setSubmitting(false);
                 return;

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 import Error from '@/components/customs/error';
-import MainLoading from '@/components/customs/main-loading';
+import DashboardOrderLoading from './dashboard-order-loading';
 
 // import {
 //     Select,
@@ -25,13 +25,6 @@ import {
 } from "@/components/ui/chart";
 import { getStatusOrder } from '@/lib/api/server-action/dashboard';
 import { convertToNumberDb } from '@/lib/utils/format-currency';
-
-// const chartData = [
-//     { browser: "fulfilled", visitors: 350, fill: "var(--color-fulfilled)" },
-//     { browser: "canceled", visitors: 20, fill: "var(--color-canceled)" },
-//     { browser: "pending", visitors: 50, fill: "var(--color-pending)" },
-//     { browser: "packing", visitors: 80, fill: "var(--color-packing)" }
-// ];
 
 const chartConfig = {
     visitors: {
@@ -81,7 +74,7 @@ export default function DashboardOrder() {
         })();
     }, []);
 
-    if (loading) return <MainLoading className="p-[10px]" />
+    if (loading) return <DashboardOrderLoading />
     if (error) return <Error message={error} />
 
     return (

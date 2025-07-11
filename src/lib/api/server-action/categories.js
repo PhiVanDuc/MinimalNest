@@ -4,7 +4,16 @@ import fetchHelper from "../fetch-helper/fetch-helper";
 
 const getCategories = async () => {
     try {
-        const { response, result } = await fetchHelper.get(`/categories`);
+        const { response, result } = await fetchHelper.get(
+            `/categories`,
+            {
+                cacheOff: true,
+                next: {
+                    revalidate: 86400,
+                    tags: ["fetch_public_get_categories"]
+                }
+            }
+        );
         return { status: response?.status, result };
     }
     catch(error) {

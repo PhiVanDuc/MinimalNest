@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import Error from "@/components/customs/error";
 import Money from "@/components/customs/money";
-import MainLoading from "@/components/customs/main-loading";
+import DashboardRevenueLoading from "./dashboard-revenue-loading";
 
 // import {
 //     Select,
@@ -72,7 +72,7 @@ export default function DashboardRevenue() {
         })();
     }, []);
 
-    if (loading) return <MainLoading className="p-[10px]" />
+    if (loading) return <DashboardRevenueLoading />
     if (error) return <Error message={error} />
 
     return (

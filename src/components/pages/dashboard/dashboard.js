@@ -1,12 +1,9 @@
-// import { Suspense } from "react";
-
 import DashboardTotal from "./dashboard-total";
 import DashboardOrder from "./dashboard-order";
 import DashboardRevenue from "./dashboard-revenue";
 
 import DashboardTopProduct from "./dashboard-top-product/dashboard-top-product";
 import DashboardTopCustomer from "./dashboard-top-customer/dashboard-top-customer";
-// import DashboardStockQuantity from "./dashboard-stock-quantity/dashboard-stock-quantity";
 
 export default function Dashboard() {
     return (
@@ -25,7 +22,6 @@ export default function Dashboard() {
                 
                 <div className="flex items-start gap-[25px]">
                     <DashboardTopCustomer />
-                    {/* <DashboardStockQuantity /> */}
                 </div>
             </div>
         </div>

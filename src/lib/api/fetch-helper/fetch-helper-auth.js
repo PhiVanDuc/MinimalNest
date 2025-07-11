@@ -35,7 +35,7 @@ const performRefreshToken = async () => {
 
 const fetchWithAuth = async (method, url, options = {}) => {
     const accessToken = cookies().get("access_token")?.value;
-    const { headers: customHeaders = {}, body, ...rest } = options;
+    const { cacheOff, next, headers: customHeaders = {}, body, ...rest } = options;
 
     const isFormData = typeof FormData !== "undefined" && body instanceof FormData;
     const defaultHeaders = {
@@ -50,7 +50,8 @@ const fetchWithAuth = async (method, url, options = {}) => {
 
     let fetchOptions = {
         method,
-        cache: "no-cache",
+        ...(!cacheOff && { cache: "no-cache" }),
+        ...(next && { next }),
         ...rest,
         headers: mergedHeaders,
         ...(body !== undefined ? { body } : {}),

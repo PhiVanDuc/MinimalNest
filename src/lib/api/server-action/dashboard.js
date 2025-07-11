@@ -92,4 +92,22 @@ const getStatusOrder = async () => {
     }
 }
 
-export { getTotalProducts, getTotalOrders, getTotalRevenue, getTotalRevenueDetail, getStatusOrder }
+const getVipCustomers = async () => {
+    try {
+        const { response, result } = await fetchHelperAuth.get(`/dashboard/vip_customers`);
+        return { status: response?.status, result };
+    }
+    catch(error) {
+        console.log(error);
+        
+        return {
+            status: -1,
+            result: {
+                success: false,
+                message: "Lỗi gọi hàm lấy danh sách các khách hàng quen!"
+            }
+        }
+    }
+}
+
+export { getTotalProducts, getTotalOrders, getTotalRevenue, getTotalRevenueDetail, getStatusOrder, getVipCustomers }
