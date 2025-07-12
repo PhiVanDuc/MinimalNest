@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useWatch } from "react-hook-form";
 
 import {
@@ -16,6 +16,7 @@ import GeneralDiscountDeleteDialog from "../general-discount-delete-dialog";
 
 export default function AdminProductDiscountApplyAll({ form, formArray, index, setDiscountSelected, submitting }) {
     const [openDialog, setOpenDialog] = useState(false);
+
     const watchCurrentDiscount = useWatch({
         control: form.control,
         name: `discounts.${index}`
@@ -34,7 +35,6 @@ export default function AdminProductDiscountApplyAll({ form, formArray, index, s
                                 <Switch
                                     checked={field.value}
                                     onCheckedChange={field.onChange}
-                                    
                                 />
                             </FormControl>
                         </FormItem>

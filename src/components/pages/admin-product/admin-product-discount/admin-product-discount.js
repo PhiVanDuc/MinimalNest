@@ -46,6 +46,12 @@ export default function AdminProductDiscount() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
+    const currentDiscount = form.watch(`discounts.${discountSelected}`);
+    const applyAll = form.watch(`discounts.${discountSelected}.applyAll`);
+    const selectedCategories = form.watch(`discounts.${discountSelected}.categoryIds`);
+    const selectedProductTypes = form.watch(`discounts.${discountSelected}.productTypeIds`);
+    const selectedLivingSpaces = form.watch(`discounts.${discountSelected}.livingSpaceIds`);
+
     useEffect(() => {
         (async () => {
             const [generalDiscountsRes, productTypesRes, categoriesRes, livingSpacesRes] = await Promise.all([
@@ -85,7 +91,13 @@ export default function AdminProductDiscount() {
             }
 
             form.reset({
-                discounts: generalDiscounts?.data?.general_discounts?.map(item => ({ ...item, discountAmount: `${convertToNumberDb(item?.discountAmount)}` })) || []
+                discounts:
+                generalDiscounts?.data?.general_discounts?.map(item => (
+                    {
+                        ...item,
+                        discountAmount: `${convertToNumberDb(item?.discountAmount)}`
+                    }
+                )) || []
             });
 
             setProductTypes(productTypes?.data?.product_types);
@@ -95,8 +107,6 @@ export default function AdminProductDiscount() {
             setLoading(false);
         })();
     }, []);
-    
-    const currentDiscount = form.watch(`discounts.${discountSelected}`);
 
     useEffect(() => {
         if (formArray.fields.length && discountSelected === null) {
@@ -106,17 +116,22 @@ export default function AdminProductDiscount() {
 
     useEffect(() => {
         setProducts([]);
-    }, [currentDiscount]);
+    }, [currentDiscount, applyAll, selectedCategories, selectedProductTypes, selectedLivingSpaces]);
+
+    useEffect(() => {
+        form.setValue(`discounts.${discountSelected}.productIds`, []);
+    }, [applyAll, selectedCategories, selectedProductTypes, selectedLivingSpaces]);
 
     const onSubmit = async (data) => {
-        if (submitting) return;
         setSubmitting(true);
 
         const generalDiscount = currentDiscount?.rootId ?
-        await editGeneralDiscount({ ...data?.discounts[discountSelected], discountAmount: convertToNumber(data?.discounts[discountSelected]?.discountAmount) }, currentDiscount?.rootId) :
-        await addGeneralDiscount(data?.discounts[discountSelected]);
-
-        console.log(data?.discounts[discountSelected]);
+        (
+            await editGeneralDiscount({ ...data?.discounts[discountSelected], discountAmount: convertToNumber(data?.discounts[discountSelected]?.discountAmount) }, currentDiscount?.rootId)
+        ) :
+        (
+            await addGeneralDiscount(data?.discounts[discountSelected])
+        )
 
         const message = generalDiscount?.message;
         if (generalDiscount?.success) {

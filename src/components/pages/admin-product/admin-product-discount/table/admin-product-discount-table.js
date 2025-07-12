@@ -36,6 +36,7 @@ export default function AdminProductDiscountTable({
             const allProductIds = products
                 ?.filter(p => !p?.general_discount || p?.general_discount?.id === currentDiscount?.rootId)
                 ?.map(p => p?.id);
+
             form.setValue(`discounts.${index}.productIds`, allProductIds || []);
         }
         else toast.error(filterProducts?.message);

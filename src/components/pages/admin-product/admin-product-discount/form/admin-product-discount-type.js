@@ -74,7 +74,15 @@ export default function AdminProductDiscountType({ form, index }) {
                                             className="px-[15px] py-[20px] pr-[38px]"
                                             value={formatCurrency(field?.value)}
                                             onChange={(e) => {
-                                                field.onChange(e.target.value);
+                                                const rawValue = e.target.value;
+                                                let filteredValue = rawValue.replace(/[^0-9,]/g, '');
+
+                                                if (watchDiscountType !== "amount") {
+                                                    if (+filteredValue < 0) filteredValue = 0;
+                                                    else if (+filteredValue > 100) filteredValue = 100
+                                                }
+
+                                                field.onChange(filteredValue);
                                             }}
                                         />
 
