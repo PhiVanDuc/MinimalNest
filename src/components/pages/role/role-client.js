@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import columns from "./columns";
 import Error from "@/components/customs/error";
-import MainLoading from "@/components/customs/main-loading";
+import AdminLoading from "@/components/customs/admin-loading";
 import CustomTable from "@/components/customs/admin/custom-table";
 import CustomPagination from "@/components/customs/admin/custom-pagination";
 
@@ -36,7 +36,7 @@ export default function RoleClient({
         })();
     }, [searchParams]);
 
-    if (loading) return <MainLoading />
+    if (loading) return <AdminLoading />
     if (error) return <Error message={error} />
 
     return (

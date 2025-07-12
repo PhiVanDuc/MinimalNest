@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import Error from "@/components/customs/error";
-import MainLoading from "@/components/customs/main-loading";
+import AdminProductLoading from "./admin-product-loading";
 
 import columns from "./columns";
 import AdminProductButton from "./admin-product-button";
@@ -39,7 +39,7 @@ export default function AdminProductClient({
         })();
     }, [searchParams]);
 
-    if (loading) return <MainLoading />
+    if (loading) return <AdminProductLoading />
     if (error) return <Error message={error} />
 
     return (

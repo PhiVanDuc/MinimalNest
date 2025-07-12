@@ -6,14 +6,6 @@ import Error from "@/components/customs/error";
 import Money from "@/components/customs/money";
 import DashboardRevenueLoading from "./dashboard-revenue-loading";
 
-// import {
-//     Select,
-//     SelectContent,
-//     SelectItem,
-//     SelectTrigger,
-//     SelectValue,
-// } from "@/components/ui/select";
-
 import {
     Bar,
     BarChart,
@@ -31,19 +23,18 @@ import { convertToNumberDb } from "@/lib/utils/format-currency";
 import { getTotalRevenueDetail } from "@/lib/api/server-action/dashboard";
 
 export default function DashboardRevenue() {
-    // const [selectRevenueTime, setSelectRevenueTime] = useState("yearly");
     const [totalRevenueDetail, setTotalRevenueDetail] = useState(0);
     const [chartData, setChartData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
     const chartConfig = {
-        expense: {
-            label: "Chi phí",
+        cost: {
+            label: "Tổng chi",
             color: "#487FFF"
         },
-        profit: {
-            label: "Lợi nhuận",
+        revenue: {
+            label: "Tổng thu",
             color: "#487FFF"
         },
     }
@@ -60,11 +51,11 @@ export default function DashboardRevenue() {
 
             setTotalRevenueDetail(totalRevenueDetail?.data);
             setChartData(() => {
-                return totalRevenueDetail?.data?.monthly?.map(item => {
+                return totalRevenueDetail?.data?.total_revenue_monthly?.map(item => {
                     return {
                         month: item?.month,
-                        profit: convertToNumberDb(item?.profit),
-                        expense: convertToNumberDb(item?.cost)
+                        revenue: convertToNumberDb(item?.revenue),
+                        cost: convertToNumberDb(item?.cost)
                     }
                 });
             });
@@ -79,25 +70,6 @@ export default function DashboardRevenue() {
         <div className="p-[25px] w-full border-r self-stretch">
             <header className="flex items-center justify-between mb-[15px]">
                 <h2 className="text-[17px] font-bold">Báo cáo doanh thu.</h2>
-
-                {/* <Select
-                    defaultValue={selectRevenueTime}
-                    onValueChange={value => { setSelectRevenueTime(value); }}
-                >
-                    <SelectTrigger className="shrink-0 w-[150px]">
-                        <SelectValue
-                            placeholder="Chọn loại thời gian."
-                        />
-                    </SelectTrigger>
-
-                    <SelectContent>
-                        <SelectItem value="yearly">Theo năm</SelectItem>
-                        <SelectItem value="monthly">Theo tháng</SelectItem>
-                        <SelectItem value="weekly">Theo tuần</SelectItem>
-                        <SelectItem value="today">Hôm nay</SelectItem>
-                    </SelectContent>
-                </Select> */}
-
                 <p className="w-[150px] text-[14px] rounded-[5px] border border-neutral-300 px-[15px] py-[5px] cursor-pointer">Theo năm</p>
             </header>
 
@@ -105,9 +77,9 @@ export default function DashboardRevenue() {
                 <div className="flex items-center gap-[15px]">
                     <span className="inline-block w-[20px] aspect-square rounded-[5px] bg-yellowBold" />
                     <div className="flex items-center text-[14px]">
-                        <p className="font-semibold w-[85px]">Chi phí:</p>
+                        <p className="font-semibold w-[85px]">Tổng chi:</p>
                         <Money
-                            price={convertToNumberDb(totalRevenueDetail?.annual?.cost)}
+                            price={convertToNumberDb(totalRevenueDetail?.total_revenue_yearly?.cost)}
                             moneyClassName="text-[14px]"
                         />
                     </div>
@@ -116,9 +88,9 @@ export default function DashboardRevenue() {
                 <div className="flex items-center gap-[15px]">
                     <span className="inline-block w-[20px] aspect-square rounded-[5px] bg-blueChart" />
                     <div className="flex items-center text-[14px]">
-                        <p className="font-semibold w-[85px]">Lợi nhuận:</p>
+                        <p className="font-semibold w-[85px]">Tổng thu:</p>
                         <Money
-                            price={convertToNumberDb(totalRevenueDetail?.annual?.profit)}
+                            price={convertToNumberDb(totalRevenueDetail?.total_revenue_yearly?.revenue)}
                             moneyClassName="text-[14px]"
                         />
                     </div>
@@ -157,8 +129,8 @@ export default function DashboardRevenue() {
                         }
                     />
 
-                    <Bar dataKey="expense" fill="#F39E50" radius={8} />
-                    <Bar dataKey="profit" fill="#487FFF" radius={8} />
+                    <Bar dataKey="cost" fill="#F39E50" radius={8} />
+                    <Bar dataKey="revenue" fill="#487FFF" radius={8} />
                 </BarChart>
             </ChartContainer>
         </div>

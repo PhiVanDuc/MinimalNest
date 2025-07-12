@@ -9,7 +9,7 @@ import CustomPagination from "@/components/customs/admin/custom-pagination";
 import Error from "@/components/customs/error";
 import InventoryButton from "./inventory-button";
 import InventoryAddExcel from "./inventory-add-excel";
-import MainLoading from "@/components/customs/main-loading";
+import InventoryLoading from "./inventory-loading";
 import InventoryBasicAnalysis from "./inventory-basic-analysis";
 import InventoryExcelProvider from "./inventory-excel-provider";
 import InventoryFilter from "./inventory-filter/inventory-filter";
@@ -55,7 +55,7 @@ export default function InventoryClient({
         })();
     }, [searchParams]);
 
-    if (loading) return <MainLoading />
+    if (loading) return <InventoryLoading />
     if (error) return <Error message={error} />
 
     return (

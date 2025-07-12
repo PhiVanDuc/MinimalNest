@@ -6,7 +6,7 @@ import columns from "./columns";
 import Filter from "./filter/filter";
 import Error from "@/components/customs/error";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import MainLoading from "@/components/customs/main-loading";
+import AdminOrderLoading from "../admin-order/admin-order-loading";
 import CustomTable from "@/components/customs/admin/custom-table";
 import CustomPagination from "@/components/customs/admin/custom-pagination";
 
@@ -38,9 +38,9 @@ export default function AdminReturnGoodsClient({
             setReturnGoods(return_goods);
             setLoading(false);
         })();
-    }, []);
+    }, [searchParams]);
 
-    if (loading) return <MainLoading />
+    if (loading) return <AdminOrderLoading />
     if (error) return <Error message={error} />
 
     return (

@@ -9,7 +9,7 @@ import CustomPagination from "@/components/customs/admin/custom-pagination";
 import Error from "@/components/customs/error";
 import ColorButtonAdd from "./color-button-add";
 import ColorFilter from "./color-filter/color-filter";
-import MainLoading from "@/components/customs/main-loading";
+import AdminLoading from "@/components/customs/admin-loading";
 
 import { getColors } from "@/lib/api/server-action/color";
 
@@ -35,7 +35,7 @@ export default function ColorClient({
         })();
     }, [searchParams]);
 
-    if (loading) return <MainLoading />
+    if (loading) return <AdminLoading />
     if (error) return <Error message={error} />
 
     return (

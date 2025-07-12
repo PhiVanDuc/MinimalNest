@@ -6,6 +6,8 @@ const columns = [
         accesserKey: "customer",
         header: () => <h3 className="text-[14px] text-darkMedium font-medium">Khách hàng</h3>,
         cell: ({ row }) => {
+            const data = row?.original;
+
             return (
                 <div className="space-y-[5px]">
                     <h4 className="text-[16px] font-medium">Tên khách hàng.</h4>

@@ -1,7 +1,6 @@
-import DashboardTotal from "./dashboard-total";
-import DashboardOrder from "./dashboard-order";
-import DashboardRevenue from "./dashboard-revenue";
-
+import DashboardTotal from "./dashboard-total/dashboard-total";
+import DashboardOrder from "./dashboard-order/dashboard-order";
+import DashboardRevenue from "./dashboard-revenue/dashboard-revenue";
 import DashboardTopProduct from "./dashboard-top-product/dashboard-top-product";
 import DashboardTopCustomer from "./dashboard-top-customer/dashboard-top-customer";
 
@@ -19,10 +18,7 @@ export default function Dashboard() {
                 </section>
 
                 <DashboardTopProduct />
-                
-                <div className="flex items-start gap-[25px]">
-                    <DashboardTopCustomer />
-                </div>
+                <DashboardTopCustomer />
             </div>
         </div>
     )

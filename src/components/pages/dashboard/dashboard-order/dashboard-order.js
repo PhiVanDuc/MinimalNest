@@ -5,14 +5,6 @@ import { useState, useEffect } from 'react';
 import Error from '@/components/customs/error';
 import DashboardOrderLoading from './dashboard-order-loading';
 
-// import {
-//     Select,
-//     SelectTrigger,
-//     SelectValue,
-//     SelectContent,
-//     SelectItem
-// } from "@/components/ui/select";
-
 import {
     Pie,
     PieChart
@@ -23,7 +15,7 @@ import {
     ChartTooltip,
     ChartTooltipContent,
 } from "@/components/ui/chart";
-import { getStatusOrder } from '@/lib/api/server-action/dashboard';
+import { getOrderStatusQuantities } from '@/lib/api/server-action/dashboard';
 import { convertToNumberDb } from '@/lib/utils/format-currency';
 
 const chartConfig = {
@@ -49,26 +41,25 @@ const chartConfig = {
 }
 
 export default function DashboardOrder() {
-    // const [selectRevenueTime, setSelectRevenueTime] = useState("yearly");
     const [chartData, setChartData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
     useEffect(() => {
         (async () => {
-            const { status, result: statusOrder } = await getStatusOrder();
+            const { status, result: orderStatusQuantities } = await getOrderStatusQuantities();
             
-            if (!statusOrder?.success) {
-                setError(`${status},${statusOrder?.message}`);
+            if (!orderStatusQuantities?.success) {
+                setError(`${status},${orderStatusQuantities?.message}`);
                 setLoading(false);
                 return;
             }
 
             setChartData([
-                { browser: "fulfilled", visitors: convertToNumberDb(statusOrder?.data?.fulfilled), fill: "var(--color-fulfilled)" },
-                { browser: "canceled", visitors: convertToNumberDb(statusOrder?.data?.canceled), fill: "var(--color-canceled)" },
-                { browser: "pending", visitors: convertToNumberDb(statusOrder?.data?.pending), fill: "var(--color-pending)" },
-                { browser: "packing", visitors: convertToNumberDb(statusOrder?.data?.packing), fill: "var(--color-packing)" }
+                { browser: "fulfilled", visitors: convertToNumberDb(orderStatusQuantities?.data?.fulfilled), fill: "var(--color-fulfilled)" },
+                { browser: "canceled", visitors: convertToNumberDb(orderStatusQuantities?.data?.canceled), fill: "var(--color-canceled)" },
+                { browser: "pending", visitors: convertToNumberDb(orderStatusQuantities?.data?.pending), fill: "var(--color-pending)" },
+                { browser: "packing", visitors: convertToNumberDb(orderStatusQuantities?.data?.packing), fill: "var(--color-packing)" }
             ]);
             setLoading(false);
         })();
@@ -81,24 +72,6 @@ export default function DashboardOrder() {
         <div className='shrink-0 flex flex-col w-[350px] self-stretch p-[25px]'>
             <header className='space-y-[10px]'>
                 <h2 className='text-[18px] font-semibold'>Trạng thái đơn hàng</h2>
-
-                {/* <Select
-                    defaultValue={selectRevenueTime}
-                    onValueChange={value => { setSelectRevenueTime(value); }}
-                >
-                    <SelectTrigger className="shrink-0 w-full">
-                        <SelectValue
-                            placeholder="Chọn loại thời gian."
-                        />
-                    </SelectTrigger>
-
-                    <SelectContent>
-                        <SelectItem value="yearly">Theo năm</SelectItem>
-                        <SelectItem value="monthly">Theo tháng</SelectItem>
-                        <SelectItem value="weekly">Theo tuần</SelectItem>
-                        <SelectItem value="today">Hôm nay</SelectItem>
-                    </SelectContent>
-                </Select> */}
                 <p className="text-[14px] rounded-[5px] border border-neutral-300 px-[15px] py-[5px] cursor-pointer">Theo năm</p>
             </header>
 

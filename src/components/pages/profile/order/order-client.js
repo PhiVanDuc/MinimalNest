@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 
 import OrderList from "./order-list";
 import OrderHeader from "./order-header";
+import OrderLoading from "./order-loading";
 import Error from "@/components/customs/error";
-import MainLoading from "@/components/customs/main-loading";
 
 import { getOrders } from "@/lib/api/server-action/order";
 
@@ -29,9 +29,9 @@ export default function OrderClient({
             setOrders(result?.data?.orders);
             setLoading(false);
         })();
-    }, []);
+    }, [searchParams]);
 
-    if (loading) return <MainLoading />
+    if (loading) return <OrderLoading />
     if (error) return <Error message={error} />
 
     return (

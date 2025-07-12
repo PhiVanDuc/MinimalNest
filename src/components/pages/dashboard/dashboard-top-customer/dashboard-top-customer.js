@@ -16,6 +16,7 @@ export default function DashboardTopCustomer() {
     useEffect(() => {
         (async () => {
             const { status, result: vipCustomers } = await getVipCustomers();
+            console.log(vipCustomers);
 
             if (!vipCustomers?.success) {
                 setError(`${status},${vipCustomers?.message}`);
@@ -23,7 +24,7 @@ export default function DashboardTopCustomer() {
                 return;
             }
 
-            setVipCustomers(vipCustomers?.data?.vip_customers);
+            setVipCustomers(vipCustomers?.data?.accounts);
             setLoading(false);
         })();
     }, []);

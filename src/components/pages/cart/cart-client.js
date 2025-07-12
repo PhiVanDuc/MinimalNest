@@ -6,11 +6,11 @@ import { useFieldArray, useForm } from "react-hook-form";
 import CartSummary from "./cart-summary";
 import cartColumns from "./table/cart-columns";
 import Error from "@/components/customs/error";
-import MainLoading from "@/components/customs/main-loading";
 import CustomTable from "@/components/customs/admin/custom-table";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { getCart } from "@/lib/api/server-action/cart";
+import CartLoading from "./cart-loading";
 
 export default function CartClient({ decode }) {
     const [cart, setCart] = useState([]);
@@ -53,7 +53,7 @@ export default function CartClient({ decode }) {
         fetchCart();
     }, []);
 
-    if (loading) return <MainLoading />
+    if (loading) return <CartLoading />
     if (error) return <Error message={error} />
 
     return (

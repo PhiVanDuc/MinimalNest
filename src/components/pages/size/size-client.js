@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import Error from "@/components/customs/error";
-import MainLoading from "@/components/customs/main-loading";
+import AdminLoading from "@/components/customs/admin-loading";
 
 import columns from "./columns";
 import SizeButtonAdd from "./size-button-add";
@@ -35,7 +35,7 @@ export default function SizeClient({
         })();
     }, [searchParams]);
 
-    if (loading) return <MainLoading />
+    if (loading) return <AdminLoading />
     if (error) return <Error message={error} />
 
     return (

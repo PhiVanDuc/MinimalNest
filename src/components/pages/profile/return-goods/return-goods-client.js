@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-import MainLoading from "@/components/customs/main-loading";
+import OrderLoading from "../order/order-loading";
 import ReturnGoodsHeader from "./return-goods-header";
 import ReturnGoodsList from "./return-goods-list";
 import Error from "@/components/customs/error";
@@ -29,9 +29,9 @@ export default function ReturnGoodsClient({
             setReturnGoods(result?.data?.return_goods);
             setLoading(false);
         })();
-    }, []);
+    }, [searchParams]);
 
-    if (loading) return <MainLoading />
+    if (loading) return <OrderLoading />
     if (error) return <Error message={error} />
 
     return (

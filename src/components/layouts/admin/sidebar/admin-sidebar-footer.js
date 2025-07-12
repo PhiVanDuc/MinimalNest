@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -12,8 +11,8 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 
 import { FiUser } from "react-icons/fi";
-import { TbLogout } from "react-icons/tb";
 import { ShoppingCart } from "lucide-react";
+import { TbArrowsExchange2, TbLogout } from "react-icons/tb";
 
 import { signOut } from "@/lib/api/server-action/auth";
 
@@ -50,6 +49,16 @@ export default function AdminSidebarFooter({ userInfo = {} }) {
                     className="p-[10px] rounded-[10px] border"
                 >
                     <DropdownMenuGroup className="w-full">
+                        <DropdownMenuItem 
+                            className="flex items-center gap-[10px] cursor-pointer text-[13px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[10px] py-[10px]"
+                            onClick={() => { handleRedirect("/ho-so"); }}
+                        >
+                            <div className="shrink-0 w-[24px] flex justify-center">
+                                <FiUser size={18} />
+                            </div>
+                            <p>Hồ sơ người dùng</p>
+                        </DropdownMenuItem>
+
                         <DropdownMenuItem
                             className="flex items-center gap-[10px] cursor-pointer text-[13px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[10px] py-[10px]"
                             onClick={() => { handleRedirect("/san-pham"); }}
@@ -60,14 +69,14 @@ export default function AdminSidebarFooter({ userInfo = {} }) {
                             <p>Sản phẩm</p>
                         </DropdownMenuItem>
 
-                        <DropdownMenuItem 
+                        <DropdownMenuItem
                             className="flex items-center gap-[10px] cursor-pointer text-[13px] text-darkMedium font-medium hover:bg-neutral-100 hover:text-darkMedium transition-colors px-[10px] py-[10px]"
-                            onClick={() => { handleRedirect("/ho-so"); }}
+                            onClick={() => { router.push("/tra-hang"); }}
                         >
                             <div className="shrink-0 w-[24px] flex justify-center">
-                                <FiUser size={18} />
+                                <TbArrowsExchange2 size={18} />
                             </div>
-                            <p>Hồ sơ người dùng</p>
+                            <p>Trả hàng</p>
                         </DropdownMenuItem>
 
                         <DropdownMenuItem 

@@ -81,7 +81,7 @@ const columns = [
             return (
                 <div className="flex justify-center">
                     {
-                        order?.total_price_discount ?
+                        order?.total_order_discount ?
                         (
                             <Money
                                 price={convertToNumberDb(order?.total_order_discount)}

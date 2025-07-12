@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import columns from "./columns";
 import Error from "@/components/customs/error";
-import MainLoading from "@/components/customs/main-loading";
+import AdminOrderLoading from "./admin-order-loading";
 import CustomTable from "@/components/customs/admin/custom-table";
 import CustomPagination from "@/components/customs/admin/custom-pagination";
 
@@ -42,7 +42,7 @@ export default function AdminOrderClient({
         })();
     }, [searchParams]);
 
-    if (loading) return <MainLoading />
+    if (loading) return <AdminOrderLoading />
     if (error) return <Error message={error} />
 
     return (

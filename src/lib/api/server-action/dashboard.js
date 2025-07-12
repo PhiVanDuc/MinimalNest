@@ -74,9 +74,9 @@ const getTotalRevenueDetail = async () => {
     }
 }
 
-const getStatusOrder = async () => {
+const getOrderStatusQuantities = async () => {
     try {
-        const { response, result } = await fetchHelperAuth.get(`/dashboard/status_order`);
+        const { response, result } = await fetchHelperAuth.get(`/dashboard/order_status_quantities`);
         return { status: response?.status, result };
     }
     catch(error) {
@@ -110,4 +110,22 @@ const getVipCustomers = async () => {
     }
 }
 
-export { getTotalProducts, getTotalOrders, getTotalRevenue, getTotalRevenueDetail, getStatusOrder, getVipCustomers }
+const getBestSellerProducts = async () => {
+    try {
+        const { response, result } = await fetchHelperAuth.get(`/dashboard/best_seller_products`);
+        return { status: response?.status, result };
+    }
+    catch(error) {
+        console.log(error);
+        
+        return {
+            status: -1,
+            result: {
+                success: false,
+                message: "Lỗi gọi hàm lấy danh sách các khách hàng quen!"
+            }
+        }
+    }
+}
+
+export { getTotalProducts, getTotalOrders, getTotalRevenue, getTotalRevenueDetail, getOrderStatusQuantities, getVipCustomers, getBestSellerProducts }

@@ -6,8 +6,8 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
 import Error from "@/components/customs/error";
+import PaymentLoading from "./payment-loading";
 import PaymentBookAddress from "./payment-book-address";
-import MainLoading from "@/components/customs/main-loading";
 import CustomTable from "@/components/customs/admin/custom-table";
 import PaymentCoupon from "@/components/pages/payment/payment-coupon";
 import PaymentMethod from "@/components/pages/payment/payment-method";
@@ -193,7 +193,7 @@ export default function PaymentClient({
         setSubmitting(false);
     }
 
-    if (loading) return <MainLoading />
+    if (loading) return <PaymentLoading />
     if (error) return <Error message={error} />
     if (reserved_order?.is_paid) return <></>
 

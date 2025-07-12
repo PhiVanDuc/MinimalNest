@@ -73,8 +73,6 @@ export default function DashboardTotal() {
                         <p className="text-[22px] font-bold">{totalProducts}</p>
                     </div>
                 </div>
-{/* 
-                <p className="text-[15px] font-medium text-darkBland">Đã tăng <span className="px-[8px] py-[4px] rounded-[4px] text-[14px] text-blueChecked bg-blueChecked/20">+ 10</span> trong tuần này.</p> */}
             </div>
 
             <div className="p-[20px] rounded-[10px] bg-white border">
@@ -88,8 +86,6 @@ export default function DashboardTotal() {
                         <p className="text-[22px] font-bold">{totalOrders}</p>
                     </div>
                 </div>
-
-                {/* <p className="text-[15px] font-medium text-darkBland">Đã giảm <span className="whitespace-normal px-[8px] py-[4px] rounded-[4px] text-[14px] text-red-500 bg-red-500/20">- 100</span> trong tuần này.</p> */}
             </div>
 
             <div className="p-[20px] rounded-[10px] bg-white border">
@@ -99,25 +95,13 @@ export default function DashboardTotal() {
                     </div>
 
                     <div>
-                        <h2 className="text-[16px] text-darkMedium font-medium">Tổng doanh số</h2>
+                        <h2 className="text-[16px] text-darkMedium font-medium">Tổng thu</h2>
                         <Money
                             price={convertToNumberDb(totalRevenue)}
                             moneyClassName="text-[22px] font-bold"
                         />
                     </div>
                 </div>
-
-                {/* <div className="flex flex-wrap items-center gap-[3px] text-[15px] font-medium text-darkBland">
-                    <p>Đã giảm</p>
-                    <div className="px-[8px] py-[4px] rounded-[4px] bg-red-500/20">
-                        <Money
-                            price={30000000}
-                            moneyClassName="w-fit text-[14px] text-red-500 font-medium"
-                            sign="-"
-                        />
-                    </div>
-                    <p>Trong tuần này.</p>
-                </div> */}
             </div>
         </section>
     )

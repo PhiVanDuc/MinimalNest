@@ -1,3 +1,5 @@
+"use server"
+
 import fetchHelper from "../fetch-helper/fetch-helper";
 
 const getPublicProducts = async (data) => {

@@ -65,6 +65,10 @@ export default function ReturnGoodsClient({ decode }) {
         })();
     }, []);
 
+    useEffect(() => {
+        form.setValue("products", []);
+    }, [watchOrder]);
+
     const onSubmit = async (data) => {
         if (submitting) return;
 
@@ -81,7 +85,7 @@ export default function ReturnGoodsClient({ decode }) {
             return;
         }
 
-        // Lấy ra thông tin return_goods
+        // Tạo trước thông tin return goods
         const return_goods = {
             account_id: order?.account_id,
             full_name: order?.full_name,
@@ -96,18 +100,39 @@ export default function ReturnGoodsClient({ decode }) {
             is_refunded: false
         }
 
+        // Tính refund_amount
         products.forEach(product => {
             const { price, price_discount, return_quantity } = product;
+            const { coupon_code, discount_type, discount_amount, total_order } = order;
 
-            const temp = 
-            price_discount ?
-            convertToNumberDb(price_discount) * +return_quantity :
-            convertToNumberDb(price) * +return_quantity;
+            // Bước 1: Tính giá hoàn trả cơ bản (chưa xét coupon)
+            const defindPrice = price_discount 
+                ? convertToNumberDb(price_discount)
+                : convertToNumberDb(price);
 
-            return_goods.refund_amount += temp;
+            let refund = defindPrice * return_quantity
+
+            // Bước 2: Kiểm tra đơn có dùng coupon
+            if (coupon_code) {
+                const totalOrder = convertToNumberDb(total_order);
+                const discountAmount = convertToNumberDb(discount_amount);
+
+                // Bước 3: Xác định loại giảm giá
+                if (discount_type === "amount") {
+                    const ratio = refund / totalOrder;
+                    const refundCouponAmount = discountAmount * ratio;
+                    refund -= refundCouponAmount;
+                }
+                else if (discount_type === "percent") {
+                    const refundCouponAmount = refund * (discountAmount / 100);
+                    refund -= refundCouponAmount;
+                }
+            }
+
+            return_goods.refund_amount += refund;
         });
 
-        // Lấy ra thông tin return_goods_items
+        // Chuẩn bị dữ liệu cho return goods items
         const return_goods_items = products.map(product => {
             const { product_id, variant_id, product_name, image, color, code_color, size, size_desc, return_quantity, message, cost_price, price_discount, price } = product;
 
@@ -144,7 +169,9 @@ export default function ReturnGoodsClient({ decode }) {
             });
         });
 
-        // Gọi api
+        // --------------------------------------------------------------------------------
+        // --------------------------------------------------------------------------------
+
         setSubmitting(true);
 
         const result = await addReturnGoods(formData);

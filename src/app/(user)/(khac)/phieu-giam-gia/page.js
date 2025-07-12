@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import CouponList from "@/components/pages/coupon/coupon-list";
-import MainLoading from "@/components/customs/main-loading";
 
 import { redirect } from "next/navigation";
 import crypto from 'crypto';
+import CouponLoading from "@/components/pages/coupon/coupon-loading";
 
 export const metadata = {
 	title: `${process.env.WEBSITE_NAME} - Phiếu giảm giá`,
@@ -23,7 +23,7 @@ export default async function Page({ searchParams }) {
     }
 
     return (
-        <Suspense fallback={<MainLoading />}>
+        <Suspense fallback={<CouponLoading />}>
             <CouponList searchParams={searchParams} />
         </Suspense>
     )
