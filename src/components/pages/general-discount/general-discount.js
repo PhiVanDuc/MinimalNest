@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Error from "@/components/customs/error";
 import MainLoading from "@/components/customs/main-loading";
 
-import { getProductTypes } from "@/lib/api/server-action/product-type";
+import { getCategories } from "@/lib/api/server-action/categories";
 
 export default function GeneralDiscount() {
     const [productTypes, setProductTypes] = useState([]);
@@ -14,7 +14,7 @@ export default function GeneralDiscount() {
 
     useEffect(() => {
         (async () => {
-            const { status, result: productTypes } = await getProductTypes();
+            const { status, result: productTypes } = await getCategories();
 
             console.log(status);
             console.log(productTypes);
@@ -25,7 +25,7 @@ export default function GeneralDiscount() {
                 return;
             }
 
-            setProductTypes(productTypes?.data?.product_types);
+            setProductTypes(productTypes?.data?.categories);
             setLoading(false);
         })();
     }, []);
@@ -35,7 +35,7 @@ export default function GeneralDiscount() {
 
     return (
         <div className="space-y-[10px]">
-            <p className="text-[16px] font-medium">Fetch loại sản phẩm.</p>
+            <p className="text-[16px] font-medium">Fetch danh mục.</p>
             <ul className="space-y-[5px]">
                 {
                     productTypes.map(prodType => {
