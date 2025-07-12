@@ -157,7 +157,7 @@ const PERMISSION_PATHS = [
     },
     {
         permission: "edit-product",
-        paths: ["/quan-tri", "/quan-tri/san-pham/chinh-sua-san-pham", "/quan-tri/san-pham/giam-gia-chung"]
+        paths: ["/quan-tri", "/quan-tri/san-pham/chinh-sua-san-pham", "/quan-tri/san-pham/giam-gia-chung", "/quan-tri/giam-gia-chung"]
     },
     {
         permission: "delete-product",
