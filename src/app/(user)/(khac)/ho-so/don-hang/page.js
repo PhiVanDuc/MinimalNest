@@ -1,6 +1,4 @@
-import MainLoading from "@/components/customs/main-loading";
 import Order from "@/components/pages/profile/order/order";
-import { Suspense } from "react";
 
 export const metadata = {
 	title: `${process.env.WEBSITE_NAME} - Hồ sơ - Đơn hàng`,
@@ -9,8 +7,6 @@ export const metadata = {
 
 export default function Page({ searchParams }) {
     return (
-        <Suspense fallback={<MainLoading />}>
-            <Order searchParams={searchParams} />
-        </Suspense>
+        <Order searchParams={searchParams} />
     )
 }

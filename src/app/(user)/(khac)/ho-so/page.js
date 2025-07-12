@@ -1,6 +1,4 @@
-import { Suspense } from "react";
 import ProfileGeneral from "@/components/pages/profile/general/profile-general";
-import MainLoading from "@/components/customs/main-loading";
 
 export const metadata = {
 	title: `${process.env.WEBSITE_NAME} - Hồ sơ - Thông tin chung`,
@@ -9,8 +7,6 @@ export const metadata = {
 
 export default function Page() {
     return (
-        <Suspense fallback={<MainLoading />}>
-            <ProfileGeneral />
-        </Suspense>
+        <ProfileGeneral />
     )
 }

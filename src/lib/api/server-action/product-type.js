@@ -1,3 +1,5 @@
+"use server"
+
 import fetchHelper from "../fetch-helper/fetch-helper";
 
 const getProductTypes = async () => {

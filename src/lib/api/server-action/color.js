@@ -1,7 +1,7 @@
 "use server"
 
 import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
-
+import { revalidateTag } from "next/cache";
 
 const getColors = async (data) => {
     try {
@@ -45,6 +45,8 @@ const addColor = async (data) => {
             `/colors`,
             { body: JSON.stringify(data) }
         );
+
+        revalidateTag("fetch_public_get_colors");
         return result;
     }
     catch(error) {
@@ -63,6 +65,8 @@ const editColor = async (data, colorId) => {
             `/colors/${colorId}`,
             { body: JSON.stringify(data) }
         );
+
+        revalidateTag("fetch_public_get_colors");
         return result;
     }
     catch(error) {
@@ -78,6 +82,8 @@ const editColor = async (data, colorId) => {
 const deleteColor = async (colorId) => {
     try {
         const { result } = await fetchHelperAuth.delete(`/colors/${colorId}`);
+
+        revalidateTag("fetch_public_get_colors");
         return result;
     }
     catch(error) {

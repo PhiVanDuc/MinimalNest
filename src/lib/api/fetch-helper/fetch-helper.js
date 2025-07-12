@@ -1,7 +1,7 @@
 const BACKEND_API = process.env.NEXT_PUBLIC_BACKEND_API;
 
 const fetchWithoutAuth = async (method, url, options = {}) => {
-    const { headers: customHeaders = {}, body, ...rest } = options;
+    const { turnOnCache, next, headers: customHeaders = {}, body, ...rest } = options;
 
     const isFormData = typeof FormData !== "undefined" && body instanceof FormData;
     const defaultHeaders = {
@@ -15,7 +15,8 @@ const fetchWithoutAuth = async (method, url, options = {}) => {
 
     const fetchOptions = {
         method,
-        cache: "no-cache",
+        ...(!turnOnCache ? { cache: "no-cache" } : {}),
+        ...(next ? { next } : {}),
         ...rest,
         headers: mergedHeaders,
         ...(body !== undefined ? { body } : {}),

@@ -1,6 +1,4 @@
-import { Suspense } from "react";
 import Payment from "@/components/pages/payment/payment";
-import MainLoading from "@/components/customs/main-loading";
 
 export const metadata = {
 	title: `${process.env.WEBSITE_NAME} - Thanh toán`,
@@ -9,8 +7,6 @@ export const metadata = {
 
 export default function Page({ params }) {
     return (
-        <Suspense fallback={<MainLoading />}>
-            <Payment params={params} />
-        </Suspense>
+        <Payment params={params} />
     )
 }

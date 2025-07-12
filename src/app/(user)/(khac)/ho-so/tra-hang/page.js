@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-import MainLoading from "@/components/customs/main-loading";
 import ReturnGoods from "@/components/pages/profile/return-goods/return-goods";
 
 export const metadata = {
@@ -9,8 +7,6 @@ export const metadata = {
 
 export default function Page({ searchParams }) {
     return (
-        <Suspense fallback={<MainLoading />}>
-            <ReturnGoods searchParams={searchParams} />
-        </Suspense>
+        <ReturnGoods searchParams={searchParams} />
     )
 }

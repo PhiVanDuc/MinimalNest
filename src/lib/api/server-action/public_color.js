@@ -4,7 +4,16 @@ import fetchHelper from "../fetch-helper/fetch-helper";
 
 const getPublicColor = async () => {
     try {
-        const { response, result } = await fetchHelper.get(`/public_colors`);
+        const { response, result } = await fetchHelper.get(
+            `/public_colors`,
+            {
+                turnOnCache: true,
+                next: {
+                    revalidate: 86400,
+                    tags: ["fetch_public_get_colors"]
+                }
+            }
+        );
         return { response, result };
     }
     catch(error) {

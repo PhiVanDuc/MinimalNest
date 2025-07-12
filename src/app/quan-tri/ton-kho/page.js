@@ -1,11 +1,7 @@
-import MainLoading from "@/components/customs/main-loading"
-import Inventory from "@/components/pages/inventory/inventory"
-import { Suspense } from "react"
+import Inventory from "@/components/pages/inventory/inventory";
 
 export default function Page({ searchParams }) {
     return (
-        <Suspense fallback={<MainLoading />}>
-            <Inventory searchParams={searchParams} />
-        </Suspense>
+        <Inventory searchParams={searchParams} />
     )
 }

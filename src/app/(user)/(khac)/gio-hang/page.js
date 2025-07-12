@@ -1,6 +1,4 @@
-import { Suspense } from "react";
 import Cart from "@/components/pages/cart/cart";
-import MainLoading from "@/components/customs/main-loading";
 
 export const metadata = {
 	title: `${process.env.WEBSITE_NAME} - Giỏ hàng`,
@@ -9,8 +7,6 @@ export const metadata = {
 
 export default function Page() {
     return (
-        <Suspense fallback={<MainLoading />}>
-            <Cart />
-        </Suspense>
+        <Cart />
     )
 }

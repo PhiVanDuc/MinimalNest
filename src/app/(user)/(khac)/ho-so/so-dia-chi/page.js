@@ -1,6 +1,3 @@
-import { Suspense } from "react";
-
-import MainLoading from "@/components/customs/main-loading";
 import BookAddress from "@/components/pages/profile/book-address/book-address";
 
 export const metadata = {
@@ -10,8 +7,6 @@ export const metadata = {
 
 export default function Page() {
     return (
-        <Suspense fallback={<MainLoading />}>
-            <BookAddress />
-        </Suspense>
+        <BookAddress />
     )
 }
