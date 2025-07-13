@@ -61,8 +61,16 @@ const columns = [
             )
         },
         cell: ({ row }) => {
+            const data = row?.original;
+
             return (
-                <p className="text-[14px] text-center font-medium">Khách quen</p>
+                <p className="text-[14px] text-center font-medium">
+                    {
+                            data?.customer_type === "first_time_customer" ? "Khách hàng lần đầu" :
+                            data?.customer_type === "new_customer" ? "Khách hàng mới" :
+                            data?.customer_type === "vip_customer" && "Khách hàng quen"
+                        }
+                </p>
             )
         }
     },

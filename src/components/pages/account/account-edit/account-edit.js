@@ -6,12 +6,11 @@ import Error from "@/components/customs/error";
 import MainLoading from "@/components/customs/main-loading";
 
 import AccountEditForm from "./account-edit-form";
-import AccountEditOrder from "./account-edit-order";
 
 import { getRoles } from "@/lib/api/server-action/role";
 import { getAccount } from "@/lib/api/server-action/account";
 
-export default function AccountEditClient({ params }) {
+export default function AccountEdit({ params }) {
     const [account, setAccount] = useState({});
     const [roles, setRoles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -54,10 +53,7 @@ export default function AccountEditClient({ params }) {
         <section className="space-y-[30px]">
             <h1 className="text-[24px] font-semibold">Chỉnh sửa tài khoản</h1>
 
-            <div className="flex items-start gap-[20px]">
-                <AccountEditForm roles={roles} account={account} />
-                <AccountEditOrder />
-            </div>
+            <AccountEditForm roles={roles} account={account} />
         </section>
     )
 }

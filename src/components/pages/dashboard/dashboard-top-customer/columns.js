@@ -9,10 +9,19 @@ const columns = [
             const data = row?.original;
 
             return (
-                <div className="space-y-[5px]">
-                    <h4 className="text-[16px] font-medium">Tên khách hàng.</h4>
-                    <p className="text-[14px] text-darkMedium">email@gmail.com</p>
-                </div>
+                <h4 className="text-[16px] font-medium">{data?.full_name}</h4>
+            )
+        }
+    },
+    {
+        id: "email",
+        accesserKey: "email",
+        header: () => <h3 className="text-[14px] text-darkMedium font-medium">Email</h3>,
+        cell: ({ row }) => {
+            const data = row?.original;
+
+            return (
+                <p className="text-[14px] font-medium text-darkMedium">{data?.email}</p>
             )
         }
     },
@@ -21,9 +30,11 @@ const columns = [
         accesserKey: "order",
         header: () => <h3 className="text-[14px] text-darkMedium font-medium text-center">Đơn hàng</h3>,
         cell: ({ row }) => {
+            const data = row?.original;
+
             return (
                 <div className="flex justify-center">
-                    <p className="text-[14px] text-blueChecked font-medium px-[10px] py-[4px] rounded-[5px] bg-blueChecked/20">70</p>
+                    <p className="text-[14px] text-blueChecked font-medium px-[10px] py-[4px] rounded-[5px] bg-blueChecked/20">{data?.order_count}</p>
                 </div>
             )
         }

@@ -38,7 +38,7 @@ export default function AccountEditForm({ roles, account }) {
     return (
         <Form {...form}>
             <form
-                className="w-[60%] space-y-[20px]"
+                className="space-y-[20px]"
                 onSubmit={form.handleSubmit(onSubmit)}
             >
                 {/* Thông tin chung */}
