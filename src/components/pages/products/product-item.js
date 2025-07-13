@@ -104,9 +104,13 @@ export default function ProductItem({ product }) {
 
                                 <Money
                                     price={
-                                        general_discount
-                                        ? calcPrice(cost_price, interest_rate, general_discount?.discount_type, general_discount?.discount_amount ? convertToNumberDb(general_discount.discount_amount) : null)
-                                        : calcPrice(cost_price, interest_rate, discount_type, discount_amount ? convertToNumberDb(discount_amount) : null)
+                                        general_discount ?
+                                        (
+                                            calcPrice(cost_price, interest_rate, general_discount?.discount_type, general_discount?.discount_amount ? convertToNumberDb(general_discount.discount_amount) : null)
+                                        ) :
+                                        (
+                                            calcPrice(cost_price, interest_rate, discount_type, discount_amount ? convertToNumberDb(discount_amount) : null)
+                                        )
                                     }
                                     moneyClassName="text-[14px] sm:text-[15px] text-darkBold font-semibold"
                                 />

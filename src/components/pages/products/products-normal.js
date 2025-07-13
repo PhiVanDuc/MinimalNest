@@ -32,7 +32,11 @@ export default function ProductsNormal({ searchParams, publicAllProducts }) {
                 className="flex justify-center"
                 style={{ marginTop: "50px" }}
             >
-                <CustomPagination page={+searchParams?.page || 1} pageSize={+publicAllProducts?.pageSize || 0} totalCount={publicAllProducts?.totalItems || 0} />
+                <CustomPagination
+                    page={+searchParams?.page || 1} 
+                    pageSize={+publicAllProducts?.pageSize || 0}
+                    totalCount={publicAllProducts?.totalItems || 0}
+                />
             </div>
         </div>
     )

@@ -59,9 +59,6 @@ export default function AdminProductEdit({ params }) {
     const watchCategoryId = form.watch("categoryId");
 
     const [productInfo, setProductInfo] = useState({});
-    // const [livingSpaceIdsInfo, setLivingSpaceIdsInfo] = useState([]);
-    // const [sizesInfo, setSizesInfo] = useState([]);
-    // const [colorsInfo, setColorsInfo] = useState([]);
     const [imagesInfo, setImagesInfo] = useState([]);
 
     const [categories, setCategories] = useState([]);
@@ -73,9 +70,7 @@ export default function AdminProductEdit({ params }) {
     const [submitting, setSubmitting] = useState(false);
     const [editImages, setEditImages] = useState(false);
     const [deletedImages, setDeletedImages] = useState([]);
-    const [mainImages, setMainImages] = useState(() => {
-        return imagesInfo?.filter(image => image?.main);
-    });
+    const [mainImages, setMainImages] = useState([]);
 
     useEffect(() => {
         (async () => {
@@ -129,9 +124,6 @@ export default function AdminProductEdit({ params }) {
             setColors(colors?.data?.colors);
 
             setProductInfo(product?.data?.product);
-            // setLivingSpaceIdsInfo(product?.data?.living_space_ids);
-            // setSizesInfo(product?.data?.sizes);
-            // setColorsInfo(product?.data?.colors);
             setImagesInfo(product?.data?.images);
 
             form.reset({
@@ -157,6 +149,13 @@ export default function AdminProductEdit({ params }) {
             setLoading(false);
         })();
     }, []);
+
+    // Xác định main images
+    useEffect(() => {
+        setMainImages(() => {
+            return imagesInfo?.filter(image => image?.main);
+        });
+    }, [imagesInfo]);
 
     // Tạo variant cho sản phẩm
     useEffect(() => {
