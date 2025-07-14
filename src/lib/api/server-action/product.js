@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidateTag } from "next/cache";
 import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 
 const getProducts = async (data) => {
@@ -64,6 +65,7 @@ const addProductsExcel = async (formData) => {
             { body: formData }
         );
 
+        revalidateTag("fetch_get_cart");
         return result;
     }
     catch(error) {
@@ -83,6 +85,7 @@ const editProduct = async (slug, formData) => {
             { body: formData }
         );
 
+        revalidateTag("fetch_get_cart");
         return result;
     }
     catch(error) {
@@ -98,6 +101,8 @@ const editProduct = async (slug, formData) => {
 const deleteProduct = async (productId) => {
     try {
         const { result } = await fetchHelperAuth.delete(`/products/${productId}`);
+
+        revalidateTag("fetch_get_cart");
         return result;
     }
     catch(error) {

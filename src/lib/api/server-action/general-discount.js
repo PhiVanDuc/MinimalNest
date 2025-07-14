@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidateTag } from "next/cache";
 import fetchHelperAuth from "../fetch-helper/fetch-helper-auth";
 
 const getGeneralDiscounts = async () => {
@@ -27,6 +28,7 @@ const addGeneralDiscount = async (data) => {
             { body: JSON.stringify(data) }
         );
 
+        revalidateTag("fetch_get_cart");
         return result;
     }
     catch(error) {
@@ -46,6 +48,7 @@ const editGeneralDiscount = async (data, id) => {
             { body: JSON.stringify(data) }
         );
 
+        revalidateTag("fetch_get_cart");
         return result;
     }
     catch(error) {
@@ -61,6 +64,8 @@ const editGeneralDiscount = async (data, id) => {
 const deleteGeneralDiscount = async (id) => {
     try {
         const { result } = await fetchHelperAuth.delete(`/general_discounts/${id}`);
+
+        revalidateTag("fetch_get_cart");
         return result;
     }
     catch(error) {
