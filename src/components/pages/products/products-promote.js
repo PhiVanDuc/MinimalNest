@@ -12,8 +12,6 @@ import ProductEvent from "./product-event";
 export default function ProductsPromote({ publicEvents, publicLatestProducts, publicBestSellerProducts }) {
     const { isOpen } = useProductFilter();
 
-    console.log(publicLatestProducts);
-
     return (
         <div className="space-y-[60px]">
             <div className="space-y-[20px]">

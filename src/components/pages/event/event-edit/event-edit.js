@@ -139,7 +139,7 @@ export default function EventEdit({ params }) {
         formData.append("endDate", data.endDate.toISOString());
         if (data.image instanceof File) formData.append("image", data.image);
 
-        const eventResult = await editEvent(formData, event?.slug);
+        const eventResult = await editEvent(formData, params?.slug);
         const message = eventResult?.message;
 
         if (eventResult?.success) {

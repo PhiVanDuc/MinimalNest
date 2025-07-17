@@ -50,7 +50,7 @@ export default function ReturnGoodsForm({
                             <div className="space-y-[5px]">
                                 <FormLabel className="mb-[10px]">Tải ảnh lên</FormLabel>
                                 <FormControl>
-                                    <div className="grid grid-cols-5 gap-[10px]">
+                                    <div className="grid grid-cols-3 md:grid-cols-4 2xl:grid-cols-5 gap-[10px]">
                                         {
                                             Array.isArray(field.value) &&
                                             field.value.map((image, index) => {

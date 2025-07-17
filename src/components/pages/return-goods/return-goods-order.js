@@ -38,7 +38,7 @@ export default function ReturnGoodsOrder({ form, orders }) {
     }
 
     return (
-        <div className="w-[40%] py-[20px] rounded-[10px] space-y-[20px] border">
+        <div className="w-full order-2 xl:order-1 xl:w-[40%] py-[20px] rounded-[10px] space-y-[20px] border">
             <div className="px-[20px] flex items-center gap-[20px] pb-[20px] border-b">
                 <p className="text-[14px] font-medium text-darkMedium">Chọn một đơn hàng bạn muốn đổi trả.</p>
             </div>
@@ -59,10 +59,10 @@ export default function ReturnGoodsOrder({ form, orders }) {
                                         value={`order-${order?.id}`}
                                     >
                                         <AccordionTrigger className={cn(
-                                            "px-[16px] py-[16px] rounded-[10px] border",
+                                            "px-[16px] py-[16px] rounded-[10px] border gap-0",
                                             watchOrder?.id === order?.id ? "bg-neutral-100" : "bg-transparent"
                                         )}>
-                                            Đơn hàng: {order?.id}
+                                            {order?.id}
                                         </AccordionTrigger>
 
                                         <AccordionContent
@@ -88,10 +88,10 @@ export default function ReturnGoodsOrder({ form, orders }) {
                                                         return (
                                                             <div
                                                                 key={item?.id}
-                                                                className="flex items-center justify-between gap-[15px] p-[15px] rounded-[10px] bg-neutral-50 hover:bg-neutral-100 cursor-pointer"
+                                                                className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-[15px] p-[15px] rounded-[10px] bg-neutral-50 hover:bg-neutral-100 cursor-pointer"
                                                             >
-                                                                <div className="flex items-center gap-[15px] ">
-                                                                    <div className="w-[80px] aspect-square rounded-[8px] overflow-hidden bg-slate-300 relative">
+                                                                <div className="flex flex-col min-[400px]:flex-row items-center gap-[15px] ">
+                                                                    <div className="shrink-0 w-[80px] aspect-square rounded-[8px] overflow-hidden bg-slate-300 relative">
                                                                         {
                                                                             item?.image ?
                                                                             <Image
@@ -107,7 +107,7 @@ export default function ReturnGoodsOrder({ form, orders }) {
                                                                     </div>
 
                                                                     <div className="space-y-[10px]">
-                                                                        <h4 className="text-[15px] font-semibold">{item.product_name}</h4>
+                                                                        <h4 className="text-[15px] font-semibold">{item.product_name} <span className="text-[13px] text-neutral-400">(x{item?.quantity})</span></h4>
 
                                                                         <div className="space-y-[5px]">
                                                                             <div className="flex items-center gap-[10px]">
@@ -151,8 +151,6 @@ export default function ReturnGoodsOrder({ form, orders }) {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
-                                                                <p className="text-[15px] font-medium text-darkMedium">x{item?.quantity}</p>
                                                             </div>
                                                         )
                                                     })

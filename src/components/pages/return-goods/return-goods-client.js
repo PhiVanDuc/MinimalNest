@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 import { getOrders } from "@/lib/api/server-action/order";
 import { convertToNumberDb } from "@/lib/utils/format-currency";
 import { addReturnGoods } from "@/lib/api/server-action/return_goods";
+import ReturnGoodsLoading from "./return-goods-loading";
 
 export default function ReturnGoodsClient({ decode }) {
     const router = useRouter();
@@ -186,7 +187,7 @@ export default function ReturnGoodsClient({ decode }) {
         setSubmitting(false);
     }
 
-    if (loading) return <MainLoading />
+    if (loading) return <ReturnGoodsLoading />
     if (error) return <Error message={error} />
 
     return (
@@ -201,7 +202,7 @@ export default function ReturnGoodsClient({ decode }) {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className={cn(
                         "",
-                        (decode?.success) ? "flex items-start gap-[20px]" : ""
+                        (decode?.success) ? "flex flex-col xl:flex-row items-start gap-[20px]" : ""
                     )}
                 >
                     <ReturnGoodsOrder
@@ -209,26 +210,12 @@ export default function ReturnGoodsClient({ decode }) {
                         orders={orders}
                     />
 
-                    <div className="w-[60%] space-y-[15px]">
+                    <div className="w-full order-1 xl:order-2 xl:w-[60%] space-y-[15px]">
                         {
                             watchOrder?.id ?
                             (
                                 <div className="space-y-[30px]">
-                                    <div className="flex items-center justify-between">
-                                        <p className="w-fit text-[13px] text-white font-medium px-[15px] py-[5px] rounded-full bg-blueChecked">Đơn hàng {watchOrder?.id}</p>
-                                    
-                                        <Button
-                                            type="button"
-                                            variant="ghost"
-                                            className="shrink-0 w-fit text-darkMedium font-medium gap-[10px]"
-                                            onClick={() => {
-                                                form.setValue("order", {})
-                                            }}
-                                        >
-                                            Đổi đơn hàng
-                                            <FaArrowRotateLeft size={15} />
-                                        </Button>
-                                    </div>
+                                    <p className="w-fit text-[13px] text-white font-medium px-[15px] py-[5px] rounded-full bg-blueChecked">{watchOrder?.id}</p>
 
                                     <div>
                                         <p className="text-[14px] font-medium text-darkBland text-center">Vui lòng chọn sản phẩm bạn muốn hoàn trả.</p>

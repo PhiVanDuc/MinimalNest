@@ -89,9 +89,9 @@ const columns = [
             const product = row.original;
 
             return (
-                <div className="space-y-[10px]">
+                <div className="space-y-[10px] min-w-[300px]">
                     <div className="flex items-center gap-[20px]">
-                        <div className="w-[80px] aspect-square rounded-[8px] overflow-hidden bg-slate-300 relative">
+                        <div className="shrink-0 w-[80px] aspect-square rounded-[8px] overflow-hidden bg-slate-300 relative">
                             {
                                 product?.image ?
                                 <Image
