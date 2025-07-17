@@ -32,9 +32,9 @@ export default function ReturnGoodsItemProduct({ product }) {
                 
                 <div className="flex-1 space-y-[10px] md:space-y-[15px]">
                     <header>
-                        <h2 className="text-[15px] md:text-[16px] font-semibold truncate">{product?.product_name}</h2>
+                        <h2 className="text-[15px] md:text-[16px] font-semibold ellipsis-2-lines">{product?.product_name}</h2>
                         
-                        <div className="flex items-center gap-[10px]">
+                        <div className="flex flex-wrap items-center gap-[5px] sm:gap-[10px]">
                             <Money
                                 price={convertToNumberDb(product?.price)}
                                 moneyClassName={cn(

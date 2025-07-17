@@ -95,6 +95,14 @@ html {
   .max-width {
     @apply w-full max-w-[1695px];
   }
+
+  .ellipsis-2-lines {
+    display: -webkit-box;            /* Tạo khối theo kiểu box của webkit */
+    -webkit-line-clamp: 2;           /* Giới hạn số dòng là 2 */
+    -webkit-box-orient: vertical;    /* Hướng sắp xếp là dọc */
+    overflow: hidden;                /* Ẩn phần tràn ra */
+    text-overflow: ellipsis;         /* Hiện dấu "..." khi tràn */
+  }
 }
 
 .truncate-text {
